@@ -5,7 +5,7 @@ import beans.models.User;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
  * Date: 06/2/16
  * Time: 2:16 AM
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @ContextConfiguration(classes = beans.configuration.TestStrategiesConfiguration.class)
 public class TicketsStrategyTest {
 
