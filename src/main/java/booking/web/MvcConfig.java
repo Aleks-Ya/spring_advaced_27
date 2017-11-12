@@ -1,8 +1,7 @@
 package booking.web;
 
-import booking.web.controller.*;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
@@ -10,7 +9,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
  */
 @Configuration
 @EnableWebMvc
-@Import({FreeMarkerConfig.class, AuditoriumController.class, BookingController.class, DiscountController.class,
-        EventController.class, UserController.class, HelloWorldController.class})
+@ComponentScan("booking")
 public class MvcConfig {
 }
