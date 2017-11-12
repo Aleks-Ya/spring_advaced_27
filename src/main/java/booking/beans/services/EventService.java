@@ -14,19 +14,19 @@ import java.util.List;
  */
 public interface EventService {
 
-    public Event create(Event event);
+    Event create(Event event);
 
-    public void remove(Event event);
+    void remove(Event event);
 
     Event getEvent(String name, Auditorium auditorium, LocalDateTime dateTime);
 
-    public List<Event> getByName(String name);
+    List<Event> getByName(String name);
 
-    public List<Event> getAll();
+    List<Event> getAll();
 
-    public List<Event> getForDateRange(LocalDateTime from, LocalDateTime to);
+    List<Event> getForDateRange(LocalDateTime from, LocalDateTime to);
 
-    public List<Event> getNextEvents(LocalDateTime to);
+    List<Event> getNextEvents(LocalDateTime to);
 
-    public Event assignAuditorium(Event event, Auditorium auditorium, LocalDateTime date);
+    Event assignAuditorium(Event event, Auditorium auditorium, LocalDateTime date);
 }
