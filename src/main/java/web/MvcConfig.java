@@ -10,7 +10,7 @@ import web.controller.*;
  */
 @Configuration
 @EnableWebMvc
-@Import({AuditoriumController.class, BookingController.class, DiscountController.class, EventController.class,
-        UserController.class, HelloWorldController.class})
+@Import({FreeMarkerConfig.class, AuditoriumController.class, BookingController.class, DiscountController.class,
+        EventController.class, UserController.class, HelloWorldController.class})
 public class MvcConfig {
 }

@@ -10,6 +10,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import web.FreeMarkerConfig;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -20,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = HelloWorldController.class)
+@ContextConfiguration(classes = {FreeMarkerConfig.class, HelloWorldController.class})
 public class HelloWorldControllerTest {
     @Autowired
     private WebApplicationContext context;
@@ -38,6 +39,6 @@ public class HelloWorldControllerTest {
                 get(HelloWorldController.ENDPOINT)
         )
                 .andExpect(status().isOk())
-                .andExpect(content().string(HelloWorldController.BODY));
+                .andExpect(content().string("Hello, FreeMarker World!"));
     }
 }
