@@ -20,10 +20,10 @@ import java.util.List;
 @Controller
 @RequestMapping(value = "/auditorium", method = RequestMethod.GET)
 public class AuditoriumController {
-    private static final String AUDITORIUMS_FTL = "auditoriums";
-    private static final String AUDITORIUM_FTL = "auditorium";
-    private static final String AUDITORIUM_SEATS_NUMBER_FTL = "auditorium_seats_number";
-    private static final String AUDITORIUM_VIP_SEATS_FTL = "auditorium_vip_seats";
+    private static final String AUDITORIUMS_FTL = "auditorium/auditoriums";
+    private static final String AUDITORIUM_FTL = "auditorium/auditorium";
+    private static final String AUDITORIUM_SEATS_NUMBER_FTL = "auditorium/auditorium_seats_number";
+    private static final String AUDITORIUM_VIP_SEATS_FTL = "auditorium/auditorium_vip_seats";
 
     @Autowired
     private AuditoriumService auditoriumService;
