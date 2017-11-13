@@ -1,7 +1,6 @@
 package booking.beans.services;
 
 import booking.beans.daos.UserDAO;
-import booking.beans.models.Ticket;
 import booking.beans.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -47,7 +46,4 @@ public class UserServiceImpl implements UserService {
         return userDAO.getAllByName(name);
     }
 
-    public List<Ticket> getBookedTickets() {
-        throw new UnsupportedOperationException("not implemented yet");
-    }
 }

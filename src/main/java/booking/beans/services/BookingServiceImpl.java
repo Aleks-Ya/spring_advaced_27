@@ -1,7 +1,11 @@
 package booking.beans.services;
 
 import booking.beans.daos.BookingDAO;
-import booking.beans.models.*;
+import booking.beans.models.Auditorium;
+import booking.beans.models.Event;
+import booking.beans.models.Rate;
+import booking.beans.models.Ticket;
+import booking.beans.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,15 +30,15 @@ import java.util.stream.Collectors;
 @Transactional
 public class BookingServiceImpl implements BookingService {
 
-    private final EventService      eventService;
+    final int minSeatNumber;
+    final double vipSeatPriceMultiplier;
+    final double highRatedPriceMultiplier;
+    final double defaultRateMultiplier;
+    private final EventService eventService;
     private final AuditoriumService auditoriumService;
-    private final UserService       userService;
-    private final BookingDAO        bookingDAO;
-    private final DiscountService   discountService;
-    final         int               minSeatNumber;
-    final         double            vipSeatPriceMultiplier;
-    final         double            highRatedPriceMultiplier;
-    final         double            defaultRateMultiplier;
+    private final UserService userService;
+    private final BookingDAO bookingDAO;
+    private final DiscountService discountService;
 
     @Autowired
     public BookingServiceImpl(@Qualifier("eventServiceImpl") EventService eventService,
@@ -79,7 +83,7 @@ public class BookingServiceImpl implements BookingService {
         if (Objects.isNull(event)) {
             throw new IllegalStateException(
                     "There is no event with name: [" + eventName + "] in auditorium: [" + auditorium + "] on date: ["
-                    + dateTime + "]");
+                            + dateTime + "]");
         }
 
         final double baseSeatPrice = event.getBasePrice();
@@ -92,7 +96,7 @@ public class BookingServiceImpl implements BookingService {
         validateSeats(seats, auditorium);
 
         final List<Integer> auditoriumVipSeats = auditorium.getVipSeatsList();
-        final List<Integer> vipSeats = auditoriumVipSeats.stream().filter(seats:: contains).collect(
+        final List<Integer> vipSeats = auditoriumVipSeats.stream().filter(seats::contains).collect(
                 Collectors.toList());
         final List<Integer> simpleSeats = seats.stream().filter(seat -> !vipSeats.contains(seat)).collect(
                 Collectors.toList());
@@ -123,7 +127,7 @@ public class BookingServiceImpl implements BookingService {
         incorrectSeat.ifPresent(seat -> {
             throw new IllegalArgumentException(
                     String.format("Seat: [%s] is incorrect. Auditorium: [%s] has [%s] seats", seat, auditorium.getName(),
-                                  seatsNumber));
+                            seatsNumber));
         });
     }
 
@@ -139,7 +143,7 @@ public class BookingServiceImpl implements BookingService {
 
         List<Ticket> bookedTickets = bookingDAO.getTickets(ticket.getEvent());
         boolean seatsAreAlreadyBooked = bookedTickets.stream().filter(bookedTicket -> ticket.getSeatsList().stream().filter(
-                bookedTicket.getSeatsList() :: contains).findAny().isPresent()).findAny().isPresent();
+                bookedTicket.getSeatsList()::contains).findAny().isPresent()).findAny().isPresent();
 
         if (!seatsAreAlreadyBooked)
             bookingDAO.create(user, ticket);
@@ -154,5 +158,9 @@ public class BookingServiceImpl implements BookingService {
         final Auditorium auditorium = auditoriumService.getByName(auditoriumName);
         final Event foundEvent = eventService.getEvent(event, auditorium, date);
         return bookingDAO.getTickets(foundEvent);
+    }
+
+    public List<Ticket> getBookedTickets() {
+        throw new UnsupportedOperationException("not implemented yet");
     }
 }

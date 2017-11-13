@@ -19,4 +19,6 @@ public interface BookingService {
     Ticket bookTicket(User user, Ticket ticket);
 
     List<Ticket> getTicketsForEvent(String event, String auditorium, LocalDateTime date);
+
+    List<Ticket> getBookedTickets();
 }
