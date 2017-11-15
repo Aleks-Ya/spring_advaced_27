@@ -2,14 +2,17 @@ package booking.web.controller;
 
 import booking.beans.models.User;
 import booking.beans.services.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
 
 /**
  * @author Aleksey Yablokov
@@ -17,12 +20,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+    static final String PART_NAME = "users";
     private static final String USER_ATTRIBUTE = "user";
     private static final String USER_FTL = "user/user";
     private static final String USER_REGISTERED_FTL = "user/user_registered";
 
+    private final UserService userService;
+
+    private static final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
+
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @SuppressWarnings("unused")
     @RequestMapping(method = RequestMethod.PUT)
@@ -38,5 +48,14 @@ public class UserController {
         User user = userService.getById(userId);
         model.addAttribute(USER_ATTRIBUTE, user);
         return USER_FTL;
+    }
+
+    @RequestMapping(path = "/batchUpload", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    public void multipartUpload(@RequestParam(value = PART_NAME) List<MultipartFile> users) throws IOException {
+        for (MultipartFile userFile : users) {
+            User user = objectMapper.readValue(userFile.getBytes(), User.class);
+            userService.register(user);
+        }
     }
 }

@@ -2,6 +2,7 @@ package booking.web.controller;
 
 import booking.beans.configuration.db.DataSourceConfiguration;
 import booking.beans.configuration.db.DbSessionFactory;
+import booking.beans.services.UserService;
 import booking.util.ResourceUtil;
 import booking.web.FreeMarkerConfig;
 import org.junit.Before;
@@ -10,14 +11,21 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import java.io.InputStream;
+
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -34,6 +42,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class UserControllerTest {
     @Autowired
     private WebApplicationContext context;
+
+    @Autowired
+    private UserService userService;
 
     private MockMvc mvc;
 
@@ -54,7 +65,7 @@ public class UserControllerTest {
                         "<p>Id: 1</p>\n" +
                         "<p>Name: John</p>\n" +
                         "<p>Email: john@gmail.com</p>\n" +
-                        "<p>Birthday: no value</p>"));
+                        "<p>Birthday: 2000-07-03</p>"));
     }
 
     @Test
@@ -67,7 +78,7 @@ public class UserControllerTest {
                         "<p>Id: 2</p>\n" +
                         "<p>Name: Mary</p>\n" +
                         "<p>Email: mary@gmail.com</p>\n" +
-                        "<p>Birthday: no value</p>"));
+                        "<p>Birthday: 2010-02-15</p>"));
     }
 
     private void registerUser(String body) throws Exception {
@@ -83,6 +94,33 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("<h1>User</h1>\n" +
                         "No user info"));
+    }
+
+    @Test
+    public void batchUpload() throws Exception {
+        String email1 = "stenev@gmail.com";
+        String email2 = "julia@gmail.com";
+
+        assertNull(userService.getUserByEmail(email1));
+        assertNull(userService.getUserByEmail(email2));
+
+        String filename1 = "UserControllerTest_batchUpload_1.json";
+        InputStream fileContent1 = UserControllerTest.class.getResourceAsStream(filename1);
+        MockMultipartFile multipartFile1 = new MockMultipartFile(UserController.PART_NAME, filename1, MediaType.APPLICATION_JSON_VALUE, fileContent1);
+
+        String filename2 = "UserControllerTest_batchUpload_2.json";
+        InputStream fileContent2 = UserControllerTest.class.getResourceAsStream(filename2);
+        MockMultipartFile multipartFile2 = new MockMultipartFile(UserController.PART_NAME, filename2, MediaType.APPLICATION_JSON_VALUE, fileContent2);
+
+        MockMultipartHttpServletRequestBuilder multipartBuilder = MockMvcRequestBuilders
+                .fileUpload("/user/batchUpload")
+                .file(multipartFile1)
+                .file(multipartFile2);
+
+        mvc.perform(multipartBuilder).andExpect(status().isOk());
+
+        assertNotNull(userService.getUserByEmail(email1));
+        assertNotNull(userService.getUserByEmail(email2));
     }
 
     @EnableWebMvc

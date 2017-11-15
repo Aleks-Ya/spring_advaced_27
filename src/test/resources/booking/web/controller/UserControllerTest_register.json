@@ -2,5 +2,5 @@
   "id": 1,
   "name": "John",
   "email": "john@gmail.com",
-  "birthdate": "2000-07-03"
+  "birthday": "2000-07-03"
 }
