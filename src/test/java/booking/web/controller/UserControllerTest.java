@@ -1,9 +1,9 @@
 package booking.web.controller;
 
+import booking.JsonUtil;
 import booking.beans.configuration.db.DataSourceConfiguration;
 import booking.beans.configuration.db.DbSessionFactory;
 import booking.beans.services.UserService;
-import booking.util.ResourceUtil;
 import booking.web.FreeMarkerConfig;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,8 +21,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
-import java.io.InputStream;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -55,7 +53,12 @@ public class UserControllerTest {
 
     @Test
     public void register() throws Exception {
-        String body = ResourceUtil.resourceToString("UserControllerTest_register.json", UserControllerTest.class);
+        String body = JsonUtil.format("{" +
+                "  'id': 1," +
+                "  'name': 'John'," +
+                "  'email': 'john@gmail.com'," +
+                "  'birthday': '2000-07-03'" +
+                "}");
         mvc.perform(put("/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body)
@@ -70,7 +73,12 @@ public class UserControllerTest {
 
     @Test
     public void getById() throws Exception {
-        String body = ResourceUtil.resourceToString("UserControllerTest_getById.json", UserControllerTest.class);
+        String body = JsonUtil.format("{" +
+                "  'id': 2," +
+                "  'name': 'Mary'," +
+                "  'email': 'mary@gmail.com'," +
+                "  'birthday': '2010-02-15'" +
+                "}");
         registerUser(body);
         mvc.perform(get("/user/id/2"))
                 .andExpect(status().isOk())
@@ -104,13 +112,22 @@ public class UserControllerTest {
         assertNull(userService.getUserByEmail(email1));
         assertNull(userService.getUserByEmail(email2));
 
-        String filename1 = "UserControllerTest_batchUpload_1.json";
-        InputStream fileContent1 = UserControllerTest.class.getResourceAsStream(filename1);
-        MockMultipartFile multipartFile1 = new MockMultipartFile(UserController.PART_NAME, filename1, MediaType.APPLICATION_JSON_VALUE, fileContent1);
+        String fileContent1 = JsonUtil.format("{" +
+                "'id': 3," +
+                "'name': 'Steven'," +
+                "'email': 'stenev@gmail.com'," +
+                "'birthday': '1990-07-03'" +
+                "}"
+        );
+        MockMultipartFile multipartFile1 = new MockMultipartFile(UserController.PART_NAME, "filename1.json", MediaType.APPLICATION_JSON_VALUE, fileContent1.getBytes());
 
-        String filename2 = "UserControllerTest_batchUpload_2.json";
-        InputStream fileContent2 = UserControllerTest.class.getResourceAsStream(filename2);
-        MockMultipartFile multipartFile2 = new MockMultipartFile(UserController.PART_NAME, filename2, MediaType.APPLICATION_JSON_VALUE, fileContent2);
+        String fileContent2 = JsonUtil.format("{" +
+                "  'id': 4," +
+                "  'name': 'Julia'," +
+                "  'email': 'julia@gmail.com'," +
+                "  'birthday': '2012-09-11'" +
+                "}");
+        MockMultipartFile multipartFile2 = new MockMultipartFile(UserController.PART_NAME, "filename2.json", MediaType.APPLICATION_JSON_VALUE, fileContent2.getBytes());
 
         MockMultipartHttpServletRequestBuilder multipartBuilder = MockMvcRequestBuilders
                 .fileUpload("/user/batchUpload")
