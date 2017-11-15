@@ -115,18 +115,19 @@ public class UserControllerTest {
         String fileContent1 = JsonUtil.format("{" +
                 "'id': 3," +
                 "'name': 'Steven'," +
-                "'email': 'stenev@gmail.com'," +
+                "'email': '%s'," +
                 "'birthday': '1990-07-03'" +
-                "}"
+                "}", email1
         );
         MockMultipartFile multipartFile1 = new MockMultipartFile(UserController.PART_NAME, "filename1.json", MediaType.APPLICATION_JSON_VALUE, fileContent1.getBytes());
 
         String fileContent2 = JsonUtil.format("{" +
                 "  'id': 4," +
                 "  'name': 'Julia'," +
-                "  'email': 'julia@gmail.com'," +
+                "  'email': '%s'," +
                 "  'birthday': '2012-09-11'" +
-                "}");
+                "}", email2
+        );
         MockMultipartFile multipartFile2 = new MockMultipartFile(UserController.PART_NAME, "filename2.json", MediaType.APPLICATION_JSON_VALUE, fileContent2.getBytes());
 
         MockMultipartHttpServletRequestBuilder multipartBuilder = MockMvcRequestBuilders
