@@ -161,6 +161,6 @@ public class BookingServiceImpl implements BookingService {
     }
 
     public List<Ticket> getBookedTickets() {
-        throw new UnsupportedOperationException("not implemented yet");
+        return bookingDAO.getAllTickets();
     }
 }

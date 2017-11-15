@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author Aleksey Yablokov
  */
 @Controller
-@RequestMapping("/booking")
+@RequestMapping(BookingController.ENDPOINT)
 public class BookingController {
-
+    static final String ENDPOINT = "/booking";
 }

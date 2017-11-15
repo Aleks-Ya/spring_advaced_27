@@ -27,5 +27,7 @@ public class BookingDAOBookingMock extends BookingDAOImpl {
         initWith.forEach((user, tickets) -> tickets.forEach(ticket -> create(user, ticket)));
     }
 
-    public void cleanup() {getAllTickets().forEach(ticket -> delete(ticket.getUser(), ticket));}
+    public void cleanup() {
+        getAllTickets().forEach(ticket -> delete(ticket.getUser(), ticket));
+    }
 }
