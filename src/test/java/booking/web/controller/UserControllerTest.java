@@ -4,12 +4,12 @@ import booking.beans.configuration.db.DataSourceConfiguration;
 import booking.beans.configuration.db.DbSessionFactory;
 import booking.beans.services.UserService;
 import booking.util.JsonUtil;
+import booking.web.EnableWebMvcConfig;
 import booking.web.FreeMarkerConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequ
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -34,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {UserControllerTest.Config.class, FreeMarkerConfig.class, UserController.class, DataSourceConfiguration.class,
+@ContextConfiguration(classes = {EnableWebMvcConfig.class, FreeMarkerConfig.class, UserController.class, DataSourceConfiguration.class,
         DbSessionFactory.class, booking.beans.configuration.TestUserServiceConfiguration.class
 })
 public class UserControllerTest {
@@ -139,10 +138,5 @@ public class UserControllerTest {
 
         assertNotNull(userService.getUserByEmail(email1));
         assertNotNull(userService.getUserByEmail(email2));
-    }
-
-    @EnableWebMvc
-    @Configuration
-    static class Config {
     }
 }

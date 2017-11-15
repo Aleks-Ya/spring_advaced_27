@@ -4,12 +4,12 @@ import booking.beans.configuration.db.DataSourceConfiguration;
 import booking.beans.configuration.db.DbSessionFactory;
 import booking.beans.services.EventService;
 import booking.util.JsonUtil;
+import booking.web.EnableWebMvcConfig;
 import booking.web.FreeMarkerConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequ
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.hasSize;
@@ -32,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {EventControllerTest.Config.class, FreeMarkerConfig.class, EventController.class, DataSourceConfiguration.class,
+@ContextConfiguration(classes = {EnableWebMvcConfig.class, FreeMarkerConfig.class, EventController.class, DataSourceConfiguration.class,
         DbSessionFactory.class, booking.beans.configuration.TestEventServiceConfiguration.class
 })
 public class EventControllerTest {
@@ -87,10 +86,5 @@ public class EventControllerTest {
 
         assertThat(eventService.getByName(name1), hasSize(1));
         assertThat(eventService.getByName(name2), hasSize(1));
-    }
-
-    @EnableWebMvc
-    @Configuration
-    static class Config {
     }
 }
