@@ -2,8 +2,7 @@ package booking.web.controller;
 
 import booking.beans.models.User;
 import booking.beans.services.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import booking.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -26,8 +25,6 @@ public class UserController {
     private static final String USER_REGISTERED_FTL = "user/user_registered";
 
     private final UserService userService;
-
-    private static final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
     @Autowired
     public UserController(UserService userService) {
@@ -54,7 +51,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public void multipartUpload(@RequestParam(value = PART_NAME) List<MultipartFile> users) throws IOException {
         for (MultipartFile userFile : users) {
-            User user = objectMapper.readValue(userFile.getBytes(), User.class);
+            User user = JsonUtil.readValue(userFile.getBytes(), User.class);
             userService.register(user);
         }
     }

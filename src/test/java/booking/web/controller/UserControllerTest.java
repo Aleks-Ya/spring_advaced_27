@@ -1,9 +1,9 @@
 package booking.web.controller;
 
-import booking.JsonUtil;
 import booking.beans.configuration.db.DataSourceConfiguration;
 import booking.beans.configuration.db.DbSessionFactory;
 import booking.beans.services.UserService;
+import booking.util.JsonUtil;
 import booking.web.FreeMarkerConfig;
 import org.junit.Before;
 import org.junit.Test;
