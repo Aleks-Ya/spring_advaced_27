@@ -1,5 +1,0 @@
-Public repository on bitbucket:
-https://laory@bitbucket.org/laory/spring-course.git
-
-Web endpoint:
-https://bitbucket.org/laory/spring-course
