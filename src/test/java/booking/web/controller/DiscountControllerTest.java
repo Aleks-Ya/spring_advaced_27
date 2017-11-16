@@ -1,8 +1,12 @@
 package booking.web.controller;
 
+import booking.beans.configuration.StrategiesConfiguration;
+import booking.beans.configuration.TestEventServiceConfiguration;
+import booking.beans.configuration.TestStrategiesConfiguration;
 import booking.beans.configuration.TestUserServiceConfiguration;
 import booking.beans.configuration.db.DataSourceConfiguration;
 import booking.beans.configuration.db.DbSessionFactory;
+import booking.beans.services.DiscountServiceImpl;
 import booking.web.FreeMarkerConfig;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,9 +28,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {FreeMarkerConfig.class, DiscountController.class, DataSourceConfiguration.class,
-        DbSessionFactory.class, booking.beans.configuration.TestEventServiceConfiguration.class,
-        TestUserServiceConfiguration.class
+@ContextConfiguration(classes = {FreeMarkerConfig.class, DiscountController.class, DiscountServiceImpl.class,
+        DataSourceConfiguration.class, DbSessionFactory.class,
+         TestStrategiesConfiguration.class, StrategiesConfiguration.class, TestUserServiceConfiguration.class,
+        TestEventServiceConfiguration.class
 })
 public class DiscountControllerTest {
     @Autowired
