@@ -25,6 +25,8 @@ public interface EventDAO {
 
     List<Event> getByName(String name);
 
+    Event getById(Long eventId);
+
     List<Event> getByNameAndDate(String name, LocalDateTime dateTime);
 
     List<Event> getAll();

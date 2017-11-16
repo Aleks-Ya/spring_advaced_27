@@ -27,7 +27,9 @@ import java.util.List;
 import java.util.UUID;
 
 import static junit.framework.Assert.assertEquals;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -38,28 +40,23 @@ import static org.junit.Assert.assertTrue;
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {AppConfiguration.class, DataSourceConfiguration.class, DbSessionFactory.class,
-                                 TestEventServiceConfiguration.class})
+        TestEventServiceConfiguration.class})
 @Transactional
 public class EventServiceImplTest {
 
-    @Autowired
-    private ApplicationContext applicationContext;
-
-    @Autowired
-    @Value("#{testEventServiceImpl}")
-    private EventService eventService;
-
+    private final Event testEvent = new Event(UUID.randomUUID().toString(), Rate.HIGH, 1321, LocalDateTime.now(),
+            null);
     @Autowired
     @Value("#{testHall1}")
     Auditorium auditorium;
-
     @Autowired
     @Qualifier("testHall2")
     Auditorium auditorium2;
-
-    private final Event testEvent = new Event(UUID.randomUUID().toString(), Rate.HIGH, 1321, LocalDateTime.now(),
-                                                     null);
-
+    @Autowired
+    private ApplicationContext applicationContext;
+    @Autowired
+    @Value("#{testEventServiceImpl}")
+    private EventService eventService;
     @Autowired
     @Value("#{testEventDAOMock}")
     private EventDAOMock eventDAOMock;
@@ -80,7 +77,7 @@ public class EventServiceImplTest {
     }
 
     @Test
-    public void testCreate() throws Exception {
+    public void testCreate() {
         List<Event> before = eventService.getAll();
         eventService.create(testEvent);
         List<Event> after = eventService.getAll();
@@ -90,7 +87,7 @@ public class EventServiceImplTest {
     }
 
     @Test
-    public void testRemove() throws Exception {
+    public void testRemove() {
         List<Event> before = eventService.getAll();
         Event eventMock = (Event) applicationContext.getBean("testEvent1");
         Event event = getEvent(eventMock);
@@ -101,13 +98,13 @@ public class EventServiceImplTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void testCreate_Exception() throws Exception {
+    public void testCreate_Exception() {
         Event addedEvent = (Event) applicationContext.getBean("testEvent1");
         eventService.create(addedEvent);
     }
 
     @Test
-    public void testGetAll() throws Exception {
+    public void testGetAll() {
         List<Event> all = eventService.getAll();
         Event event1 = (Event) applicationContext.getBean("testEvent1");
         Event event2 = (Event) applicationContext.getBean("testEvent2");
@@ -119,7 +116,7 @@ public class EventServiceImplTest {
     }
 
     @Test
-    public void testGetByName() throws Exception {
+    public void testGetByName() {
         Event eventMock = (Event) applicationContext.getBean("testEvent1");
         Event event1 = getEvent(eventMock);
         Event eventMock3 = (Event) applicationContext.getBean("testEvent3");
@@ -130,10 +127,12 @@ public class EventServiceImplTest {
         assertTrue("List of events should match", foundByName.containsAll(expected));
     }
 
-    private Event getEvent(Event eventMock) {return eventService.getEvent(eventMock.getName(), eventMock.getAuditorium(), eventMock.getDateTime());}
+    private Event getEvent(Event eventMock) {
+        return eventService.getEvent(eventMock.getName(), eventMock.getAuditorium(), eventMock.getDateTime());
+    }
 
     @Test
-    public void testGetEvent() throws Exception {
+    public void testGetEvent() {
         Event event1 = (Event) applicationContext.getBean("testEvent1");
         Event foundEvent = getEvent(event1);
         assertEquals("Events should match", event1.getAuditorium(), foundEvent.getAuditorium());
@@ -144,14 +143,14 @@ public class EventServiceImplTest {
     }
 
     @Test
-    public void testGetEvent_Exception() throws Exception {
+    public void testGetEvent_Exception() {
         Auditorium auditorium = new Auditorium(UUID.randomUUID().toString(), 1231, Collections.emptyList());
         Event event = eventService.getEvent(UUID.randomUUID().toString(), auditorium, LocalDateTime.now());
         assertNull("There shouldn't be such event in db", event);
     }
 
     @Test
-    public void testAssignAuditorium_createNew() throws Exception {
+    public void testAssignAuditorium_createNew() {
         System.out.println("auditorium = " + auditorium);
         System.out.println("auditorium2 = " + auditorium2);
         List<Event> before = eventService.getAll();
@@ -165,7 +164,7 @@ public class EventServiceImplTest {
     }
 
     @Test
-    public void testAssignAuditorium_update() throws Exception {
+    public void testAssignAuditorium_update() {
         List<Event> before = eventService.getAll();
         Event eventMock = (Event) applicationContext.getBean("testEvent1");
         Event event = getEvent(eventMock);
@@ -173,7 +172,7 @@ public class EventServiceImplTest {
         List<Event> after = eventService.getAll();
         before.remove(event);
         before.add(new Event(event.getId(), event.getName(), event.getRate(), event.getBasePrice(),
-                             testEvent.getDateTime(), testEvent.getAuditorium()));
+                testEvent.getDateTime(), testEvent.getAuditorium()));
         System.out.println("before = " + before);
         System.out.println("after = " + after);
         assertTrue("Events should match", before.containsAll(after));
@@ -181,9 +180,22 @@ public class EventServiceImplTest {
     }
 
     @Test
-    public void testAssignAuditorium_Exception() throws Exception {
+    public void testAssignAuditorium_Exception() {
         Event event1 = (Event) applicationContext.getBean("testEvent1");
         Event event2 = (Event) applicationContext.getBean("testEvent2");
         eventService.assignAuditorium(event1, event2.getAuditorium(), event2.getDateTime());
+    }
+
+    @Test
+    public void testGetById() {
+        LocalDateTime dateTime = LocalDateTime.of(2017, 1, 25, 10, 30, 45);
+        Event event = new Event("the_name", Rate.HIGH, 100, dateTime, null);
+        event = eventService.create(event);
+        assertThat(eventService.getById(event.getId()), equalTo(event));
+    }
+
+    @Test
+    public void testGetByIdNotFound() {
+        assertNull(eventService.getById(123456L));
     }
 }

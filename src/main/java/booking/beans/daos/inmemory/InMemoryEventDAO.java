@@ -6,7 +6,13 @@ import booking.beans.models.Event;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -32,7 +38,7 @@ public class InMemoryEventDAO implements EventDAO {
         EventDAO.validateEvent(event);
         final List<Event> assignedEvents = getByAuditoriumAndDate(event.getAuditorium(), event.getDateTime());
         if (assignedEvents.isEmpty() || (assignedEvents.size() == 1 && Objects.equals(assignedEvents.get(0).getName(),
-                                                                                      event.getName()))) {
+                event.getName()))) {
             delete(new Event(event.getId(), event.getName(), event.getRate(), event.getBasePrice(), null, null));
             return create(event);
         } else
@@ -56,7 +62,7 @@ public class InMemoryEventDAO implements EventDAO {
         if (Objects.nonNull(events)) {
             final List<Event> toRemove = events.stream().filter(foundEvent -> foundEvent.getId() == event.getId()).collect(
                     Collectors.toList());
-            toRemove.forEach(events:: remove);
+            toRemove.forEach(events::remove);
             if (events.isEmpty()) {
                 db.remove(event.getName());
             }
@@ -72,13 +78,22 @@ public class InMemoryEventDAO implements EventDAO {
     }
 
     @Override
+    public Event getById(Long eventId) {
+        return db.values().stream()
+                .flatMap(Collection::stream)
+                .filter(event -> event.getId() == eventId)
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
     public List<Event> getByNameAndDate(String name, LocalDateTime date) {
         if (Objects.isNull(name)) {
             throw new NullPointerException("Event name is [null]");
         }
         return getByName(name).stream().filter(event -> event.getDateTime().getYear() == date.getYear() &&
-                                                        event.getDateTime().getMonth() == date.getMonth() &&
-                                                        event.getDateTime().getDayOfMonth() == date.getDayOfMonth()).collect(
+                event.getDateTime().getMonth() == date.getMonth() &&
+                event.getDateTime().getDayOfMonth() == date.getDayOfMonth()).collect(
                 Collectors.toList());
     }
 
@@ -120,7 +135,7 @@ public class InMemoryEventDAO implements EventDAO {
     }
 
     private Stream<Event> getEventStream() {
-        return db.values().stream().flatMap(Collection:: stream);
+        return db.values().stream().flatMap(Collection::stream);
     }
 
     private Stream<Event> filterByAuditorium(Stream<Event> eventStream, Auditorium auditorium) {
@@ -128,7 +143,7 @@ public class InMemoryEventDAO implements EventDAO {
     }
 
     private Stream<Event> filterByDateTime(Stream<Event> eventStream, LocalDateTime dateTime) {
-        return filterBy(eventStream, Event:: getDateTime, dateTime);
+        return filterBy(eventStream, Event::getDateTime, dateTime);
     }
 
     private <T> Stream<Event> filterBy(Stream<Event> eventStream, Function<Event, T> valueExtractor, T compareValue) {

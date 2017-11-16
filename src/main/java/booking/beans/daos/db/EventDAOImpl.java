@@ -61,6 +61,11 @@ public class EventDAOImpl extends AbstractDAO implements EventDAO {
     }
 
     @Override
+    public Event getById(Long eventId) {
+        return (Event) createBlankCriteria(Event.class).add(Restrictions.eq("id", eventId)).uniqueResult();
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public List<Event> getByNameAndDate(String name, LocalDateTime dateTime) {
         LogicalExpression nameAndDate = Restrictions.and(Restrictions.eq("dateTime", dateTime),

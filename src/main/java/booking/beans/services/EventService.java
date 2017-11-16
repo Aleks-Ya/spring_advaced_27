@@ -22,6 +22,8 @@ public interface EventService {
 
     List<Event> getByName(String name);
 
+    Event getById(Long eventId);
+
     List<Event> getAll();
 
     List<Event> getForDateRange(LocalDateTime from, LocalDateTime to);
