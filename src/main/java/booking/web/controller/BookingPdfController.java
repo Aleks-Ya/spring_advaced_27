@@ -17,8 +17,12 @@ class BookingPdfController {
     static final String ENDPOINT = BookingController.ENDPOINT + "/bookedTickets";
     static final String TICKETS_KEY = "tickets";
 
+    private final BookingService bookingService;
+
     @Autowired
-    private BookingService bookingService;
+    public BookingPdfController(BookingService bookingService) {
+        this.bookingService = bookingService;
+    }
 
     @SuppressWarnings("unused")
     @RequestMapping(path = BookingPdfController.ENDPOINT, produces = MediaType.APPLICATION_PDF_VALUE)

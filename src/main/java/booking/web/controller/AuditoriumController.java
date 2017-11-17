@@ -6,11 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,8 +23,12 @@ public class AuditoriumController {
     private static final String AUDITORIUM_SEATS_NUMBER_FTL = "auditorium/auditorium_seats_number";
     private static final String AUDITORIUM_VIP_SEATS_FTL = "auditorium/auditorium_vip_seats";
 
+    private final AuditoriumService auditoriumService;
+
     @Autowired
-    private AuditoriumService auditoriumService;
+    public AuditoriumController(AuditoriumService auditoriumService) {
+        this.auditoriumService = auditoriumService;
+    }
 
     @SuppressWarnings("unused")
     @RequestMapping
