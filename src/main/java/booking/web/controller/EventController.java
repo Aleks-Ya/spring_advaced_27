@@ -21,8 +21,10 @@ import java.util.List;
 public class EventController {
     static final String PART_NAME = "events";
     private static final String EVENT_ATTR = "event";
+    private static final String EVENTS_ATTR = "events";
     private static final String EVENT_CREATED_FTL = "event/event_created";
-    private static final String EVENT_GET_FTL = "event/event_get";
+    private static final String EVENT_FTL = "event/event";
+    private static final String EVENT_LIST_FTL = "event/event_list";
 
     private final EventService eventService;
 
@@ -40,11 +42,19 @@ public class EventController {
     }
 
     @SuppressWarnings("unused")
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(path= "/id", method = RequestMethod.GET)
     String getById(@RequestParam Long eventId, @ModelAttribute("model") ModelMap model) {
         Event event = eventService.getById(eventId);
         model.addAttribute(EVENT_ATTR, event);
-        return EVENT_GET_FTL;
+        return EVENT_FTL;
+    }
+
+    @SuppressWarnings("unused")
+    @RequestMapping(path = "/name", method = RequestMethod.GET)
+    String getByName(@RequestParam String eventName, @ModelAttribute("model") ModelMap model) {
+        List<Event> events = eventService.getByName(eventName);
+        model.addAttribute(EVENTS_ATTR, events);
+        return EVENT_LIST_FTL;
     }
 
     @RequestMapping(path = "/batchUpload", method = RequestMethod.POST)

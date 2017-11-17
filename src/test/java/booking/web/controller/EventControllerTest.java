@@ -75,7 +75,12 @@ public class EventControllerTest {
         )
                 .andExpect(status().isOk())
                 .andExpect(content().string("<h1>Event created</h1>\n" +
-                        "<p>Event{id=1, name='Discussion', rate=HIGH, basePrice=100.5, dateTime=2007-12-03T10:15:30, auditorium=null}</p>"));
+                        "<p>Id: 1</p>\n" +
+                        "<p>Name: Discussion</p>\n" +
+                        "<p>Rate: HIGH</p>\n" +
+                        "<p>Base price: 100.5</p>\n" +
+                        "<p>Date: 2007-12-03T10:15:30</p>\n" +
+                        "<p>Auditorium: -No auditorium-</p>\n"));
 
         assertThat(eventService.getByName(name), hasSize(1));
     }
@@ -84,12 +89,46 @@ public class EventControllerTest {
     public void getById() throws Exception {
         Event event = eventService.create(new Event("Meeting", Rate.HIGH, 100, null, null));
 
-        mvc.perform(get("/event")
+        mvc.perform(get("/event/id")
                 .param("eventId", String.valueOf(event.getId()))
         )
                 .andExpect(status().isOk())
                 .andExpect(content().string("<h1>Event</h1>\n" +
-                        "<p>Event{id=2, name='Meeting', rate=HIGH, basePrice=100.0, dateTime=null, auditorium=null}</p>"));
+                        "<p>Id: 2</p>\n" +
+                        "<p>Name: Meeting</p>\n" +
+                        "<p>Rate: HIGH</p>\n" +
+                        "<p>Base price: 100</p>\n" +
+                        "<p>Date: -No date-</p>\n" +
+                        "<p>Auditorium: -No auditorium-</p>\n"));
+    }
+
+    @Test
+    public void getByName() throws Exception {
+        String eventName = "Kick Off";
+        eventService.create(new Event(eventName, Rate.HIGH, 100, null, null));
+        eventService.create(new Event(eventName, Rate.HIGH, 100, null, null));
+
+        mvc.perform(get("/event/name")
+                .param("eventName", eventName)
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().string("<h1>Event list</h1>\n" +
+                        "<p>Event</p>\n" +
+                        "<p>Id: 5</p>\n" +
+                        "<p>Name: Kick Off</p>\n" +
+                        "<p>Rate: HIGH</p>\n" +
+                        "<p>Base price: 100</p>\n" +
+                        "<p>Date: -No date-</p>\n" +
+                        "<p>Auditorium: -No auditorium-</p>\n" +
+                        "<hr/>\n" +
+                        "<p>Event</p>\n" +
+                        "<p>Id: 6</p>\n" +
+                        "<p>Name: Kick Off</p>\n" +
+                        "<p>Rate: HIGH</p>\n" +
+                        "<p>Base price: 100</p>\n" +
+                        "<p>Date: -No date-</p>\n" +
+                        "<p>Auditorium: -No auditorium-</p>\n" +
+                        "<hr/>\n"));
     }
 
     @Test
