@@ -2,6 +2,8 @@ package booking.web.controller;
 
 import booking.beans.configuration.db.DataSourceConfiguration;
 import booking.beans.configuration.db.DbSessionFactory;
+import booking.beans.models.Event;
+import booking.beans.models.Rate;
 import booking.beans.services.EventService;
 import booking.util.JsonUtil;
 import booking.web.EnableWebMvcConfig;
@@ -24,6 +26,7 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -75,6 +78,18 @@ public class EventControllerTest {
                         "<p>Event{id=1, name='Discussion', rate=HIGH, basePrice=100.5, dateTime=2007-12-03T10:15:30, auditorium=null}</p>"));
 
         assertThat(eventService.getByName(name), hasSize(1));
+    }
+
+    @Test
+    public void getById() throws Exception {
+        Event event = eventService.create(new Event("Meeting", Rate.HIGH, 100, null, null));
+
+        mvc.perform(get("/event")
+                .param("eventId", String.valueOf(event.getId()))
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().string("<h1>Event</h1>\n" +
+                        "<p>Event{id=2, name='Meeting', rate=HIGH, basePrice=100.0, dateTime=null, auditorium=null}</p>"));
     }
 
     @Test

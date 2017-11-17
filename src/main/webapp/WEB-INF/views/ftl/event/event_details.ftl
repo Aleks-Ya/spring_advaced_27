@@ -1,0 +1,1 @@
+<p>${(event)!"No information about event"}</p>

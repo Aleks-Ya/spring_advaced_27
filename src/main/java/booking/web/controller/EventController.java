@@ -22,6 +22,7 @@ public class EventController {
     static final String PART_NAME = "events";
     private static final String EVENT_ATTR = "event";
     private static final String EVENT_CREATED_FTL = "event/event_created";
+    private static final String EVENT_GET_FTL = "event/event_get";
 
     private final EventService eventService;
 
@@ -36,6 +37,14 @@ public class EventController {
         Event event = eventService.create(newEvent);
         model.addAttribute(EVENT_ATTR, event);
         return EVENT_CREATED_FTL;
+    }
+
+    @SuppressWarnings("unused")
+    @RequestMapping(method = RequestMethod.GET)
+    String getById(@RequestParam Long eventId, @ModelAttribute("model") ModelMap model) {
+        Event event = eventService.getById(eventId);
+        model.addAttribute(EVENT_ATTR, event);
+        return EVENT_GET_FTL;
     }
 
     @RequestMapping(path = "/batchUpload", method = RequestMethod.POST)
