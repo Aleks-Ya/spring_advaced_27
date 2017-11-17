@@ -90,9 +90,7 @@ public class EventControllerTest {
     public void getById() throws Exception {
         Event event = eventService.create(new Event("Meeting", Rate.HIGH, 100, null, null));
 
-        mvc.perform(get("/event/id")
-                .param("eventId", String.valueOf(event.getId()))
-        )
+        mvc.perform(get("/event/id/" + event.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format("<h1>Event</h1>\n" +
                         "<p>Id: %s</p>\n" +
@@ -109,9 +107,7 @@ public class EventControllerTest {
         Event event1 = eventService.create(new Event(eventName, Rate.HIGH, 100, null, null));
         Event event2 = eventService.create(new Event(eventName, Rate.HIGH, 100, null, null));
 
-        mvc.perform(get("/event/name")
-                .param("eventName", eventName)
-        )
+        mvc.perform(get("/event/name/" + eventName))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format("<h1>Event list</h1>\n" +
                         "<p>Event</p>\n" +

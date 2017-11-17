@@ -18,6 +18,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/event")
+@SuppressWarnings("unused")
 public class EventController {
     static final String PART_NAME = "events";
     private static final String EVENT_ATTR = "event";
@@ -33,7 +34,6 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @SuppressWarnings("unused")
     @RequestMapping(method = RequestMethod.PUT)
     String create(@RequestBody Event newEvent, @ModelAttribute("model") ModelMap model) {
         Event event = eventService.create(newEvent);
@@ -41,7 +41,6 @@ public class EventController {
         return EVENT_CREATED_FTL;
     }
 
-    @SuppressWarnings("unused")
     @RequestMapping(method = RequestMethod.GET)
     String getAll(@ModelAttribute("model") ModelMap model) {
         List<Event> events = eventService.getAll();
@@ -49,17 +48,15 @@ public class EventController {
         return EVENT_LIST_FTL;
     }
 
-    @SuppressWarnings("unused")
-    @RequestMapping(path = "/id", method = RequestMethod.GET)
-    String getById(@RequestParam Long eventId, @ModelAttribute("model") ModelMap model) {
+    @RequestMapping(path = "/id/{eventId}", method = RequestMethod.GET)
+    String getById(@PathVariable Long eventId, @ModelAttribute("model") ModelMap model) {
         Event event = eventService.getById(eventId);
         model.addAttribute(EVENT_ATTR, event);
         return EVENT_FTL;
     }
 
-    @SuppressWarnings("unused")
-    @RequestMapping(path = "/name", method = RequestMethod.GET)
-    String getByName(@RequestParam String eventName, @ModelAttribute("model") ModelMap model) {
+    @RequestMapping(path = "/name/{eventName}", method = RequestMethod.GET)
+    String getByName(@PathVariable String eventName, @ModelAttribute("model") ModelMap model) {
         List<Event> events = eventService.getByName(eventName);
         model.addAttribute(EVENTS_ATTR, events);
         return EVENT_LIST_FTL;
