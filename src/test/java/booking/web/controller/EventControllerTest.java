@@ -24,6 +24,8 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -31,8 +33,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {EnableWebMvcConfig.class, FreeMarkerConfig.class, EventController.class, DataSourceConfiguration.class,
-        DbSessionFactory.class, booking.beans.configuration.TestEventServiceConfiguration.class
+@ContextConfiguration(classes = {EnableWebMvcConfig.class, FreeMarkerConfig.class, EventController.class,
+        DataSourceConfiguration.class, DbSessionFactory.class,
+        booking.beans.configuration.TestEventServiceConfiguration.class
 })
 public class EventControllerTest {
     @Autowired
@@ -48,6 +51,31 @@ public class EventControllerTest {
         mvc = MockMvcBuilders.webAppContextSetup(context).build();
     }
 
+
+    @Test
+    public void create() throws Exception {
+        String name = "Discussion";
+
+        assertThat(eventService.getByName(name), emptyIterable());
+
+        String json = JsonUtil.format("{" +
+                "'id': 1," +
+                "'name': '%s'," +
+                "'rate': 'HIGH'," +
+                "'basePrice': 100.5," +
+                "'dateTime': '2007-12-03T10:15:30'" +
+                "}", name
+        );
+        mvc.perform(put("/event")
+                .content(json)
+                .contentType(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().string("<h1>Event created</h1>\n" +
+                        "<p>Event{id=1, name='Discussion', rate=HIGH, basePrice=100.5, dateTime=2007-12-03T10:15:30, auditorium=null}</p>"));
+
+        assertThat(eventService.getByName(name), hasSize(1));
+    }
 
     @Test
     public void batchUpload() throws Exception {
