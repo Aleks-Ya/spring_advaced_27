@@ -10,13 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author Aleksey Yablokov
  */
 @Controller
-@RequestMapping(DiscountController.ENDPOINT)
+@RequestMapping(value = DiscountController.ENDPOINT)
 public class DiscountController {
     static final String ENDPOINT = "/discount";
     static final String DISCOUNT_KEY = "discount";
@@ -36,7 +37,8 @@ public class DiscountController {
     }
 
     @SuppressWarnings("unused")
-    String getDiscount(@RequestParam Long userId, @RequestParam Long eventId, @ModelAttribute("model") ModelMap model) {
+    @RequestMapping(method = RequestMethod.GET)
+    public String getDiscount(@RequestParam Long userId, @RequestParam Long eventId, @ModelAttribute("model") ModelMap model) {
         User user = userService.getById(userId);
         Event event = eventService.getById(eventId);
         double discount = discountService.getDiscount(user, event);

@@ -6,7 +6,12 @@ import booking.beans.configuration.TestStrategiesConfiguration;
 import booking.beans.configuration.TestUserServiceConfiguration;
 import booking.beans.configuration.db.DataSourceConfiguration;
 import booking.beans.configuration.db.DbSessionFactory;
+import booking.beans.models.Event;
+import booking.beans.models.Rate;
+import booking.beans.models.User;
 import booking.beans.services.DiscountServiceImpl;
+import booking.beans.services.EventService;
+import booking.beans.services.UserService;
 import booking.web.FreeMarkerConfig;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,12 +35,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebAppConfiguration
 @ContextConfiguration(classes = {FreeMarkerConfig.class, DiscountController.class, DiscountServiceImpl.class,
         DataSourceConfiguration.class, DbSessionFactory.class,
-         TestStrategiesConfiguration.class, StrategiesConfiguration.class, TestUserServiceConfiguration.class,
+        TestStrategiesConfiguration.class, StrategiesConfiguration.class, TestUserServiceConfiguration.class,
         TestEventServiceConfiguration.class
 })
 public class DiscountControllerTest {
+
     @Autowired
     private WebApplicationContext context;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private EventService eventService;
 
     private MockMvc mvc;
 
@@ -45,10 +57,26 @@ public class DiscountControllerTest {
     }
 
     @Test
-    public void auditoriumsGet() throws Exception {
-        mvc.perform(get(DiscountController.ENDPOINT))
+    public void getNonZeroDiscount() throws Exception {
+        User user = userService.register(new User("john@gmail.com", "Test User", null));
+        Event event = eventService.create(new Event("Meeting", Rate.HIGH, 100, null, null));
+        mvc.perform(get(DiscountController.ENDPOINT)
+                .param("userId", String.valueOf(user.getId()))
+                .param("eventId", String.valueOf(event.getId()))
+        )
                 .andExpect(status().isOk())
-                .andExpect(content().string("<h1>Auditoriums</h1>\n" +
-                        "<p>VIP seats: 25,26,27,28,29,30,31,32,33,34,35,75,76,77,78,79,80,81,82,83,84,85,105,106,107,108,109,110,111,112,113,114,115</p><hr/>\n"));
+                .andExpect(content().string("<h1>Discount</h1>\n<p>0.5</p>"));
+    }
+
+    @Test
+    public void getZeroDiscount() throws Exception {
+        User user = userService.register(new User("john2@gmail.com", "John", null));
+        Event event = eventService.create(new Event("Meeting2", Rate.HIGH, 100, null, null));
+        mvc.perform(get(DiscountController.ENDPOINT)
+                .param("userId", String.valueOf(user.getId()))
+                .param("eventId", String.valueOf(event.getId()))
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().string("<h1>Discount</h1>\n<p>0</p>"));
     }
 }
