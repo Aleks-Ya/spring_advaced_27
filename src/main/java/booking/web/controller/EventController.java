@@ -42,7 +42,15 @@ public class EventController {
     }
 
     @SuppressWarnings("unused")
-    @RequestMapping(path= "/id", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
+    String getAll(@ModelAttribute("model") ModelMap model) {
+        List<Event> events = eventService.getAll();
+        model.addAttribute(EVENTS_ATTR, events);
+        return EVENT_LIST_FTL;
+    }
+
+    @SuppressWarnings("unused")
+    @RequestMapping(path = "/id", method = RequestMethod.GET)
     String getById(@RequestParam Long eventId, @ModelAttribute("model") ModelMap model) {
         Event event = eventService.getById(eventId);
         model.addAttribute(EVENT_ATTR, event);

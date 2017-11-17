@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static java.lang.String.format;
 import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
@@ -93,28 +94,28 @@ public class EventControllerTest {
                 .param("eventId", String.valueOf(event.getId()))
         )
                 .andExpect(status().isOk())
-                .andExpect(content().string("<h1>Event</h1>\n" +
-                        "<p>Id: 2</p>\n" +
+                .andExpect(content().string(format("<h1>Event</h1>\n" +
+                        "<p>Id: %s</p>\n" +
                         "<p>Name: Meeting</p>\n" +
                         "<p>Rate: HIGH</p>\n" +
                         "<p>Base price: 100</p>\n" +
                         "<p>Date: -No date-</p>\n" +
-                        "<p>Auditorium: -No auditorium-</p>\n"));
+                        "<p>Auditorium: -No auditorium-</p>\n", event.getId())));
     }
 
     @Test
     public void getByName() throws Exception {
         String eventName = "Kick Off";
-        eventService.create(new Event(eventName, Rate.HIGH, 100, null, null));
-        eventService.create(new Event(eventName, Rate.HIGH, 100, null, null));
+        Event event1 = eventService.create(new Event(eventName, Rate.HIGH, 100, null, null));
+        Event event2 = eventService.create(new Event(eventName, Rate.HIGH, 100, null, null));
 
         mvc.perform(get("/event/name")
                 .param("eventName", eventName)
         )
                 .andExpect(status().isOk())
-                .andExpect(content().string("<h1>Event list</h1>\n" +
+                .andExpect(content().string(format("<h1>Event list</h1>\n" +
                         "<p>Event</p>\n" +
-                        "<p>Id: 5</p>\n" +
+                        "<p>Id: %s</p>\n" +
                         "<p>Name: Kick Off</p>\n" +
                         "<p>Rate: HIGH</p>\n" +
                         "<p>Base price: 100</p>\n" +
@@ -122,13 +123,41 @@ public class EventControllerTest {
                         "<p>Auditorium: -No auditorium-</p>\n" +
                         "<hr/>\n" +
                         "<p>Event</p>\n" +
-                        "<p>Id: 6</p>\n" +
+                        "<p>Id: %s</p>\n" +
                         "<p>Name: Kick Off</p>\n" +
                         "<p>Rate: HIGH</p>\n" +
                         "<p>Base price: 100</p>\n" +
                         "<p>Date: -No date-</p>\n" +
                         "<p>Auditorium: -No auditorium-</p>\n" +
-                        "<hr/>\n"));
+                        "<hr/>\n", event1.getId(), event2.getId())));
+    }
+
+    @Test
+    public void getAll() throws Exception {
+        eventService.getAll().forEach(event -> eventService.remove(event));
+        String eventName = "Travel";
+        Event event1 = eventService.create(new Event(eventName, Rate.HIGH, 100, null, null));
+        Event event2 = eventService.create(new Event(eventName, Rate.HIGH, 100, null, null));
+
+        mvc.perform(get("/event"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(format("<h1>Event list</h1>\n" +
+                        "<p>Event</p>\n" +
+                        "<p>Id: %s</p>\n" +
+                        "<p>Name: Travel</p>\n" +
+                        "<p>Rate: HIGH</p>\n" +
+                        "<p>Base price: 100</p>\n" +
+                        "<p>Date: -No date-</p>\n" +
+                        "<p>Auditorium: -No auditorium-</p>\n" +
+                        "<hr/>\n" +
+                        "<p>Event</p>\n" +
+                        "<p>Id: %s</p>\n" +
+                        "<p>Name: Travel</p>\n" +
+                        "<p>Rate: HIGH</p>\n" +
+                        "<p>Base price: 100</p>\n" +
+                        "<p>Date: -No date-</p>\n" +
+                        "<p>Auditorium: -No auditorium-</p>\n" +
+                        "<hr/>\n", event1.getId(), event2.getId())));
     }
 
     @Test
