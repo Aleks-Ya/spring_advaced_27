@@ -6,7 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 
@@ -14,6 +18,7 @@ import java.util.List;
  * @author Aleksey Yablokov
  */
 @Controller
+@SuppressWarnings("unused")
 @RequestMapping(value = "/auditorium", method = RequestMethod.GET)
 public class AuditoriumController {
     private static final String AUDITORIUMS_ATTRIBUTE = "auditoriums";
@@ -30,7 +35,6 @@ public class AuditoriumController {
         this.auditoriumService = auditoriumService;
     }
 
-    @SuppressWarnings("unused")
     @RequestMapping
     String getAuditoriums(@ModelAttribute("model") ModelMap model) {
         List<Auditorium> auditoriums = auditoriumService.getAuditoriums();
@@ -38,14 +42,12 @@ public class AuditoriumController {
         return AUDITORIUMS_FTL;
     }
 
-    @SuppressWarnings("unused")
     @RequestMapping("/id/{auditoriumId}")
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     String getAuditoriumById(@PathVariable String auditoriumId) {
         return null; //TODO implement
     }
 
-    @SuppressWarnings("unused")
     @RequestMapping("/name/{auditoriumName}")
     String getAuditoriumByName(@PathVariable String auditoriumName, @ModelAttribute("model") ModelMap model) {
         Auditorium auditorium = auditoriumService.getByName(auditoriumName);
@@ -53,7 +55,6 @@ public class AuditoriumController {
         return AUDITORIUM_FTL;
     }
 
-    @SuppressWarnings("unused")
     @RequestMapping("/name/{auditoriumName}/seatsNumber")
     String getSeatsNumberByAuditoriumName(@PathVariable String auditoriumName, @ModelAttribute("model") ModelMap model) {
         Auditorium auditorium = auditoriumService.getByName(auditoriumName);
@@ -61,14 +62,12 @@ public class AuditoriumController {
         return AUDITORIUM_SEATS_NUMBER_FTL;
     }
 
-    @SuppressWarnings("unused")
     @RequestMapping("/id/{auditoriumId}/seatsNumber")
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     String getSeatsNumberByAuditoriumId(@PathVariable String auditoriumId, @ModelAttribute("model") ModelMap model) {
         return null; //TODO implement
     }
 
-    @SuppressWarnings("unused")
     @RequestMapping("/name/{auditoriumName}/vipSeats")
     String getVipSeatsByAuditoriumName(@PathVariable String auditoriumName, @ModelAttribute("model") ModelMap model) {
         Auditorium auditorium = auditoriumService.getByName(auditoriumName);
@@ -76,7 +75,6 @@ public class AuditoriumController {
         return AUDITORIUM_VIP_SEATS_FTL;
     }
 
-    @SuppressWarnings("unused")
     @RequestMapping("/id/{auditoriumId}/vipSeats")
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     String getVipSeatsByAuditoriumId(@PathVariable String auditoriumId, @ModelAttribute("model") ModelMap model) {

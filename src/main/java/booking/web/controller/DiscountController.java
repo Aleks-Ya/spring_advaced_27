@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Aleksey Yablokov
  */
 @Controller
+@SuppressWarnings("unused")
 @RequestMapping(value = DiscountController.ENDPOINT)
 public class DiscountController {
     static final String ENDPOINT = "/discount";
@@ -36,7 +37,6 @@ public class DiscountController {
         this.eventService = eventService;
     }
 
-    @SuppressWarnings("unused")
     @RequestMapping(method = RequestMethod.GET)
     public String getDiscount(@RequestParam Long userId, @RequestParam Long eventId, @ModelAttribute("model") ModelMap model) {
         User user = userService.getById(userId);

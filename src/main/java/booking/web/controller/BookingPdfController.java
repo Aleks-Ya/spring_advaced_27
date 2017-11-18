@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
+@SuppressWarnings("unused")
 class BookingPdfController {
     static final String ENDPOINT = BookingController.ENDPOINT + "/bookedTickets";
     static final String TICKETS_KEY = "tickets";
@@ -24,7 +25,6 @@ class BookingPdfController {
         this.bookingService = bookingService;
     }
 
-    @SuppressWarnings("unused")
     @RequestMapping(path = BookingPdfController.ENDPOINT, produces = MediaType.APPLICATION_PDF_VALUE)
     ModelAndView getPdf() {
         List<Ticket> tickets = bookingService.getBookedTickets();
