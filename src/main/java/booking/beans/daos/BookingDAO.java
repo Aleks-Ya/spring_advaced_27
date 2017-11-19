@@ -6,6 +6,7 @@ import booking.beans.models.User;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,6 +27,8 @@ public interface BookingDAO {
     long countTickets(User user);
 
     List<Ticket> getAllTickets();
+
+    Optional<Ticket> getTicketById(Long ticketId);
 
     static void validateUser(User user) {
         if (Objects.isNull(user)) {

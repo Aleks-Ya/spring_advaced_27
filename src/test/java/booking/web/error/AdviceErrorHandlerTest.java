@@ -4,7 +4,7 @@ import booking.beans.configuration.db.DataSourceConfiguration;
 import booking.beans.configuration.db.DbSessionFactory;
 import booking.util.JsonUtil;
 import booking.web.EnableWebMvcConfig;
-import booking.web.FreeMarkerConfig;
+import booking.web.configuration.FreeMarkerConfig;
 import booking.web.controller.UserController;
 import org.junit.Before;
 import org.junit.Test;

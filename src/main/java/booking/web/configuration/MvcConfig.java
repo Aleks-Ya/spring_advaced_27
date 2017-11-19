@@ -1,4 +1,4 @@
-package booking.web;
+package booking.web.configuration;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

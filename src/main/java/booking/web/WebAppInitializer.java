@@ -1,5 +1,6 @@
 package booking.web;
 
+import booking.web.configuration.MvcConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;

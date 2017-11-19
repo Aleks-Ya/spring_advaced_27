@@ -12,7 +12,7 @@ import booking.beans.models.User;
 import booking.beans.services.DiscountServiceImpl;
 import booking.beans.services.EventService;
 import booking.beans.services.UserService;
-import booking.web.FreeMarkerConfig;
+import booking.web.configuration.FreeMarkerConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

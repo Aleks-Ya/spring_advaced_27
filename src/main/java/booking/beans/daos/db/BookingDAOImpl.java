@@ -10,6 +10,7 @@ import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created with IntelliJ IDEA.
@@ -71,4 +72,12 @@ public class BookingDAOImpl extends AbstractDAO implements BookingDAO {
         Query query = getCurrentSession().createQuery("select b.ticket from Booking b");
         return ((List<Ticket>) query.list());
     }
+
+    @Override
+    public Optional<Ticket> getTicketById(Long ticketId) {
+        Query query = getCurrentSession().createQuery("from Ticket t where t.id = :ticketId");
+        query.setParameter("ticketId", ticketId);
+        return Optional.ofNullable((Ticket) query.uniqueResult());
+    }
+
 }

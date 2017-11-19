@@ -163,4 +163,9 @@ public class BookingServiceImpl implements BookingService {
     public List<Ticket> getBookedTickets() {
         return bookingDAO.getAllTickets();
     }
+
+    @Override
+    public Ticket getTicketById(Long ticketId) {
+        return bookingDAO.getTicketById(ticketId).orElse(null);
+    }
 }

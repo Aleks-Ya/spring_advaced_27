@@ -7,6 +7,7 @@ import booking.beans.models.User;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Created with IntelliJ IDEA.
@@ -52,5 +53,10 @@ public class BookingDAODiscountMock implements BookingDAO {
     @Override
     public List<Ticket> getAllTickets() {
         return null;
+    }
+
+    @Override
+    public Optional<Ticket> getTicketById(Long ticketId) {
+        return Optional.empty();
     }
 }

@@ -1,8 +1,9 @@
 package booking.web.controller;
 
+import booking.beans.configuration.TestAuditoriumConfiguration;
 import booking.beans.configuration.db.DataSourceConfiguration;
 import booking.beans.configuration.db.DbSessionFactory;
-import booking.web.FreeMarkerConfig;
+import booking.web.configuration.FreeMarkerConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {FreeMarkerConfig.class, AuditoriumController.class, DataSourceConfiguration.class,
-        DbSessionFactory.class, booking.beans.configuration.TestAuditoriumConfiguration.class
+        DbSessionFactory.class, TestAuditoriumConfiguration.class
 })
 public class AuditoriumControllerTest {
     @Autowired

@@ -6,7 +6,15 @@ import booking.beans.models.Ticket;
 import booking.beans.models.User;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -61,5 +69,16 @@ public class InMemoryBookingDAO implements BookingDAO {
     @Override
     public List<Ticket> getAllTickets() {
         return db.values().stream().flatMap(Collection:: stream).collect(Collectors.toList());
+    }
+
+    @Override
+    public Optional<Ticket> getTicketById(Long ticketId) {
+        if (ticketId == null) {
+            return Optional.empty();
+        }
+        return db.values().stream()
+                .flatMap(Collection::stream)
+                .filter(ticket -> ticketId.equals(ticket.getId()))
+                .findAny();
     }
 }

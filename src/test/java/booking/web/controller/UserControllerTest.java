@@ -1,11 +1,12 @@
 package booking.web.controller;
 
+import booking.beans.configuration.TestUserServiceConfiguration;
 import booking.beans.configuration.db.DataSourceConfiguration;
 import booking.beans.configuration.db.DbSessionFactory;
 import booking.beans.services.UserService;
 import booking.util.JsonUtil;
 import booking.web.EnableWebMvcConfig;
-import booking.web.FreeMarkerConfig;
+import booking.web.configuration.FreeMarkerConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,8 +34,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {EnableWebMvcConfig.class, FreeMarkerConfig.class, UserController.class, DataSourceConfiguration.class,
-        DbSessionFactory.class, booking.beans.configuration.TestUserServiceConfiguration.class
+@ContextConfiguration(classes = {EnableWebMvcConfig.class, FreeMarkerConfig.class, UserController.class,
+        DataSourceConfiguration.class, DbSessionFactory.class, TestUserServiceConfiguration.class
 })
 public class UserControllerTest {
     @Autowired
