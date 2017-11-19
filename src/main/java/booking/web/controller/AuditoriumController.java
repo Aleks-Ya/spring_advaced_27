@@ -21,8 +21,8 @@ import java.util.List;
 @SuppressWarnings("unused")
 @RequestMapping(value = "/auditorium", method = RequestMethod.GET)
 public class AuditoriumController {
-    private static final String AUDITORIUMS_ATTRIBUTE = "auditoriums";
-    private static final String AUDITORIUM_ATTRIBUTE = "auditorium";
+    private static final String AUDITORIUMS_ATTR = "auditoriums";
+    private static final String AUDITORIUM_ATTR = "auditorium";
     private static final String AUDITORIUMS_FTL = "auditorium/auditoriums";
     private static final String AUDITORIUM_FTL = "auditorium/auditorium";
     private static final String AUDITORIUM_SEATS_NUMBER_FTL = "auditorium/auditorium_seats_number";
@@ -38,7 +38,7 @@ public class AuditoriumController {
     @RequestMapping
     String getAuditoriums(@ModelAttribute("model") ModelMap model) {
         List<Auditorium> auditoriums = auditoriumService.getAuditoriums();
-        model.addAttribute(AUDITORIUMS_ATTRIBUTE, auditoriums);
+        model.addAttribute(AUDITORIUMS_ATTR, auditoriums);
         return AUDITORIUMS_FTL;
     }
 
@@ -51,14 +51,14 @@ public class AuditoriumController {
     @RequestMapping("/name/{auditoriumName}")
     String getAuditoriumByName(@PathVariable String auditoriumName, @ModelAttribute("model") ModelMap model) {
         Auditorium auditorium = auditoriumService.getByName(auditoriumName);
-        model.addAttribute(AUDITORIUM_ATTRIBUTE, auditorium);
+        model.addAttribute(AUDITORIUM_ATTR, auditorium);
         return AUDITORIUM_FTL;
     }
 
     @RequestMapping("/name/{auditoriumName}/seatsNumber")
     String getSeatsNumberByAuditoriumName(@PathVariable String auditoriumName, @ModelAttribute("model") ModelMap model) {
         Auditorium auditorium = auditoriumService.getByName(auditoriumName);
-        model.addAttribute(AUDITORIUM_ATTRIBUTE, auditorium);
+        model.addAttribute(AUDITORIUM_ATTR, auditorium);
         return AUDITORIUM_SEATS_NUMBER_FTL;
     }
 
@@ -71,7 +71,7 @@ public class AuditoriumController {
     @RequestMapping("/name/{auditoriumName}/vipSeats")
     String getVipSeatsByAuditoriumName(@PathVariable String auditoriumName, @ModelAttribute("model") ModelMap model) {
         Auditorium auditorium = auditoriumService.getByName(auditoriumName);
-        model.addAttribute(AUDITORIUM_ATTRIBUTE, auditorium);
+        model.addAttribute(AUDITORIUM_ATTR, auditorium);
         return AUDITORIUM_VIP_SEATS_FTL;
     }
 

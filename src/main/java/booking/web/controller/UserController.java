@@ -27,7 +27,7 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
     static final String PART_NAME = "users";
-    private static final String USER_ATTRIBUTE = "user";
+    private static final String USER_ATTR = "user";
     private static final String USER_FTL = "user/user";
     private static final String USER_REGISTERED_FTL = "user/user_registered";
 
@@ -41,14 +41,14 @@ public class UserController {
     @RequestMapping(method = RequestMethod.PUT)
     String register(@RequestBody User newUser, @ModelAttribute("model") ModelMap model) {
         User user = userService.register(newUser);
-        model.addAttribute(USER_ATTRIBUTE, user);
+        model.addAttribute(USER_ATTR, user);
         return USER_REGISTERED_FTL;
     }
 
     @RequestMapping(value = "/id/{userId}", method = RequestMethod.GET)
     String getById(@PathVariable Long userId, @ModelAttribute("model") ModelMap model) {
         User user = userService.getById(userId);
-        model.addAttribute(USER_ATTRIBUTE, user);
+        model.addAttribute(USER_ATTR, user);
         return USER_FTL;
     }
 
