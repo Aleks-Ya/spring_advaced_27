@@ -1,0 +1,200 @@
+{
+	"info": {
+		"name": "SpringAdvanced27",
+		"_postman_id": "0d08394b-881b-d3a9-c63c-c4398ee3c49c",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auditorium",
+			"description": "",
+			"item": [
+				{
+					"name": "Create auditorium",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/auditorium?auditoriumName=Meeting room&seatsNumber=50&vipSeats=1,2,3,4",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auditorium"
+							],
+							"query": [
+								{
+									"key": "auditoriumName",
+									"value": "Meeting room",
+									"equals": true
+								},
+								{
+									"key": "seatsNumber",
+									"value": "50",
+									"equals": true
+								},
+								{
+									"key": "vipSeats",
+									"value": "1,2,3,4",
+									"equals": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get auditoriums",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/auditorium",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auditorium"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get auditorium by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/auditorium/id/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auditorium",
+								"id",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get auditorium by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/auditorium/name/Blue hall",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auditorium",
+								"name",
+								"Blue hall"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get seats number",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/auditorium/name/Blue hall/seatsNumber",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auditorium",
+								"name",
+								"Blue hall",
+								"seatsNumber"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get VIP seats by auditorium name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/auditorium/name/Blue hall/vipSeats",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auditorium",
+								"name",
+								"Blue hall",
+								"vipSeats"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get VIP seats by auditorium id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/auditorium/id/1/vipSeats",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"auditorium",
+								"id",
+								"1",
+								"vipSeats"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
