@@ -1,8 +1,18 @@
-package booking;import booking.beans.aspects.CounterAspect;
+package booking;
+
+import booking.beans.aspects.CounterAspect;
 import booking.beans.aspects.DiscountAspect;
 import booking.beans.aspects.LuckyWinnerAspect;
-import booking.beans.models.*;
-import booking.beans.services.*;
+import booking.beans.models.Auditorium;
+import booking.beans.models.Event;
+import booking.beans.models.Rate;
+import booking.beans.models.Ticket;
+import booking.beans.models.User;
+import booking.beans.services.AuditoriumService;
+import booking.beans.services.BookingService;
+import booking.beans.services.DiscountService;
+import booking.beans.services.EventService;
+import booking.beans.services.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -107,7 +117,7 @@ public class Main {
         System.out.println();
         System.out.println("Tickets booked for event: [" + event + "]");
         List<Ticket> ticketsForEvent = bookingService.getTicketsForEvent(event.getName(),
-                                                                         event.getAuditorium().getName(),
+                                                                         event.getAuditorium().getId(),
                                                                          event.getDateTime());
         IntStream.range(0, ticketsForEvent.size()).forEach(
                 i -> System.out.println("" + i + ") " + ticketsForEvent.get(i)));

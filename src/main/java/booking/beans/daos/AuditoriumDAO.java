@@ -3,6 +3,7 @@ package booking.beans.daos;
 import booking.beans.models.Auditorium;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,7 +15,9 @@ public interface AuditoriumDAO {
 
     List<Auditorium> getAll();
 
-    Auditorium getByName(String name);
+    Auditorium getByName(String auditoriumName);
+
+    Optional<Auditorium> getById(Long auditoriumId);
 
     void delete(Auditorium auditorium);
 

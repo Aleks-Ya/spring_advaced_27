@@ -14,7 +14,9 @@ public interface AuditoriumService {
 
     List<Auditorium> getAuditoriums();
 
-    Auditorium getByName(String name);
+    Auditorium getByName(String auditoriumName);
+
+    Auditorium getById(Long auditoriumId);
 
     int getSeatsNumber(String auditoriumName);
 

@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,11 +31,11 @@ import static junit.framework.Assert.assertEquals;
 @Transactional
 public class AuditoriumServiceImplTest {
 
-    public static final int AUDITORIUMS_COUNT = 2;
+    private static final int AUDITORIUMS_COUNT = 2;
     @Autowired
-    private AuditoriumService   auditoriumService;
+    private AuditoriumService auditoriumService;
     @Autowired
-    private ApplicationContext  applicationContext;
+    private ApplicationContext applicationContext;
     @Autowired
     private DBAuditoriumDAOMock auditoriumDAOMock;
 
@@ -54,19 +55,24 @@ public class AuditoriumServiceImplTest {
     }
 
     @Test
-    public void testGetAuditoriums() throws Exception {
+    public void testGetAuditoriums() {
         List<Auditorium> auditoriums = auditoriumService.getAuditoriums();
         assertEquals("Auditoriums number should match", AUDITORIUMS_COUNT, auditoriums.size());
     }
 
     @Test
-    public void testGetByName() throws Exception {
+    public void testGetByName() {
         checkTestHall(testHall1);
         checkTestHall(testHall2);
     }
 
+    @Test
+    public void testGetById() {
+        assertNotNull(auditoriumService.getById(testHall1.getId()));
+    }
+
     @Test(expected = RuntimeException.class)
-    public void testGetByName_Exception() throws Exception {
+    public void testGetByName_Exception() {
         auditoriumService.getSeatsNumber("bla-bla-bla");
     }
 
@@ -74,8 +80,8 @@ public class AuditoriumServiceImplTest {
         int seatsNumber = auditoriumService.getSeatsNumber(testHall.getName());
         List<Integer> vipSeats = auditoriumService.getVipSeats(testHall.getName());
         assertEquals("Auditorium seats number should match. Auditorium: [" + testHall + "]", testHall.getSeatsNumber(),
-                     seatsNumber);
+                seatsNumber);
         assertEquals("Auditorium vip seats should match. Auditorium: [" + testHall + "]", testHall.getVipSeatsList(),
-                     vipSeats);
+                vipSeats);
     }
 }

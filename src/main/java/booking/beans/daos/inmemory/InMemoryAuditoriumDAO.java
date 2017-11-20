@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -36,6 +37,11 @@ public class InMemoryAuditoriumDAO implements AuditoriumDAO {
         return db.stream().filter(auditorium -> Objects.equals(auditorium.getName(), auditoriumName)).findFirst()
                  .orElseThrow(() -> new IllegalArgumentException(
                          "Auditorium with name: [" + auditoriumName + "] does not exist"));
+    }
+
+    @Override
+    public Optional<Auditorium> getById(Long auditoriumId) {
+        return db.stream().filter(auditorium -> auditorium.getId() == auditoriumId).findAny();
     }
 
     @Override

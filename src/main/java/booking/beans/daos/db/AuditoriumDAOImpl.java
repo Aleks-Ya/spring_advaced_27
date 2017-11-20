@@ -7,6 +7,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,8 +25,13 @@ public class AuditoriumDAOImpl extends AbstractDAO implements AuditoriumDAO {
     }
 
     @Override
-    public Auditorium getByName(String name) {
-        return ((Auditorium) createBlankCriteria(Auditorium.class).add(Restrictions.eq("name", name)).uniqueResult());
+    public Auditorium getByName(String auditoriumName) {
+        return ((Auditorium) createBlankCriteria(Auditorium.class).add(Restrictions.eq("name", auditoriumName)).uniqueResult());
+    }
+
+    @Override
+    public Optional<Auditorium> getById(Long auditoriumId) {
+        return Optional.ofNullable((Auditorium) createBlankCriteria(Auditorium.class).add(Restrictions.eq("id", auditoriumId)).uniqueResult());
     }
 
     @Override
