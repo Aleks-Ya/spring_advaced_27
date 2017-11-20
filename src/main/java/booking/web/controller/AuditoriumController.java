@@ -61,7 +61,7 @@ public class AuditoriumController {
     }
 
     @RequestMapping("/id/{auditoriumId}")
-    String getAuditoriumById(@PathVariable Long auditoriumId,  @ModelAttribute("model") ModelMap model) {
+    String getAuditoriumById(@PathVariable Long auditoriumId, @ModelAttribute("model") ModelMap model) {
         Auditorium auditorium = auditoriumService.getById(auditoriumId);
         model.addAttribute(AUDITORIUM_ATTR, auditorium);
         return AUDITORIUM_FTL;
@@ -82,9 +82,10 @@ public class AuditoriumController {
     }
 
     @RequestMapping("/id/{auditoriumId}/seatsNumber")
-    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    String getSeatsNumberByAuditoriumId(@PathVariable String auditoriumId, @ModelAttribute("model") ModelMap model) {
-        return null; //TODO implement
+    String getSeatsNumberByAuditoriumId(@PathVariable Long auditoriumId, @ModelAttribute("model") ModelMap model) {
+        Auditorium auditorium = auditoriumService.getById(auditoriumId);
+        model.addAttribute(AUDITORIUM_ATTR, auditorium);
+        return AUDITORIUM_SEATS_NUMBER_FTL;
     }
 
     @RequestMapping("/name/{auditoriumName}/vipSeats")
