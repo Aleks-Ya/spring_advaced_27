@@ -172,6 +172,38 @@ public class BookingControllerTest {
                         "720\n"));
     }
 
+    @Test
+    public void getTicketsForEvent() throws Exception {
+        deleteAllTickets();
+        Auditorium auditorium = auditoriumService.create(new Auditorium("Room", 100, Arrays.asList(1, 2, 3)));
+        LocalDateTime date = LocalDateTime.of(2018, 1, 15, 10, 30);
+        User user = createUser();
+        Event event = eventService.create(new Event(UUID.randomUUID() + "Meeting", Rate.HIGH, 100,
+                date, auditorium));
+        Ticket ticket = bookingService.bookTicket(user, new Ticket(event, date, Arrays.asList(1, 2, 3), user, 100));
+        mvc.perform(get(BookingController.ENDPOINT + "/tickets")
+                .param("eventName", event.getName())
+                .param("auditoriumId", String.valueOf(auditorium.getId()))
+                .param("localDateTime", date.toString())
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().string(format("<h1>Ticket for event</h1>\n" +
+                        "<p>Events:\n" +
+                        "    %s;\n" +
+                        "</p>\n" +
+                        "<p>Ticket</p>\n" +
+                        "<p>Id: %s</p>\n" +
+                        "<p>Event: %s</p>\n" +
+                        "<p>Date: 2018-01-15T10:30</p>\n" +
+                        "<p>Seats: 1,2,3</p>\n" +
+                        "<p>User: Mat</p>\n" +
+                        "<p>Price: 100</p><hr/>\n",
+                        event.getName(),
+                        ticket.getId(),
+                        event.getName()
+                )));
+    }
+
     private Ticket createTicket() {
         User user = createUser();
         Event event = createEvent();

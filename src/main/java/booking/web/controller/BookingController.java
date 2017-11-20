@@ -30,10 +30,12 @@ public class BookingController {
     static final String ENDPOINT = "/booking";
     private static final String TICKETS_ATTR = "tickets";
     private static final String TICKET_ATTR = "ticket";
+    private static final String EVENTS_ATTR = "events";
     private static final String TICKET_PRICE_ATTR = "price";
     private static final String TICKETS_FTL = "booking/booked_tickets";
     private static final String TICKET_FTL = "booking/ticket";
     private static final String TICKET_PRICE_FTL = "booking/ticket_price";
+    private static final String TICKET_FOR_EVENT_FTL = "booking/ticket_for_event";
     private static final String BOOKED_TICKET_FTL = "booking/booked_ticket";
 
     private final BookingService bookingService;
@@ -53,7 +55,7 @@ public class BookingController {
         return TICKETS_FTL;
     }
 
-    @RequestMapping(path= "/price", method = RequestMethod.GET)
+    @RequestMapping(path = "/price", method = RequestMethod.GET)
     String getTicketPrice(
             @RequestParam String eventName,
             @RequestParam String auditoriumName,
@@ -67,6 +69,20 @@ public class BookingController {
         double price = bookingService.getTicketPrice(eventName, String.valueOf(auditoriumName), date, seatsList, user);
         model.addAttribute(TICKET_PRICE_ATTR, price);
         return TICKET_PRICE_FTL;
+    }
+
+    @RequestMapping(path = "/tickets", method = RequestMethod.GET)
+    String getTicketsForEvent(
+            @RequestParam String eventName,
+            @RequestParam Long auditoriumId,
+            @RequestParam String localDateTime,
+            @ModelAttribute("model") ModelMap model) {
+        LocalDateTime date = LocalDateTime.parse(localDateTime);
+        List<Ticket> tickets = bookingService.getTicketsForEvent(eventName, auditoriumId, date);
+        List<Event> events = eventService.getByName(eventName);
+        model.addAttribute(TICKETS_ATTR, tickets);
+        model.addAttribute(EVENTS_ATTR, events);
+        return TICKET_FOR_EVENT_FTL;
     }
 
     @RequestMapping(method = RequestMethod.PUT)
