@@ -30,8 +30,10 @@ public class BookingController {
     static final String ENDPOINT = "/booking";
     private static final String TICKETS_ATTR = "tickets";
     private static final String TICKET_ATTR = "ticket";
+    private static final String TICKET_PRICE_ATTR = "price";
     private static final String TICKETS_FTL = "booking/booked_tickets";
     private static final String TICKET_FTL = "booking/ticket";
+    private static final String TICKET_PRICE_FTL = "booking/ticket_price";
     private static final String BOOKED_TICKET_FTL = "booking/booked_ticket";
 
     private final BookingService bookingService;
@@ -49,6 +51,22 @@ public class BookingController {
     String getBookedTickets(@ModelAttribute("model") ModelMap model) {
         model.addAttribute(TICKETS_ATTR, bookingService.getBookedTickets());
         return TICKETS_FTL;
+    }
+
+    @RequestMapping(path= "/price", method = RequestMethod.GET)
+    String getTicketPrice(
+            @RequestParam String eventName,
+            @RequestParam String auditoriumName,
+            @RequestParam Long userId,
+            @RequestParam String localDateTime,
+            @RequestParam String seats,
+            @ModelAttribute("model") ModelMap model) {
+        User user = userService.getById(userId);
+        LocalDateTime date = LocalDateTime.parse(localDateTime);
+        List<Integer> seatsList = parseSeatsString(seats);
+        double price = bookingService.getTicketPrice(eventName, String.valueOf(auditoriumName), date, seatsList, user);
+        model.addAttribute(TICKET_PRICE_ATTR, price);
+        return TICKET_PRICE_FTL;
     }
 
     @RequestMapping(method = RequestMethod.PUT)
@@ -70,7 +88,11 @@ public class BookingController {
         return BOOKED_TICKET_FTL;
     }
 
-    @RequestMapping(path = "/{ticketId}", method = RequestMethod.GET)
+    private List<Integer> parseSeatsString(@RequestParam String seats) {
+        return Stream.of(seats.split(",")).map(Integer::valueOf).collect(Collectors.toList());
+    }
+
+    @RequestMapping(path = "/id/{ticketId}", method = RequestMethod.GET)
     String getTicketById(@PathVariable Long ticketId, @ModelAttribute("model") ModelMap model) {
         Ticket ticket = bookingService.getTicketById(ticketId);
         model.addAttribute(TICKET_ATTR, ticket);

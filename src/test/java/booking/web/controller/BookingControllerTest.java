@@ -8,10 +8,12 @@ import booking.beans.daos.mocks.BookingDAOBookingMock;
 import booking.beans.daos.mocks.DBAuditoriumDAOMock;
 import booking.beans.daos.mocks.EventDAOMock;
 import booking.beans.daos.mocks.UserDAOMock;
+import booking.beans.models.Auditorium;
 import booking.beans.models.Event;
 import booking.beans.models.Rate;
 import booking.beans.models.Ticket;
 import booking.beans.models.User;
+import booking.beans.services.AuditoriumService;
 import booking.beans.services.BookingService;
 import booking.beans.services.EventService;
 import booking.beans.services.UserService;
@@ -67,6 +69,8 @@ public class BookingControllerTest {
     private UserService userService;
     @Autowired
     private EventService eventService;
+    @Autowired
+    private AuditoriumService auditoriumService;
 
     private MockMvc mvc;
 
@@ -112,16 +116,16 @@ public class BookingControllerTest {
     @Test
     public void getTicketById() throws Exception {
         Ticket bookedTicket = createTicket();
-        mvc.perform(get(BookingController.ENDPOINT + "/" + bookedTicket.getId())
+        mvc.perform(get(BookingController.ENDPOINT + "/id/" + bookedTicket.getId())
         )
                 .andExpect(status().isOk())
                 .andExpect(content().string(format("<h1>Ticket</h1>\n" +
-                        "<p>Id: %s</p>\n" +
-                        "<p>Event: %s</p>\n" +
-                        "<p>Date: 2017-01-15T10:30</p>\n" +
-                        "<p>Seats: 1,2,3</p>\n" +
-                        "<p>User: Mat</p>\n" +
-                        "<p>Price: 100</p>",
+                                "<p>Id: %s</p>\n" +
+                                "<p>Event: %s</p>\n" +
+                                "<p>Date: 2017-01-15T10:30</p>\n" +
+                                "<p>Seats: 1,2,3</p>\n" +
+                                "<p>User: Mat</p>\n" +
+                                "<p>Price: 100</p>",
                         bookedTicket.getId(), bookedTicket.getEvent().getName())));
     }
 
@@ -139,13 +143,33 @@ public class BookingControllerTest {
         )
                 .andExpect(status().isOk())
                 .andExpect(content().string(format("<h1>The ticket is booked</h1>\n" +
-                        "<p>Id: 3</p>\n" +
-                        "<p>Event: %s</p>\n" +
-                        "<p>Date: 2007-12-03T10:15:30</p>\n" +
-                        "<p>Seats: 1,2,3</p>\n" +
-                        "<p>User: Mat</p>\n" +
-                        "<p>Price: 100.5</p>",
+                                "<p>Id: 3</p>\n" +
+                                "<p>Event: %s</p>\n" +
+                                "<p>Date: 2007-12-03T10:15:30</p>\n" +
+                                "<p>Seats: 1,2,3</p>\n" +
+                                "<p>User: Mat</p>\n" +
+                                "<p>Price: 100.5</p>",
                         event.getName())));
+    }
+
+    @Test
+    public void getTicketPrice() throws Exception {
+        deleteAllTickets();
+        Auditorium auditorium = auditoriumService.create(new Auditorium("Room", 100, Arrays.asList(1, 2, 3)));
+        User user = createUser();
+        LocalDateTime date = LocalDateTime.of(2018, 1, 15, 10, 30);
+        Event event = eventService.create(new Event(UUID.randomUUID() + "Meeting", Rate.HIGH, 100,
+                date, auditorium));
+        mvc.perform(get(BookingController.ENDPOINT + "/price")
+                .param("eventName", event.getName())
+                .param("auditoriumName", auditorium.getName())
+                .param("userId", String.valueOf(user.getId()))
+                .param("localDateTime", date.toString())
+                .param("seats", "1,2,3")
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().string("<h1>Ticket price</h1>\n" +
+                        "720\n"));
     }
 
     private Ticket createTicket() {

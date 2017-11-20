@@ -19,4 +19,6 @@ public interface AuditoriumService {
     int getSeatsNumber(String auditoriumName);
 
     List<Integer> getVipSeats(String auditoriumName);
+
+    Auditorium create(Auditorium auditorium);
 }
