@@ -98,22 +98,24 @@ public class AuditoriumControllerTest {
         mvc.perform(get("/auditorium/id/" + auditorium.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format("<h1>Auditorium</h1>\n" +
-                        "<p>Id: %d</p>\n" +
-                        "<p>Name: Meeting room</p>\n" +
-                        "<p>Seats number: 500</p>\n" +
-                        "<p>VIP seats: 1,2,3</p>",
+                                "<p>Id: %d</p>\n" +
+                                "<p>Name: Meeting room</p>\n" +
+                                "<p>Seats number: 500</p>\n" +
+                                "<p>VIP seats: 1,2,3</p>",
                         auditorium.getId())));
     }
 
     @Test
     public void getAuditoriumByName() throws Exception {
-        mvc.perform(get("/auditorium/name/Blue hall"))
+        Auditorium auditorium = auditoriumService.create(new Auditorium("Relax room", 500, Arrays.asList(1, 2, 3)));
+        mvc.perform(get("/auditorium/name/" + auditorium.getName()))
                 .andExpect(status().isOk())
-                .andExpect(content().string("<h1>Auditorium</h1>\n" +
-                        "<p>Id: 1</p>\n" +
-                        "<p>Name: Blue hall</p>\n" +
-                        "<p>Seats number: 500</p>\n" +
-                        "<p>VIP seats: 25,26,27,28,29,30,31,32,33,34,35</p>"));
+                .andExpect(content().string(format("<h1>Auditorium</h1>\n" +
+                                "<p>Id: %d</p>\n" +
+                                "<p>Name: Relax room</p>\n" +
+                                "<p>Seats number: 500</p>\n" +
+                                "<p>VIP seats: 1,2,3</p>",
+                        auditorium.getId())));
     }
 
     @Test
@@ -153,7 +155,11 @@ public class AuditoriumControllerTest {
 
     @Test
     public void vipSeatsByAuditoriumIdGet() throws Exception {
-        mvc.perform(get("/auditorium/id/123/vipSeats"))
-                .andExpect(status().is(HttpStatus.METHOD_NOT_ALLOWED.value()));
+        Auditorium auditorium = auditoriumService.create(new Auditorium("Red room", 500, Arrays.asList(1, 2, 3)));
+        mvc.perform(get(format("/auditorium/id/%d/vipSeats", auditorium.getId())))
+                .andExpect(status().isOk())
+                .andExpect(content().string("<h1>VIP seats</h1>\n" +
+                        "<p>Auditorium: Red room</p>\n" +
+                        "<p>VIP seats: 1,2,3</p>"));
     }
 }
