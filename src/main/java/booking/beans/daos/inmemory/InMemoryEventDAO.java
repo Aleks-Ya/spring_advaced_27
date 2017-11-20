@@ -48,8 +48,8 @@ public class InMemoryEventDAO implements EventDAO {
     }
 
     @Override
-    public Event get(String name, Auditorium auditorium, LocalDateTime dateTime) {
-        final Stream<Event> eventStream = getByName(name).stream();
+    public Event get(String eventName, Auditorium auditorium, LocalDateTime dateTime) {
+        final Stream<Event> eventStream = getByName(eventName).stream();
         final Stream<Event> filteredByAuditorium = filterByAuditorium(eventStream, auditorium);
         final Stream<Event> filteredByDate = filterByDateTime(filteredByAuditorium, dateTime);
         return filteredByDate.findFirst().orElse(null);
