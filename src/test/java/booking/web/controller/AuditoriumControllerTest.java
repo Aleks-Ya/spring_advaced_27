@@ -93,8 +93,16 @@ public class AuditoriumControllerTest {
     }
 
     @Test
-    public void auditoriumByIdGet() throws Exception {
-        mvc.perform(get("/auditorium/id/123")).andExpect(status().is(HttpStatus.METHOD_NOT_ALLOWED.value()));
+    public void getById() throws Exception {
+        Auditorium auditorium = auditoriumService.create(new Auditorium("Meeting room", 500, Arrays.asList(1, 2, 3)));
+        mvc.perform(get("/auditorium/id/" + auditorium.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().string(format("<h1>Auditorium</h1>\n" +
+                        "<p>Id: %d</p>\n" +
+                        "<p>Name: Meeting room</p>\n" +
+                        "<p>Seats number: 500</p>\n" +
+                        "<p>VIP seats: 1,2,3</p>",
+                        auditorium.getId())));
     }
 
     @Test

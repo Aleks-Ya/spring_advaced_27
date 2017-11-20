@@ -61,9 +61,10 @@ public class AuditoriumController {
     }
 
     @RequestMapping("/id/{auditoriumId}")
-    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    String getAuditoriumById(@PathVariable String auditoriumId) {
-        return null; //TODO implement
+    String getAuditoriumById(@PathVariable Long auditoriumId,  @ModelAttribute("model") ModelMap model) {
+        Auditorium auditorium = auditoriumService.getById(auditoriumId);
+        model.addAttribute(AUDITORIUM_ATTR, auditorium);
+        return AUDITORIUM_FTL;
     }
 
     @RequestMapping("/name/{auditoriumName}")
