@@ -21,10 +21,10 @@ public class DBAuditoriumDAOMock extends AuditoriumDAOImpl {
 
     public void init() {
         cleanup();
-        auditoriums.forEach(this :: add);
+        auditoriums.forEach(this::add);
     }
 
     public void cleanup() {
-        getAll().forEach(this :: delete);
+        getAll().stream().map(Auditorium::getId).forEach(this::delete);
     }
 }

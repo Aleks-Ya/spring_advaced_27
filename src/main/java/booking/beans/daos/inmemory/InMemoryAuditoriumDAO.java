@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Created with IntelliJ IDEA.
@@ -29,14 +29,14 @@ public class InMemoryAuditoriumDAO implements AuditoriumDAO {
 
     @Override
     public List<Auditorium> getAll() {
-        return db.stream().collect(Collectors.toList());
+        return new ArrayList<>(db);
     }
 
     @Override
     public Auditorium getByName(String auditoriumName) {
         return db.stream().filter(auditorium -> Objects.equals(auditorium.getName(), auditoriumName)).findFirst()
-                 .orElseThrow(() -> new IllegalArgumentException(
-                         "Auditorium with name: [" + auditoriumName + "] does not exist"));
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Auditorium with name: [" + auditoriumName + "] does not exist"));
     }
 
     @Override
@@ -45,8 +45,8 @@ public class InMemoryAuditoriumDAO implements AuditoriumDAO {
     }
 
     @Override
-    public void delete(Auditorium auditorium) {
-        throw new UnsupportedOperationException("not implemented");
+    public void delete(Long auditoriumId) {
+        getById(auditoriumId).ifPresent(db::remove);
     }
 
     @Override

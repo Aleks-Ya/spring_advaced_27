@@ -35,13 +35,14 @@ public class AuditoriumDAOImpl extends AbstractDAO implements AuditoriumDAO {
     }
 
     @Override
-    public Auditorium add(Auditorium auditorium) {
-        Long id = (Long) getCurrentSession().save(auditorium);
-        return auditorium.withId(id);
+    public void delete(Long auditoriumId) {
+        Auditorium auditorium = getCurrentSession().get(Auditorium.class, auditoriumId);
+        getCurrentSession().delete(auditorium);
     }
 
     @Override
-    public void delete(Auditorium auditorium) {
-        getCurrentSession().delete(auditorium);
+    public Auditorium add(Auditorium auditorium) {
+        Long id = (Long) getCurrentSession().save(auditorium);
+        return auditorium.withId(id);
     }
 }

@@ -23,4 +23,6 @@ public interface AuditoriumService {
     List<Integer> getVipSeats(String auditoriumName);
 
     Auditorium create(Auditorium auditorium);
+
+    void delete(Long auditoriumId);
 }

@@ -65,7 +65,7 @@ public class BookingController {
             @ModelAttribute("model") ModelMap model) {
         User user = userService.getById(userId);
         LocalDateTime date = LocalDateTime.parse(localDateTime);
-        List<Integer> seatsList = parseSeatsString(seats);
+        List<Integer> seatsList = SeatHelper.parseSeatsString(seats);
         double price = bookingService.getTicketPrice(eventName, String.valueOf(auditoriumName), date, seatsList, user);
         model.addAttribute(TICKET_PRICE_ATTR, price);
         return TICKET_PRICE_FTL;
@@ -102,10 +102,6 @@ public class BookingController {
 
         model.addAttribute(TICKET_ATTR, bookedTicket);
         return BOOKED_TICKET_FTL;
-    }
-
-    private List<Integer> parseSeatsString(@RequestParam String seats) {
-        return Stream.of(seats.split(",")).map(Integer::valueOf).collect(Collectors.toList());
     }
 
     @RequestMapping(path = "/id/{ticketId}", method = RequestMethod.GET)

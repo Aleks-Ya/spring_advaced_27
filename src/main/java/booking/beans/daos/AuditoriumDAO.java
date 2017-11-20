@@ -19,7 +19,7 @@ public interface AuditoriumDAO {
 
     Optional<Auditorium> getById(Long auditoriumId);
 
-    void delete(Auditorium auditorium);
+    void delete(Long auditoriumId);
 
     Auditorium add(Auditorium auditorium);
 }
