@@ -6,7 +6,7 @@ import booking.beans.configuration.db.DbSessionFactory;
 import booking.beans.models.Event;
 import booking.beans.models.Rate;
 import booking.beans.services.EventService;
-import booking.util.JsonUtil;
+import booking.util.ResourceUtil;
 import booking.web.EnableWebMvcConfig;
 import booking.web.configuration.FreeMarkerConfig;
 import org.junit.Before;
@@ -160,24 +160,10 @@ public class EventControllerTest {
         assertThat(eventService.getByName(name1), emptyIterable());
         assertThat(eventService.getByName(name2), emptyIterable());
 
-        String fileContent1 = JsonUtil.format("{" +
-                "'id': 1," +
-                "'name': '%s'," +
-                "'rate': 'HIGH'," +
-                "'basePrice': 100.5," +
-                "'dateTime': '2007-12-03T10:15:30'" +
-                "}", name1
-        );
+        String fileContent1 = ResourceUtil.resourceToString("EventControllerTest_batchUpload_1.json", EventControllerTest.class);
         MockMultipartFile multipartFile1 = new MockMultipartFile(EventController.PART_NAME, "filename1.json", MediaType.APPLICATION_JSON_VALUE, fileContent1.getBytes());
 
-        String fileContent2 = JsonUtil.format("{" +
-                "'id': 2," +
-                "'name': '%s'," +
-                "'rate': 'LOW'," +
-                "'basePrice': 50," +
-                "'dateTime': '2017-10-13T15:09:20'" +
-                "}", name2
-        );
+        String fileContent2 = ResourceUtil.resourceToString("EventControllerTest_batchUpload_2.json", EventControllerTest.class);
         MockMultipartFile multipartFile2 = new MockMultipartFile(EventController.PART_NAME, "filename2.json", MediaType.APPLICATION_JSON_VALUE, fileContent2.getBytes());
 
         MockMultipartHttpServletRequestBuilder multipartBuilder = MockMvcRequestBuilders
@@ -188,6 +174,6 @@ public class EventControllerTest {
         mvc.perform(multipartBuilder).andExpect(status().isOk());
 
         assertThat(eventService.getByName(name1), hasSize(1));
-        assertThat(eventService.getByName(name2), hasSize(1));
+        assertThat(eventService.getByName(name2), hasSize(2));
     }
 }

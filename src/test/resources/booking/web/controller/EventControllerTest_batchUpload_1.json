@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Hall",
+    "rate": "HIGH",
+    "basePrice": 100.5,
+    "dateTime": "2007-12-03T10:15:30",
+    "auditoriumId": 1
+  },
+  {
+    "id": 2,
+    "name": "Room",
+    "rate": "LOW",
+    "basePrice": 20.50,
+    "dateTime": "2006-11-03T11:15:30",
+    "auditoriumId": 1
+  }
+]

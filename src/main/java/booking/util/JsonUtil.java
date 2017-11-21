@@ -1,5 +1,6 @@
 package booking.util;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
@@ -17,5 +18,9 @@ public class JsonUtil {
 
     public static <T> T readValue(byte[] src, Class<T> valueType) throws IOException {
         return objectMapper.readValue(src, valueType);
+    }
+
+    public static <T> T readValue(byte[] src, TypeReference<T> typeReference) throws IOException {
+        return objectMapper.readValue(src, typeReference);
     }
 }

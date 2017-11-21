@@ -6,6 +6,7 @@ import booking.beans.models.Rate;
 import booking.beans.services.AuditoriumService;
 import booking.beans.services.EventService;
 import booking.util.JsonUtil;
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -79,8 +80,71 @@ public class EventController {
     @ResponseStatus(HttpStatus.OK)
     public void multipartUpload(@RequestParam(value = PART_NAME) List<MultipartFile> events) throws IOException {
         for (MultipartFile userFile : events) {
-            Event event = JsonUtil.readValue(userFile.getBytes(), Event.class);
-            eventService.create(event);
+            List<EventCreateData> eventCreateDataList = JsonUtil.readValue(userFile.getBytes(), new TypeReference<List<EventCreateData>>() {
+            });
+            for (EventCreateData eventCreateData : eventCreateDataList) {
+                Auditorium auditorium = auditoriumService.getById(eventCreateData.getAuditoriumId());
+                Event event = new Event(eventCreateData.getId(), eventCreateData.getName(), eventCreateData.getRate(),
+                        eventCreateData.getBasePrice(), eventCreateData.getDateTime(), auditorium);
+                eventService.create(event);
+            }
+        }
+    }
+
+    private static class EventCreateData {
+        private long id;
+        private String name;
+        private Rate rate;
+        private double basePrice;
+        private LocalDateTime dateTime;
+        private Long auditoriumId;
+
+        public long getId() {
+            return id;
+        }
+
+        public void setId(long id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Rate getRate() {
+            return rate;
+        }
+
+        public void setRate(Rate rate) {
+            this.rate = rate;
+        }
+
+        public double getBasePrice() {
+            return basePrice;
+        }
+
+        public void setBasePrice(double basePrice) {
+            this.basePrice = basePrice;
+        }
+
+        public LocalDateTime getDateTime() {
+            return dateTime;
+        }
+
+        public void setDateTime(LocalDateTime dateTime) {
+            this.dateTime = dateTime;
+        }
+
+        public Long getAuditoriumId() {
+            return auditoriumId;
+        }
+
+        public void setAuditoriumId(Long auditoriumId) {
+            this.auditoriumId = auditoriumId;
         }
     }
 }

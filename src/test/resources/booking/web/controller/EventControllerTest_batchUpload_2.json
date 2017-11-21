@@ -1,0 +1,10 @@
+[
+  {
+    "id": 3,
+    "name": "Room",
+    "rate": "LOW",
+    "basePrice": 50,
+    "dateTime": "2017-10-13T15:09:20",
+    "auditoriumId": 1
+  }
+]
