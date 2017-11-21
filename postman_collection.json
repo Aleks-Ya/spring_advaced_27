@@ -1,14 +1,13 @@
 {
 	"info": {
 		"name": "SpringAdvanced27",
-		"_postman_id": "0d08394b-881b-d3a9-c63c-c4398ee3c49c",
+		"_postman_id": "3a89d82c-e199-61d2-f883-903f1e97900d",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Auditorium",
-			"description": "",
 			"item": [
 				{
 					"name": "Create auditorium",
@@ -44,8 +43,7 @@
 									"equals": true
 								}
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -66,8 +64,7 @@
 							"path": [
 								"auditorium"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -90,8 +87,7 @@
 								"id",
 								"1"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -114,8 +110,7 @@
 								"name",
 								"Blue hall"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -139,8 +134,7 @@
 								"Blue hall",
 								"seatsNumber"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -164,8 +158,7 @@
 								"Blue hall",
 								"vipSeats"
 							]
-						},
-						"description": ""
+						}
 					},
 					"response": []
 				},
@@ -189,8 +182,215 @@
 								"1",
 								"vipSeats"
 							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Event",
+			"description": "",
+			"item": [
+				{
+					"name": "Create event",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
 						},
-						"description": ""
+						"url": {
+							"raw": "http://localhost:8080/event?name=Celebration&rate=HIGH&bastPrice=10.5&dateTime=2007-12-03T10:15:30&auditoriumId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"event"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Celebration",
+									"equals": true
+								},
+								{
+									"key": "rate",
+									"value": "HIGH",
+									"equals": true
+								},
+								{
+									"key": "bastPrice",
+									"value": "10.5",
+									"equals": true
+								},
+								{
+									"key": "dateTime",
+									"value": "2007-12-03T10:15:30",
+									"equals": true
+								},
+								{
+									"key": "auditoriumId",
+									"value": "1",
+									"equals": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Batch event upload",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "events1",
+									"description": "",
+									"type": "file",
+									"src": "EventControllerTest_batchUpload_1.json"
+								},
+								{
+									"key": "events2",
+									"value": "",
+									"description": "",
+									"type": "file",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/event/batchUpload",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"event",
+								"batchUpload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/event",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"event"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get event by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/event/id/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"event",
+								"id",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get event by name",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/event/name/Celebration",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"event",
+								"name",
+								"Celebration"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Discount",
+			"description": "",
+			"item": [
+				{
+					"name": "Get discount",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/discount?userId=1&eventId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"discount"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1",
+									"equals": true
+								},
+								{
+									"key": "eventId",
+									"value": "1",
+									"equals": true
+								}
+							]
+						}
 					},
 					"response": []
 				}
