@@ -25,10 +25,12 @@
 							"raw": "{\n    \"name\": \"John\",\n    \"email\": \"john@gmail.com\",\n    \"birthday\": \"2000-07-03\"\n}"
 						},
 						"url": {
-							"raw": "{{server}}/user",
+							"raw": "http://localhost:8080/user",
+							"protocol": "http",
 							"host": [
-								"{{server}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"user"
 							]
@@ -65,10 +67,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{server}}/user/batchUpload",
+							"raw": "http://localhost:8080/user/batchUpload",
+							"protocol": "http",
 							"host": [
-								"{{server}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"user",
 								"batchUpload"
@@ -88,10 +92,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{server}}/user/id/1",
+							"raw": "http://localhost:8080/user/id/1",
+							"protocol": "http",
 							"host": [
-								"{{server}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"user",
 								"id",
@@ -117,10 +123,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{server}}/auditorium?auditoriumName=Meeting room&seatsNumber=50&vipSeats=1,2,3,4",
+							"raw": "http://localhost:8080/auditorium?auditoriumName=Meeting room&seatsNumber=50&vipSeats=1,2,3,4",
+							"protocol": "http",
 							"host": [
-								"{{server}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"auditorium"
 							],
@@ -155,10 +163,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{server}}/auditorium",
+							"raw": "http://localhost:8080/auditorium",
+							"protocol": "http",
 							"host": [
-								"{{server}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"auditorium"
 							]
@@ -176,10 +186,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{server}}/auditorium/id/1",
+							"raw": "http://localhost:8080/auditorium/id/1",
+							"protocol": "http",
 							"host": [
-								"{{server}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"auditorium",
 								"id",
@@ -199,10 +211,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{server}}/auditorium/name/Blue hall",
+							"raw": "http://localhost:8080/auditorium/name/Blue hall",
+							"protocol": "http",
 							"host": [
-								"{{server}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"auditorium",
 								"name",
@@ -222,10 +236,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{server}}/auditorium/name/Blue hall/seatsNumber",
+							"raw": "http://localhost:8080/auditorium/name/Blue hall/seatsNumber",
+							"protocol": "http",
 							"host": [
-								"{{server}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"auditorium",
 								"name",
@@ -246,10 +262,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{server}}/auditorium/name/Blue hall/vipSeats",
+							"raw": "http://localhost:8080/auditorium/name/Blue hall/vipSeats",
+							"protocol": "http",
 							"host": [
-								"{{server}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"auditorium",
 								"name",
@@ -270,10 +288,12 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "{{server}}/auditorium/id/1/vipSeats",
+							"raw": "http://localhost:8080/auditorium/id/1/vipSeats",
+							"protocol": "http",
 							"host": [
-								"{{server}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"auditorium",
 								"id",
@@ -482,6 +502,229 @@
 									"value": "1",
 									"equals": true
 								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Booking",
+			"description": "",
+			"item": [
+				{
+					"name": "Book ticket",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/booking?userId=1&eventId=1&localDateTime=2007-12-03T10:15:30&seats=1,2,3&price=10.5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"booking"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "1",
+									"equals": true
+								},
+								{
+									"key": "eventId",
+									"value": "1",
+									"equals": true
+								},
+								{
+									"key": "localDateTime",
+									"value": "2007-12-03T10:15:30",
+									"equals": true
+								},
+								{
+									"key": "seats",
+									"value": "1,2,3",
+									"equals": true
+								},
+								{
+									"key": "price",
+									"value": "10.5",
+									"equals": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get booked tickets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/booking",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get ticket by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/booking/id/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"booking",
+								"id",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get ticket for event",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/booking?eventName=Celebration&auditoriumId=1&localDateTime=2007-12-03T10:15:30",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"booking"
+							],
+							"query": [
+								{
+									"key": "eventName",
+									"value": "Celebration",
+									"equals": true
+								},
+								{
+									"key": "auditoriumId",
+									"value": "1",
+									"equals": true
+								},
+								{
+									"key": "localDateTime",
+									"value": "2007-12-03T10:15:30",
+									"equals": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get ticket price",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/booking?eventName=Celebration&auditoriumName=Blue hall&localDateTime=2007-12-03T10:15:30&userId=1&seats=1,2,3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"booking"
+							],
+							"query": [
+								{
+									"key": "eventName",
+									"value": "Celebration",
+									"equals": true
+								},
+								{
+									"key": "auditoriumName",
+									"value": "Blue hall",
+									"equals": true
+								},
+								{
+									"key": "localDateTime",
+									"value": "2007-12-03T10:15:30",
+									"equals": true
+								},
+								{
+									"key": "userId",
+									"value": "1",
+									"equals": true
+								},
+								{
+									"key": "seats",
+									"value": "1,2,3",
+									"equals": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Booked tickets PDF",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/pdf"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/booking/bookedTickets",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"booking",
+								"bookedTickets"
 							]
 						}
 					},
