@@ -1,14 +1,12 @@
-Local run
-mvn jetty:run
+Aleksei Iablokov, Spring Advanced 27
 
-Base URL:
-http://localhost:8080
+Requirements:
+1) Java 8
+2) Maven 3
+3) Free 8080 port
 
-Request example:
-PUT localhost:8080/user
-{
-   "id":1,
-   "name":"John",
-   "email":"john@gmail.com",
-   "birthday":"2000-07-03"
-}
+Local run:
+1) mvn jetty:run
+2) Import "postman_collection.json" to Postman for trying locally
+
+Base URL: http://localhost:8080
