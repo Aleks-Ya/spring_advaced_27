@@ -1,6 +1,9 @@
 package booking.web.controller;
 
+import booking.beans.models.Auditorium;
 import booking.beans.models.Event;
+import booking.beans.models.Rate;
+import booking.beans.services.AuditoriumService;
 import booking.beans.services.EventService;
 import booking.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -28,16 +32,25 @@ public class EventController {
     private static final String EVENT_LIST_FTL = "event/event_list";
 
     private final EventService eventService;
+    private final AuditoriumService auditoriumService;
 
     @Autowired
-    public EventController(EventService eventService) {
+    public EventController(EventService eventService, AuditoriumService auditoriumService) {
         this.eventService = eventService;
+        this.auditoriumService = auditoriumService;
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    String create(@RequestBody Event newEvent, @ModelAttribute("model") ModelMap model) {
-        Event event = eventService.create(newEvent);
-        model.addAttribute(EVENT_ATTR, event);
+    String create(@RequestParam String name,
+                  @RequestParam String rate,
+                  @RequestParam Double bastPrice,
+                  @RequestParam String dateTime,
+                  @RequestParam Long auditoriumId,
+                  @ModelAttribute("model") ModelMap model) {
+        Auditorium auditorium = auditoriumService.getById(auditoriumId);
+        Event event = new Event(name, Rate.valueOf(rate), bastPrice, LocalDateTime.parse(dateTime), auditorium);
+        Event eventCreated = eventService.create(event);
+        model.addAttribute(EVENT_ATTR, eventCreated);
         return EVENT_CREATED_FTL;
     }
 

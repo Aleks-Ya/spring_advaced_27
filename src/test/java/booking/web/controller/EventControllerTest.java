@@ -62,26 +62,22 @@ public class EventControllerTest {
 
         assertThat(eventService.getByName(name), emptyIterable());
 
-        String json = JsonUtil.format("{" +
-                "'id': 1," +
-                "'name': '%s'," +
-                "'rate': 'HIGH'," +
-                "'basePrice': 100.5," +
-                "'dateTime': '2007-12-03T10:15:30'" +
-                "}", name
-        );
         mvc.perform(put("/event")
-                .content(json)
-                .contentType(MediaType.APPLICATION_JSON)
+                .param("id", "1")
+                .param("name", name)
+                .param("rate", "HIGH")
+                .param("bastPrice", "10.5")
+                .param("dateTime", "2007-12-03T10:15:30")
+                .param("auditoriumId", "1")
         )
                 .andExpect(status().isOk())
                 .andExpect(content().string("<h1>Event created</h1>\n" +
                         "<p>Id: 1</p>\n" +
                         "<p>Name: Discussion</p>\n" +
                         "<p>Rate: HIGH</p>\n" +
-                        "<p>Base price: 100.5</p>\n" +
+                        "<p>Base price: 10.5</p>\n" +
                         "<p>Date: 2007-12-03T10:15:30</p>\n" +
-                        "<p>Auditorium: -No auditorium-</p>\n"));
+                        "<p>Auditorium: Blue hall</p>\n"));
 
         assertThat(eventService.getByName(name), hasSize(1));
     }
