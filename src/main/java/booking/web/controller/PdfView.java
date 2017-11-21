@@ -1,6 +1,7 @@
 package booking.web.controller;
 
 
+import booking.beans.models.Event;
 import booking.beans.models.Ticket;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.PageSize;
@@ -28,7 +29,9 @@ class PdfView extends AbstractView {
 
         if (!tickets.isEmpty()) {
             for (Ticket ticket : tickets) {
-                String ticketLine = String.format("%s, %s", ticket.getEvent().getName(), ticket.getDateTime());
+                Event event = ticket.getEvent();
+                String eventStr = event != null ? event.getName() : "No event info";
+                String ticketLine = String.format("%s, %s", eventStr, ticket.getDateTime());
                 Paragraph paragraph = new Paragraph(ticketLine);
                 document.add(paragraph);
             }
