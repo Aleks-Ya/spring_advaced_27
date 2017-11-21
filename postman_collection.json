@@ -1,11 +1,109 @@
 {
 	"info": {
 		"name": "SpringAdvanced27",
-		"_postman_id": "3a89d82c-e199-61d2-f883-903f1e97900d",
+		"_postman_id": "872a8062-0181-2f96-cfbb-5559854fa4f3",
 		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "User",
+			"description": "",
+			"item": [
+				{
+					"name": "Register user",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John\",\n    \"email\": \"john@gmail.com\",\n    \"birthday\": \"2000-07-03\"\n}"
+						},
+						"url": {
+							"raw": "{{server}}/user",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "User batch upload",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user1",
+									"description": "",
+									"type": "file",
+									"src": "user1.json"
+								},
+								{
+									"key": "user2",
+									"description": "",
+									"type": "file",
+									"src": "user2.json"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/user/batchUpload",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"batchUpload"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get user by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{server}}/user/id/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"user",
+								"id",
+								"1"
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "Auditorium",
 			"item": [
@@ -190,7 +288,6 @@
 		},
 		{
 			"name": "Event",
-			"description": "",
 			"item": [
 				{
 					"name": "Create event",
@@ -252,14 +349,11 @@
 							"formdata": [
 								{
 									"key": "events1",
-									"description": "",
-									"type": "file",
-									"src": "EventControllerTest_batchUpload_1.json"
+									"type": "file"
 								},
 								{
 									"key": "events2",
 									"value": "",
-									"description": "",
 									"type": "file",
 									"disabled": true
 								}
@@ -357,7 +451,6 @@
 		},
 		{
 			"name": "Discount",
-			"description": "",
 			"item": [
 				{
 					"name": "Get discount",
