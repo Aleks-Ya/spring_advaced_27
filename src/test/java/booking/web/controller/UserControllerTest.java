@@ -25,7 +25,7 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -59,7 +59,7 @@ public class UserControllerTest {
                 "  'email': 'john@gmail.com'," +
                 "  'birthday': '2000-07-03'" +
                 "}");
-        mvc.perform(put("/user")
+        mvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body)
         )
@@ -90,7 +90,7 @@ public class UserControllerTest {
     }
 
     private void registerUser(String body) throws Exception {
-        mvc.perform(put("/user")
+        mvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body)
         ).andExpect(status().isOk());

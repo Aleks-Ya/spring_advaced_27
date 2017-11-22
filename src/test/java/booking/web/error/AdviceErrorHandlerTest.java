@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -46,7 +46,7 @@ public class AdviceErrorHandlerTest {
                 "  'email': null," +
                 "  'birthday': '2000-07-03'" +
                 "}");
-        mvc.perform(put("/user")
+        mvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body)
         )

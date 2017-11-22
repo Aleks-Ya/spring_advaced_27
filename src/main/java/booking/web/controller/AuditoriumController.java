@@ -39,7 +39,7 @@ public class AuditoriumController {
         this.auditoriumService = auditoriumService;
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.POST)
     String create(
             @RequestParam String auditoriumName,
             @RequestParam int seatsNumber,

@@ -29,7 +29,7 @@ import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -62,7 +62,7 @@ public class EventControllerTest {
 
         assertThat(eventService.getByName(name), emptyIterable());
 
-        mvc.perform(put("/event")
+        mvc.perform(post("/event")
                 .param("id", "1")
                 .param("name", name)
                 .param("rate", "HIGH")

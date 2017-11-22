@@ -85,7 +85,7 @@ public class BookingController {
         return TICKET_FOR_EVENT_FTL;
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.POST)
     String bookTicket(@RequestParam Long userId,
                       @RequestParam Long eventId,
                       @RequestParam String localDateTime,

@@ -38,7 +38,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(method = RequestMethod.POST)
     String register(@RequestBody User newUser, @ModelAttribute("model") ModelMap model) {
         User user = userService.register(newUser);
         model.addAttribute(USER_ATTR, user);
@@ -54,7 +54,7 @@ public class UserController {
 
     @RequestMapping(path = "/batchUpload", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public void multipartUpload(@RequestParam(value = PART_NAME) List<MultipartFile> users) throws IOException {
+    public void batchUpload(@RequestParam(value = PART_NAME) List<MultipartFile> users) throws IOException {
         for (MultipartFile userFile : users) {
             User user = JsonUtil.readValue(userFile.getBytes(), User.class);
             userService.register(user);

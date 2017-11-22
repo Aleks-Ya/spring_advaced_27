@@ -13,7 +13,7 @@
 				{
 					"name": "Register user",
 					"request": {
-						"method": "PUT",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -116,7 +116,7 @@
 				{
 					"name": "Create auditorium",
 					"request": {
-						"method": "PUT",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -312,7 +312,7 @@
 				{
 					"name": "Create event",
 					"request": {
-						"method": "PUT",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -516,7 +516,7 @@
 				{
 					"name": "Book ticket",
 					"request": {
-						"method": "PUT",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",

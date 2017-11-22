@@ -36,7 +36,7 @@ import java.util.UUID;
 
 import static java.lang.String.format;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -134,7 +134,7 @@ public class BookingControllerTest {
         deleteAllTickets();
         User user = createUser();
         Event event = createEvent();
-        mvc.perform(put(BookingController.ENDPOINT)
+        mvc.perform(post(BookingController.ENDPOINT)
                 .param("userId", String.valueOf(user.getId()))
                 .param("eventId", String.valueOf(event.getId()))
                 .param("localDateTime", "2007-12-03T10:15:30")

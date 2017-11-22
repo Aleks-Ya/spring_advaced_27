@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -24,7 +23,6 @@ import static booking.web.controller.AuditoriumController.ENDPOINT;
 import static java.lang.String.format;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -53,7 +51,7 @@ public class AuditoriumControllerTest {
     public void createAuditorium() throws Exception {
         String auditoriumName = "Room";
         int auditoriumId = auditoriumService.getAuditoriums().size() + 1;
-        mvc.perform(put(ENDPOINT)
+        mvc.perform(post(ENDPOINT)
                 .param("auditoriumName", auditoriumName)
                 .param("seatsNumber", String.valueOf(1000))
                 .param("vipSeats", "1,2,3,4")
@@ -85,11 +83,6 @@ public class AuditoriumControllerTest {
 
     private void deleteAllAuditoriums() {
         auditoriumService.getAuditoriums().forEach(auditorium -> auditoriumService.delete(auditorium.getId()));
-    }
-
-    @Test
-    public void auditoriumsPost() throws Exception {
-        mvc.perform(post("/auditorium")).andExpect(status().is(HttpStatus.METHOD_NOT_ALLOWED.value()));
     }
 
     @Test
