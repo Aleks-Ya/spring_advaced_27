@@ -6,12 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,6 +27,7 @@ public class AuditoriumController {
     private static final String AUDITORIUM_FTL = "auditorium/auditorium";
     private static final String AUDITORIUM_SEATS_NUMBER_FTL = "auditorium/auditorium_seats_number";
     private static final String AUDITORIUM_VIP_SEATS_FTL = "auditorium/auditorium_vip_seats";
+    private static final String AUDITORIUM_DELETED_FTL = "auditorium/auditorium_deleted";
     private static final String AUDITORIUM_CREATED_FTL = "auditorium/auditorium_created";
 
     private final AuditoriumService auditoriumService;
@@ -101,5 +97,17 @@ public class AuditoriumController {
         Auditorium auditorium = auditoriumService.getById(auditoriumId);
         model.addAttribute(AUDITORIUM_ATTR, auditorium);
         return AUDITORIUM_VIP_SEATS_FTL;
+    }
+
+    @RequestMapping(path = "/id/{auditoriumId}/delete", method = RequestMethod.DELETE)
+    String remove(@PathVariable Long auditoriumId, @ModelAttribute("model") ModelMap model) {
+        Auditorium auditorium = auditoriumService.getById(auditoriumId);
+        if (auditorium != null) {
+            auditoriumService.delete(auditoriumId);
+            model.addAttribute(AUDITORIUM_ATTR, auditorium);
+        } else {
+            throw new IllegalArgumentException("Auditorium is not found by id=" + auditoriumId);
+        }
+        return AUDITORIUM_DELETED_FTL;
     }
 }

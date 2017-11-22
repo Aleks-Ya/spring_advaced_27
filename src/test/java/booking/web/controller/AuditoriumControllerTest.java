@@ -5,7 +5,9 @@ import booking.beans.configuration.db.DataSourceConfiguration;
 import booking.beans.configuration.db.DbSessionFactory;
 import booking.beans.models.Auditorium;
 import booking.beans.services.AuditoriumService;
+import booking.web.EnableWebMvcConfig;
 import booking.web.configuration.FreeMarkerConfig;
+import booking.web.error.AdviceErrorHandler;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -32,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {FreeMarkerConfig.class, AuditoriumController.class, DataSourceConfiguration.class,
-        DbSessionFactory.class, TestAuditoriumConfiguration.class
+        DbSessionFactory.class, TestAuditoriumConfiguration.class, AdviceErrorHandler.class, EnableWebMvcConfig.class
 })
 public class AuditoriumControllerTest {
     @Autowired
@@ -154,5 +157,29 @@ public class AuditoriumControllerTest {
                 .andExpect(content().string("<h1>VIP seats</h1>\n" +
                         "<p>Auditorium: Red room</p>\n" +
                         "<p>VIP seats: 1,2,3</p>"));
+    }
+
+    @Test
+    public void deleteExistsAuditorium() throws Exception {
+        String auditoriumName = "Blue hall";
+        Auditorium auditorium = auditoriumService.create(new Auditorium(auditoriumName, 500, Arrays.asList(1, 2, 3)));
+        mvc.perform(MockMvcRequestBuilders.delete(format("/auditorium/id/%s/delete", auditorium.getId())))
+                .andExpect(status().isOk())
+                .andExpect(content().string(format(
+                        "<h1>Auditorium is deleted</h1>\n" +
+                                "<p>Id: %d</p>\n" +
+                                "<p>Name: Blue hall</p>\n" +
+                                "<p>Seats number: 500</p>\n" +
+                                "<p>VIP seats: 1,2,3</p>",
+                        auditorium.getId())));
+    }
+
+    @Test
+    public void deleteNotExistsAuditorium() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.delete(format("/auditorium/id/%s/delete", 1234567)))
+                .andExpect(status().isOk())
+                .andExpect(content().string(
+                        "<h1>An error occurred</h1>\n" +
+                                "<p>Auditorium is not found by id=1234567</p>"));
     }
 }

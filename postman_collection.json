@@ -112,6 +112,7 @@
 		},
 		{
 			"name": "Auditorium",
+			"description": null,
 			"item": [
 				{
 					"name": "Create auditorium",
@@ -149,7 +150,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -172,7 +174,8 @@
 							"path": [
 								"auditorium"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -197,7 +200,8 @@
 								"id",
 								"1"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -222,7 +226,8 @@
 								"name",
 								"Blue hall"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -248,7 +253,8 @@
 								"Blue hall",
 								"seatsNumber"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -274,7 +280,8 @@
 								"Blue hall",
 								"vipSeats"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -300,7 +307,35 @@
 								"1",
 								"vipSeats"
 							]
-						}
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Delete auditorium",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/auditorium/id/1/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auditorium",
+								"id",
+								"1",
+								"delete"
+							]
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -308,6 +343,7 @@
 		},
 		{
 			"name": "Event",
+			"description": null,
 			"item": [
 				{
 					"name": "Create event",
@@ -355,7 +391,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -390,7 +427,8 @@
 								"event",
 								"batchUpload"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -413,7 +451,8 @@
 							"path": [
 								"event"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -438,7 +477,8 @@
 								"id",
 								"1"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -463,7 +503,8 @@
 								"name",
 								"Celebration"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -471,6 +512,7 @@
 		},
 		{
 			"name": "Discount",
+			"description": null,
 			"item": [
 				{
 					"name": "Get discount",
@@ -503,7 +545,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -559,7 +602,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -582,7 +626,8 @@
 							"path": [
 								"booking"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -607,7 +652,8 @@
 								"id",
 								"1"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -647,7 +693,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -697,7 +744,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -726,7 +774,8 @@
 								"booking",
 								"bookedTickets"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
