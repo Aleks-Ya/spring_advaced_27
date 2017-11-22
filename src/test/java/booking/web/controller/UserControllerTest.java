@@ -63,7 +63,7 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body)
         )
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().string("<h1>User is registered</h1>\n" +
                         "<p>Id: 1</p>\n" +
                         "<p>Name: John</p>\n" +
@@ -93,7 +93,7 @@ public class UserControllerTest {
         mvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body)
-        ).andExpect(status().isOk());
+        ).andExpect(status().isCreated());
     }
 
     @Test

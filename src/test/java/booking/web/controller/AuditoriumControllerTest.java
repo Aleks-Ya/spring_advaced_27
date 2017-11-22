@@ -56,7 +56,7 @@ public class AuditoriumControllerTest {
                 .param("seatsNumber", String.valueOf(1000))
                 .param("vipSeats", "1,2,3,4")
         )
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().string(format("<h1>Auditorium is created</h1>\n" +
                                 "<p>Id: %d</p>\n" +
                                 "<p>Name: Room</p>\n" +

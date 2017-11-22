@@ -141,7 +141,7 @@ public class BookingControllerTest {
                 .param("seats", "1,2,3")
                 .param("price", "100.5")
         )
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().string(format("<h1>The ticket is booked</h1>\n" +
                                 "<p>Id: 3</p>\n" +
                                 "<p>Event: %s</p>\n" +

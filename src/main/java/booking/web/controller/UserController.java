@@ -39,6 +39,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
     String register(@RequestBody User newUser, @ModelAttribute("model") ModelMap model) {
         User user = userService.register(newUser);
         model.addAttribute(USER_ATTR, user);

@@ -70,7 +70,7 @@ public class EventControllerTest {
                 .param("dateTime", "2007-12-03T10:15:30")
                 .param("auditoriumId", "1")
         )
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(content().string("<h1>Event created</h1>\n" +
                         "<p>Id: 1</p>\n" +
                         "<p>Name: Discussion</p>\n" +

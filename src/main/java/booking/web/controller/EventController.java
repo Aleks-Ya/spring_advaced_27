@@ -47,6 +47,7 @@ public class EventController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
     String create(@RequestParam String name,
                   @RequestParam String rate,
                   @RequestParam Double bastPrice,
