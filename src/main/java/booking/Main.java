@@ -3,16 +3,8 @@ package booking;
 import booking.beans.aspects.CounterAspect;
 import booking.beans.aspects.DiscountAspect;
 import booking.beans.aspects.LuckyWinnerAspect;
-import booking.beans.models.Auditorium;
-import booking.beans.models.Event;
-import booking.beans.models.Rate;
-import booking.beans.models.Ticket;
-import booking.beans.models.User;
-import booking.beans.services.AuditoriumService;
-import booking.beans.services.BookingService;
-import booking.beans.services.DiscountService;
-import booking.beans.services.EventService;
-import booking.beans.services.UserService;
+import booking.beans.models.*;
+import booking.beans.services.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -50,8 +42,8 @@ public class Main {
         Auditorium redHall = auditoriumService.getByName("Red hall");
         LocalDateTime dateOfEvent = LocalDateTime.of(LocalDate.of(2016, 2, 5), LocalTime.of(15, 45, 0));
 
-        userService.register(new User(email, name, LocalDate.now()));
-        userService.register(new User("laory@yandex.ru", name, LocalDate.of(1992, 4, 29)));
+        userService.register(new User(email, name, LocalDate.now(), null, null));
+        userService.register(new User("laory@yandex.ru", name, LocalDate.of(1992, 4, 29), null, null));
 
         User userByEmail = userService.getUserByEmail(email);
         System.out.println("User with email: [" + email + "] is " + userByEmail);

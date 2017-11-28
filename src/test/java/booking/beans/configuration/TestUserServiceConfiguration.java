@@ -7,6 +7,7 @@ import booking.beans.services.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 
 /**
@@ -20,12 +21,14 @@ public class TestUserServiceConfiguration {
 
     @Bean
     public User testUser1() {
-        return new User(0, "dmitriy.vbabichev@gmail.com", "Dmytro Babichev", java.time.LocalDate.of(1992, 4, 29));
+        return new User(0, "dmitriy.vbabichev@gmail.com", "Dmytro Babichev",
+                LocalDate.of(1992, 4, 29), null, null);
     }
 
     @Bean
     public User testUser2() {
-        return new User(1, "laory@yandex.ru", "Dmytro Babichev", java.time.LocalDate.of(1992, 4, 29));
+        return new User(1, "laory@yandex.ru", "Dmytro Babichev",
+                LocalDate.of(1992, 4, 29), null, null);
     }
 
     @Bean

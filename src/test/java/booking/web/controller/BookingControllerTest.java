@@ -8,11 +8,7 @@ import booking.beans.daos.mocks.BookingDAOBookingMock;
 import booking.beans.daos.mocks.DBAuditoriumDAOMock;
 import booking.beans.daos.mocks.EventDAOMock;
 import booking.beans.daos.mocks.UserDAOMock;
-import booking.beans.models.Auditorium;
-import booking.beans.models.Event;
-import booking.beans.models.Rate;
-import booking.beans.models.Ticket;
-import booking.beans.models.User;
+import booking.beans.models.*;
 import booking.beans.services.AuditoriumService;
 import booking.beans.services.BookingService;
 import booking.beans.services.EventService;
@@ -217,7 +213,7 @@ public class BookingControllerTest {
     }
 
     private User createUser() {
-        User userObj = new User(UUID.randomUUID() + "mat@gmail.com", "Mat", null);
+        User userObj = new User(UUID.randomUUID() + "mat@gmail.com", "Mat", null, null, null);
         return userService.register(userObj);
     }
 }

@@ -91,7 +91,7 @@ public class BookingServiceImplTest {
     @Test(expected = RuntimeException.class)
     public void testBookTicket_NotRegistered() {
         Event testEvent1 = (Event) applicationContext.getBean("testEvent1");
-        User newUser = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString(), LocalDate.now());
+        User newUser = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString(), LocalDate.now(), null, null);
         Ticket newTicket = new Ticket(testEvent1, LocalDateTime.now(), Arrays.asList(3, 4), newUser, 0.0);
         bookingService.bookTicket(newUser, newTicket);
     }
@@ -134,7 +134,7 @@ public class BookingServiceImplTest {
     @Test
     public void testGetTicketPrice_WithoutDiscount() {
         Ticket ticket = (Ticket) applicationContext.getBean("testTicket1");
-        User user = userDAOMock.create(new User("dadsada", "asdasda", LocalDate.now().minus(1, ChronoUnit.DAYS)));
+        User user = userDAOMock.create(new User("dadsada", "asdasda", LocalDate.now().minus(1, ChronoUnit.DAYS), null, null));
         Event event = ticket.getEvent();
         double ticketPrice = bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
                 event.getDateTime(), ticket.getSeatsList(), user);
@@ -144,7 +144,7 @@ public class BookingServiceImplTest {
     @Test
     public void testGetTicketPrice_DiscountsForTicketsAndForBirthday() {
         Ticket ticket = (Ticket) applicationContext.getBean("testTicket1");
-        User testUser = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString(), LocalDate.now());
+        User testUser = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString(), LocalDate.now(), null, null);
         User registeredUser = userDAOMock.create(testUser);
         bookingService.bookTicket(registeredUser,
                 new Ticket(ticket.getEvent(), LocalDateTime.now(), Collections.singletonList(1),
@@ -162,7 +162,7 @@ public class BookingServiceImplTest {
     @Test
     public void testGetTicketPrice_DiscountsForTicketsAndForBirthday_MidRate() {
         Ticket ticket = (Ticket) applicationContext.getBean("testTicket2");
-        User testUser = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString(), LocalDate.now());
+        User testUser = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString(), LocalDate.now(), null, null);
         User registeredUser = userDAOMock.create(testUser);
         bookingService.bookTicket(registeredUser,
                 new Ticket(ticket.getEvent(), LocalDateTime.now(), Collections.singletonList(3),

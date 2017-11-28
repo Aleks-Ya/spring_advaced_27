@@ -59,7 +59,7 @@ public class UserServiceImplTest {
     @Test
     public void testRegister() throws Exception {
         String email = UUID.randomUUID().toString();
-        User user = new User(email, UUID.randomUUID().toString(), LocalDate.now());
+        User user = new User(email, UUID.randomUUID().toString(), LocalDate.now(), null, null);
         long registeredId = userService.register(user).getId();
         assertEquals("User should be the same", userService.getUserByEmail(email), user.withId(registeredId));
     }
@@ -81,7 +81,7 @@ public class UserServiceImplTest {
     public void testUsersGetByName() throws Exception {
         User testUser1 = (User) applicationContext.getBean("testUser1");
         List<User> before = userService.getUsersByName(testUser1.getName());
-        User addedUser = new User(UUID.randomUUID().toString(), testUser1.getName(), LocalDate.now());
+        User addedUser = new User(UUID.randomUUID().toString(), testUser1.getName(), LocalDate.now(), null, null);
         long registeredId = userService.register(addedUser).getId();
         List<User> after = userService.getUsersByName(testUser1.getName());
         before.add(addedUser.withId(registeredId));

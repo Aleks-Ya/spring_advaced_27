@@ -81,7 +81,7 @@ public class TestLuckyWinnerAspect {
     @Test
     public void testCalculateDiscount() {
         User user = (User) applicationContext.getBean("testUser1");
-        User discountUser = new User(user.getId(), user.getEmail(), user.getName(), LocalDate.now());
+        User discountUser = new User(user.getId(), user.getEmail(), user.getName(), LocalDate.now(), null, null);
         Ticket ticket1 = (Ticket) applicationContext.getBean("testTicket1");
         bookingService.bookTicket(discountUser,
                                   new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(5, 6), user, ticket1.getPrice()));

@@ -58,7 +58,7 @@ public class DiscountControllerTest {
 
     @Test
     public void getNonZeroDiscount() throws Exception {
-        User user = userService.register(new User("john@gmail.com", "Test User", null));
+        User user = userService.register(new User("john@gmail.com", "Test User", null, null, null));
         Event event = eventService.create(new Event("Meeting", Rate.HIGH, 100, null, null));
         mvc.perform(get(DiscountController.ENDPOINT)
                 .param("userId", String.valueOf(user.getId()))
@@ -70,7 +70,7 @@ public class DiscountControllerTest {
 
     @Test
     public void getZeroDiscount() throws Exception {
-        User user = userService.register(new User("john2@gmail.com", "John", null));
+        User user = userService.register(new User("john2@gmail.com", "John", null, null, null));
         Event event = eventService.create(new Event("Meeting2", Rate.HIGH, 100, null, null));
         mvc.perform(get(DiscountController.ENDPOINT)
                 .param("userId", String.valueOf(user.getId()))
