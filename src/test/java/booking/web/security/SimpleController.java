@@ -2,14 +2,16 @@ package booking.web.security;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author Aleksey Yablokov
  */
 @Controller
 @SuppressWarnings("unused")
-public class SimpleController {
+class SimpleController {
 
+    @ResponseBody
     @RequestMapping("/abc")
     String getAbc() {
         return "abc";
