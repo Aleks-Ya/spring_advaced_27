@@ -16,9 +16,11 @@
         <id name="id" column="ID">
             <generator class="identity"/>
         </id>
-        <property name="email" column="EMAIL" type="string" unique="true"/>
-        <property name="name" column="NAME" type="string"/>
+        <property name="email" type="string" column="EMAIL" unique="true"/>
+        <property name="name" type="string" column="NAME"/>
         <property name="birthday" type="java.time.LocalDate" column="EVENT_DATE"/>
+        <property name="password" type="string" column="PASSWORD"/>
+        <property name="roles" type="string" column="ROLES"/>
     </class>
 
 </hibernate-mapping>
