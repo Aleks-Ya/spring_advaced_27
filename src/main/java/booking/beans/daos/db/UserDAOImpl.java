@@ -25,7 +25,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
         if (Objects.nonNull(byEmail)) {
             throw new IllegalStateException(
                     String.format("Unable to store user: [%s]. User with email: [%s] is already created.", user,
-                                  user.getEmail()));
+                            user.getEmail()));
         } else {
             Long userId = (Long) getCurrentSession().save(user);
             return user.withId(userId);
@@ -51,7 +51,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
     @Override
     @SuppressWarnings("unchecked")
     public List<User> getAllByName(String name) {
-        return createBlankCriteria(User.class).list();
+        return createBlankCriteria(User.class).add(Restrictions.eq("name", name)).list();
     }
 
     @Override

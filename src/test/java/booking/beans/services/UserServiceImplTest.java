@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.UUID;
 
 import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -59,9 +59,18 @@ public class UserServiceImplTest {
     @Test
     public void testRegister() throws Exception {
         String email = UUID.randomUUID().toString();
-        User user = new User(email, UUID.randomUUID().toString(), LocalDate.now(), null, null);
-        long registeredId = userService.register(user).getId();
-        assertEquals("User should be the same", userService.getUserByEmail(email), user.withId(registeredId));
+        String name = UUID.randomUUID().toString();
+        User user = new User(email, name, LocalDate.now(), "mypass", "admin,user");
+        User expUser = userService.register(user);
+
+        User actUserByEmail = userService.getUserByEmail(email);
+
+        List<User> usersByName = userService.getUsersByName(name);
+        assertThat(usersByName, hasSize(1));
+        User actUserByName = usersByName.get(0);
+
+        assertEquals("User should be the same", expUser, actUserByEmail);
+        assertEquals("User should be the same", expUser, actUserByName);
     }
 
     @Test(expected = RuntimeException.class)
