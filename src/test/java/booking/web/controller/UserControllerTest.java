@@ -54,10 +54,10 @@ public class UserControllerTest {
     @Test
     public void register() throws Exception {
         String body = JsonUtil.format("{" +
-                "  'id': 1," +
                 "  'name': 'John'," +
                 "  'email': 'john@gmail.com'," +
-                "  'birthday': '2000-07-03'" +
+                "  'birthday': '2000-07-03'," +
+                "  'password': 'pass'" +
                 "}");
         mvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -74,10 +74,10 @@ public class UserControllerTest {
     @Test
     public void getById() throws Exception {
         String body = JsonUtil.format("{" +
-                "  'id': 2," +
                 "  'name': 'Mary'," +
                 "  'email': 'mary@gmail.com'," +
-                "  'birthday': '2010-02-15'" +
+                "  'birthday': '2010-02-15'," +
+                "  'password': 'pass'" +
                 "}");
         registerUser(body);
         mvc.perform(get("/user/id/2"))
@@ -113,19 +113,19 @@ public class UserControllerTest {
         assertNull(userService.getUserByEmail(email2));
 
         String fileContent1 = JsonUtil.format("{" +
-                "'id': 3," +
                 "'name': 'Steven'," +
                 "'email': '%s'," +
-                "'birthday': '1990-07-03'" +
+                "'birthday': '1990-07-03'," +
+                "'password': 'pass'" +
                 "}", email1
         );
         MockMultipartFile multipartFile1 = new MockMultipartFile(UserController.PART_NAME, "filename1.json", MediaType.APPLICATION_JSON_VALUE, fileContent1.getBytes());
 
         String fileContent2 = JsonUtil.format("{" +
-                "  'id': 4," +
                 "  'name': 'Julia'," +
                 "  'email': '%s'," +
-                "  'birthday': '2012-09-11'" +
+                "  'birthday': '2012-09-11'," +
+                "  'password': 'pass'" +
                 "}", email2
         );
         MockMultipartFile multipartFile2 = new MockMultipartFile(UserController.PART_NAME, "filename2.json", MediaType.APPLICATION_JSON_VALUE, fileContent2.getBytes());

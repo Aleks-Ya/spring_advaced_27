@@ -23,7 +23,9 @@ import java.util.UUID;
 
 import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created with IntelliJ IDEA.
@@ -57,7 +59,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testRegister() throws Exception {
+    public void testRegister() {
         String email = UUID.randomUUID().toString();
         String name = UUID.randomUUID().toString();
         User user = new User(email, name, LocalDate.now(), "mypass", "admin,user");
@@ -74,23 +76,23 @@ public class UserServiceImplTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void testRegister_Exception() throws Exception {
+    public void testRegister_Exception() {
         User testUser1 = (User) applicationContext.getBean("testUser1");
         userService.register(testUser1);
     }
 
     @Test
-    public void testRemove() throws Exception {
+    public void testRemove() {
         User testUser1 = (User) applicationContext.getBean("testUser1");
         userService.remove(testUser1);
         assertEquals("User should be the same", userService.getUserByEmail(testUser1.getEmail()), null);
     }
 
     @Test
-    public void testUsersGetByName() throws Exception {
+    public void testUsersGetByName() {
         User testUser1 = (User) applicationContext.getBean("testUser1");
         List<User> before = userService.getUsersByName(testUser1.getName());
-        User addedUser = new User(UUID.randomUUID().toString(), testUser1.getName(), LocalDate.now(), null, null);
+        User addedUser = new User(UUID.randomUUID().toString(), testUser1.getName(), LocalDate.now(), "pass", null);
         long registeredId = userService.register(addedUser).getId();
         List<User> after = userService.getUsersByName(testUser1.getName());
         before.add(addedUser.withId(registeredId));
@@ -99,14 +101,14 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testGetUserByEmail() throws Exception {
+    public void testGetUserByEmail() {
         User testUser1 = (User) applicationContext.getBean("testUser1");
         User foundUser = userService.getUserByEmail(testUser1.getEmail());
         assertEquals("User should match", testUser1, foundUser);
     }
 
     @Test
-    public void testGetUserByEmail_Null() throws Exception {
+    public void testGetUserByEmail_Null() {
         User foundUser = userService.getUserByEmail(UUID.randomUUID().toString());
         assertNull("There should not be such user", foundUser);
     }

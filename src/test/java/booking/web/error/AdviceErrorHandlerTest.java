@@ -41,10 +41,10 @@ public class AdviceErrorHandlerTest {
     @Test
     public void register() throws Exception {
         String body = JsonUtil.format("{" +
-                "  'id': 1," +
                 "  'name': 'John'," +
                 "  'email': null," +
-                "  'birthday': '2000-07-03'" +
+                "  'birthday': '2000-07-03'," +
+                "  'password': 'pass'" +
                 "}");
         mvc.perform(post("/user")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -52,7 +52,7 @@ public class AdviceErrorHandlerTest {
         )
                 .andExpect(status().isOk())
                 .andExpect(content().string("<h1>An error occurred</h1>\n" +
-                        "<p>User's email is [null]. User: [User{id=1, email='null', name='John', birthday=2000-07-03, password='null', roles='null'}]</p>"));
+                        "<p>User's email is [null]: [User {email='null', name='John', birthday='2000-07-03'}]</p>"));
     }
 
 }

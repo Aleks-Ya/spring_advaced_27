@@ -22,13 +22,13 @@ public class TestUserServiceConfiguration {
     @Bean
     public User testUser1() {
         return new User(0, "dmitriy.vbabichev@gmail.com", "Dmytro Babichev",
-                LocalDate.of(1992, 4, 29), null, null);
+                LocalDate.of(1992, 4, 29), "pass", null);
     }
 
     @Bean
     public User testUser2() {
         return new User(1, "laory@yandex.ru", "Dmytro Babichev",
-                LocalDate.of(1992, 4, 29), null, null);
+                LocalDate.of(1992, 4, 29), "pass", null);
     }
 
     @Bean

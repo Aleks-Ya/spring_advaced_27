@@ -8,8 +8,21 @@ import booking.beans.daos.mocks.BookingDAOBookingMock;
 import booking.beans.daos.mocks.DBAuditoriumDAOMock;
 import booking.beans.daos.mocks.EventDAOMock;
 import booking.beans.daos.mocks.UserDAOMock;
-import booking.beans.models.*;
-import booking.beans.services.*;
+import booking.beans.models.Auditorium;
+import booking.beans.models.Event;
+import booking.beans.models.Rate;
+import booking.beans.models.Ticket;
+import booking.beans.models.User;
+import booking.beans.services.AuditoriumService;
+import booking.beans.services.AuditoriumServiceImpl;
+import booking.beans.services.BookingService;
+import booking.beans.services.BookingServiceImpl;
+import booking.beans.services.DiscountService;
+import booking.beans.services.DiscountServiceImpl;
+import booking.beans.services.EventService;
+import booking.beans.services.EventServiceImpl;
+import booking.beans.services.UserService;
+import booking.beans.services.UserServiceImpl;
 import booking.beans.services.discount.BirthdayStrategy;
 import booking.beans.services.discount.DiscountStrategy;
 import booking.beans.services.discount.TicketsStrategy;
@@ -17,7 +30,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -82,13 +100,13 @@ public class TestBookingServiceConfiguration {
     @Bean
     public User testUser1() {
         return new User(0, "dmitriy.vbabichev@gmail.com", "Dmytro Babichev",
-                LocalDate.of(1992, 4, 29), null, null);
+                LocalDate.of(1992, 4, 29), "dmpass", null);
     }
 
     @Bean
     public User testUser2() {
         return new User(1, "laory@yandex.ru", "Dmytro Babichev",
-                LocalDate.of(1992, 4, 29), null, null);
+                LocalDate.of(1992, 4, 29), "lapass", null);
     }
 
     @Bean

@@ -3,6 +3,7 @@ package booking.web.controller;
 import booking.beans.models.User;
 import booking.beans.services.UserService;
 import booking.util.JsonUtil;
+import booking.web.security.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -38,9 +40,15 @@ public class UserController {
         this.userService = userService;
     }
 
+    private static User createUserFromNewUserData(@RequestBody NewUserData newUserData) {
+        return new User(newUserData.getEmail(), newUserData.getName(), newUserData.getBirthday(),
+                newUserData.getPassword(), Roles.RESGISTERED_USER);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    String register(@RequestBody User newUser, @ModelAttribute("model") ModelMap model) {
+    String register(@RequestBody NewUserData newUserData, @ModelAttribute("model") ModelMap model) {
+        User newUser = createUserFromNewUserData(newUserData);
         User user = userService.register(newUser);
         model.addAttribute(USER_ATTR, user);
         return USER_REGISTERED_FTL;
@@ -57,8 +65,48 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public void batchUpload(@RequestParam(value = PART_NAME) List<MultipartFile> users) throws IOException {
         for (MultipartFile userFile : users) {
-            User user = JsonUtil.readValue(userFile.getBytes(), User.class);
-            userService.register(user);
+            NewUserData newUserData = JsonUtil.readValue(userFile.getBytes(), NewUserData.class);
+            User newUser = createUserFromNewUserData(newUserData);
+            userService.register(newUser);
+        }
+    }
+
+    private static class NewUserData {
+        private String email;
+        private String name;
+        private LocalDate birthday;
+        private String password;
+
+        public String getEmail() {
+            return email;
+        }
+
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public LocalDate getBirthday() {
+            return birthday;
+        }
+
+        public void setBirthday(LocalDate birthday) {
+            this.birthday = birthday;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public void setPassword(String password) {
+            this.password = password;
         }
     }
 }
