@@ -1,5 +1,6 @@
 package booking.web.security;
 
+import org.springframework.context.annotation.Import;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -8,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * @author Aleksey Yablokov
  */
 @EnableWebSecurity
+@Import(UserDaoUserDetailsService.class)
 class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override

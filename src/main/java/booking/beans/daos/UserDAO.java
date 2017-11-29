@@ -35,5 +35,8 @@ public interface UserDAO {
         if (Objects.isNull(user.getName())) {
             throw new NullPointerException("User's name is [null]. User: [" + user + "]");
         }
+        if (Objects.isNull(user.getPassword())) {
+            throw new NullPointerException("User's password is [null]. User: [" + user + "]");
+        }
     }
 }
