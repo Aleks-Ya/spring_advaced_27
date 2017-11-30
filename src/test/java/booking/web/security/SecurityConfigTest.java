@@ -5,7 +5,7 @@ import booking.beans.configuration.db.DataSourceConfiguration;
 import booking.beans.configuration.db.DbSessionFactory;
 import booking.beans.models.User;
 import booking.beans.services.UserService;
-import booking.web.EnableWebMvcConfig;
+import booking.web.configuration.MvcConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,8 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {EnableWebMvcConfig.class, SimpleController.class, SecurityConfig.class,
-        TestUserServiceConfiguration.class,  DataSourceConfiguration.class, DbSessionFactory.class})
+@ContextConfiguration(classes = {MvcConfig.class, SimpleController.class, SecurityConfig.class,
+        TestUserServiceConfiguration.class, DataSourceConfiguration.class, DbSessionFactory.class})
 public class SecurityConfigTest {
     @Autowired
     private WebApplicationContext context;

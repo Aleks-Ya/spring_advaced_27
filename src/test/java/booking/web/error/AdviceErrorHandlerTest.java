@@ -3,8 +3,8 @@ package booking.web.error;
 import booking.beans.configuration.db.DataSourceConfiguration;
 import booking.beans.configuration.db.DbSessionFactory;
 import booking.util.JsonUtil;
-import booking.web.EnableWebMvcConfig;
 import booking.web.configuration.FreeMarkerConfig;
+import booking.web.configuration.MvcConfig;
 import booking.web.controller.UserController;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {EnableWebMvcConfig.class, FreeMarkerConfig.class, UserController.class, DataSourceConfiguration.class,
+@ContextConfiguration(classes = {MvcConfig.class, FreeMarkerConfig.class, UserController.class, DataSourceConfiguration.class,
         DbSessionFactory.class, booking.beans.configuration.TestUserServiceConfiguration.class, AdviceErrorHandler.class
 })
 public class AdviceErrorHandlerTest {

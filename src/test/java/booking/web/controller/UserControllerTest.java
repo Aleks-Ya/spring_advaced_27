@@ -5,8 +5,8 @@ import booking.beans.configuration.db.DataSourceConfiguration;
 import booking.beans.configuration.db.DbSessionFactory;
 import booking.beans.services.UserService;
 import booking.util.JsonUtil;
-import booking.web.EnableWebMvcConfig;
 import booking.web.configuration.FreeMarkerConfig;
+import booking.web.configuration.MvcConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {EnableWebMvcConfig.class, FreeMarkerConfig.class, UserController.class,
+@ContextConfiguration(classes = {MvcConfig.class, FreeMarkerConfig.class, UserController.class,
         DataSourceConfiguration.class, DbSessionFactory.class, TestUserServiceConfiguration.class
 })
 public class UserControllerTest {

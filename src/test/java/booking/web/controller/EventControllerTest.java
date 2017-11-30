@@ -7,8 +7,8 @@ import booking.beans.models.Event;
 import booking.beans.models.Rate;
 import booking.beans.services.EventService;
 import booking.util.ResourceUtil;
-import booking.web.EnableWebMvcConfig;
 import booking.web.configuration.FreeMarkerConfig;
+import booking.web.configuration.MvcConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = {EnableWebMvcConfig.class, FreeMarkerConfig.class, EventController.class,
+@ContextConfiguration(classes = {MvcConfig.class, FreeMarkerConfig.class, EventController.class,
         DataSourceConfiguration.class, DbSessionFactory.class, TestEventServiceConfiguration.class
 })
 public class EventControllerTest {

@@ -1,6 +1,6 @@
 package booking.web;
 
-import booking.web.configuration.MvcConfig;
+import booking.web.configuration.RootConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
@@ -26,7 +26,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
 
     private AnnotationConfigWebApplicationContext getContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.register(MvcConfig.class);
+        context.register(RootConfig.class);
         return context;
     }
 
