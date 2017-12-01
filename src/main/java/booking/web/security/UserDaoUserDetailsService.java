@@ -26,22 +26,24 @@ public class UserDaoUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         List<User> users = userService.getUsersByName(username);
+
         if (users.size() > 1) {
-            throw new IllegalStateException("More than one user with name '" + username + "'.");
+            throw new UsernameNotFoundException("More than one user with name '" + username + "'.");
         }
-        UserDetails userDetails = null;
-        if (!users.isEmpty()) {
-            User user = users.get(0);
-            String rolesStr = user.getRoles();
-            List<SimpleGrantedAuthority> authorities = Collections.emptyList();
-            if (rolesStr != null) {
-                authorities = Stream.of(rolesStr.split(","))
-                        .map(SimpleGrantedAuthority::new)
-                        .collect(Collectors.toList());
-            }
-            userDetails = new org.springframework.security.core.userdetails.User(
-                    user.getName(), user.getPassword(), authorities);
+
+        if (users.isEmpty()) {
+            throw new UsernameNotFoundException(username);
         }
-        return userDetails;
+
+        User user = users.get(0);
+        String rolesStr = user.getRoles();
+        List<SimpleGrantedAuthority> authorities = Collections.emptyList();
+        if (rolesStr != null) {
+            authorities = Stream.of(rolesStr.split(","))
+                    .map(SimpleGrantedAuthority::new)
+                    .collect(Collectors.toList());
+        }
+        return new org.springframework.security.core.userdetails.User(
+                user.getName(), user.getPassword(), authorities);
     }
 }
