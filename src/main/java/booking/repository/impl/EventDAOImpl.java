@@ -2,7 +2,6 @@ package booking.repository.impl;
 
 import booking.domain.Auditorium;
 import booking.domain.Event;
-import booking.repository.AbstractDAO;
 import booking.repository.EventDAO;
 import org.hibernate.Query;
 import org.hibernate.criterion.LogicalExpression;

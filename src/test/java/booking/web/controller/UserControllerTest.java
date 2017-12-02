@@ -1,8 +1,8 @@
 package booking.web.controller;
 
+import booking.repository.config.DataSourceConfig;
+import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.config.TestUserServiceConfig;
-import booking.repository.config.db.DataSourceConfig;
-import booking.repository.config.db.DbSessionFactoryConfig;
 import booking.service.UserService;
 import booking.util.JsonUtil;
 import booking.web.config.FreeMarkerConfig;

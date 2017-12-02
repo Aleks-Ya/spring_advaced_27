@@ -1,7 +1,6 @@
 package booking.repository.impl;
 
 import booking.domain.User;
-import booking.repository.AbstractDAO;
 import booking.repository.UserDAO;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;

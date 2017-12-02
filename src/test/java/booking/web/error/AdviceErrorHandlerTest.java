@@ -1,7 +1,7 @@
 package booking.web.error;
 
-import booking.repository.config.db.DataSourceConfig;
-import booking.repository.config.db.DbSessionFactoryConfig;
+import booking.repository.config.DataSourceConfig;
+import booking.repository.config.DbSessionFactoryConfig;
 import booking.util.JsonUtil;
 import booking.web.config.FreeMarkerConfig;
 import booking.web.config.MvcConfig;

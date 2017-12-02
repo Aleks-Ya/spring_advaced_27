@@ -2,10 +2,10 @@ package booking.service.aspects;
 
 import booking.domain.Ticket;
 import booking.domain.User;
+import booking.repository.config.DataSourceConfig;
+import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.config.PropertySourceConfig;
 import booking.repository.config.TestAspectsConfig;
-import booking.repository.config.db.DataSourceConfig;
-import booking.repository.config.db.DbSessionFactoryConfig;
 import booking.repository.mocks.BookingDAOBookingMock;
 import booking.repository.mocks.DBAuditoriumDAOMock;
 import booking.repository.mocks.EventDAOMock;

@@ -4,7 +4,6 @@ import booking.domain.Booking;
 import booking.domain.Event;
 import booking.domain.Ticket;
 import booking.domain.User;
-import booking.repository.AbstractDAO;
 import booking.repository.BookingDAO;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;

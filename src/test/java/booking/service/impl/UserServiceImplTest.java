@@ -1,10 +1,10 @@
 package booking.service.impl;
 
 import booking.domain.User;
+import booking.repository.config.DataSourceConfig;
+import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.config.PropertySourceConfig;
 import booking.repository.config.TestUserServiceConfig;
-import booking.repository.config.db.DataSourceConfig;
-import booking.repository.config.db.DbSessionFactoryConfig;
 import booking.repository.mocks.UserDAOMock;
 import booking.service.UserService;
 import org.junit.After;

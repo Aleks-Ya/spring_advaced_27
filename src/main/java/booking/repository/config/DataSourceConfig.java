@@ -1,4 +1,4 @@
-package booking.repository.config.db;
+package booking.repository.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

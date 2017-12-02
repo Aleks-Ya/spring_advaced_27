@@ -2,9 +2,9 @@ package booking.web.controller;
 
 import booking.domain.Event;
 import booking.domain.Rate;
+import booking.repository.config.DataSourceConfig;
+import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.config.TestEventServiceConfig;
-import booking.repository.config.db.DataSourceConfig;
-import booking.repository.config.db.DbSessionFactoryConfig;
 import booking.service.EventService;
 import booking.util.ResourceUtil;
 import booking.web.config.FreeMarkerConfig;

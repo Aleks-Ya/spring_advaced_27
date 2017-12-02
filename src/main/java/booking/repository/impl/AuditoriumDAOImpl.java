@@ -1,7 +1,6 @@
 package booking.repository.impl;
 
 import booking.domain.Auditorium;
-import booking.repository.AbstractDAO;
 import booking.repository.AuditoriumDAO;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;

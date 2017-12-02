@@ -1,8 +1,8 @@
 package booking.web.controller;
 
+import booking.repository.config.DataSourceConfig;
+import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.config.TestBookingServiceConfig;
-import booking.repository.config.db.DataSourceConfig;
-import booking.repository.config.db.DbSessionFactoryConfig;
 import booking.repository.mocks.BookingDAOBookingMock;
 import booking.repository.mocks.DBAuditoriumDAOMock;
 import booking.repository.mocks.EventDAOMock;

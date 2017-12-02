@@ -1,10 +1,10 @@
 package booking.service.impl;
 
 import booking.domain.Auditorium;
+import booking.repository.config.DataSourceConfig;
+import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.config.PropertySourceConfig;
 import booking.repository.config.TestAuditoriumConfig;
-import booking.repository.config.db.DataSourceConfig;
-import booking.repository.config.db.DbSessionFactoryConfig;
 import booking.repository.mocks.DBAuditoriumDAOMock;
 import booking.service.AuditoriumService;
 import org.junit.After;
