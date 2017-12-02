@@ -5,7 +5,7 @@ import booking.beans.config.db.DataSourceConfig;
 import booking.beans.config.db.DbSessionFactoryConfig;
 import booking.beans.models.Event;
 import booking.beans.models.Rate;
-import booking.beans.services.EventService;
+import booking.service.EventService;
 import booking.util.ResourceUtil;
 import booking.web.config.FreeMarkerConfig;
 import booking.web.config.MvcConfig;

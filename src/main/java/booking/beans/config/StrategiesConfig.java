@@ -1,6 +1,6 @@
 package booking.beans.config;
 
-import booking.beans.services.DiscountStrategy;
+import booking.service.DiscountStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;

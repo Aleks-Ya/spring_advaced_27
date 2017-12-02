@@ -25,16 +25,16 @@ public class CounterAspect {
     protected static final Map<String, Integer> getPriceByNameCounter = new HashMap<>();
     protected static final Map<String, Integer> bookByNameCounter     = new HashMap<>();
 
-    @Pointcut("(execution(* booking.beans.services.EventService.getEvent(String, ..)) && args(eventName, ..)) || "
-              + "execution(* booking.beans.services.EventService.getByName(String)) && args(eventName))")
+    @Pointcut("(execution(* booking.service.EventService.getEvent(String, ..)) && args(eventName, ..)) || "
+              + "execution(* booking.service.EventService.getByName(String)) && args(eventName))")
     private void accessedByName(String eventName) {
     }
 
-    @Pointcut("(execution(* booking.beans.services.BookingService.getTicketPrice(String, ..)) && args(eventName,..))")
+    @Pointcut("(execution(* booking.service.BookingService.getTicketPrice(String, ..)) && args(eventName,..))")
     private void getPriceByName(String eventName) {
     }
 
-    @Pointcut("(execution(* booking.beans.services.BookingService.bookTicket(*, booking.beans.models.Ticket)) && args(*, ticket))")
+    @Pointcut("(execution(* booking.service.BookingService.bookTicket(*, booking.beans.models.Ticket)) && args(*, ticket))")
     private void bookTicketByName(Ticket ticket) {
     }
 

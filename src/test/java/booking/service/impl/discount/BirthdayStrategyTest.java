@@ -1,6 +1,5 @@
-package booking.beans.services.impl.discount;
+package booking.service.impl.discount;
 
-import booking.beans.daos.mocks.BookingDAODiscountMock;
 import booking.beans.models.User;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,28 +19,22 @@ import static org.junit.Assert.assertEquals;
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = booking.beans.config.TestStrategiesConfig.class)
-public class TicketsStrategyTest {
+public class BirthdayStrategyTest {
 
     @Autowired
-    private TicketsStrategy strategy;
-
-    @Autowired
-    private BookingDAODiscountMock bookingDAODiscountMock;
+    private BirthdayStrategy strategy;
 
     @org.junit.Test
     public void testCalculateDiscount_UserHasDiscount() throws Exception {
-        System.out.println(strategy.getClass());
-        User userWithDiscount = new User("test@ema.il", bookingDAODiscountMock.userThatBookedTickets,
-                LocalDate.now(), null, null);
+        User userWithDiscount = new User("test@ema.il", "Test Name", LocalDate.now(), null, null);
         double discount = strategy.calculateDiscount(userWithDiscount);
-        assertEquals("User: [" + userWithDiscount + "] has tickets discount", strategy.ticketsDiscountValue, discount, 0.00001);
+        assertEquals("User: [" + userWithDiscount + "] has birthday discount", strategy.birthdayDiscountValue, discount, 0.00001);
     }
 
     @org.junit.Test
     public void testCalculateDiscount_UserHasNoDiscount() throws Exception {
-        User userWithoutDiscount = new User("test@ema.il", "Test Name 2",
-                LocalDate.now().minus(1, ChronoUnit.DAYS), null, null);
+        User userWithoutDiscount = new User("test@ema.il", "Test Name", LocalDate.now().minus(1, ChronoUnit.DAYS), null, null);
         double discount = strategy.calculateDiscount(userWithoutDiscount);
-        assertEquals("User: [" + userWithoutDiscount + "] doesn't have tickets discount", strategy.defaultDiscount, discount, 0.00001);
+        assertEquals("User: [" + userWithoutDiscount + "] doesn't have birthday discount", strategy.defaultDiscountValue, discount, 0.00001);
     }
 }

@@ -3,7 +3,7 @@ package booking.web.controller;
 import booking.beans.config.TestUserServiceConfig;
 import booking.beans.config.db.DataSourceConfig;
 import booking.beans.config.db.DbSessionFactoryConfig;
-import booking.beans.services.UserService;
+import booking.service.UserService;
 import booking.util.JsonUtil;
 import booking.web.config.FreeMarkerConfig;
 import booking.web.config.MvcConfig;

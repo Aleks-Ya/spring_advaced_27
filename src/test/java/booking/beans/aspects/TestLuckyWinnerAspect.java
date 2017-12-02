@@ -11,7 +11,7 @@ import booking.beans.daos.mocks.EventDAOMock;
 import booking.beans.daos.mocks.UserDAOMock;
 import booking.beans.models.Ticket;
 import booking.beans.models.User;
-import booking.beans.services.BookingService;
+import booking.service.BookingService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

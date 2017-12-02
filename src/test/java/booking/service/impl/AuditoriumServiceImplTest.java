@@ -1,4 +1,4 @@
-package booking.beans.services.impl;
+package booking.service.impl;
 
 import booking.beans.config.PropertySourceConfig;
 import booking.beans.config.TestAuditoriumConfig;
@@ -6,7 +6,7 @@ import booking.beans.config.db.DataSourceConfig;
 import booking.beans.config.db.DbSessionFactoryConfig;
 import booking.beans.daos.mocks.DBAuditoriumDAOMock;
 import booking.beans.models.Auditorium;
-import booking.beans.services.AuditoriumService;
+import booking.service.AuditoriumService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

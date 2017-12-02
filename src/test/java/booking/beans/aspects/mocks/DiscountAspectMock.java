@@ -1,8 +1,8 @@
 package booking.beans.aspects.mocks;
 
 import booking.beans.aspects.DiscountAspect;
-import booking.beans.services.impl.discount.BirthdayStrategy;
-import booking.beans.services.impl.discount.TicketsStrategy;
+import booking.service.impl.discount.BirthdayStrategy;
+import booking.service.impl.discount.TicketsStrategy;
 
 import java.util.HashMap;
 

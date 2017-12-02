@@ -4,7 +4,7 @@ import booking.beans.config.TestUserServiceConfig;
 import booking.beans.config.db.DataSourceConfig;
 import booking.beans.config.db.DbSessionFactoryConfig;
 import booking.beans.models.User;
-import booking.beans.services.UserService;
+import booking.service.UserService;
 import booking.web.config.MvcConfig;
 import org.junit.Before;
 import org.junit.Test;

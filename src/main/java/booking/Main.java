@@ -3,8 +3,16 @@ package booking;
 import booking.beans.aspects.CounterAspect;
 import booking.beans.aspects.DiscountAspect;
 import booking.beans.aspects.LuckyWinnerAspect;
-import booking.beans.models.*;
-import booking.beans.services.*;
+import booking.beans.models.Auditorium;
+import booking.beans.models.Event;
+import booking.beans.models.Rate;
+import booking.beans.models.Ticket;
+import booking.beans.models.User;
+import booking.service.AuditoriumService;
+import booking.service.BookingService;
+import booking.service.DiscountService;
+import booking.service.EventService;
+import booking.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

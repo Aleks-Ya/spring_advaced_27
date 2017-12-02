@@ -1,7 +1,7 @@
 package booking.web.controller;
 
 import booking.beans.models.User;
-import booking.beans.services.UserService;
+import booking.service.UserService;
 import booking.util.JsonUtil;
 import booking.web.security.Roles;
 import org.springframework.beans.factory.annotation.Autowired;

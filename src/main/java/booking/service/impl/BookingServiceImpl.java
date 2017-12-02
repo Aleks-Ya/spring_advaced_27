@@ -1,4 +1,4 @@
-package booking.beans.services.impl;
+package booking.service.impl;
 
 import booking.beans.daos.BookingDAO;
 import booking.beans.models.Auditorium;
@@ -6,11 +6,11 @@ import booking.beans.models.Event;
 import booking.beans.models.Rate;
 import booking.beans.models.Ticket;
 import booking.beans.models.User;
-import booking.beans.services.AuditoriumService;
-import booking.beans.services.BookingService;
-import booking.beans.services.DiscountService;
-import booking.beans.services.EventService;
-import booking.beans.services.UserService;
+import booking.service.AuditoriumService;
+import booking.service.BookingService;
+import booking.service.DiscountService;
+import booking.service.EventService;
+import booking.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;

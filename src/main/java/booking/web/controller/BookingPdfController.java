@@ -1,7 +1,7 @@
 package booking.web.controller;
 
 import booking.beans.models.Ticket;
-import booking.beans.services.BookingService;
+import booking.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;

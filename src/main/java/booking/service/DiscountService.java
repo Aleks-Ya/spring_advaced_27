@@ -1,4 +1,4 @@
-package booking.beans.services;
+package booking.service;
 
 import booking.beans.models.Event;
 import booking.beans.models.User;

@@ -2,9 +2,9 @@ package booking.web.controller;
 
 import booking.beans.models.Event;
 import booking.beans.models.User;
-import booking.beans.services.DiscountService;
-import booking.beans.services.EventService;
-import booking.beans.services.UserService;
+import booking.service.DiscountService;
+import booking.service.EventService;
+import booking.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
