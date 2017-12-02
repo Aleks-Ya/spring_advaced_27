@@ -1,4 +1,4 @@
-package booking.beans.services;
+package booking.beans.services.impl;
 
 import booking.beans.config.PropertySourceConfig;
 import booking.beans.config.TestUserServiceConfig;
@@ -6,6 +6,7 @@ import booking.beans.config.db.DataSourceConfig;
 import booking.beans.config.db.DbSessionFactoryConfig;
 import booking.beans.daos.mocks.UserDAOMock;
 import booking.beans.models.User;
+import booking.beans.services.UserService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

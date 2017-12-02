@@ -3,7 +3,7 @@ package booking.beans.config;
 import booking.beans.daos.mocks.UserDAOMock;
 import booking.beans.models.User;
 import booking.beans.services.UserService;
-import booking.beans.services.UserServiceImpl;
+import booking.beans.services.impl.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

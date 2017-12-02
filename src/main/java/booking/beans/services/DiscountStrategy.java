@@ -1,4 +1,4 @@
-package booking.beans.services.discount;
+package booking.beans.services;
 
 import booking.beans.models.User;
 

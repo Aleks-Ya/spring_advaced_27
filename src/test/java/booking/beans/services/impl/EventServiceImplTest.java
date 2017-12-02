@@ -1,4 +1,4 @@
-package booking.beans.services;
+package booking.beans.services.impl;
 
 import booking.beans.config.PropertySourceConfig;
 import booking.beans.config.TestEventServiceConfig;
@@ -8,6 +8,7 @@ import booking.beans.daos.mocks.EventDAOMock;
 import booking.beans.models.Auditorium;
 import booking.beans.models.Event;
 import booking.beans.models.Rate;
+import booking.beans.services.EventService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

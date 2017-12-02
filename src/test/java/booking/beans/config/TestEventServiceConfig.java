@@ -5,7 +5,7 @@ import booking.beans.daos.mocks.EventDAOMock;
 import booking.beans.models.Event;
 import booking.beans.models.Rate;
 import booking.beans.services.EventService;
-import booking.beans.services.EventServiceImpl;
+import booking.beans.services.impl.EventServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;

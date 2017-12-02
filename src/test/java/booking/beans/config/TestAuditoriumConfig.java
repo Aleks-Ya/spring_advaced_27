@@ -4,7 +4,7 @@ import booking.beans.daos.AuditoriumDAO;
 import booking.beans.daos.mocks.DBAuditoriumDAOMock;
 import booking.beans.models.Auditorium;
 import booking.beans.services.AuditoriumService;
-import booking.beans.services.AuditoriumServiceImpl;
+import booking.beans.services.impl.AuditoriumServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
