@@ -1,6 +1,6 @@
 package booking.service.impl.discount;
 
-import booking.beans.models.User;
+import booking.domain.models.User;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
  * Time: 2:16 AM
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = booking.beans.config.TestStrategiesConfig.class)
+@ContextConfiguration(classes = booking.domain.config.TestStrategiesConfig.class)
 public class BirthdayStrategyTest {
 
     @Autowired

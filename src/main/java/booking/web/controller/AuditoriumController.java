@@ -1,6 +1,6 @@
 package booking.web.controller;
 
-import booking.beans.models.Auditorium;
+import booking.domain.models.Auditorium;
 import booking.service.AuditoriumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
 package booking.service.impl;
 
-import booking.beans.daos.UserDAO;
-import booking.beans.models.User;
+import booking.domain.daos.UserDAO;
+import booking.domain.models.User;
 import booking.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

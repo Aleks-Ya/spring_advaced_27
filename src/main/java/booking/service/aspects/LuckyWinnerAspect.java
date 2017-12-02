@@ -1,7 +1,7 @@
 package booking.service.aspects;
 
-import booking.beans.models.Ticket;
-import booking.beans.models.User;
+import booking.domain.models.Ticket;
+import booking.domain.models.User;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -36,7 +36,7 @@ public class LuckyWinnerAspect {
         this.luckyPercentage = luckyPercentage;
     }
 
-    @Pointcut("(execution(* booking.service.BookingService.bookTicket(booking.beans.models.User, booking.beans.models.Ticket)) && args(user, ticket))")
+    @Pointcut("(execution(* booking.service.BookingService.bookTicket(booking.domain.models.User, booking.domain.models.Ticket)) && args(user, ticket))")
     private void bookTicket(User user, Ticket ticket) {
     }
 

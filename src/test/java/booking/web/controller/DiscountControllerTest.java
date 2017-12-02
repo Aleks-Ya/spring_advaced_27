@@ -1,14 +1,14 @@
 package booking.web.controller;
 
-import booking.beans.config.StrategiesConfig;
-import booking.beans.config.TestEventServiceConfig;
-import booking.beans.config.TestStrategiesConfig;
-import booking.beans.config.TestUserServiceConfig;
-import booking.beans.config.db.DataSourceConfig;
-import booking.beans.config.db.DbSessionFactoryConfig;
-import booking.beans.models.Event;
-import booking.beans.models.Rate;
-import booking.beans.models.User;
+import booking.domain.config.StrategiesConfig;
+import booking.domain.config.TestEventServiceConfig;
+import booking.domain.config.TestStrategiesConfig;
+import booking.domain.config.TestUserServiceConfig;
+import booking.domain.config.db.DataSourceConfig;
+import booking.domain.config.db.DbSessionFactoryConfig;
+import booking.domain.models.Event;
+import booking.domain.models.Rate;
+import booking.domain.models.User;
 import booking.service.EventService;
 import booking.service.UserService;
 import booking.service.impl.discount.DiscountServiceImpl;

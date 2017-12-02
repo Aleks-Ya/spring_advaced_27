@@ -1,13 +1,13 @@
 package booking.service.impl;
 
-import booking.beans.config.PropertySourceConfig;
-import booking.beans.config.TestEventServiceConfig;
-import booking.beans.config.db.DataSourceConfig;
-import booking.beans.config.db.DbSessionFactoryConfig;
-import booking.beans.daos.mocks.EventDAOMock;
-import booking.beans.models.Auditorium;
-import booking.beans.models.Event;
-import booking.beans.models.Rate;
+import booking.domain.config.PropertySourceConfig;
+import booking.domain.config.TestEventServiceConfig;
+import booking.domain.config.db.DataSourceConfig;
+import booking.domain.config.db.DbSessionFactoryConfig;
+import booking.domain.daos.mocks.EventDAOMock;
+import booking.domain.models.Auditorium;
+import booking.domain.models.Event;
+import booking.domain.models.Rate;
 import booking.service.EventService;
 import org.junit.After;
 import org.junit.Before;

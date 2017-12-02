@@ -1,9 +1,9 @@
 package booking.web.controller;
 
-import booking.beans.config.TestAuditoriumConfig;
-import booking.beans.config.db.DataSourceConfig;
-import booking.beans.config.db.DbSessionFactoryConfig;
-import booking.beans.models.Auditorium;
+import booking.domain.config.TestAuditoriumConfig;
+import booking.domain.config.db.DataSourceConfig;
+import booking.domain.config.db.DbSessionFactoryConfig;
+import booking.domain.models.Auditorium;
 import booking.service.AuditoriumService;
 import booking.web.config.FreeMarkerConfig;
 import booking.web.config.MvcConfig;

@@ -1,8 +1,8 @@
 package booking.web.controller;
 
-import booking.beans.models.Auditorium;
-import booking.beans.models.Event;
-import booking.beans.models.Rate;
+import booking.domain.models.Auditorium;
+import booking.domain.models.Event;
+import booking.domain.models.Rate;
 import booking.service.AuditoriumService;
 import booking.service.EventService;
 import booking.util.JsonUtil;

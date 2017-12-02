@@ -1,6 +1,6 @@
 package booking.service;
 
-import booking.beans.models.Auditorium;
+import booking.domain.models.Auditorium;
 
 import java.util.List;
 

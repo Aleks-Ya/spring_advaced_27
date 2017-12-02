@@ -1,6 +1,6 @@
 package booking.service;
 
-import booking.beans.models.User;
+import booking.domain.models.User;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,8 +1,8 @@
 package booking.web.controller;
 
-import booking.beans.models.Event;
-import booking.beans.models.Ticket;
-import booking.beans.models.User;
+import booking.domain.models.Event;
+import booking.domain.models.Ticket;
+import booking.domain.models.User;
 import booking.service.BookingService;
 import booking.service.EventService;
 import booking.service.UserService;

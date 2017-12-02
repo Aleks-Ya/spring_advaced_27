@@ -1,11 +1,11 @@
 package booking.service.impl;
 
-import booking.beans.config.PropertySourceConfig;
-import booking.beans.config.TestUserServiceConfig;
-import booking.beans.config.db.DataSourceConfig;
-import booking.beans.config.db.DbSessionFactoryConfig;
-import booking.beans.daos.mocks.UserDAOMock;
-import booking.beans.models.User;
+import booking.domain.config.PropertySourceConfig;
+import booking.domain.config.TestUserServiceConfig;
+import booking.domain.config.db.DataSourceConfig;
+import booking.domain.config.db.DbSessionFactoryConfig;
+import booking.domain.daos.mocks.UserDAOMock;
+import booking.domain.models.User;
 import booking.service.UserService;
 import org.junit.After;
 import org.junit.Before;

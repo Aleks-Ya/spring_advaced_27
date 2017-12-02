@@ -1,8 +1,8 @@
 package booking.service.impl;
 
-import booking.beans.daos.EventDAO;
-import booking.beans.models.Auditorium;
-import booking.beans.models.Event;
+import booking.domain.daos.EventDAO;
+import booking.domain.models.Auditorium;
+import booking.domain.models.Event;
 import booking.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

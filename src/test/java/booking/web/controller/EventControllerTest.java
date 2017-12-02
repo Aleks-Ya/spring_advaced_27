@@ -1,10 +1,10 @@
 package booking.web.controller;
 
-import booking.beans.config.TestEventServiceConfig;
-import booking.beans.config.db.DataSourceConfig;
-import booking.beans.config.db.DbSessionFactoryConfig;
-import booking.beans.models.Event;
-import booking.beans.models.Rate;
+import booking.domain.config.TestEventServiceConfig;
+import booking.domain.config.db.DataSourceConfig;
+import booking.domain.config.db.DbSessionFactoryConfig;
+import booking.domain.models.Event;
+import booking.domain.models.Rate;
 import booking.service.EventService;
 import booking.util.ResourceUtil;
 import booking.web.config.FreeMarkerConfig;

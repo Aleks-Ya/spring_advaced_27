@@ -1,7 +1,7 @@
 package booking.web.error;
 
-import booking.beans.config.db.DataSourceConfig;
-import booking.beans.config.db.DbSessionFactoryConfig;
+import booking.domain.config.db.DataSourceConfig;
+import booking.domain.config.db.DbSessionFactoryConfig;
 import booking.util.JsonUtil;
 import booking.web.config.FreeMarkerConfig;
 import booking.web.config.MvcConfig;
@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {MvcConfig.class, FreeMarkerConfig.class, UserController.class, DataSourceConfig.class,
-        DbSessionFactoryConfig.class, booking.beans.config.TestUserServiceConfig.class, AdviceErrorHandler.class
+        DbSessionFactoryConfig.class, booking.domain.config.TestUserServiceConfig.class, AdviceErrorHandler.class
 })
 public class AdviceErrorHandlerTest {
     @Autowired

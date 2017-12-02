@@ -1,10 +1,10 @@
 package booking;
 
-import booking.beans.models.Auditorium;
-import booking.beans.models.Event;
-import booking.beans.models.Rate;
-import booking.beans.models.Ticket;
-import booking.beans.models.User;
+import booking.domain.models.Auditorium;
+import booking.domain.models.Event;
+import booking.domain.models.Rate;
+import booking.domain.models.Ticket;
+import booking.domain.models.User;
 import booking.service.AuditoriumService;
 import booking.service.BookingService;
 import booking.service.DiscountService;
