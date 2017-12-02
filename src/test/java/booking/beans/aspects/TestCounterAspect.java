@@ -3,7 +3,7 @@ package booking.beans.aspects;
 import booking.beans.aspects.mocks.CountAspectMock;
 import booking.beans.configuration.PropertySourceConfiguration;
 import booking.beans.configuration.db.DataSourceConfiguration;
-import booking.beans.configuration.db.DbSessionFactory;
+import booking.beans.configuration.db.DbSessionFactoryConfig;
 import booking.beans.daos.mocks.BookingDAOBookingMock;
 import booking.beans.daos.mocks.DBAuditoriumDAOMock;
 import booking.beans.daos.mocks.EventDAOMock;
@@ -36,7 +36,7 @@ import static junit.framework.Assert.assertEquals;
  * Time: 7:20 PM
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {PropertySourceConfiguration.class, DataSourceConfiguration.class, DbSessionFactory.class,
+@ContextConfiguration(classes = {PropertySourceConfiguration.class, DataSourceConfiguration.class, DbSessionFactoryConfig.class,
                                  booking.beans.configuration.TestAspectsConfiguration.class})
 @Transactional
 public class TestCounterAspect {

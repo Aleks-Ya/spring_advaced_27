@@ -3,7 +3,7 @@ package booking.beans.services;
 import booking.beans.configuration.PropertySourceConfiguration;
 import booking.beans.configuration.TestUserServiceConfiguration;
 import booking.beans.configuration.db.DataSourceConfiguration;
-import booking.beans.configuration.db.DbSessionFactory;
+import booking.beans.configuration.db.DbSessionFactoryConfig;
 import booking.beans.daos.mocks.UserDAOMock;
 import booking.beans.models.User;
 import org.junit.After;
@@ -34,7 +34,7 @@ import static org.junit.Assert.assertTrue;
  * Time: 8:02 PM
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {PropertySourceConfiguration.class, DataSourceConfiguration.class, DbSessionFactory.class, TestUserServiceConfiguration.class})
+@ContextConfiguration(classes = {PropertySourceConfiguration.class, DataSourceConfiguration.class, DbSessionFactoryConfig.class, TestUserServiceConfiguration.class})
 @Transactional
 public class UserServiceImplTest {
 

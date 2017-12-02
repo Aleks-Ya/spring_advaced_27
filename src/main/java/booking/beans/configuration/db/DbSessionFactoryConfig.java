@@ -1,5 +1,6 @@
 package booking.beans.configuration.db;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,20 +23,22 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:db.properties")
-public class DbSessionFactory {
+public class DbSessionFactoryConfig {
+    private final DataSource dataSource;
+    private final String dialect;
+    private final String showSql;
+    private final String hbm2ddlAuto;
 
     @Autowired
-    @Qualifier("dataSource")
-    private DataSource dataSource;
-
-    @Value("${hibernate.dialect}")
-    private String dialect;
-
-    @Value("${hibernate.show_sql}")
-    private String showSql;
-
-    @Value("${hibernate.hbm2ddl.auto}")
-    private String hbm2ddlAuto;
+    public DbSessionFactoryConfig(@Qualifier("dataSource") DataSource dataSource,
+                                  @Value("${hibernate.dialect}") String dialect,
+                                  @Value("${hibernate.show_sql}") String showSql,
+                                  @Value("${hibernate.hbm2ddl.auto}") String hbm2ddlAuto) {
+        this.dataSource = dataSource;
+        this.dialect = dialect;
+        this.showSql = showSql;
+        this.hbm2ddlAuto = hbm2ddlAuto;
+    }
 
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
@@ -47,13 +50,13 @@ public class DbSessionFactory {
             setProperty("hibernate.hbm2ddl.auto", hbm2ddlAuto);
         }});
         localSessionFactoryBean.setMappingResources("/mappings/auditorium.hbm.xml", "/mappings/event.hbm.xml",
-                                                    "/mappings/ticket.hbm.xml", "/mappings/user.hbm.xml",
-                                                    "/mappings/booking.hbm.xml");
+                "/mappings/ticket.hbm.xml", "/mappings/user.hbm.xml",
+                "/mappings/booking.hbm.xml");
         return localSessionFactoryBean;
     }
 
     @Bean
-    public HibernateTransactionManager transactionManager(org.hibernate.SessionFactory sessionFactory) {
+    public HibernateTransactionManager transactionManager(SessionFactory sessionFactory) {
         HibernateTransactionManager txManager = new HibernateTransactionManager();
         txManager.setSessionFactory(sessionFactory);
         return txManager;

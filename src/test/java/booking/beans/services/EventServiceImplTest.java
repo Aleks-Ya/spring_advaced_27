@@ -3,7 +3,7 @@ package booking.beans.services;
 import booking.beans.configuration.PropertySourceConfiguration;
 import booking.beans.configuration.TestEventServiceConfiguration;
 import booking.beans.configuration.db.DataSourceConfiguration;
-import booking.beans.configuration.db.DbSessionFactory;
+import booking.beans.configuration.db.DbSessionFactoryConfig;
 import booking.beans.daos.mocks.EventDAOMock;
 import booking.beans.models.Auditorium;
 import booking.beans.models.Event;
@@ -39,7 +39,7 @@ import static org.junit.Assert.assertTrue;
  * Time: 1:23 PM
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {PropertySourceConfiguration.class, DataSourceConfiguration.class, DbSessionFactory.class,
+@ContextConfiguration(classes = {PropertySourceConfiguration.class, DataSourceConfiguration.class, DbSessionFactoryConfig.class,
         TestEventServiceConfiguration.class})
 @Transactional
 public class EventServiceImplTest {
