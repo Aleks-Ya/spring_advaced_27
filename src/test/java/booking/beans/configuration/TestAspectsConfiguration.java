@@ -16,7 +16,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  * Time: 7:18 PM
  */
 @Configuration
-@EnableAspectJAutoProxy(proxyTargetClass=false)
+@EnableAspectJAutoProxy(proxyTargetClass=true)
 public class TestAspectsConfiguration extends TestBookingServiceConfiguration {
 
     @Bean
