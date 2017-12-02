@@ -1,6 +1,6 @@
 package booking.beans.services;
 
-import booking.beans.configuration.AppConfiguration;
+import booking.beans.configuration.PropertySourceConfiguration;
 import booking.beans.configuration.TestBookingServiceConfiguration;
 import booking.beans.configuration.db.DataSourceConfiguration;
 import booking.beans.configuration.db.DbSessionFactory;
@@ -41,7 +41,7 @@ import static org.junit.Assert.assertTrue;
  * Time: 8:28 PM
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {AppConfiguration.class, DataSourceConfiguration.class, DbSessionFactory.class,
+@ContextConfiguration(classes = {PropertySourceConfiguration.class, DataSourceConfiguration.class, DbSessionFactory.class,
         TestBookingServiceConfiguration.class})
 @Transactional
 public class BookingServiceImplTest {

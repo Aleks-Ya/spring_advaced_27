@@ -1,7 +1,7 @@
 package booking.beans.aspects;
 
 import booking.beans.aspects.mocks.DiscountAspectMock;
-import booking.beans.configuration.AppConfiguration;
+import booking.beans.configuration.PropertySourceConfiguration;
 import booking.beans.configuration.db.DataSourceConfiguration;
 import booking.beans.configuration.db.DbSessionFactory;
 import booking.beans.daos.mocks.BookingDAOBookingMock;
@@ -40,7 +40,7 @@ import static junit.framework.Assert.assertEquals;
  * Time: 7:20 PM
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {AppConfiguration.class, DataSourceConfiguration.class, DbSessionFactory.class,
+@ContextConfiguration(classes = {PropertySourceConfiguration.class, DataSourceConfiguration.class, DbSessionFactory.class,
                                  booking.beans.configuration.TestAspectsConfiguration.class})
 @Transactional
 public class TestDiscountAspect {

@@ -11,7 +11,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  * Time: 1:12 PM
  */
 @Configuration
-public class AppConfiguration {
+public class PropertySourceConfiguration {
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
