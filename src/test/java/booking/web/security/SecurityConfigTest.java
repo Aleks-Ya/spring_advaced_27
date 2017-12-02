@@ -1,9 +1,9 @@
 package booking.web.security;
 
-import booking.domain.config.TestUserServiceConfig;
-import booking.domain.config.db.DataSourceConfig;
-import booking.domain.config.db.DbSessionFactoryConfig;
-import booking.domain.models.User;
+import booking.domain.User;
+import booking.repository.config.TestUserServiceConfig;
+import booking.repository.config.db.DataSourceConfig;
+import booking.repository.config.db.DbSessionFactoryConfig;
 import booking.service.UserService;
 import booking.web.config.MvcConfig;
 import org.junit.Before;

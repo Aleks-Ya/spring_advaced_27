@@ -10,7 +10,7 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="booking.domain.models">
+<hibernate-mapping package="booking.domain">
 
     <class name="Event" table="EVENT">
         <id name="id" column="ID">
@@ -19,13 +19,13 @@
         <property name="name" column="NAME" type="string"/>
         <property name="rate" column="RATE">
             <type name="org.hibernate.type.EnumType">
-                <param name="enumClass">booking.domain.models.Rate</param>
+                <param name="enumClass">booking.domain.Rate</param>
                 <param name="useNamed">true</param>
             </type>
         </property>
         <property name="basePrice" type="double" column="BASE_PRICE"/>
         <property name="dateTime" type="java.time.LocalDateTime" column="DATE_TIME"/>
-        <many-to-one name="auditorium" class="booking.domain.models.Auditorium" column="AUDITORIUM" fetch="join" lazy="false"/>
+        <many-to-one name="auditorium" class="booking.domain.Auditorium" column="AUDITORIUM" fetch="join" lazy="false"/>
     </class>
 
 </hibernate-mapping>

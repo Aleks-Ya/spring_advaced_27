@@ -1,7 +1,7 @@
 package booking.service;
 
-import booking.domain.models.Auditorium;
-import booking.domain.models.Event;
+import booking.domain.Auditorium;
+import booking.domain.Event;
 
 import java.time.LocalDateTime;
 import java.util.List;

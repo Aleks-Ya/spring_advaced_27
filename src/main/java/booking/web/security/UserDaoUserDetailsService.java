@@ -1,6 +1,6 @@
 package booking.web.security;
 
-import booking.domain.models.User;
+import booking.domain.User;
 import booking.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

@@ -1,7 +1,7 @@
 package booking.service.impl.discount;
 
-import booking.domain.models.Event;
-import booking.domain.models.User;
+import booking.domain.Event;
+import booking.domain.User;
 import booking.service.DiscountService;
 import booking.service.DiscountStrategy;
 import org.springframework.beans.factory.annotation.Autowired;

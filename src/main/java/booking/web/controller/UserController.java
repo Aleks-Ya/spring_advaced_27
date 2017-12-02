@@ -1,6 +1,6 @@
 package booking.web.controller;
 
-import booking.domain.models.User;
+import booking.domain.User;
 import booking.service.UserService;
 import booking.util.JsonUtil;
 import booking.web.security.Roles;

@@ -1,6 +1,6 @@
 package booking.web.security;
 
-import booking.domain.models.User;
+import booking.domain.User;
 import booking.service.UserService;
 import org.junit.Test;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

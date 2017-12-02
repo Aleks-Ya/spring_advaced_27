@@ -10,16 +10,16 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
-<hibernate-mapping package="booking.domain.models">
+<hibernate-mapping package="booking.domain">
 
     <class name="Ticket" table="TICKET">
         <id name="id" column="ID">
             <generator class="identity"/>
         </id>
-        <many-to-one name="event" class="booking.domain.models.Event" column="EVENT" fetch="join" lazy="false"/>
+        <many-to-one name="event" class="booking.domain.Event" column="EVENT" fetch="join" lazy="false"/>
         <property name="dateTime" type="java.time.LocalDateTime" column="DATE_TIME"/>
         <property name="seats" column="SEATS" type="string"/>
-        <many-to-one name="user" class="booking.domain.models.User" column="USER" fetch="join" lazy="false"/>
+        <many-to-one name="user" class="booking.domain.User" column="USER" fetch="join" lazy="false"/>
         <property name="price" column="PRICE" type="double"/>
     </class>
 

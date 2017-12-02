@@ -1,15 +1,15 @@
 package booking.service.aspects;
 
-import booking.domain.config.PropertySourceConfig;
-import booking.domain.config.db.DataSourceConfig;
-import booking.domain.config.db.DbSessionFactoryConfig;
-import booking.domain.daos.mocks.BookingDAOBookingMock;
-import booking.domain.daos.mocks.DBAuditoriumDAOMock;
-import booking.domain.daos.mocks.EventDAOMock;
-import booking.domain.daos.mocks.UserDAOMock;
-import booking.domain.models.Event;
-import booking.domain.models.Ticket;
-import booking.domain.models.User;
+import booking.domain.Event;
+import booking.domain.Ticket;
+import booking.domain.User;
+import booking.repository.config.PropertySourceConfig;
+import booking.repository.config.db.DataSourceConfig;
+import booking.repository.config.db.DbSessionFactoryConfig;
+import booking.repository.mocks.BookingDAOBookingMock;
+import booking.repository.mocks.DBAuditoriumDAOMock;
+import booking.repository.mocks.EventDAOMock;
+import booking.repository.mocks.UserDAOMock;
 import booking.service.BookingService;
 import booking.service.EventService;
 import booking.service.aspects.mocks.DiscountAspectMock;
@@ -41,7 +41,7 @@ import static junit.framework.Assert.assertEquals;
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {PropertySourceConfig.class, DataSourceConfig.class, DbSessionFactoryConfig.class,
-                                 booking.domain.config.TestAspectsConfig.class})
+                                 booking.repository.config.TestAspectsConfig.class})
 @Transactional
 public class TestDiscountAspect {
 

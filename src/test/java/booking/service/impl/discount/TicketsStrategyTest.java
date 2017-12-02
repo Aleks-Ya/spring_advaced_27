@@ -1,7 +1,7 @@
 package booking.service.impl.discount;
 
-import booking.domain.daos.mocks.BookingDAODiscountMock;
-import booking.domain.models.User;
+import booking.domain.User;
+import booking.repository.mocks.BookingDAODiscountMock;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
  * Time: 2:16 AM
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = booking.domain.config.TestStrategiesConfig.class)
+@ContextConfiguration(classes = booking.repository.config.TestStrategiesConfig.class)
 public class TicketsStrategyTest {
 
     @Autowired

@@ -1,7 +1,7 @@
 package booking.service;
 
-import booking.domain.models.Event;
-import booking.domain.models.User;
+import booking.domain.Event;
+import booking.domain.User;
 
 /**
  * Created with IntelliJ IDEA.

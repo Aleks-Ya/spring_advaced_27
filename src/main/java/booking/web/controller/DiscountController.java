@@ -1,7 +1,7 @@
 package booking.web.controller;
 
-import booking.domain.models.Event;
-import booking.domain.models.User;
+import booking.domain.Event;
+import booking.domain.User;
 import booking.service.DiscountService;
 import booking.service.EventService;
 import booking.service.UserService;

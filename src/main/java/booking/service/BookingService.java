@@ -1,7 +1,7 @@
 package booking.service;
 
-import booking.domain.models.Ticket;
-import booking.domain.models.User;
+import booking.domain.Ticket;
+import booking.domain.User;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,8 +1,8 @@
 package booking.web.controller;
 
 
-import booking.domain.models.Event;
-import booking.domain.models.Ticket;
+import booking.domain.Event;
+import booking.domain.Ticket;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;

@@ -1,6 +1,6 @@
 package booking.service.aspects;
 
-import booking.domain.models.Ticket;
+import booking.domain.Ticket;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -34,7 +34,7 @@ public class CounterAspect {
     private void getPriceByName(String eventName) {
     }
 
-    @Pointcut("(execution(* booking.service.BookingService.bookTicket(*, booking.domain.models.Ticket)) && args(*, ticket))")
+    @Pointcut("(execution(* booking.service.BookingService.bookTicket(*, booking.domain.Ticket)) && args(*, ticket))")
     private void bookTicketByName(Ticket ticket) {
     }
 

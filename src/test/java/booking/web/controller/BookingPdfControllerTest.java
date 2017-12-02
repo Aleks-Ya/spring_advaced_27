@@ -1,12 +1,12 @@
 package booking.web.controller;
 
-import booking.domain.config.TestBookingServiceConfig;
-import booking.domain.config.db.DataSourceConfig;
-import booking.domain.config.db.DbSessionFactoryConfig;
-import booking.domain.daos.mocks.BookingDAOBookingMock;
-import booking.domain.daos.mocks.DBAuditoriumDAOMock;
-import booking.domain.daos.mocks.EventDAOMock;
-import booking.domain.daos.mocks.UserDAOMock;
+import booking.repository.config.TestBookingServiceConfig;
+import booking.repository.config.db.DataSourceConfig;
+import booking.repository.config.db.DbSessionFactoryConfig;
+import booking.repository.mocks.BookingDAOBookingMock;
+import booking.repository.mocks.DBAuditoriumDAOMock;
+import booking.repository.mocks.EventDAOMock;
+import booking.repository.mocks.UserDAOMock;
 import com.codeborne.pdftest.PDF;
 import org.junit.Before;
 import org.junit.Test;

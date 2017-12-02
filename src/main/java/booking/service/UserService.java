@@ -1,6 +1,6 @@
 package booking.service;
 
-import booking.domain.models.User;
+import booking.domain.User;
 
 import java.util.List;
 
