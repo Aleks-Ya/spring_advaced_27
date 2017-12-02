@@ -26,7 +26,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collections;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created with IntelliJ IDEA.

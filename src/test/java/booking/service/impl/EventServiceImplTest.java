@@ -27,8 +27,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -137,7 +137,7 @@ public class EventServiceImplTest {
         Event event1 = (Event) applicationContext.getBean("testEvent1");
         Event foundEvent = getEvent(event1);
         assertEquals("Events should match", event1.getAuditorium(), foundEvent.getAuditorium());
-        assertEquals("Events should match", event1.getBasePrice(), foundEvent.getBasePrice());
+        assertEquals("Events should match", event1.getBasePrice(), foundEvent.getBasePrice(), 0);
         assertEquals("Events should match", event1.getDateTime(), foundEvent.getDateTime());
         assertEquals("Events should match", event1.getRate(), foundEvent.getRate());
         assertEquals("Events should match", event1.getName(), foundEvent.getName());

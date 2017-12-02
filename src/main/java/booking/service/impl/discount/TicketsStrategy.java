@@ -21,10 +21,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class TicketsStrategy implements DiscountStrategy {
 
-    public final BookingDAO bookingDAO;
-    public final double     ticketsDiscountValue;
-    public final int        discountThreshold;
-    public final double     defaultDiscount;
+    public final double ticketsDiscountValue;
+    public final double defaultDiscount;
+    private final BookingDAO bookingDAO;
+    private final int discountThreshold;
 
     @Autowired
     public TicketsStrategy(@Qualifier("bookingDAO") BookingDAO bookingDAO,

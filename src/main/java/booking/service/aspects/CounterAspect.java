@@ -38,17 +38,17 @@ public class CounterAspect {
     private void bookTicketByName(Ticket ticket) {
     }
 
-    @Before("accessedByName(eventName)")
+    @Before(value = "accessedByName(eventName)", argNames = "eventName")
     public void countAccessByName(String eventName) {
         increaseCounter(accessByNameCounter, eventName);
     }
 
-    @Before("getPriceByName(eventName)")
+    @Before(value = "getPriceByName(eventName)", argNames = "eventName")
     public void countGetPriceByName(String eventName) {
         increaseCounter(getPriceByNameCounter, eventName);
     }
 
-    @AfterReturning("bookTicketByName(ticket)")
+    @AfterReturning(value = "bookTicketByName(ticket)", argNames = "ticket")
     public void countBookTicketByName(Ticket ticket) {
         increaseCounter(bookByNameCounter, ticket.getEvent().getName());
     }

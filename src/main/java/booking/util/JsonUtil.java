@@ -13,7 +13,7 @@ public class JsonUtil {
     }
 
     public static String format(String singleQuotationMarkJson, String... args) {
-        return String.format(singleQuotationMarkJson, args).replaceAll("'", "\"");
+        return String.format(singleQuotationMarkJson, (Object[]) args).replaceAll("'", "\"");
     }
 
     public static <T> T readValue(byte[] src, Class<T> valueType) throws IOException {

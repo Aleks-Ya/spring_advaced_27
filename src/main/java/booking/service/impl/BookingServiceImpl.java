@@ -35,10 +35,10 @@ import java.util.stream.Collectors;
 @Transactional
 public class BookingServiceImpl implements BookingService {
 
-    final int minSeatNumber;
-    final double vipSeatPriceMultiplier;
-    final double highRatedPriceMultiplier;
-    final double defaultRateMultiplier;
+    private final int minSeatNumber;
+    private final double vipSeatPriceMultiplier;
+    private final double highRatedPriceMultiplier;
+    private final double defaultRateMultiplier;
     private final EventService eventService;
     private final AuditoriumService auditoriumService;
     private final UserService userService;

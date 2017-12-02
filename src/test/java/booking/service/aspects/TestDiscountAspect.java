@@ -6,6 +6,7 @@ import booking.domain.User;
 import booking.repository.config.DataSourceConfig;
 import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.config.PropertySourceConfig;
+import booking.repository.config.TestAspectsConfig;
 import booking.repository.mocks.BookingDAOBookingMock;
 import booking.repository.mocks.DBAuditoriumDAOMock;
 import booking.repository.mocks.EventDAOMock;
@@ -31,7 +32,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created with IntelliJ IDEA.
@@ -41,7 +42,7 @@ import static junit.framework.Assert.assertEquals;
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {PropertySourceConfig.class, DataSourceConfig.class, DbSessionFactoryConfig.class,
-                                 booking.repository.config.TestAspectsConfig.class})
+        TestAspectsConfig.class})
 @Transactional
 public class TestDiscountAspect {
 
@@ -94,11 +95,11 @@ public class TestDiscountAspect {
         User discountUser = new User(user.getId(), user.getEmail(), user.getName(), LocalDate.now(), null, null);
         Ticket ticket1 = (Ticket) applicationContext.getBean("testTicket1");
         bookingService.bookTicket(discountUser,
-                                  new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(5, 6), user, ticket1.getPrice()));
+                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(5, 6), user, ticket1.getPrice()));
         bookingService.bookTicket(discountUser,
-                                  new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(7, 8), user, ticket1.getPrice()));
+                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(7, 8), user, ticket1.getPrice()));
         bookingService.bookTicket(discountUser,
-                                  new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(9, 10), user, ticket1.getPrice()));
+                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(9, 10), user, ticket1.getPrice()));
         List<Integer> seats = Arrays.asList(1, 2, 3, 4);
         bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
         bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);

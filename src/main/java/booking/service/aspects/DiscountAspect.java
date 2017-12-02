@@ -34,7 +34,7 @@ public class DiscountAspect {
     private void calculateDiscount(User user) {
     }
 
-    @AfterReturning(pointcut = "calculateDiscount(user)", returning = "discount")
+    @AfterReturning(pointcut = "calculateDiscount(user)", returning = "discount", argNames = "joinPoint,user,discount")
     public void countCalculateDiscount(JoinPoint joinPoint, User user, double discount) {
         if (Double.compare(discount, 0.0) > 0) {
             final Class<?> discountStrategy = joinPoint.getTarget().getClass();
