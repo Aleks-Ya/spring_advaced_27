@@ -5,7 +5,6 @@ import booking.domain.User;
 import booking.service.DiscountService;
 import booking.service.DiscountStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,12 +21,12 @@ import java.util.List;
 @Transactional
 public class DiscountServiceImpl implements DiscountService {
 
-    public static final double MAX_DISCOUNT = 0.8;
+    private static final double MAX_DISCOUNT = 0.8;
 
     private final List<DiscountStrategy> strategies;
 
     @Autowired
-    public DiscountServiceImpl(@Value("#{strategies}") List<DiscountStrategy> strategies) {
+    public DiscountServiceImpl(List<DiscountStrategy> strategies) {
         this.strategies = Collections.unmodifiableList(strategies);
     }
 

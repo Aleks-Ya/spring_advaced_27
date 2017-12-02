@@ -3,7 +3,6 @@ package booking.web.controller;
 import booking.domain.Event;
 import booking.domain.Rate;
 import booking.domain.User;
-import booking.repository.config.StrategiesConfig;
 import booking.repository.config.TestEventServiceConfig;
 import booking.repository.config.TestStrategiesConfig;
 import booking.repository.config.TestUserServiceConfig;
@@ -34,9 +33,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {FreeMarkerConfig.class, DiscountController.class, DiscountServiceImpl.class,
-        DataSourceConfig.class, DbSessionFactoryConfig.class,
-        TestStrategiesConfig.class, StrategiesConfig.class, TestUserServiceConfig.class,
-        TestEventServiceConfig.class
+        DataSourceConfig.class, DbSessionFactoryConfig.class, TestStrategiesConfig.class,
+        TestUserServiceConfig.class, TestEventServiceConfig.class
 })
 public class DiscountControllerTest {
 
