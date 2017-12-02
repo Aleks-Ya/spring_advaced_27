@@ -53,7 +53,6 @@ public class DbSessionFactory {
     }
 
     @Bean
-    @Autowired
     public HibernateTransactionManager transactionManager(org.hibernate.SessionFactory sessionFactory) {
         HibernateTransactionManager txManager = new HibernateTransactionManager();
         txManager.setSessionFactory(sessionFactory);
