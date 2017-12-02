@@ -1,4 +1,4 @@
-package booking.beans.configuration;
+package booking.beans.config;
 
 import booking.beans.daos.EventDAO;
 import booking.beans.daos.mocks.EventDAOMock;
@@ -19,7 +19,7 @@ import java.util.Arrays;
  * Time: 6:10 PM
  */
 @Configuration
-public class TestEventServiceConfiguration extends TestAuditoriumConfiguration {
+public class TestEventServiceConfig extends TestAuditoriumConfig {
 
     @Bean
     @Scope("prototype")

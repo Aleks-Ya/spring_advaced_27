@@ -18,7 +18,7 @@ import static org.junit.Assert.assertEquals;
  * Time: 2:16 AM
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = booking.beans.configuration.TestStrategiesConfiguration.class)
+@ContextConfiguration(classes = booking.beans.config.TestStrategiesConfig.class)
 public class BirthdayStrategyTest {
 
     @Autowired

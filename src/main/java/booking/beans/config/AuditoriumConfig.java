@@ -1,4 +1,4 @@
-package booking.beans.configuration;
+package booking.beans.config;
 
 import booking.beans.models.Auditorium;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +18,7 @@ import java.util.List;
 @Configuration
 @PropertySource({"classpath:auditoriums/blueHall.properties", "classpath:auditoriums/redHall.properties",
                  "classpath:auditoriums/yellowHall.properties"})
-public class AuditoriumConfiguration {
+public class AuditoriumConfig {
 
     @Value("${blue.hall.name}")
     private String blueHallName;

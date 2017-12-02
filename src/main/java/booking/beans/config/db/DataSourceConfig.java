@@ -1,4 +1,4 @@
-package booking.beans.configuration.db;
+package booking.beans.config.db;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +16,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @PropertySource("classpath:db.properties")
-public class DataSourceConfiguration {
+public class DataSourceConfig {
 
     @Value("${jdbc.driver}")
     private String driver;

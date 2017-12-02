@@ -1,8 +1,8 @@
 package booking.web.controller;
 
-import booking.beans.configuration.TestBookingServiceConfiguration;
-import booking.beans.configuration.db.DataSourceConfiguration;
-import booking.beans.configuration.db.DbSessionFactoryConfig;
+import booking.beans.config.TestBookingServiceConfig;
+import booking.beans.config.db.DataSourceConfig;
+import booking.beans.config.db.DbSessionFactoryConfig;
 import booking.beans.daos.mocks.BookingDAOBookingMock;
 import booking.beans.daos.mocks.DBAuditoriumDAOMock;
 import booking.beans.daos.mocks.EventDAOMock;
@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {BookingPdfController.class, PdfView.class,
-        DbSessionFactoryConfig.class, DataSourceConfiguration.class, TestBookingServiceConfiguration.class})
+        DbSessionFactoryConfig.class, DataSourceConfig.class, TestBookingServiceConfig.class})
 @Transactional
 public class BookingPdfControllerTest {
     @Autowired

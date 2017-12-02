@@ -1,8 +1,8 @@
 package booking.beans.services;
 
-import booking.beans.configuration.PropertySourceConfiguration;
-import booking.beans.configuration.db.DataSourceConfiguration;
-import booking.beans.configuration.db.DbSessionFactoryConfig;
+import booking.beans.config.PropertySourceConfig;
+import booking.beans.config.db.DataSourceConfig;
+import booking.beans.config.db.DbSessionFactoryConfig;
 import booking.beans.daos.mocks.DBAuditoriumDAOMock;
 import booking.beans.models.Auditorium;
 import org.junit.After;
@@ -27,7 +27,7 @@ import static junit.framework.Assert.assertNotNull;
  * Time: 1:23 PM
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {PropertySourceConfiguration.class, DataSourceConfiguration.class, DbSessionFactoryConfig.class, booking.beans.configuration.TestAuditoriumConfiguration.class})
+@ContextConfiguration(classes = {PropertySourceConfig.class, DataSourceConfig.class, DbSessionFactoryConfig.class, booking.beans.config.TestAuditoriumConfig.class})
 @Transactional
 public class AuditoriumServiceImplTest {
 

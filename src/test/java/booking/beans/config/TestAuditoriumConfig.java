@@ -1,4 +1,4 @@
-package booking.beans.configuration;
+package booking.beans.config;
 
 import booking.beans.daos.AuditoriumDAO;
 import booking.beans.daos.mocks.DBAuditoriumDAOMock;
@@ -18,7 +18,7 @@ import java.util.Collections;
  * Time: 1:36 PM
  */
 @Configuration
-public class TestAuditoriumConfiguration {
+public class TestAuditoriumConfig {
 
     @Bean
     public Auditorium testHall1() {

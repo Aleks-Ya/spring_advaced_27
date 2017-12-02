@@ -1,4 +1,4 @@
-package booking.beans.configuration;
+package booking.beans.config;
 
 import booking.beans.daos.BookingDAO;
 import booking.beans.daos.mocks.BookingDAODiscountMock;
@@ -18,7 +18,7 @@ import java.util.Arrays;
  * Time: 3:36 PM
  */
 @Configuration
-public class TestStrategiesConfiguration {
+public class TestStrategiesConfig {
 
     @Bean
     public BirthdayStrategy birthdayStrategy() {

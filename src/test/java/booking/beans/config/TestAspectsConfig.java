@@ -1,4 +1,4 @@
-package booking.beans.configuration;
+package booking.beans.config;
 
 import booking.beans.aspects.CounterAspect;
 import booking.beans.aspects.DiscountAspect;
@@ -17,7 +17,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  */
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass=true)
-public class TestAspectsConfiguration extends TestBookingServiceConfiguration {
+public class TestAspectsConfig extends TestBookingServiceConfig {
 
     @Bean
     public CounterAspect counterAspect() {

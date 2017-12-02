@@ -1,4 +1,4 @@
-package booking.beans.configuration;
+package booking.beans.config;
 
 import booking.beans.daos.mocks.UserDAOMock;
 import booking.beans.models.User;
@@ -17,7 +17,7 @@ import java.util.Arrays;
  * Time: 1:36 PM
  */
 @Configuration
-public class TestUserServiceConfiguration {
+public class TestUserServiceConfig {
 
     @Bean
     public User testUser1() {

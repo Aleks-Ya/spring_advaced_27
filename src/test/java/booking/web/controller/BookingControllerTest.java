@@ -1,8 +1,8 @@
 package booking.web.controller;
 
-import booking.beans.configuration.TestBookingServiceConfiguration;
-import booking.beans.configuration.db.DataSourceConfiguration;
-import booking.beans.configuration.db.DbSessionFactoryConfig;
+import booking.beans.config.TestBookingServiceConfig;
+import booking.beans.config.db.DataSourceConfig;
+import booking.beans.config.db.DbSessionFactoryConfig;
 import booking.beans.daos.BookingDAO;
 import booking.beans.daos.mocks.BookingDAOBookingMock;
 import booking.beans.daos.mocks.DBAuditoriumDAOMock;
@@ -17,7 +17,7 @@ import booking.beans.services.AuditoriumService;
 import booking.beans.services.BookingService;
 import booking.beans.services.EventService;
 import booking.beans.services.UserService;
-import booking.web.configuration.FreeMarkerConfig;
+import booking.web.config.FreeMarkerConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,7 +46,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {FreeMarkerConfig.class, BookingController.class, DbSessionFactoryConfig.class,
-        DataSourceConfiguration.class, TestBookingServiceConfiguration.class
+        DataSourceConfig.class, TestBookingServiceConfig.class
 })
 @Transactional
 public class BookingControllerTest {

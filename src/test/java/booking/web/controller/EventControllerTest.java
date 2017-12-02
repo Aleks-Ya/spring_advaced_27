@@ -1,14 +1,14 @@
 package booking.web.controller;
 
-import booking.beans.configuration.TestEventServiceConfiguration;
-import booking.beans.configuration.db.DataSourceConfiguration;
-import booking.beans.configuration.db.DbSessionFactoryConfig;
+import booking.beans.config.TestEventServiceConfig;
+import booking.beans.config.db.DataSourceConfig;
+import booking.beans.config.db.DbSessionFactoryConfig;
 import booking.beans.models.Event;
 import booking.beans.models.Rate;
 import booking.beans.services.EventService;
 import booking.util.ResourceUtil;
-import booking.web.configuration.FreeMarkerConfig;
-import booking.web.configuration.MvcConfig;
+import booking.web.config.FreeMarkerConfig;
+import booking.web.config.MvcConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {MvcConfig.class, FreeMarkerConfig.class, EventController.class,
-        DataSourceConfiguration.class, DbSessionFactoryConfig.class, TestEventServiceConfiguration.class
+        DataSourceConfig.class, DbSessionFactoryConfig.class, TestEventServiceConfig.class
 })
 public class EventControllerTest {
     @Autowired

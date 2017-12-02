@@ -1,4 +1,4 @@
-package booking.beans.configuration;
+package booking.beans.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
  * Time: 1:12 PM
  */
 @Configuration
-public class PropertySourceConfiguration {
+public class PropertySourceConfig {
 
     @Bean
     public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {

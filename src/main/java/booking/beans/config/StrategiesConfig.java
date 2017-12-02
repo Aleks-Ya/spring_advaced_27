@@ -1,4 +1,4 @@
-package booking.beans.configuration;
+package booking.beans.config;
 
 import booking.beans.services.discount.DiscountStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +16,16 @@ import java.util.List;
  * Time: 3:36 PM
  */
 @Configuration
-public class StrategiesConfiguration {
+public class StrategiesConfig {
+    private final DiscountStrategy birthdayStrategy;
+    private final DiscountStrategy ticketsStrategy;
 
     @Autowired
-    @Qualifier("birthdayStrategy")
-    private DiscountStrategy birthdayStrategy;
-
-    @Autowired
-    @Qualifier("ticketsStrategy")
-    private DiscountStrategy ticketsStrategy;
+    public StrategiesConfig(@Qualifier("birthdayStrategy") DiscountStrategy birthdayStrategy,
+                            @Qualifier("ticketsStrategy") DiscountStrategy ticketsStrategy) {
+        this.birthdayStrategy = birthdayStrategy;
+        this.ticketsStrategy = ticketsStrategy;
+    }
 
     @Bean(name = "strategies")
     public List<DiscountStrategy> strategies() {

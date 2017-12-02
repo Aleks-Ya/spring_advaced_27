@@ -1,6 +1,6 @@
 package booking.web;
 
-import booking.web.configuration.RootConfig;
+import booking.web.config.RootConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;

@@ -1,4 +1,4 @@
-package booking.beans.configuration.db;
+package booking.beans.config.db;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package booking.beans.configuration;
+package booking.beans.config;
 
 import booking.beans.daos.AuditoriumDAO;
 import booking.beans.daos.BookingDAO;
@@ -44,7 +44,7 @@ import java.util.Set;
  * Time: 3:36 PM
  */
 @Configuration
-public class TestBookingServiceConfiguration {
+public class TestBookingServiceConfig {
 
     @Bean
     public DiscountStrategy birthdayBookingStrategy() {
