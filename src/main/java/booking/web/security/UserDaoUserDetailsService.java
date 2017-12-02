@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 
 @Component
 public class UserDaoUserDetailsService implements UserDetailsService {
+    public static final String ROLES_DELIMITER = ",";
     private final UserService userService;
 
     @Autowired
@@ -25,6 +26,9 @@ public class UserDaoUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        if (username == null) {
+            throw new UsernameNotFoundException("username is null");
+        }
         List<User> users = userService.getUsersByName(username);
 
         if (users.size() > 1) {
@@ -39,7 +43,7 @@ public class UserDaoUserDetailsService implements UserDetailsService {
         String rolesStr = user.getRoles();
         List<SimpleGrantedAuthority> authorities = Collections.emptyList();
         if (rolesStr != null) {
-            authorities = Stream.of(rolesStr.split(","))
+            authorities = Stream.of(rolesStr.split(ROLES_DELIMITER))
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
         }
