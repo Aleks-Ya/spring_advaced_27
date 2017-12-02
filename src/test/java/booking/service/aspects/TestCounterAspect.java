@@ -1,6 +1,5 @@
-package booking.beans.aspects;
+package booking.service.aspects;
 
-import booking.beans.aspects.mocks.CountAspectMock;
 import booking.beans.config.PropertySourceConfig;
 import booking.beans.config.db.DataSourceConfig;
 import booking.beans.config.db.DbSessionFactoryConfig;
@@ -13,6 +12,7 @@ import booking.beans.models.Ticket;
 import booking.beans.models.User;
 import booking.service.BookingService;
 import booking.service.EventService;
+import booking.service.aspects.mocks.CountAspectMock;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,6 +1,6 @@
-package booking.beans.aspects.mocks;
+package booking.service.aspects.mocks;
 
-import booking.beans.aspects.DiscountAspect;
+import booking.service.aspects.DiscountAspect;
 import booking.service.impl.discount.BirthdayStrategy;
 import booking.service.impl.discount.TicketsStrategy;
 

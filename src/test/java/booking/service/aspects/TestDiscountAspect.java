@@ -1,17 +1,20 @@
-package booking.beans.aspects;
+package booking.service.aspects;
 
-import booking.beans.aspects.mocks.LuckyWinnerAspectMock;
 import booking.beans.config.PropertySourceConfig;
-import booking.beans.config.TestAspectsConfig;
 import booking.beans.config.db.DataSourceConfig;
 import booking.beans.config.db.DbSessionFactoryConfig;
 import booking.beans.daos.mocks.BookingDAOBookingMock;
 import booking.beans.daos.mocks.DBAuditoriumDAOMock;
 import booking.beans.daos.mocks.EventDAOMock;
 import booking.beans.daos.mocks.UserDAOMock;
+import booking.beans.models.Event;
 import booking.beans.models.Ticket;
 import booking.beans.models.User;
 import booking.service.BookingService;
+import booking.service.EventService;
+import booking.service.aspects.mocks.DiscountAspectMock;
+import booking.service.impl.discount.BirthdayStrategy;
+import booking.service.impl.discount.TicketsStrategy;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +27,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -35,16 +40,19 @@ import static junit.framework.Assert.assertEquals;
  * Time: 7:20 PM
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {PropertySourceConfig.class, DataSourceConfig.class,
-        DbSessionFactoryConfig.class, TestAspectsConfig.class})
+@ContextConfiguration(classes = {PropertySourceConfig.class, DataSourceConfig.class, DbSessionFactoryConfig.class,
+                                 booking.beans.config.TestAspectsConfig.class})
 @Transactional
-public class TestLuckyWinnerAspect {
+public class TestDiscountAspect {
 
     @Autowired
     private ApplicationContext applicationContext;
 
     @Autowired
     private BookingService bookingService;
+
+    @Autowired
+    private EventService eventService;
 
     @Autowired
     private BookingDAOBookingMock bookingDAOBookingMock;
@@ -56,14 +64,14 @@ public class TestLuckyWinnerAspect {
     private UserDAOMock userDAOMock;
 
     @Autowired
-    private LuckyWinnerAspectMock luckyWinnerAspectMock;
+    private DiscountAspectMock discountAspect;
 
     @Autowired
     private DBAuditoriumDAOMock auditoriumDAOMock;
 
     @Before
     public void init() {
-        LuckyWinnerAspectMock.cleanup();
+        DiscountAspectMock.cleanup();
         auditoriumDAOMock.init();
         userDAOMock.init();
         eventDAOMock.init();
@@ -72,7 +80,7 @@ public class TestLuckyWinnerAspect {
 
     @After
     public void cleanup() {
-        LuckyWinnerAspectMock.cleanup();
+        DiscountAspectMock.cleanup();
         auditoriumDAOMock.cleanup();
         userDAOMock.cleanup();
         eventDAOMock.cleanup();
@@ -81,18 +89,29 @@ public class TestLuckyWinnerAspect {
 
     @Test
     public void testCalculateDiscount() {
+        Event event = (Event) applicationContext.getBean("testEvent1");
         User user = (User) applicationContext.getBean("testUser1");
         User discountUser = new User(user.getId(), user.getEmail(), user.getName(), LocalDate.now(), null, null);
         Ticket ticket1 = (Ticket) applicationContext.getBean("testTicket1");
         bookingService.bookTicket(discountUser,
-                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(5, 6), user, ticket1.getPrice()));
+                                  new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(5, 6), user, ticket1.getPrice()));
         bookingService.bookTicket(discountUser,
-                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(7, 8), user, ticket1.getPrice()));
+                                  new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(7, 8), user, ticket1.getPrice()));
         bookingService.bookTicket(discountUser,
-                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(9, 10), user, ticket1.getPrice()));
-        bookingService.bookTicket(discountUser,
-                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(11, 12), user, ticket1.getPrice()));
-
-        assertEquals(Collections.singletonList(user.getEmail()), LuckyWinnerAspectMock.getLuckyUsers());
+                                  new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(9, 10), user, ticket1.getPrice()));
+        List<Integer> seats = Arrays.asList(1, 2, 3, 4);
+        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
+        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
+        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
+        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
+        HashMap<String, Map<String, Integer>> expected = new HashMap<String, Map<String, Integer>>() {{
+            put(TicketsStrategy.class.getSimpleName(), new HashMap<String, Integer>() {{
+                put(user.getEmail(), 4);
+            }});
+            put(BirthdayStrategy.class.getSimpleName(), new HashMap<String, Integer>() {{
+                put(user.getEmail(), 4);
+            }});
+        }};
+        assertEquals(expected, DiscountAspect.getDiscountStatistics());
     }
 }

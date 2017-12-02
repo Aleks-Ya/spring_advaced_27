@@ -1,4 +1,4 @@
-package booking.beans.aspects;
+package booking.service.aspects;
 
 import booking.beans.models.User;
 import booking.service.impl.discount.BirthdayStrategy;

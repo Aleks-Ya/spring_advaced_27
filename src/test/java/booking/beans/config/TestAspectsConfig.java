@@ -1,10 +1,10 @@
 package booking.beans.config;
 
-import booking.beans.aspects.CounterAspect;
-import booking.beans.aspects.DiscountAspect;
-import booking.beans.aspects.LuckyWinnerAspect;
-import booking.beans.aspects.mocks.DiscountAspectMock;
-import booking.beans.aspects.mocks.LuckyWinnerAspectMock;
+import booking.service.aspects.CounterAspect;
+import booking.service.aspects.DiscountAspect;
+import booking.service.aspects.LuckyWinnerAspect;
+import booking.service.aspects.mocks.DiscountAspectMock;
+import booking.service.aspects.mocks.LuckyWinnerAspectMock;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;

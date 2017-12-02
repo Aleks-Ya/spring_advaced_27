@@ -1,6 +1,6 @@
-package booking.beans.aspects.mocks;
+package booking.service.aspects.mocks;
 
-import booking.beans.aspects.CounterAspect;
+import booking.service.aspects.CounterAspect;
 
 /**
  * Created with IntelliJ IDEA.
