@@ -1,6 +1,5 @@
-package booking.web;
+package booking;
 
-import booking.web.config.RootConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.WebApplicationContext;
@@ -19,14 +18,14 @@ public class WebAppInitializer implements WebApplicationInitializer {
     public void onStartup(ServletContext servletContext) {
         WebApplicationContext context = getContext();
         servletContext.addListener(new ContextLoaderListener(context));
-        ServletRegistration.Dynamic servlet = servletContext.addServlet("DispatcherServlet", new DispatcherServlet(context));
+        ServletRegistration.Dynamic servlet = servletContext.addServlet("SpringDispatcherServlet", new DispatcherServlet(context));
         servlet.setLoadOnStartup(1);
         servlet.addMapping("/*");
     }
 
     private AnnotationConfigWebApplicationContext getContext() {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.register(RootConfig.class);
+        context.register(ApplicationConfig.class);
         return context;
     }
 

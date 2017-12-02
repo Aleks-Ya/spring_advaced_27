@@ -17,7 +17,7 @@ import java.util.List;
  * Date: 2/4/2016
  * Time: 11:23 AM
  */
-@Service
+@Service("discountServiceImpl")
 @Transactional
 public class DiscountServiceImpl implements DiscountService {
 

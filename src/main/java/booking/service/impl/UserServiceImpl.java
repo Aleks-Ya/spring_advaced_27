@@ -16,7 +16,7 @@ import java.util.List;
  * Date: 2/1/2016
  * Time: 7:30 PM
  */
-@Service
+@Service("userServiceImpl")
 @Transactional
 public class UserServiceImpl implements UserService {
 
