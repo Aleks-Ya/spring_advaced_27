@@ -1,4 +1,4 @@
-Aleksei Iablokov, Spring Advanced 27
+Aleksei Iablokov, Spring Advanced 31.2
 
 Requirements:
 1) Java 8

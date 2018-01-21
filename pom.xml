@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.epam</groupId>
-    <artifactId>spring-course</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>spring-advanced-course</artifactId>
+    <version>31.2-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <properties>

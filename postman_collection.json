@@ -1,12 +1,14 @@
 {
 	"info": {
-		"name": "SpringAdvanced27",
+		"name": "Spring Advanced 31.2",
 		"_postman_id": "d18ceabf-b99d-1677-b93a-9405754d831c",
+		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "User",
+			"description": null,
 			"item": [
 				{
 					"name": "Register user",
@@ -32,7 +34,8 @@
 							"path": [
 								"user"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -51,15 +54,13 @@
 							"formdata": [
 								{
 									"key": "user1",
-									"description": "",
-									"type": "file",
-									"src": "user1.json"
+									"value": "",
+									"type": "file"
 								},
 								{
 									"key": "user2",
-									"description": "",
-									"type": "file",
-									"src": "user2.json"
+									"value": "",
+									"type": "file"
 								}
 							]
 						},
@@ -74,7 +75,8 @@
 								"user",
 								"batchUpload"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -99,7 +101,8 @@
 								"id",
 								"1"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -107,6 +110,7 @@
 		},
 		{
 			"name": "Auditorium",
+			"description": null,
 			"item": [
 				{
 					"name": "Create auditorium",
@@ -144,7 +148,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -167,7 +172,8 @@
 							"path": [
 								"auditorium"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -192,7 +198,8 @@
 								"id",
 								"1"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -217,7 +224,8 @@
 								"name",
 								"Blue hall"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -243,7 +251,8 @@
 								"Blue hall",
 								"seatsNumber"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -269,7 +278,8 @@
 								"Blue hall",
 								"vipSeats"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -295,7 +305,8 @@
 								"1",
 								"vipSeats"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -321,7 +332,8 @@
 								"1",
 								"delete"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -329,6 +341,7 @@
 		},
 		{
 			"name": "Event",
+			"description": null,
 			"item": [
 				{
 					"name": "Create event",
@@ -376,7 +389,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -412,7 +426,8 @@
 								"event",
 								"batchUpload"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -435,7 +450,48 @@
 							"path": [
 								"event"
 							]
-						}
+						},
+						"description": null
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "dmitriy.vbabichev@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "pass",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"login"
+							]
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -460,7 +516,8 @@
 								"id",
 								"1"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -485,7 +542,8 @@
 								"name",
 								"Celebration"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -493,6 +551,7 @@
 		},
 		{
 			"name": "Discount",
+			"description": null,
 			"item": [
 				{
 					"name": "Get discount",
@@ -525,7 +584,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
@@ -533,6 +593,7 @@
 		},
 		{
 			"name": "Booking",
+			"description": null,
 			"item": [
 				{
 					"name": "Book ticket",
@@ -580,7 +641,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -603,7 +665,8 @@
 							"path": [
 								"booking"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -628,7 +691,8 @@
 								"id",
 								"1"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -668,7 +732,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -718,7 +783,8 @@
 									"equals": true
 								}
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				},
@@ -747,7 +813,8 @@
 								"booking",
 								"bookedTickets"
 							]
-						}
+						},
+						"description": null
 					},
 					"response": []
 				}
