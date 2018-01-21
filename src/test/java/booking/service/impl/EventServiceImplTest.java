@@ -28,10 +28,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -88,11 +85,11 @@ public class EventServiceImplTest {
     }
 
     @Test
-    public void testRemove() {
+    public void testDelete() {
         List<Event> before = eventService.getAll();
         Event eventMock = (Event) applicationContext.getBean("testEvent1");
         Event event = getEvent(eventMock);
-        eventService.remove(event);
+        eventService.delete(event);
         List<Event> after = eventService.getAll();
         before.remove(event);
         assertEquals("Events should change", after, before);

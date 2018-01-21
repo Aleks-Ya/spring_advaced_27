@@ -23,10 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -83,9 +80,9 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testRemove() {
+    public void testDelete() {
         User testUser1 = (User) applicationContext.getBean("testUser1");
-        userService.remove(testUser1);
+        userService.delete(testUser1);
         assertEquals("User should be the same", userService.getUserByEmail(testUser1.getEmail()), null);
     }
 

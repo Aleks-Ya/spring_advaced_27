@@ -126,7 +126,7 @@ public class EventControllerTest {
 
     @Test
     public void getAll() throws Exception {
-        eventService.getAll().forEach(event -> eventService.remove(event));
+        eventService.getAll().forEach(event -> eventService.delete(event));
         String eventName = "Travel";
         Event event1 = eventService.create(new Event(eventName, Rate.HIGH, 100, null, null));
         Event event2 = eventService.create(new Event(eventName, Rate.HIGH, 100, null, null));

@@ -16,7 +16,7 @@ public interface EventService {
 
     Event create(Event event);
 
-    void remove(Event event);
+    void delete(Event event);
 
     Event getEvent(String name, Auditorium auditorium, LocalDateTime dateTime);
 

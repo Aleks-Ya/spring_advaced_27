@@ -6,13 +6,7 @@ import booking.repository.EventDAO;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -60,9 +54,9 @@ public class InMemoryEventDAO implements EventDAO {
         EventDAO.validateEvent(event);
         final List<Event> events = db.get(event.getName());
         if (Objects.nonNull(events)) {
-            final List<Event> toRemove = events.stream().filter(foundEvent -> foundEvent.getId() == event.getId()).collect(
+            final List<Event> toDelete = events.stream().filter(foundEvent -> foundEvent.getId() == event.getId()).collect(
                     Collectors.toList());
-            toRemove.forEach(events::remove);
+            toDelete.forEach(events::remove);
             if (events.isEmpty()) {
                 db.remove(event.getName());
             }

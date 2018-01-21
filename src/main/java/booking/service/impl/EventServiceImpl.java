@@ -33,7 +33,7 @@ public class EventServiceImpl implements EventService {
         return eventDAO.create(event);
     }
 
-    public void remove(Event event) {
+    public void delete(Event event) {
         eventDAO.delete(event);
     }
 

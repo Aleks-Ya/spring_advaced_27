@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
         return userDAO.create(user);
     }
 
-    public void remove(User user) {
+    public void delete(User user) {
         userDAO.delete(user);
     }
 
