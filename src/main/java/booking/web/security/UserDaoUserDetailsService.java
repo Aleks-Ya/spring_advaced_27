@@ -25,7 +25,7 @@ public class UserDaoUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
         if (username == null) {
             throw new UsernameNotFoundException("username is null");
         }
