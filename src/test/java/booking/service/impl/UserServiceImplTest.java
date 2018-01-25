@@ -83,7 +83,8 @@ public class UserServiceImplTest {
     public void testDelete() {
         User testUser1 = (User) applicationContext.getBean("testUser1");
         userService.delete(testUser1);
-        assertEquals("User should be the same", userService.getUserByEmail(testUser1.getEmail()), null);
+        User actUser = userService.getUserByEmail(testUser1.getEmail());
+        assertNull("User should be the same", actUser);
     }
 
     @Test
