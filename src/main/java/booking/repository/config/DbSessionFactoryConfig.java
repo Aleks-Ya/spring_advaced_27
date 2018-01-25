@@ -42,13 +42,14 @@ public class DbSessionFactoryConfig {
 
     @Bean
     public LocalSessionFactoryBean sessionFactory() {
+        Properties properties = new Properties();
+        properties.setProperty("hibernate.dialect", dialect);
+        properties.setProperty("hibernate.show_sql", showSql);
+        properties.setProperty("hibernate.hbm2ddl.auto", hbm2ddlAuto);
+
         LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
         localSessionFactoryBean.setDataSource(dataSource);
-        localSessionFactoryBean.setHibernateProperties(new Properties() {{
-            setProperty("hibernate.dialect", dialect);
-            setProperty("hibernate.show_sql", showSql);
-            setProperty("hibernate.hbm2ddl.auto", hbm2ddlAuto);
-        }});
+        localSessionFactoryBean.setHibernateProperties(properties);
         localSessionFactoryBean.setMappingResources("/mappings/auditorium.hbm.xml", "/mappings/event.hbm.xml",
                 "/mappings/ticket.hbm.xml", "/mappings/user.hbm.xml",
                 "/mappings/booking.hbm.xml");
