@@ -19,6 +19,7 @@ import java.util.List;
  */
 @Repository(value = "eventDAO")
 public class EventDAOImpl extends AbstractDAO implements EventDAO {
+    private static final String DATE_TIME_PROPERTY = "dateTime";
 
     @Override
     public Event create(Event event) {
@@ -42,8 +43,8 @@ public class EventDAOImpl extends AbstractDAO implements EventDAO {
 
     @Override
     public Event get(String eventName, Auditorium auditorium, LocalDateTime dateTime) {
-        LogicalExpression nameAndDate = Restrictions.and(Restrictions.eq("dateTime", dateTime),
-                                                         Restrictions.eq("name", eventName));
+        LogicalExpression nameAndDate = Restrictions.and(Restrictions.eq(DATE_TIME_PROPERTY, dateTime),
+                Restrictions.eq("name", eventName));
         return ((Event) createBlankCriteria(Event.class).add(nameAndDate).createAlias("auditorium", "aud").add(
                 Restrictions.eq("aud.id", auditorium.getId())).uniqueResult());
     }
@@ -67,8 +68,8 @@ public class EventDAOImpl extends AbstractDAO implements EventDAO {
     @Override
     @SuppressWarnings("unchecked")
     public List<Event> getByNameAndDate(String name, LocalDateTime dateTime) {
-        LogicalExpression nameAndDate = Restrictions.and(Restrictions.eq("dateTime", dateTime),
-                                                         Restrictions.eq("name", name));
+        LogicalExpression nameAndDate = Restrictions.and(Restrictions.eq(DATE_TIME_PROPERTY, dateTime),
+                Restrictions.eq("name", name));
         return ((List<Event>) createBlankCriteria(Event.class).add(nameAndDate).list());
     }
 
@@ -81,13 +82,13 @@ public class EventDAOImpl extends AbstractDAO implements EventDAO {
     @Override
     @SuppressWarnings("unchecked")
     public List<Event> getForDateRange(LocalDateTime from, LocalDateTime to) {
-        return ((List<Event>) createBlankCriteria(Event.class).add(Restrictions.between("dateTime", from, to)).list());
+        return ((List<Event>) createBlankCriteria(Event.class).add(Restrictions.between(DATE_TIME_PROPERTY, from, to)).list());
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<Event> getNext(LocalDateTime to) {
-        return ((List<Event>) createBlankCriteria(Event.class).add(Restrictions.le("dateTime", to)).list());
+        return ((List<Event>) createBlankCriteria(Event.class).add(Restrictions.le(DATE_TIME_PROPERTY, to)).list());
     }
 
     @Override
@@ -96,7 +97,7 @@ public class EventDAOImpl extends AbstractDAO implements EventDAO {
         Query query = getCurrentSession().createQuery(
                 "from Event e where e.auditorium = :auditorium and e.dateTime = :dateTime");
         query.setParameter("auditorium", auditorium);
-        query.setParameter("dateTime", date);
+        query.setParameter(DATE_TIME_PROPERTY, date);
         return ((List<Event>) query.list());
     }
 }
