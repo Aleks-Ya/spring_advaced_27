@@ -13,6 +13,9 @@ import java.util.stream.Collectors;
  */
 public class CsvUtil {
 
+    private CsvUtil() {
+    }
+
     @SuppressWarnings("WeakerAccess")
     public static final String DELIMITER = ",";
 
