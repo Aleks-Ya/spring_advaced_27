@@ -120,7 +120,6 @@ public class User {
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", birthday=" + birthday +
-                ", password=*****" +
                 ", roles='" + roles + '\'' +
                 '}';
     }
