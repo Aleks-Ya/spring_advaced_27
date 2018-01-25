@@ -28,14 +28,17 @@ public class CounterAspect {
     @Pointcut("(execution(* booking.service.EventService.getEvent(String, ..)) && args(eventName, ..)) || "
               + "execution(* booking.service.EventService.getByName(String)) && args(eventName))")
     private void accessedByName(String eventName) {
+        // This method intended for declaring a @Pointcut
     }
 
     @Pointcut("(execution(* booking.service.BookingService.getTicketPrice(String, ..)) && args(eventName,..))")
     private void getPriceByName(String eventName) {
+        // This method intended for declaring a @Pointcut
     }
 
     @Pointcut("(execution(* booking.service.BookingService.bookTicket(*, booking.domain.Ticket)) && args(*, ticket))")
     private void bookTicketByName(Ticket ticket) {
+        // This method intended for declaring a @Pointcut
     }
 
     @Before(value = "accessedByName(eventName)", argNames = "eventName")

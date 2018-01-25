@@ -32,6 +32,7 @@ public class DiscountAspect {
 
     @Pointcut("(execution(* booking.service.DiscountStrategy.calculateDiscount(booking.domain.User)) && args(user))")
     private void calculateDiscount(User user) {
+        // This method intended for declaring a @Pointcut
     }
 
     @AfterReturning(pointcut = "calculateDiscount(user)", returning = "discount", argNames = "joinPoint,user,discount")

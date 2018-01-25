@@ -43,6 +43,7 @@ public class LuckyWinnerAspect {
     @Pointcut(value = "(execution(* booking.service.BookingService.bookTicket(booking.domain.User, booking.domain.Ticket)) && args(user, ticket))",
             argNames = "user,ticket")
     private void bookTicket(User user, Ticket ticket) {
+        // This method intended for declaring a @Pointcut
     }
 
     @Around(value = "bookTicket(user, ticket)", argNames = "joinPoint,user,ticket")
