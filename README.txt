@@ -7,6 +7,10 @@ Requirements:
 
 Local run:
 1) mvn jetty:run
-2) Import "postman_collection.json" to Postman for trying locally
+2) Open http://localhost:8080
 
 Base URL: http://localhost:8080
+
+Predefined users:
+  - john@gmail.com/jpass (RESGISTERED_USER and BOOKING_MANAGER roles)
+  - mary@gmail.com/mpass (RESGISTERED_USER role)
