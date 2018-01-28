@@ -40,6 +40,6 @@ public class UserDaoUserDetailsService implements UserDetailsService {
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
         }
-        return new ExtendedUserDetails(user.getName(), user.getPassword(), authorities, email);
+        return new ExtendedUserDetails(email, user.getPassword(), authorities, email, user.getName());
     }
 }

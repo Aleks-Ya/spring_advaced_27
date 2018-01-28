@@ -7,18 +7,25 @@ import java.util.Collection;
 
 public class ExtendedUserDetails extends User {
 
+    private final String name;
     private final String email;
 
     ExtendedUserDetails(String username,
                         String password,
                         Collection<? extends GrantedAuthority> authorities,
-                        String email
+                        String email,
+                        String name
     ) {
         super(username, password, authorities);
         this.email = email;
+        this.name = name;
     }
 
     public String getEmail() {
         return email;
+    }
+
+    public String getName() {
+        return name;
     }
 }
