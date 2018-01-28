@@ -3,6 +3,7 @@ package booking.web.controller;
 import booking.repository.config.DataSourceConfig;
 import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.config.TestUserServiceConfig;
+import booking.util.ResourceUtil;
 import booking.web.config.FreeMarkerConfig;
 import booking.web.config.MvcConfig;
 import org.junit.Before;
@@ -41,14 +42,9 @@ public class RootControllerTest {
 
     @Test
     public void rootPage() throws Exception {
-        mvc.perform(get("/")).andExpect(status().isOk())
-                .andExpect(content().string(
-                        "User: Anonymous\n" +
-                                "<h1>Choose page:</h1>\n" +
-                                "<ul>\n" +
-                                "    <li><a href=\"auditorium\">Auditoriums</a></li>\n" +
-                                "    <li><a href=\"booking\">Booked tickets</a></li>\n" +
-                                "    <li><a href=\"event\">Events</a></li>\n" +
-                                "</ul>"));
+        String expBody = ResourceUtil.resourceToString("root.html", LoginController.class);
+        mvc.perform(get("/"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(expBody));
     }
 }

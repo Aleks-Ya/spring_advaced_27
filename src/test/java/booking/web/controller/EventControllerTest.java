@@ -62,7 +62,7 @@ public class EventControllerTest {
 
         assertThat(eventService.getByName(name), emptyIterable());
 
-        mvc.perform(post("/event")
+        mvc.perform(post(EventController.ENDPOINT)
                 .param("id", "1")
                 .param("name", name)
                 .param("rate", "HIGH")
@@ -86,7 +86,7 @@ public class EventControllerTest {
     public void getById() throws Exception {
         Event event = eventService.create(new Event("Meeting", Rate.HIGH, 100, null, null));
 
-        mvc.perform(get("/event/id/" + event.getId()))
+        mvc.perform(get(EventController.ENDPOINT + "/id/" + event.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format("<h1>Event</h1>\n" +
                         "<p>Id: %s</p>\n" +
@@ -103,7 +103,7 @@ public class EventControllerTest {
         Event event1 = eventService.create(new Event(eventName, Rate.HIGH, 100, null, null));
         Event event2 = eventService.create(new Event(eventName, Rate.HIGH, 100, null, null));
 
-        mvc.perform(get("/event/name/" + eventName))
+        mvc.perform(get(EventController.ENDPOINT + "/name/" + eventName))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format("<h1>Event list</h1>\n" +
                         "<p>Event</p>\n" +
@@ -131,7 +131,7 @@ public class EventControllerTest {
         Event event1 = eventService.create(new Event(eventName, Rate.HIGH, 100, null, null));
         Event event2 = eventService.create(new Event(eventName, Rate.HIGH, 100, null, null));
 
-        mvc.perform(get("/event"))
+        mvc.perform(get(EventController.ENDPOINT))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format("<h1>Event list</h1>\n" +
                         "<p>Event</p>\n" +
@@ -167,7 +167,7 @@ public class EventControllerTest {
         MockMultipartFile multipartFile2 = new MockMultipartFile(EventController.PART_NAME, "filename2.json", MediaType.APPLICATION_JSON_VALUE, fileContent2.getBytes());
 
         MockMultipartHttpServletRequestBuilder multipartBuilder = MockMvcRequestBuilders
-                .fileUpload("/event/batchUpload")
+                .fileUpload(EventController.ENDPOINT + "/batchUpload")
                 .file(multipartFile1)
                 .file(multipartFile2);
 

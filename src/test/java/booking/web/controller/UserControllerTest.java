@@ -56,21 +56,18 @@ public class UserControllerTest {
 
     @Test
     public void registerWithoutId() throws Exception {
-        String body = JsonUtil.format("{" +
-                "  'name': 'John'," +
-                "  'email': 'john1@gmail.com'," +
-                "  'birthday': '2000-07-03'," +
-                "  'password': 'pass'" +
-                "}");
-        mvc.perform(post("/user")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(body)
+        mvc.perform(post(UserController.ENDPOINT)
+                .param("name", "John")
+                .param("email", "john12@gmail.com")
+                .param("birthday", "2000-07-03")
+                .param("password", "pass")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
         ).andExpect(status().isCreated())
                 .andExpect(content().string(matchesPattern(
                         "<h1>User is registered</h1>\n" +
                                 "<p>Id: \\d+</p>\n" +
                                 "<p>Name: John</p>\n" +
-                                "<p>Email: john1@gmail.com</p>\n" +
+                                "<p>Email: john12@gmail.com</p>\n" +
                                 "<p>Birthday: 2000-07-03</p>")));
     }
 
@@ -84,7 +81,7 @@ public class UserControllerTest {
                 "  'birthday': '2000-07-03'," +
                 "  'password': 'pass'" +
                 "}");
-        ResultActions result = mvc.perform(post("/user")
+        ResultActions result = mvc.perform(post(UserController.ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(body)
         );
@@ -108,7 +105,7 @@ public class UserControllerTest {
                 "  'password': 'pass'" +
                 "}");
         registerUser(body);
-        mvc.perform(get("/user/id/123"))
+        mvc.perform(get(UserController.ENDPOINT + "/id/123"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(matchesPattern(
                         "<h1>User</h1>\n" +
@@ -127,7 +124,7 @@ public class UserControllerTest {
 
     @Test
     public void getByIdNotFound() throws Exception {
-        mvc.perform(get("/user/id/333"))
+        mvc.perform(get(UserController.ENDPOINT + "/id/333"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("<h1>User</h1>\n" +
                         "No user info"));
@@ -160,7 +157,7 @@ public class UserControllerTest {
         MockMultipartFile multipartFile2 = new MockMultipartFile(UserController.PART_NAME, "filename2.json", MediaType.APPLICATION_JSON_VALUE, fileContent2.getBytes());
 
         MockMultipartHttpServletRequestBuilder multipartBuilder = MockMvcRequestBuilders
-                .fileUpload("/user/batchUpload")
+                .fileUpload(UserController.ENDPOINT + "/batchUpload")
                 .file(multipartFile1)
                 .file(multipartFile2);
 

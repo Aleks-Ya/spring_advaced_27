@@ -2,7 +2,6 @@ package booking.web.error;
 
 import booking.repository.config.DataSourceConfig;
 import booking.repository.config.DbSessionFactoryConfig;
-import booking.util.JsonUtil;
 import booking.web.config.FreeMarkerConfig;
 import booking.web.config.MvcConfig;
 import booking.web.controller.UserController;
@@ -40,15 +39,11 @@ public class AdviceErrorHandlerTest {
 
     @Test
     public void register() throws Exception {
-        String body = JsonUtil.format("{" +
-                "  'name': 'John'," +
-                "  'email': null," +
-                "  'birthday': '2000-07-03'," +
-                "  'password': 'pass'" +
-                "}");
-        mvc.perform(post("/user")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(body)
+        mvc.perform(post(UserController.ENDPOINT)
+                .param("name", "John")
+                .param("birthday", "2000-07-03")
+                .param("password", "pass")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
         )
                 .andExpect(status().isOk())
                 .andExpect(content().string("<h1>An error occurred</h1>\n" +

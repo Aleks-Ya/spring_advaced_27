@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,13 +16,16 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import static booking.web.controller.UserController.ENDPOINT;
+
 /**
  * @author Aleksey Yablokov
  */
 @Controller
 @SuppressWarnings("unused")
-@RequestMapping("/user")
+@RequestMapping(ENDPOINT)
 public class UserController {
+    public static final String ENDPOINT = "/user";
     static final String PART_NAME = "users";
     static final String USER_ATTR = "user";
     private static final String USER_FTL = "user/user";
@@ -39,10 +43,14 @@ public class UserController {
                 newUserData.getPassword(), Roles.REGISTERED_USER);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
     @ResponseStatus(HttpStatus.CREATED)
-    String register(@RequestBody NewUserData newUserData, @ModelAttribute("model") ModelMap model) {
-        User newUser = createUserFromNewUserData(newUserData);
+    String register(@RequestBody MultiValueMap<String, String> formParams, @ModelAttribute("model") ModelMap model) {
+        String name = formParams.getFirst("name");
+        String email = formParams.getFirst("email");
+        String birthday = formParams.getFirst("birthday");
+        String password = formParams.getFirst("password");
+        User newUser = new User(email, name, LocalDate.parse(birthday), password, Roles.REGISTERED_USER);
         User user = userService.register(newUser);
         model.addAttribute(USER_ATTR, user);
         return USER_REGISTERED_FTL;
