@@ -12,5 +12,5 @@ Local run:
 Base URL: http://localhost:8080
 
 Predefined users:
-  - john@gmail.com/jpass (RESGISTERED_USER and BOOKING_MANAGER roles)
-  - mary@gmail.com/mpass (RESGISTERED_USER role)
+  - john@gmail.com/jpass (REGISTERED_USER and BOOKING_MANAGER roles)
+  - mary@gmail.com/mpass (REGISTERED_USER role)

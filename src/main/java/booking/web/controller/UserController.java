@@ -36,7 +36,7 @@ public class UserController {
 
     private static User createUserFromNewUserData(@RequestBody NewUserData newUserData) {
         return new User(newUserData.getEmail(), newUserData.getName(), newUserData.getBirthday(),
-                newUserData.getPassword(), Roles.RESGISTERED_USER);
+                newUserData.getPassword(), Roles.REGISTERED_USER);
     }
 
     @RequestMapping(method = RequestMethod.POST)
