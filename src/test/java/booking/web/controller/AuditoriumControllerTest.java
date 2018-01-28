@@ -4,6 +4,7 @@ import booking.domain.Auditorium;
 import booking.repository.config.DataSourceConfig;
 import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.config.TestAuditoriumConfig;
+import booking.repository.config.TestUserServiceConfig;
 import booking.service.AuditoriumService;
 import booking.web.config.FreeMarkerConfig;
 import booking.web.config.MvcConfig;
@@ -41,7 +42,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {FreeMarkerConfig.class, AuditoriumController.class, DataSourceConfig.class,
-        DbSessionFactoryConfig.class, TestAuditoriumConfig.class, AdviceErrorHandler.class, MvcConfig.class
+        DbSessionFactoryConfig.class, TestAuditoriumConfig.class, AdviceErrorHandler.class, MvcConfig.class,
+        TestUserServiceConfig.class
 })
 public class AuditoriumControllerTest {
     @Autowired
@@ -96,7 +98,8 @@ public class AuditoriumControllerTest {
     public void getAuditoriums() throws Exception {
         mvc.perform(get("/auditorium"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("<h1>Auditoriums</h1>\n" +
+                .andExpect(content().string("User: Anonymous\n" +
+                        "<h1>Auditoriums</h1>\n" +
                         "<p>Auditorium</p>\n" +
                         "<p>Id: 1</p>\n" +
                         "<p>Name: Blue hall</p>\n" +

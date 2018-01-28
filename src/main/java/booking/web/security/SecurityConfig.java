@@ -25,6 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
                 .and().authorizeRequests().anyRequest().authenticated()
+                .and().logout()
                 .and().csrf().disable();
     }
 

@@ -25,21 +25,14 @@ public class UserDaoUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) {
-        if (username == null) {
-            throw new UsernameNotFoundException("username is null");
+    public UserDetails loadUserByUsername(String email) {
+        if (email == null) {
+            throw new UsernameNotFoundException("email is null");
         }
-        List<User> users = userService.getUsersByName(username);
-
-        if (users.size() > 1) {
-            throw new UsernameNotFoundException("More than one user with name '" + username + "'.");
+        User user = userService.getUserByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found by email: " + email);
         }
-
-        if (users.isEmpty()) {
-            throw new UsernameNotFoundException(username);
-        }
-
-        User user = users.get(0);
         String rolesStr = user.getRoles();
         List<SimpleGrantedAuthority> authorities = Collections.emptyList();
         if (rolesStr != null) {
@@ -47,7 +40,6 @@ public class UserDaoUserDetailsService implements UserDetailsService {
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
         }
-        return new org.springframework.security.core.userdetails.User(
-                user.getName(), user.getPassword(), authorities);
+        return new ExtendedUserDetails(user.getName(), user.getPassword(), authorities, email);
     }
 }

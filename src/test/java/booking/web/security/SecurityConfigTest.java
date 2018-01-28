@@ -52,13 +52,13 @@ public class SecurityConfigTest {
 
     @Test
     public void getByIdNotFound() throws Exception {
-        String username = "the_username";
         String password = "the_password";
-        User user = new User("the@mail.ru", username, LocalDate.of(2000, 1, 14), password, null);
+        String email = "the@mail.ru";
+        User user = new User(email, "the_username", LocalDate.of(2000, 1, 14), password, null);
 
         userService.register(user);
 
-        Authentication auth = new UsernamePasswordAuthenticationToken(username, password);
+        Authentication auth = new UsernamePasswordAuthenticationToken(email, password);
         mvc.perform(get("/abc").with(authentication(auth)))
                 .andExpect(status().isOk())
                 .andExpect(content().string("abc"));

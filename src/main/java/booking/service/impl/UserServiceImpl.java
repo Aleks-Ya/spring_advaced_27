@@ -3,8 +3,11 @@ package booking.service.impl;
 import booking.domain.User;
 import booking.repository.UserDAO;
 import booking.service.UserService;
+import booking.web.security.ExtendedUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +48,17 @@ public class UserServiceImpl implements UserService {
 
     public List<User> getUsersByName(String name) {
         return userDAO.getAllByName(name);
+    }
+
+    @Override
+    public User getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null) {
+            return null;
+        }
+        ExtendedUserDetails principal = (ExtendedUserDetails) auth.getPrincipal();
+        String email = principal.getEmail();
+        return userDAO.getByEmail(email);
     }
 
 }
