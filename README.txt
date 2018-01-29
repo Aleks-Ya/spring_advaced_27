@@ -16,3 +16,10 @@ Predefined users:
   - mary@gmail.com/mpass (REGISTERED_USER role)
 
 GitHub: https://github.com/Aleks-Ya/spring_advanced_31-2
+
+Sonar Report: https://sonarcloud.io/dashboard?id=com.epam%3Aspring-advanced-course
+Analyze command:
+    mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar \
+       -Dsonar.organization=aleks-ya-github \
+       -Dsonar.host.url=https://sonarcloud.io \
+       -Dsonar.login=the_token
