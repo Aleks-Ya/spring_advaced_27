@@ -6,6 +6,7 @@ import booking.util.JsonUtil;
 import booking.web.security.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
@@ -32,15 +33,12 @@ public class UserController {
     private static final String USER_REGISTERED_FTL = "user/user_registered";
 
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
-    }
-
-    private static User createUserFromNewUserData(@RequestBody NewUserData newUserData) {
-        return new User(newUserData.getEmail(), newUserData.getName(), newUserData.getBirthday(),
-                newUserData.getPassword(), Roles.REGISTERED_USER);
+        this.passwordEncoder = passwordEncoder;
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
@@ -49,8 +47,9 @@ public class UserController {
         String name = formParams.getFirst("name");
         String email = formParams.getFirst("email");
         String birthday = formParams.getFirst("birthday");
-        String password = formParams.getFirst("password");
-        User newUser = new User(email, name, LocalDate.parse(birthday), password, Roles.REGISTERED_USER);
+        String rawPassword = formParams.getFirst("password");
+        String encodedPassword = passwordEncoder.encode(rawPassword);
+        User newUser = new User(email, name, LocalDate.parse(birthday), encodedPassword, Roles.REGISTERED_USER);
         User user = userService.register(newUser);
         model.addAttribute(USER_ATTR, user);
         return USER_REGISTERED_FTL;
@@ -68,7 +67,9 @@ public class UserController {
     public void batchUpload(@RequestParam(value = PART_NAME) List<MultipartFile> users) throws IOException {
         for (MultipartFile userFile : users) {
             NewUserData newUserData = JsonUtil.readValue(userFile.getBytes(), NewUserData.class);
-            User newUser = createUserFromNewUserData(newUserData);
+            String encodedPassword = passwordEncoder.encode(newUserData.getPassword());
+            User newUser = new User(newUserData.getEmail(), newUserData.getName(), newUserData.getBirthday(),
+                    encodedPassword, Roles.REGISTERED_USER);
             userService.register(newUser);
         }
     }

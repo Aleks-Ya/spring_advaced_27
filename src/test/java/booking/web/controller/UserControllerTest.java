@@ -9,6 +9,7 @@ import booking.util.JsonUtil;
 import booking.web.config.FreeMarkerConfig;
 import booking.web.config.MvcConfig;
 import booking.web.security.Roles;
+import booking.web.security.SecurityConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,8 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.matchesPattern;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -41,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {MvcConfig.class, FreeMarkerConfig.class, UserController.class,
-        DataSourceConfig.class, DbSessionFactoryConfig.class, TestUserServiceConfig.class
+        DataSourceConfig.class, DbSessionFactoryConfig.class, TestUserServiceConfig.class, SecurityConfig.class
 })
 public class UserControllerTest {
     @Autowired
@@ -62,14 +62,14 @@ public class UserControllerTest {
         String expEmail = "john12@gmail.com";
         String expName = "John";
         LocalDate expBirthday = LocalDate.parse("2000-07-03");
-        String expPass = "pass";
+        String rawPassword = "pass";
 
         MockHttpSession session = new MockHttpSession();
         mvc.perform(post(UserController.ENDPOINT).session(session)
                 .param("name", expName)
                 .param("email", expEmail)
                 .param("birthday", expBirthday.toString())
-                .param("password", expPass)
+                .param("password", rawPassword)
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
         ).andExpect(status().isCreated())
                 .andExpect(content().string(matchesPattern(
@@ -81,10 +81,12 @@ public class UserControllerTest {
 
         User actUser = userService.getUserByEmail(expEmail);
         assertNotNull(actUser);
+
+        String encodedPassword = actUser.getPassword();
         assertThat(actUser.getEmail(), equalTo(expEmail));
         assertThat(actUser.getName(), equalTo(expName));
         assertThat(actUser.getBirthday(), equalTo(expBirthday));
-        assertThat(actUser.getPassword(), equalTo(expPass));
+        assertThat("Password is stored in DB in unencoded form", encodedPassword, not(equalTo(rawPassword)));
         assertThat(actUser.getRoles(), equalTo(Roles.REGISTERED_USER));
 
         userService.delete(actUser);
