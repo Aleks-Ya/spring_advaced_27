@@ -73,7 +73,8 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
         ).andExpect(status().isCreated())
                 .andExpect(content().string(matchesPattern(
-                        "<h1>User is registered</h1>\n" +
+                        ".+\n" +
+                                "<h1>User is registered</h1>\n" +
                                 "<p>Id: \\d+</p>\n" +
                                 "<p>Name: John</p>\n" +
                                 "<p>Email: john12@gmail.com</p>\n" +
@@ -100,7 +101,8 @@ public class UserControllerTest {
         mvc.perform(get(UserController.ENDPOINT + "/id/" + user.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(matchesPattern(
-                        "<h1>User</h1>\n" +
+                        ".+\n" +
+                                "<h1>User</h1>\n" +
                                 "<p>Id: \\d+</p>\n" +
                                 "<p>Name: Dan</p>\n" +
                                 "<p>Email: dan@gmail.com</p>\n" +
@@ -114,7 +116,8 @@ public class UserControllerTest {
     public void getByIdNotFound() throws Exception {
         mvc.perform(get(UserController.ENDPOINT + "/id/333"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("<h1>User</h1>\n" +
+                .andExpect(content().string(LoginControllerTest.ANONYMOUS_HEADER +
+                        "<h1>User</h1>\n" +
                         "No user info"));
     }
 

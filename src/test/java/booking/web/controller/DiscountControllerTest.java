@@ -3,11 +3,7 @@ package booking.web.controller;
 import booking.domain.Event;
 import booking.domain.Rate;
 import booking.domain.User;
-import booking.repository.config.DataSourceConfig;
-import booking.repository.config.DbSessionFactoryConfig;
-import booking.repository.config.TestEventServiceConfig;
-import booking.repository.config.TestStrategiesConfig;
-import booking.repository.config.TestUserServiceConfig;
+import booking.repository.config.*;
 import booking.service.EventService;
 import booking.service.UserService;
 import booking.service.impl.discount.DiscountServiceImpl;
@@ -23,6 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static booking.web.controller.LoginControllerTest.ANONYMOUS_HEADER;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -63,7 +60,7 @@ public class DiscountControllerTest {
                 .param("eventId", String.valueOf(event.getId()))
         )
                 .andExpect(status().isOk())
-                .andExpect(content().string("<h1>Discount</h1>\n<p>0.5</p>"));
+                .andExpect(content().string(ANONYMOUS_HEADER + "<h1>Discount</h1>\n<p>0.5</p>"));
     }
 
     @Test
@@ -75,6 +72,6 @@ public class DiscountControllerTest {
                 .param("eventId", String.valueOf(event.getId()))
         )
                 .andExpect(status().isOk())
-                .andExpect(content().string("<h1>Discount</h1>\n<p>0</p>"));
+                .andExpect(content().string(ANONYMOUS_HEADER + "<h1>Discount</h1>\n<p>0</p>"));
     }
 }

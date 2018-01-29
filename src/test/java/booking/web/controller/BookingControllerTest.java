@@ -1,10 +1,6 @@
 package booking.web.controller;
 
-import booking.domain.Auditorium;
-import booking.domain.Event;
-import booking.domain.Rate;
-import booking.domain.Ticket;
-import booking.domain.User;
+import booking.domain.*;
 import booking.repository.BookingDAO;
 import booking.repository.config.DataSourceConfig;
 import booking.repository.config.DbSessionFactoryConfig;
@@ -90,7 +86,8 @@ public class BookingControllerTest {
         Ticket ticket2 = createTicket();
         mvc.perform(get(BookingController.ENDPOINT))
                 .andExpect(status().isOk())
-                .andExpect(content().string(format("<h1>Booked tickets</h1>\n" +
+                .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
+                                "<h1>Booked tickets</h1>\n" +
                                 "<p>Ticket</p>\n" +
                                 "<p>Id: %s</p>\n" +
                                 "<p>Event: %s</p>\n" +
@@ -119,7 +116,8 @@ public class BookingControllerTest {
         mvc.perform(get(BookingController.ENDPOINT + "/id/" + bookedTicket.getId())
         )
                 .andExpect(status().isOk())
-                .andExpect(content().string(format("<h1>Ticket</h1>\n" +
+                .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
+                                "<h1>Ticket</h1>\n" +
                                 "<p>Id: %s</p>\n" +
                                 "<p>Event: %s</p>\n" +
                                 "<p>Date: 2017-01-15T10:30</p>\n" +
@@ -142,7 +140,9 @@ public class BookingControllerTest {
                 .param("price", "100.5")
         )
                 .andExpect(status().isCreated())
-                .andExpect(content().string(format("<h1>The ticket is booked</h1>\n" +
+                .andExpect(content().string(format(
+                        LoginControllerTest.ANONYMOUS_HEADER +
+                                "<h1>The ticket is booked</h1>\n" +
                                 "<p>Id: 3</p>\n" +
                                 "<p>Event: %s</p>\n" +
                                 "<p>Date: 2007-12-03T10:15:30</p>\n" +
@@ -168,8 +168,10 @@ public class BookingControllerTest {
                 .param("seats", "1,2,3")
         )
                 .andExpect(status().isOk())
-                .andExpect(content().string("<h1>Ticket price</h1>\n" +
-                        "720\n"));
+                .andExpect(content().string(
+                        LoginControllerTest.ANONYMOUS_HEADER +
+                                "<h1>Ticket price</h1>\n" +
+                                "720\n"));
     }
 
     @Test
@@ -187,17 +189,19 @@ public class BookingControllerTest {
                 .param("localDateTime", date.toString())
         )
                 .andExpect(status().isOk())
-                .andExpect(content().string(format("<h1>Ticket for event</h1>\n" +
-                        "<p>Events:\n" +
-                        "    %s;\n" +
-                        "</p>\n" +
-                        "<p>Ticket</p>\n" +
-                        "<p>Id: %s</p>\n" +
-                        "<p>Event: %s</p>\n" +
-                        "<p>Date: 2018-01-15T10:30</p>\n" +
-                        "<p>Seats: 1,2,3</p>\n" +
-                        "<p>User: Mat</p>\n" +
-                        "<p>Price: 100</p><hr/>\n",
+                .andExpect(content().string(format(
+                        LoginControllerTest.ANONYMOUS_HEADER +
+                                "<h1>Ticket for event</h1>\n" +
+                                "<p>Events:\n" +
+                                "    %s;\n" +
+                                "</p>\n" +
+                                "<p>Ticket</p>\n" +
+                                "<p>Id: %s</p>\n" +
+                                "<p>Event: %s</p>\n" +
+                                "<p>Date: 2018-01-15T10:30</p>\n" +
+                                "<p>Seats: 1,2,3</p>\n" +
+                                "<p>User: Mat</p>\n" +
+                                "<p>Price: 100</p><hr/>\n",
                         event.getName(),
                         ticket.getId(),
                         event.getName()

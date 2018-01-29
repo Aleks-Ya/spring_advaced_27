@@ -72,7 +72,8 @@ public class EventControllerTest {
                 .param("auditoriumId", "1")
         )
                 .andExpect(status().isCreated())
-                .andExpect(content().string("<h1>Event created</h1>\n" +
+                .andExpect(content().string(LoginControllerTest.ANONYMOUS_HEADER +
+                        "<h1>Event created</h1>\n" +
                         "<p>Id: 1</p>\n" +
                         "<p>Name: Discussion</p>\n" +
                         "<p>Rate: HIGH</p>\n" +
@@ -89,7 +90,8 @@ public class EventControllerTest {
 
         mvc.perform(get(EventController.ENDPOINT + "/id/" + event.getId()))
                 .andExpect(status().isOk())
-                .andExpect(content().string(format("<h1>Event</h1>\n" +
+                .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
+                        "<h1>Event</h1>\n" +
                         "<p>Id: %s</p>\n" +
                         "<p>Name: Meeting</p>\n" +
                         "<p>Rate: HIGH</p>\n" +
@@ -106,7 +108,8 @@ public class EventControllerTest {
 
         mvc.perform(get(EventController.ENDPOINT + "/name/" + eventName))
                 .andExpect(status().isOk())
-                .andExpect(content().string(format("<h1>Event list</h1>\n" +
+                .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
+                        "<h1>Event list</h1>\n" +
                         "<p>Event</p>\n" +
                         "<p>Id: %s</p>\n" +
                         "<p>Name: Kick Off</p>\n" +
@@ -134,7 +137,8 @@ public class EventControllerTest {
 
         mvc.perform(get(EventController.ENDPOINT))
                 .andExpect(status().isOk())
-                .andExpect(content().string(format("<h1>Event list</h1>\n" +
+                .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
+                        "<h1>Event list</h1>\n" +
                         "<p>Event</p>\n" +
                         "<p>Id: %s</p>\n" +
                         "<p>Name: Travel</p>\n" +

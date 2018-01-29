@@ -1,3 +1,4 @@
+<#include "../login/login_details.ftl">
 <h1>User</h1>
 <#if model.user??>
     <#assign user=model.user>

@@ -41,6 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         RootController.class
 })
 public class LoginControllerTest {
+    public static final String ANONYMOUS_HEADER = "User: Anonymous (<a href='/login'>login</a>)\n";
     @Autowired
     private WebApplicationContext context;
 

@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static booking.web.controller.LoginControllerTest.ANONYMOUS_HEADER;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,7 +43,7 @@ public class RootControllerTest {
 
     @Test
     public void rootPage() throws Exception {
-        String expBody = ResourceUtil.resourceToString("root.html", LoginController.class);
+        String expBody = ANONYMOUS_HEADER + ResourceUtil.resourceToString("root.html", LoginController.class);
         mvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(expBody));

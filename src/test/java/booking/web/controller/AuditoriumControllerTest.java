@@ -78,7 +78,8 @@ public class AuditoriumControllerTest {
 
         resultActions
                 .andExpect(status().isCreated())
-                .andExpect(content().string(format("<h1>Auditorium is created</h1>\n" +
+                .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
+                                "<h1>Auditorium is created</h1>\n" +
                                 "<p>Id: %d</p>\n" +
                                 "<p>Name: Room</p>\n" +
                                 "<p>Seats number: 1,000</p>\n" +
@@ -98,7 +99,7 @@ public class AuditoriumControllerTest {
     public void getAuditoriums() throws Exception {
         mvc.perform(get("/auditorium"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("User: Anonymous\n" +
+                .andExpect(content().string(LoginControllerTest.ANONYMOUS_HEADER +
                         "<h1>Auditoriums</h1>\n" +
                         "<p>Auditorium</p>\n" +
                         "<p>Id: 1</p>\n" +
@@ -122,7 +123,8 @@ public class AuditoriumControllerTest {
         Auditorium auditorium = auditoriumService.create(new Auditorium("Meeting room", 500, Arrays.asList(1, 2, 3)));
         mvc.perform(get("/auditorium/id/" + auditorium.getId()))
                 .andExpect(status().isOk())
-                .andExpect(content().string(format("<h1>Auditorium</h1>\n" +
+                .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
+                                "<h1>Auditorium</h1>\n" +
                                 "<p>Id: %d</p>\n" +
                                 "<p>Name: Meeting room</p>\n" +
                                 "<p>Seats number: 500</p>\n" +
@@ -136,7 +138,9 @@ public class AuditoriumControllerTest {
         Auditorium auditorium = auditoriumService.create(new Auditorium("Relax room", 500, Arrays.asList(1, 2, 3)));
         mvc.perform(get("/auditorium/name/" + auditorium.getName()))
                 .andExpect(status().isOk())
-                .andExpect(content().string(format("<h1>Auditorium</h1>\n" +
+                .andExpect(content().string(format(
+                        LoginControllerTest.ANONYMOUS_HEADER +
+                                "<h1>Auditorium</h1>\n" +
                                 "<p>Id: %d</p>\n" +
                                 "<p>Name: Relax room</p>\n" +
                                 "<p>Seats number: 500</p>\n" +
@@ -151,7 +155,8 @@ public class AuditoriumControllerTest {
         mvc.perform(get(format("/auditorium/name/%s/seatsNumber", auditoriumName)))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(
-                        "<h1>Seats number</h1>\n" +
+                        LoginControllerTest.ANONYMOUS_HEADER +
+                                "<h1>Seats number</h1>\n" +
                                 "<p>Auditorium: %s</p>\n" +
                                 "<p>Seats number: 500</p>", auditoriumName)));
         auditoriumService.delete(auditorium.getId());
@@ -163,10 +168,10 @@ public class AuditoriumControllerTest {
         Auditorium auditorium = auditoriumService.create(new Auditorium(auditoriumName, 500, Arrays.asList(1, 2, 3)));
         mvc.perform(get(format("/auditorium/id/%s/seatsNumber", auditorium.getId())))
                 .andExpect(status().isOk())
-                .andExpect(content().string(format(
+                .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
                         "<h1>Seats number</h1>\n" +
-                                "<p>Auditorium: %s</p>\n" +
-                                "<p>Seats number: 500</p>", auditoriumName)));
+                        "<p>Auditorium: %s</p>\n" +
+                        "<p>Seats number: 500</p>", auditoriumName)));
         auditoriumService.delete(auditorium.getId());
     }
 
@@ -174,7 +179,8 @@ public class AuditoriumControllerTest {
     public void vipSeatsByAuditoriumNameGet() throws Exception {
         mvc.perform(get("/auditorium/name/Blue hall/vipSeats"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("<h1>VIP seats</h1>\n" +
+                .andExpect(content().string(LoginControllerTest.ANONYMOUS_HEADER +
+                        "<h1>VIP seats</h1>\n" +
                         "<p>Auditorium: Blue hall</p>\n" +
                         "<p>VIP seats: 25,26,27,28,29,30,31,32,33,34,35</p>"));
     }
@@ -184,9 +190,11 @@ public class AuditoriumControllerTest {
         Auditorium auditorium = auditoriumService.create(new Auditorium("Red room", 500, Arrays.asList(1, 2, 3)));
         mvc.perform(get(format("/auditorium/id/%d/vipSeats", auditorium.getId())))
                 .andExpect(status().isOk())
-                .andExpect(content().string("<h1>VIP seats</h1>\n" +
-                        "<p>Auditorium: Red room</p>\n" +
-                        "<p>VIP seats: 1,2,3</p>"));
+                .andExpect(content().string(
+                        LoginControllerTest.ANONYMOUS_HEADER +
+                                "<h1>VIP seats</h1>\n" +
+                                "<p>Auditorium: Red room</p>\n" +
+                                "<p>VIP seats: 1,2,3</p>"));
     }
 
     @Test
@@ -195,8 +203,8 @@ public class AuditoriumControllerTest {
         Auditorium auditorium = auditoriumService.create(new Auditorium(auditoriumName, 500, Arrays.asList(1, 2, 3)));
         mvc.perform(delete(format("/auditorium/id/%s/delete", auditorium.getId())))
                 .andExpect(status().isOk())
-                .andExpect(content().string(format(
-                        "<h1>Auditorium is deleted</h1>\n" +
+                .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
+                                "<h1>Auditorium is deleted</h1>\n" +
                                 "<p>Id: %d</p>\n" +
                                 "<p>Name: %s</p>\n" +
                                 "<p>Seats number: 500</p>\n" +
