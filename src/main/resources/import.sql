@@ -6,3 +6,6 @@ INSERT INTO AUDITORIUM (NAME, SEATS_NUMBER, VIP_SEATS) VALUES ('Yellow hall', 10
 
 INSERT INTO USER (id, email, name, password, roles) VALUES (1, 'john@gmail.com', 'John', 'jpass', 'REGISTERED_USER,BOOKING_MANAGER');
 INSERT INTO USER (id, email, name, password, roles) VALUES (2, 'mary@gmail.com', 'Mary', 'mpass', 'REGISTERED_USER');
+
+INSERT INTO EVENT (id, name, rate, BASE_PRICE, DATE_TIME, auditorium) VALUES (1, 'New Year Party', 'HIGH', 1500.5, '2019-12-31 23:30:00', 1);
+INSERT INTO EVENT (id, name, rate, BASE_PRICE, DATE_TIME, auditorium) VALUES (2, 'Summer Party', 'MID', 500, '2018-06-01 10:30:00', 2);
