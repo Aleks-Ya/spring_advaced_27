@@ -25,7 +25,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -82,7 +81,7 @@ public class LoginControllerTest {
     public void logout() throws Exception {
         MockHttpSession session = new MockHttpSession();
 
-        String email = UUID.randomUUID().toString();
+        String email = "dan@gmail.com";
         User user = userService.register(new User(email, "John", LocalDate.now(), "abc", Roles.REGISTERED_USER));
 
         MvcResult mvcResultLogin = mvc.perform(post(LoginController.ENDPOINT).session(session)
@@ -109,6 +108,8 @@ public class LoginControllerTest {
         mvc.perform(get(redirectedUrlLogout).session(session))
                 .andExpect(status().isOk())
                 .andExpect(content().string(logoutBody));
+
+        userService.delete(user);
     }
 
 }
