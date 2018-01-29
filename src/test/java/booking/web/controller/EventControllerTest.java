@@ -5,6 +5,7 @@ import booking.domain.Rate;
 import booking.repository.config.DataSourceConfig;
 import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.config.TestEventServiceConfig;
+import booking.repository.config.TestUserServiceConfig;
 import booking.service.EventService;
 import booking.util.ResourceUtil;
 import booking.web.config.FreeMarkerConfig;
@@ -39,7 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {MvcConfig.class, FreeMarkerConfig.class, EventController.class,
-        DataSourceConfig.class, DbSessionFactoryConfig.class, TestEventServiceConfig.class
+        DataSourceConfig.class, DbSessionFactoryConfig.class, TestEventServiceConfig.class, TestUserServiceConfig.class
 })
 public class EventControllerTest {
     @Autowired

@@ -2,7 +2,6 @@ package booking.web.controller;
 
 import booking.domain.Auditorium;
 import booking.service.AuditoriumService;
-import booking.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static booking.web.controller.AuditoriumController.ENDPOINT;
-import static booking.web.controller.UserController.USER_ATTR;
 
 /**
  * @author Aleksey Yablokov
@@ -33,12 +31,10 @@ public class AuditoriumController {
     private static final String AUDITORIUM_CREATED_FTL = "auditorium/auditorium_created";
 
     private final AuditoriumService auditoriumService;
-    private final UserService userService;
 
     @Autowired
-    public AuditoriumController(AuditoriumService auditoriumService, UserService userService) {
+    public AuditoriumController(AuditoriumService auditoriumService) {
         this.auditoriumService = auditoriumService;
-        this.userService = userService;
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -58,7 +54,6 @@ public class AuditoriumController {
     String getAuditoriums(@ModelAttribute("model") ModelMap model) {
         List<Auditorium> auditoriums = auditoriumService.getAuditoriums();
         model.addAttribute(AUDITORIUMS_ATTR, auditoriums);
-        model.addAttribute(USER_ATTR, userService.getCurrentUser());
         return AUDITORIUMS_FTL;
     }
 

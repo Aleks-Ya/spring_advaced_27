@@ -1,5 +1,6 @@
-<#if (model.user.name)??>
-<p>Name: ${(model.user.name)!}, E-mail: ${(model.user.email)!}, Roles: ${(model.user.roles)!} (<a href="/logout">logout</a>)</p>
+<#if currentUser()??>
+<#assign user=currentUser()>
+<p>Name: ${(user.name)!}, E-mail: ${(user.email)!}, Roles: ${(user.roles)!} (<a href="/logout">logout</a>)</p>
 <#else>
 User: Anonymous
 </#if>

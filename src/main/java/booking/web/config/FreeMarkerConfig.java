@@ -1,9 +1,10 @@
 package booking.web.config;
 
-import freemarker.ext.beans.BeansWrapper;
-import freemarker.ext.beans.BeansWrapperBuilder;
+import booking.web.freemarker.CurrentUserMethod;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
@@ -14,7 +15,15 @@ import java.util.Map;
  * @author Aleksey Yablokov
  */
 @Configuration
+@Import(CurrentUserMethod.class)
 public class FreeMarkerConfig {
+
+    private final CurrentUserMethod currentUserMethod;
+
+    @Autowired
+    public FreeMarkerConfig(CurrentUserMethod currentUserMethod) {
+        this.currentUserMethod = currentUserMethod;
+    }
 
     @Bean
     public FreeMarkerViewResolver freeMarkerViewResolver() {
@@ -27,11 +36,8 @@ public class FreeMarkerConfig {
 
     @Bean
     public FreeMarkerConfigurer freemarkerConfig() {
-        BeansWrapperBuilder builder = new BeansWrapperBuilder(freemarker.template.Configuration.VERSION_2_3_21);
-        BeansWrapper beansWrapper = builder.build();
-
         Map<String, Object> sharedVariables = new HashMap<>();
-        sharedVariables.put("statics", beansWrapper.getStaticModels());
+        sharedVariables.put("currentUser", currentUserMethod);
 
         FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
         freeMarkerConfigurer.setTemplateLoaderPath("WEB-INF/views/ftl/");
