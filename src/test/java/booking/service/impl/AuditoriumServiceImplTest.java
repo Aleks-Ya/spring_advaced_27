@@ -6,6 +6,7 @@ import booking.repository.config.DataSourceConfig;
 import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.impl.AuditoriumDAOImpl;
 import booking.service.AuditoriumService;
+import booking.service.TestObjects;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
@@ -41,10 +40,8 @@ public class AuditoriumServiceImplTest extends BaseTest {
 
     @Before
     public void init() {
-        auditorium1 = auditoriumService.create(
-                new Auditorium("auditorium 1", 15, Arrays.asList(1, 2, 3, 4, 5)));
-        auditorium2 = auditoriumService.create(
-                new Auditorium("auditorium 2", 8, Collections.singletonList(1)));
+        auditorium1 = auditoriumService.create(TestObjects.auditoriumBlueHall());
+        auditorium2 = auditoriumService.create(TestObjects.auditoriumRedHall());
     }
 
     @After

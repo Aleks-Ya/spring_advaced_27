@@ -7,6 +7,7 @@ import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.config.TestUserServiceConfig;
 import booking.repository.impl.AuditoriumDAOImpl;
 import booking.service.AuditoriumService;
+import booking.service.TestObjects;
 import booking.service.impl.AuditoriumServiceImpl;
 import booking.web.config.FreeMarkerConfig;
 import booking.web.config.MvcConfig;
@@ -23,7 +24,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -58,10 +58,8 @@ public class AuditoriumControllerTest extends BaseTest {
     public void setup() {
         mvc = MockMvcBuilders.webAppContextSetup(context).build();
 
-        auditorium1 = auditoriumService.create(
-                new Auditorium(1, "Blue hall", 15, Arrays.asList(1, 2, 3, 4, 5)));
-        auditorium2 = auditoriumService.create(
-                new Auditorium(2, "Red hall", 8, Collections.singletonList(1)));
+        auditorium1 = auditoriumService.create(TestObjects.auditoriumBlueHall());
+        auditorium2 = auditoriumService.create(TestObjects.auditoriumRedHall());
     }
 
     @After
