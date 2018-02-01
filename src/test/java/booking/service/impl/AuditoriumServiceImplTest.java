@@ -7,8 +7,6 @@ import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.impl.AuditoriumDAOImpl;
 import booking.service.AuditoriumService;
 import booking.service.TestObjects;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -18,6 +16,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -28,42 +27,45 @@ import static org.junit.Assert.assertThat;
  */
 @Transactional
 @ContextConfiguration(classes = {DataSourceConfig.class, DbSessionFactoryConfig.class, AuditoriumServiceImpl.class,
-        AuditoriumDAOImpl.class
+        AuditoriumDAOImpl.class, TestObjects.class
 })
 public class AuditoriumServiceImplTest extends BaseTest {
 
     @Autowired
     private AuditoriumService auditoriumService;
+    @Autowired
+    private TestObjects testObjects;
 
-    private Auditorium auditorium1;
-    private Auditorium auditorium2;
-
-    @Before
-    public void init() {
-        auditorium1 = auditoriumService.create(TestObjects.auditoriumBlueHall());
-        auditorium2 = auditoriumService.create(TestObjects.auditoriumRedHall());
-    }
-
-    @After
-    public void tearDown() {
-        auditoriumService.delete(auditorium1.getId());
-        auditoriumService.delete(auditorium2.getId());
+    @Test
+    public void testDelete() {
+        Auditorium auditorium = testObjects.createBlueHall();
+        long auditoriumId = auditorium.getId();
+        assertThat(auditoriumService.getById(auditoriumId), equalTo(auditorium));
+        auditoriumService.delete(auditoriumId);
+        assertNull(auditoriumService.getById(auditoriumId));
     }
 
     @Test
     public void testGetAuditoriums() {
+        Auditorium auditorium1 = testObjects.createBlueHall();
+        Auditorium auditorium2 = testObjects.createRedHall();
         List<Auditorium> auditoriums = auditoriumService.getAuditoriums();
         assertThat(auditoriums, containsInAnyOrder(auditorium1, auditorium2));
+        testObjects.deleteAuditorium(auditorium1, auditorium2);
     }
 
     @Test
     public void testGetByName() {
+        Auditorium auditorium1 = testObjects.createBlueHall();
         assertThat(auditoriumService.getByName(auditorium1.getName()), equalTo(auditorium1));
+        testObjects.deleteAuditorium(auditorium1);
     }
 
     @Test
     public void testGetById() {
+        Auditorium auditorium1 = testObjects.createBlueHall();
         assertThat(auditoriumService.getById(auditorium1.getId()), equalTo(auditorium1));
+        testObjects.deleteAuditorium(auditorium1);
     }
 
     @Test(expected = RuntimeException.class)

@@ -12,7 +12,6 @@ import booking.service.impl.AuditoriumServiceImpl;
 import booking.web.config.FreeMarkerConfig;
 import booking.web.config.MvcConfig;
 import booking.web.error.AdviceErrorHandler;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,32 +40,32 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @ContextConfiguration(classes = {FreeMarkerConfig.class, AuditoriumController.class, DataSourceConfig.class,
         DbSessionFactoryConfig.class, AdviceErrorHandler.class, MvcConfig.class, AuditoriumDAOImpl.class,
-        AuditoriumServiceImpl.class, TestUserServiceConfig.class
+        AuditoriumServiceImpl.class, TestUserServiceConfig.class, TestObjects.class
 })
 public class AuditoriumControllerTest extends BaseTest {
     @Autowired
     private WebApplicationContext context;
     @Autowired
     private AuditoriumService auditoriumService;
+    @Autowired
+    private TestObjects testObjects;
 
     private MockMvc mvc;
 
-    private Auditorium auditorium1;
-    private Auditorium auditorium2;
 
     @Before
     public void setup() {
         mvc = MockMvcBuilders.webAppContextSetup(context).build();
 
-        auditorium1 = auditoriumService.create(TestObjects.auditoriumBlueHall());
-        auditorium2 = auditoriumService.create(TestObjects.auditoriumRedHall());
+//        testObjectFactory.createBlueHall();
+//        testObjectFactory.createRedHall();
     }
-
-    @After
-    public void tearDown() {
-        auditoriumService.delete(auditorium1.getId());
-        auditoriumService.delete(auditorium2.getId());
-    }
+//
+//    @After
+//    public void tearDown() {
+//        testObjectFactory.deleteBlueHall();
+//        testObjectFactory.deleteRedHall();
+//    }
 
     @Test
     public void createAuditorium() throws Exception {
@@ -107,20 +106,25 @@ public class AuditoriumControllerTest extends BaseTest {
 
     @Test
     public void getAuditoriums() throws Exception {
+        Auditorium blueHall = testObjects.createBlueHall();
+        Auditorium redHall = testObjects.createRedHall();
         mvc.perform(get("/auditorium"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(LoginControllerTest.ANONYMOUS_HEADER +
-                        "<h1>Auditoriums</h1>\n" +
-                        "<p>Auditorium</p>\n" +
-                        "<p>Id: 14</p>\n" +
-                        "<p>Name: Blue hall</p>\n" +
-                        "<p>Seats number: 15</p>\n" +
-                        "<p>VIP seats: 1,2,3,4,5</p><hr/>\n" +
-                        "<p>Auditorium</p>\n" +
-                        "<p>Id: 15</p>\n" +
-                        "<p>Name: Red hall</p>\n" +
-                        "<p>Seats number: 8</p>\n" +
-                        "<p>VIP seats: 1</p><hr/>\n"));
+                .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
+                                "<h1>Auditoriums</h1>\n" +
+                                "<p>Auditorium</p>\n" +
+                                "<p>Id: %d</p>\n" +
+                                "<p>Name: Blue hall</p>\n" +
+                                "<p>Seats number: 15</p>\n" +
+                                "<p>VIP seats: 1,2,3,4,5</p><hr/>\n" +
+                                "<p>Auditorium</p>\n" +
+                                "<p>Id: %d</p>\n" +
+                                "<p>Name: Red hall</p>\n" +
+                                "<p>Seats number: 8</p>\n" +
+                                "<p>VIP seats: 1</p><hr/>\n",
+                        blueHall.getId(),
+                        redHall.getId())));
+        testObjects.deleteAuditorium(blueHall, redHall);
     }
 
     @Test
@@ -183,12 +187,14 @@ public class AuditoriumControllerTest extends BaseTest {
 
     @Test
     public void vipSeatsByAuditoriumNameGet() throws Exception {
-        mvc.perform(get("/auditorium/name/Blue hall/vipSeats"))
+        Auditorium auditorium = testObjects.createBlueHall();
+        mvc.perform(get(format("/auditorium/name/%s/vipSeats", auditorium.getName())))
                 .andExpect(status().isOk())
                 .andExpect(content().string(LoginControllerTest.ANONYMOUS_HEADER +
                         "<h1>VIP seats</h1>\n" +
                         "<p>Auditorium: Blue hall</p>\n" +
                         "<p>VIP seats: 1,2,3,4,5</p>"));
+        testObjects.deleteAuditorium(auditorium);
     }
 
     @Test
