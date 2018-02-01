@@ -28,16 +28,20 @@ public class DbSessionFactoryConfig {
     private final String dialect;
     private final String showSql;
     private final String hbm2ddlAuto;
+    private final String importFiles;
 
     @Autowired
     public DbSessionFactoryConfig(@Qualifier("dataSource") DataSource dataSource,
                                   @Value("${hibernate.dialect}") String dialect,
                                   @Value("${hibernate.show_sql}") String showSql,
-                                  @Value("${hibernate.hbm2ddl.auto}") String hbm2ddlAuto) {
+                                  @Value("${hibernate.hbm2ddl.auto}") String hbm2ddlAuto,
+                                  @Value("${hibernate.hbm2ddl.import_files}") String importFiles
+    ) {
         this.dataSource = dataSource;
         this.dialect = dialect;
         this.showSql = showSql;
         this.hbm2ddlAuto = hbm2ddlAuto;
+        this.importFiles = importFiles;
     }
 
     @Bean
@@ -46,6 +50,7 @@ public class DbSessionFactoryConfig {
         properties.setProperty("hibernate.dialect", dialect);
         properties.setProperty("hibernate.show_sql", showSql);
         properties.setProperty("hibernate.hbm2ddl.auto", hbm2ddlAuto);
+        properties.setProperty("hibernate.hbm2ddl.import_files", importFiles);
 
         LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
         localSessionFactoryBean.setDataSource(dataSource);

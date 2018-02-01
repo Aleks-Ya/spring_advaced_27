@@ -1,21 +1,21 @@
 package booking.web.controller;
 
+import booking.BaseTest;
 import booking.domain.Auditorium;
 import booking.repository.config.DataSourceConfig;
 import booking.repository.config.DbSessionFactoryConfig;
-import booking.repository.config.TestAuditoriumConfig;
 import booking.repository.config.TestUserServiceConfig;
+import booking.repository.impl.AuditoriumDAOImpl;
 import booking.service.AuditoriumService;
+import booking.service.impl.AuditoriumServiceImpl;
 import booking.web.config.FreeMarkerConfig;
 import booking.web.config.MvcConfig;
 import booking.web.error.AdviceErrorHandler;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,8 +31,7 @@ import java.util.regex.Pattern;
 import static booking.web.controller.AuditoriumController.ENDPOINT;
 import static java.lang.String.format;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -39,13 +39,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Aleksey Yablokov
  */
-@RunWith(SpringRunner.class)
-@WebAppConfiguration
 @ContextConfiguration(classes = {FreeMarkerConfig.class, AuditoriumController.class, DataSourceConfig.class,
-        DbSessionFactoryConfig.class, TestAuditoriumConfig.class, AdviceErrorHandler.class, MvcConfig.class,
-        TestUserServiceConfig.class
+        DbSessionFactoryConfig.class, AdviceErrorHandler.class, MvcConfig.class, AuditoriumDAOImpl.class,
+        AuditoriumServiceImpl.class, TestUserServiceConfig.class
 })
-public class AuditoriumControllerTest {
+public class AuditoriumControllerTest extends BaseTest {
     @Autowired
     private WebApplicationContext context;
     @Autowired
@@ -53,9 +51,23 @@ public class AuditoriumControllerTest {
 
     private MockMvc mvc;
 
+    private Auditorium auditorium1;
+    private Auditorium auditorium2;
+
     @Before
     public void setup() {
         mvc = MockMvcBuilders.webAppContextSetup(context).build();
+
+        auditorium1 = auditoriumService.create(
+                new Auditorium(1, "Blue hall", 15, Arrays.asList(1, 2, 3, 4, 5)));
+        auditorium2 = auditoriumService.create(
+                new Auditorium(2, "Red hall", 8, Collections.singletonList(1)));
+    }
+
+    @After
+    public void tearDown() {
+        auditoriumService.delete(auditorium1.getId());
+        auditoriumService.delete(auditorium2.getId());
     }
 
     @Test
@@ -102,20 +114,15 @@ public class AuditoriumControllerTest {
                 .andExpect(content().string(LoginControllerTest.ANONYMOUS_HEADER +
                         "<h1>Auditoriums</h1>\n" +
                         "<p>Auditorium</p>\n" +
-                        "<p>Id: 1</p>\n" +
+                        "<p>Id: 14</p>\n" +
                         "<p>Name: Blue hall</p>\n" +
-                        "<p>Seats number: 500</p>\n" +
-                        "<p>VIP seats: 25,26,27,28,29,30,31,32,33,34,35</p><hr/>\n" +
+                        "<p>Seats number: 15</p>\n" +
+                        "<p>VIP seats: 1,2,3,4,5</p><hr/>\n" +
                         "<p>Auditorium</p>\n" +
-                        "<p>Id: 2</p>\n" +
+                        "<p>Id: 15</p>\n" +
                         "<p>Name: Red hall</p>\n" +
-                        "<p>Seats number: 800</p>\n" +
-                        "<p>VIP seats: 25,26,27,28,29,30,31,32,33,34,35,75,76,77,78,79,80,81,82,83,84,85</p><hr/>\n" +
-                        "<p>Auditorium</p>\n" +
-                        "<p>Id: 3</p>\n" +
-                        "<p>Name: Yellow hall</p>\n" +
-                        "<p>Seats number: 1,000</p>\n" +
-                        "<p>VIP seats: 25,26,27,28,29,30,31,32,33,34,35,75,76,77,78,79,80,81,82,83,84,85,105,106,107,108,109,110,111,112,113,114,115</p><hr/>\n"));
+                        "<p>Seats number: 8</p>\n" +
+                        "<p>VIP seats: 1</p><hr/>\n"));
     }
 
     @Test
@@ -146,6 +153,7 @@ public class AuditoriumControllerTest {
                                 "<p>Seats number: 500</p>\n" +
                                 "<p>VIP seats: 1,2,3</p>",
                         auditorium.getId())));
+        auditoriumService.delete(auditorium.getId());
     }
 
     @Test
@@ -182,7 +190,7 @@ public class AuditoriumControllerTest {
                 .andExpect(content().string(LoginControllerTest.ANONYMOUS_HEADER +
                         "<h1>VIP seats</h1>\n" +
                         "<p>Auditorium: Blue hall</p>\n" +
-                        "<p>VIP seats: 25,26,27,28,29,30,31,32,33,34,35</p>"));
+                        "<p>VIP seats: 1,2,3,4,5</p>"));
     }
 
     @Test
@@ -195,6 +203,7 @@ public class AuditoriumControllerTest {
                                 "<h1>VIP seats</h1>\n" +
                                 "<p>Auditorium: Red room</p>\n" +
                                 "<p>VIP seats: 1,2,3</p>"));
+        auditoriumService.delete(auditorium.getId());
     }
 
     @Test
@@ -210,6 +219,7 @@ public class AuditoriumControllerTest {
                                 "<p>Seats number: 500</p>\n" +
                                 "<p>VIP seats: 1,2,3</p>",
                         auditorium.getId(), auditoriumName)));
+        assertNull(auditoriumService.getById(auditorium.getId()));
     }
 
     @Test
