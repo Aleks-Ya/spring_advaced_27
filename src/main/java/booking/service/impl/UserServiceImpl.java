@@ -61,4 +61,9 @@ public class UserServiceImpl implements UserService {
         return userDAO.getByEmail(email);
     }
 
+    @Override
+    public List<User> getAll() {
+        return userDAO.getAll();
+    }
+
 }

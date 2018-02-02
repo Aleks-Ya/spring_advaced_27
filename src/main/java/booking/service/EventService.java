@@ -30,5 +30,9 @@ public interface EventService {
 
     List<Event> getNextEvents(LocalDateTime to);
 
+    /**
+     * Change auditorium and date of an event.
+     * Check that desired auditorium is free at that time.
+     */
     Event assignAuditorium(Event event, Auditorium auditorium, LocalDateTime date);
 }

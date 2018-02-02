@@ -5,6 +5,7 @@ import booking.domain.Auditorium;
 import booking.repository.config.DataSourceConfig;
 import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.impl.AuditoriumDAOImpl;
+import booking.repository.impl.EventDAOImpl;
 import booking.repository.impl.UserDAOImpl;
 import booking.service.AuditoriumService;
 import booking.service.TestObjects;
@@ -26,14 +27,13 @@ import static org.junit.Assert.assertThat;
  * Time: 1:23 PM
  */
 @ContextConfiguration(classes = {DataSourceConfig.class, DbSessionFactoryConfig.class, AuditoriumServiceImpl.class,
-        AuditoriumDAOImpl.class, TestObjects.class, UserServiceImpl.class, UserDAOImpl.class
+        AuditoriumDAOImpl.class, TestObjects.class, UserServiceImpl.class, UserDAOImpl.class,
+        EventServiceImpl.class, EventDAOImpl.class
 })
 public class AuditoriumServiceImplTest extends BaseTest {
 
     @Autowired
     private AuditoriumService auditoriumService;
-    @Autowired
-    private TestObjects testObjects;
 
     @Test
     public void testDelete() {
@@ -50,21 +50,18 @@ public class AuditoriumServiceImplTest extends BaseTest {
         Auditorium auditorium2 = testObjects.createRedHall();
         List<Auditorium> auditoriums = auditoriumService.getAuditoriums();
         assertThat(auditoriums, containsInAnyOrder(auditorium1, auditorium2));
-        testObjects.deleteAuditorium(auditorium1, auditorium2);
     }
 
     @Test
     public void testGetByName() {
         Auditorium auditorium1 = testObjects.createBlueHall();
         assertThat(auditoriumService.getByName(auditorium1.getName()), equalTo(auditorium1));
-        testObjects.deleteAuditorium(auditorium1);
     }
 
     @Test
     public void testGetById() {
         Auditorium auditorium1 = testObjects.createBlueHall();
         assertThat(auditoriumService.getById(auditorium1.getId()), equalTo(auditorium1));
-        testObjects.deleteAuditorium(auditorium1);
     }
 
     @Test(expected = RuntimeException.class)

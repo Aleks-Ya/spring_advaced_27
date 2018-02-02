@@ -5,6 +5,7 @@ import booking.domain.User;
 import booking.repository.config.DataSourceConfig;
 import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.impl.AuditoriumDAOImpl;
+import booking.repository.impl.EventDAOImpl;
 import booking.repository.impl.UserDAOImpl;
 import booking.service.TestObjects;
 import booking.service.UserService;
@@ -26,14 +27,12 @@ import static org.junit.Assert.*;
  * Time: 8:02 PM
  */
 @ContextConfiguration(classes = {DataSourceConfig.class, DbSessionFactoryConfig.class,
-        TestObjects.class, UserServiceImpl.class, AuditoriumServiceImpl.class, AuditoriumDAOImpl.class, UserDAOImpl.class})
+        TestObjects.class, UserServiceImpl.class, AuditoriumServiceImpl.class, AuditoriumDAOImpl.class,
+        UserDAOImpl.class, EventDAOImpl.class, EventServiceImpl.class})
 public class UserServiceImplTest extends BaseTest {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private TestObjects testObjects;
 
     @Test
     public void testRegister() {
@@ -55,11 +54,7 @@ public class UserServiceImplTest extends BaseTest {
     @Test(expected = RuntimeException.class)
     public void testRegisterSameUser() {
         User user = testObjects.createJohn();
-        try {
-            userService.register(user);
-        } finally {
-            userService.delete(user);
-        }
+        userService.register(user);
     }
 
     @Test
@@ -80,7 +75,6 @@ public class UserServiceImplTest extends BaseTest {
         before.add(addedUser.withId(registeredId));
         assertTrue("Users should change", before.containsAll(after));
         assertTrue("Users should change", after.containsAll(before));
-        testObjects.deleteUser(testUser1);
     }
 
     @Test
@@ -88,7 +82,6 @@ public class UserServiceImplTest extends BaseTest {
         User user = testObjects.createJohn();
         User foundUser = userService.getUserByEmail(user.getEmail());
         assertEquals("User should match", user, foundUser);
-        testObjects.deleteUser(user);
     }
 
     @Test

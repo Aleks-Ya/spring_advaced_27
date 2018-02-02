@@ -6,9 +6,11 @@ import booking.repository.config.DataSourceConfig;
 import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.config.TestUserServiceConfig;
 import booking.repository.impl.AuditoriumDAOImpl;
+import booking.repository.impl.EventDAOImpl;
 import booking.service.AuditoriumService;
 import booking.service.TestObjects;
 import booking.service.impl.AuditoriumServiceImpl;
+import booking.service.impl.EventServiceImpl;
 import booking.web.config.FreeMarkerConfig;
 import booking.web.config.MvcConfig;
 import booking.web.error.AdviceErrorHandler;
@@ -30,7 +32,8 @@ import java.util.regex.Pattern;
 import static booking.web.controller.AuditoriumController.ENDPOINT;
 import static java.lang.String.format;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,32 +43,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @ContextConfiguration(classes = {FreeMarkerConfig.class, AuditoriumController.class, DataSourceConfig.class,
         DbSessionFactoryConfig.class, AdviceErrorHandler.class, MvcConfig.class, AuditoriumDAOImpl.class,
-        AuditoriumServiceImpl.class, TestUserServiceConfig.class, TestObjects.class
+        AuditoriumServiceImpl.class, TestUserServiceConfig.class, TestObjects.class,
+        EventServiceImpl.class, EventDAOImpl.class
 })
 public class AuditoriumControllerTest extends BaseTest {
     @Autowired
     private WebApplicationContext context;
     @Autowired
     private AuditoriumService auditoriumService;
-    @Autowired
-    private TestObjects testObjects;
 
     private MockMvc mvc;
-
 
     @Before
     public void setup() {
         mvc = MockMvcBuilders.webAppContextSetup(context).build();
-
-//        testObjectFactory.createBlueHall();
-//        testObjectFactory.createRedHall();
     }
-//
-//    @After
-//    public void tearDown() {
-//        testObjectFactory.deleteBlueHall();
-//        testObjectFactory.deleteRedHall();
-//    }
 
     @Test
     public void createAuditorium() throws Exception {
@@ -100,8 +92,6 @@ public class AuditoriumControllerTest extends BaseTest {
         assertThat(actAuditorium.getName(), equalTo(expAuditoriumName));
         assertThat(Integer.toString(actAuditorium.getSeatsNumber()), equalTo(expSeatsNumber));
         assertThat(actAuditorium.getVipSeats(), equalTo(expVipSeats));
-
-        auditoriumService.delete(auditoriumId);
     }
 
     @Test
@@ -124,7 +114,6 @@ public class AuditoriumControllerTest extends BaseTest {
                                 "<p>VIP seats: 1</p><hr/>\n",
                         blueHall.getId(),
                         redHall.getId())));
-        testObjects.deleteAuditorium(blueHall, redHall);
     }
 
     @Test
@@ -139,7 +128,6 @@ public class AuditoriumControllerTest extends BaseTest {
                                 "<p>Seats number: 500</p>\n" +
                                 "<p>VIP seats: 1,2,3</p>",
                         auditorium.getId())));
-        auditoriumService.delete(auditorium.getId());
     }
 
     @Test
@@ -155,7 +143,6 @@ public class AuditoriumControllerTest extends BaseTest {
                                 "<p>Seats number: 500</p>\n" +
                                 "<p>VIP seats: 1,2,3</p>",
                         auditorium.getId())));
-        auditoriumService.delete(auditorium.getId());
     }
 
     @Test
@@ -169,7 +156,6 @@ public class AuditoriumControllerTest extends BaseTest {
                                 "<h1>Seats number</h1>\n" +
                                 "<p>Auditorium: %s</p>\n" +
                                 "<p>Seats number: 500</p>", auditoriumName)));
-        auditoriumService.delete(auditorium.getId());
     }
 
     @Test
@@ -182,7 +168,6 @@ public class AuditoriumControllerTest extends BaseTest {
                         "<h1>Seats number</h1>\n" +
                         "<p>Auditorium: %s</p>\n" +
                         "<p>Seats number: 500</p>", auditoriumName)));
-        auditoriumService.delete(auditorium.getId());
     }
 
     @Test
@@ -194,7 +179,6 @@ public class AuditoriumControllerTest extends BaseTest {
                         "<h1>VIP seats</h1>\n" +
                         "<p>Auditorium: Blue hall</p>\n" +
                         "<p>VIP seats: 1,2,3,4,5</p>"));
-        testObjects.deleteAuditorium(auditorium);
     }
 
     @Test
@@ -207,7 +191,6 @@ public class AuditoriumControllerTest extends BaseTest {
                                 "<h1>VIP seats</h1>\n" +
                                 "<p>Auditorium: Red room</p>\n" +
                                 "<p>VIP seats: 1,2,3</p>"));
-        auditoriumService.delete(auditorium.getId());
     }
 
     @Test
@@ -223,7 +206,6 @@ public class AuditoriumControllerTest extends BaseTest {
                                 "<p>Seats number: 500</p>\n" +
                                 "<p>VIP seats: 1,2,3</p>",
                         auditorium.getId(), auditoriumName)));
-        assertNull(auditoriumService.getById(auditorium.getId()));
     }
 
     @Test
