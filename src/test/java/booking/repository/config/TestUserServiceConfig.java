@@ -17,6 +17,7 @@ import java.util.Arrays;
  * Time: 1:36 PM
  */
 @Configuration
+@Deprecated
 public class TestUserServiceConfig {
 
     @Bean

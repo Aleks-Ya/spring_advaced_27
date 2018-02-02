@@ -1,7 +1,7 @@
 package booking.web.controller;
 
 import booking.domain.Ticket;
-import booking.service.BookingService;
+import booking.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -18,16 +18,16 @@ class BookingPdfController {
     static final String ENDPOINT = BookingController.ENDPOINT + "/bookedTickets";
     static final String TICKETS_KEY = "tickets";
 
-    private final BookingService bookingService;
+    private final TicketService ticketService;
 
     @Autowired
-    public BookingPdfController(BookingService bookingService) {
-        this.bookingService = bookingService;
+    public BookingPdfController(TicketService ticketService) {
+        this.ticketService = ticketService;
     }
 
     @RequestMapping(path = BookingPdfController.ENDPOINT, produces = MediaType.APPLICATION_PDF_VALUE)
     ModelAndView getPdf() {
-        List<Ticket> tickets = bookingService.getBookedTickets();
+        List<Ticket> tickets = ticketService.getBookedTickets();
         Map<String, Object> model = new HashMap<>();
         model.put(TICKETS_KEY, tickets);
         return new ModelAndView(new PdfView(), model);

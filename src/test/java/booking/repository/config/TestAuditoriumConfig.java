@@ -18,6 +18,7 @@ import java.util.Collections;
  * Time: 1:36 PM
  */
 @Configuration
+@Deprecated
 public class TestAuditoriumConfig {
 
     @Bean

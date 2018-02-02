@@ -1,26 +1,11 @@
 package booking.web.controller;
 
-import booking.repository.config.DataSourceConfig;
-import booking.repository.config.DbSessionFactoryConfig;
-import booking.repository.config.TestBookingServiceConfig;
-import booking.repository.mocks.BookingDAOBookingMock;
-import booking.repository.mocks.DBAuditoriumDAOMock;
-import booking.repository.mocks.EventDAOMock;
-import booking.repository.mocks.UserDAOMock;
+import booking.BaseWebTest;
 import com.codeborne.pdftest.PDF;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
 
 import static com.codeborne.pdftest.PDF.containsText;
 import static org.hamcrest.core.AllOf.allOf;
@@ -32,36 +17,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Aleksey Yablokov
  */
-@RunWith(SpringRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(classes = {BookingPdfController.class, PdfView.class,
-        DbSessionFactoryConfig.class, DataSourceConfig.class, TestBookingServiceConfig.class})
-@Transactional
-public class BookingPdfControllerTest {
-    @Autowired
-    private WebApplicationContext context;
-    @Autowired
-    private BookingDAOBookingMock bookingDAOBookingMock;
-    @Autowired
-    private EventDAOMock eventDAOMock;
-    @Autowired
-    private UserDAOMock userDAOMock;
-    @Autowired
-    private DBAuditoriumDAOMock auditoriumDAOMock;
-
-    private MockMvc mvc;
-
-    @Before
-    public void setup() {
-        auditoriumDAOMock.init();
-        userDAOMock.init();
-        eventDAOMock.init();
-        bookingDAOBookingMock.init();
-        mvc = MockMvcBuilders.webAppContextSetup(context).build();
-    }
+@ContextConfiguration(classes = {BookingPdfController.class, PdfView.class})
+public class BookingPdfControllerTest extends BaseWebTest {
 
     @Test
     public void requestParam() throws Exception {
+        testObjects.createTicketToParty();
+        testObjects.createTicketToHackathon();
         MvcResult mvcResult = mvc.perform(get(BookingPdfController.ENDPOINT).accept(MediaType.APPLICATION_PDF))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_PDF_VALUE))
@@ -70,8 +32,8 @@ public class BookingPdfControllerTest {
         byte[] body = mvcResult.getResponse().getContentAsByteArray();
         PDF bodyPdf = new PDF(body);
         assertThat(bodyPdf, allOf(
-                containsText("Test event, 2016-02-06T14:45"),
-                containsText("Test event2, 2016-02-07T14:45")
+                containsText("New Year Party, 2018-12-31T23:00"),
+                containsText("Java Hackathon, 2018-03-13T09:00")
         ));
     }
 }

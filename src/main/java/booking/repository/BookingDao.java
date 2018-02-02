@@ -1,4 +1,4 @@
-package booking.service;
+package booking.repository;
 
 import booking.domain.Booking;
 import booking.domain.Ticket;
@@ -9,11 +9,13 @@ import java.util.List;
 /**
  * @author Aleksey Yablokov
  */
-public interface BookingService {
+public interface BookingDao {
 
     Booking create(User user, Ticket ticket);
 
     List<Booking> getAll();
+
+    void delete(User user, Ticket booking);
 
     void delete(long bookingId);
 }

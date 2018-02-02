@@ -52,7 +52,7 @@ public class AuditoriumController {
 
     @RequestMapping(method = RequestMethod.GET)
     String getAuditoriums(@ModelAttribute("model") ModelMap model) {
-        List<Auditorium> auditoriums = auditoriumService.getAuditoriums();
+        List<Auditorium> auditoriums = auditoriumService.getAll();
         model.addAttribute(AUDITORIUMS_ATTR, auditoriums);
         return AUDITORIUMS_FTL;
     }

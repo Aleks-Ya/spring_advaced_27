@@ -17,6 +17,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  */
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass=true)
+@Deprecated
 public class TestAspectsConfig extends TestBookingServiceConfig {
 
     @Bean
@@ -31,6 +32,7 @@ public class TestAspectsConfig extends TestBookingServiceConfig {
 
     @Bean
     LuckyWinnerAspect luckyWinnerAspect() {
-        return new LuckyWinnerAspectMock(99);
+        return new LuckyWinnerAspectMock();
+//        return new LuckyWinnerAspectMock(99);
     }
 }

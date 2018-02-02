@@ -16,9 +16,7 @@ import java.util.Optional;
  */
 public interface TicketDao {
 
-    Ticket create(User user, Ticket ticket);
-
-    void delete(User user, Ticket booking);
+    Ticket create(Ticket ticket);
 
     void delete(long ticketId);
 
@@ -28,7 +26,9 @@ public interface TicketDao {
 
     long countTickets(User user);
 
-    List<Ticket> getAllTickets();
+    List<Ticket> getBookedTickets();
+
+    List<Ticket> getAll();
 
     Optional<Ticket> getTicketById(Long ticketId);
 

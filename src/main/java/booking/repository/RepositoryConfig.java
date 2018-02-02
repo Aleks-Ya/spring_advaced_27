@@ -3,10 +3,7 @@ package booking.repository;
 import booking.repository.config.DataSourceConfig;
 import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.config.PropertySourceConfig;
-import booking.repository.impl.AuditoriumDAOImpl;
-import booking.repository.impl.EventDAOImpl;
-import booking.repository.impl.TicketDaoImpl;
-import booking.repository.impl.UserDAOImpl;
+import booking.repository.impl.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -15,6 +12,6 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import({DataSourceConfig.class, DbSessionFactoryConfig.class, PropertySourceConfig.class,
-        AuditoriumDAOImpl.class, TicketDaoImpl.class, EventDAOImpl.class, UserDAOImpl.class})
+        AuditoriumDAOImpl.class, TicketDaoImpl.class, EventDAOImpl.class, UserDAOImpl.class, BookingDaoImpl.class})
 public class RepositoryConfig {
 }

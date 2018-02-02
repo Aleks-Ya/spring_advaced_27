@@ -19,6 +19,7 @@ import java.util.Arrays;
  * Time: 6:10 PM
  */
 @Configuration
+@Deprecated
 public class TestEventServiceConfig extends TestAuditoriumConfig {
 
     @Bean

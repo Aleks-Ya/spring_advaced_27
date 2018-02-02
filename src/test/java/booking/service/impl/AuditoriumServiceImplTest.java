@@ -32,7 +32,7 @@ public class AuditoriumServiceImplTest extends BaseTest {
     public void testGetAuditoriums() {
         Auditorium auditorium1 = testObjects.createBlueHall();
         Auditorium auditorium2 = testObjects.createRedHall();
-        List<Auditorium> auditoriums = auditoriumService.getAuditoriums();
+        List<Auditorium> auditoriums = auditoriumService.getAll();
         assertThat(auditoriums, containsInAnyOrder(auditorium1, auditorium2));
     }
 

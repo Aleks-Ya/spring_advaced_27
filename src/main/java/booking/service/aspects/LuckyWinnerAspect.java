@@ -6,7 +6,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -31,8 +30,10 @@ public class LuckyWinnerAspect {
     protected static final Set<String> luckyUsers = new HashSet<>();
     private final int luckyPercentage;
 
-    @Autowired
+//    TODO
+//    @Autowired
     public LuckyWinnerAspect(@Value("${lucky.percentage}") int luckyPercentage) {
+//        this.luckyPercentage = luckyPercentage;
         this.luckyPercentage = luckyPercentage;
     }
 
@@ -40,7 +41,7 @@ public class LuckyWinnerAspect {
         return new ArrayList<>(luckyUsers);
     }
 
-    @Pointcut(value = "(execution(* booking.service.BookingService.bookTicket(booking.domain.User, booking.domain.Ticket)) && args(user, ticket))",
+    @Pointcut(value = "(execution(* booking.service.BookingService.create(booking.domain.User, booking.domain.Ticket)) && args(user, ticket))",
             argNames = "user,ticket")
     private void bookTicket(User user, Ticket ticket) {
         // This method intended for declaring a @Pointcut

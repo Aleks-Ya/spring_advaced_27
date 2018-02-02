@@ -11,6 +11,7 @@ import java.util.List;
  * Date: 06/2/16
  * Time: 2:41 PM
  */
+@Deprecated
 public class UserDAOMock extends UserDAOImpl {
 
     private final List<User> users;

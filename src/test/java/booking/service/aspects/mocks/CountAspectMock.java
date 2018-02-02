@@ -8,6 +8,7 @@ import booking.service.aspects.CounterAspect;
  * Date: 13/2/16
  * Time: 8:42 PM
  */
+@Deprecated
 public class CountAspectMock extends CounterAspect {
 
     public static void cleanup() {

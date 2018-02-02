@@ -5,23 +5,24 @@ import booking.repository.AuditoriumDAO;
 import booking.repository.EventDAO;
 import booking.repository.TicketDao;
 import booking.repository.UserDAO;
-import booking.repository.mocks.BookingDAOBookingMock;
 import booking.repository.mocks.DBAuditoriumDAOMock;
 import booking.repository.mocks.EventDAOMock;
 import booking.repository.mocks.UserDAOMock;
 import booking.service.*;
 import booking.service.impl.AuditoriumServiceImpl;
-import booking.service.impl.BookingServiceImpl;
 import booking.service.impl.EventServiceImpl;
 import booking.service.impl.UserServiceImpl;
 import booking.service.impl.discount.BirthdayStrategy;
 import booking.service.impl.discount.DiscountServiceImpl;
 import booking.service.impl.discount.TicketsStrategy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,7 +31,11 @@ import java.util.*;
  * Time: 3:36 PM
  */
 @Configuration
+@Deprecated
 public class TestBookingServiceConfig {
+
+    @Autowired
+    private TicketDao ticketDao;
 
     @Bean
     public DiscountStrategy birthdayBookingStrategy() {
@@ -39,22 +44,18 @@ public class TestBookingServiceConfig {
 
     @Bean
     public DiscountStrategy ticketsBookingStrategy() {
-        return new TicketsStrategy(bookingBookingDAO(), 0.5, 3, 0);
+        return new TicketsStrategy(ticketDao, 0.5, 3, 0);
     }
 
-    @Bean
-    public TicketDao bookingBookingDAO() {
-        HashSet<Ticket> tickets = new HashSet<Ticket>() {
-            {
-                addAll(tickets());
-            }
-        };
-        return new BookingDAOBookingMock(new HashMap<User, Set<Ticket>>() {
-            {
-                put(testUser1(), tickets);
-            }
-        });
-    }
+//    @Bean
+//    public TicketDao bookingBookingDAO() {
+//        HashSet<Ticket> tickets = new HashSet<Ticket>() {
+//            {
+//                addAll(tickets());
+//            }
+//        };
+//        throw new UnsupportedOperationException();
+//    }
 
     @Bean
     public DiscountService discountBookingServiceImpl() {
@@ -143,9 +144,9 @@ public class TestBookingServiceConfig {
         return new UserServiceImpl(userDAOMock());
     }
 
-    @Bean(name = "testBookingServiceImpl")
-    public BookingService bookingServiceImpl() {
-        return new BookingServiceImpl(eventServiceImpl(), auditoriumServiceImpl(), userServiceImpl(),
-                                      discountBookingServiceImpl(), bookingBookingDAO(), 1, 2, 1.2, 1);
-    }
+//    @Bean(name = "testBookingServiceImpl")
+//    public BookingService bookingServiceImpl() {
+//        return new BookingServiceImpl(eventServiceImpl(), auditoriumServiceImpl(), userServiceImpl(),
+//                                      discountBookingServiceImpl(), bookingBookingDAO(), 1, 2, 1.2, 1);
+//    }
 }

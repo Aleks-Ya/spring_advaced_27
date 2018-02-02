@@ -1,30 +1,10 @@
 package booking.web.controller;
 
+import booking.BaseWebTest;
 import booking.domain.*;
-import booking.repository.TicketDao;
-import booking.repository.config.DataSourceConfig;
-import booking.repository.config.DbSessionFactoryConfig;
-import booking.repository.config.TestBookingServiceConfig;
-import booking.repository.mocks.BookingDAOBookingMock;
-import booking.repository.mocks.DBAuditoriumDAOMock;
-import booking.repository.mocks.EventDAOMock;
-import booking.repository.mocks.UserDAOMock;
-import booking.service.AuditoriumService;
-import booking.service.BookingService;
-import booking.service.EventService;
-import booking.service.UserService;
 import booking.web.config.FreeMarkerConfig;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -39,49 +19,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Aleksey Yablokov
  */
-@RunWith(SpringRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(classes = {FreeMarkerConfig.class, BookingController.class, DbSessionFactoryConfig.class,
-        DataSourceConfig.class, TestBookingServiceConfig.class
+@ContextConfiguration(classes = {FreeMarkerConfig.class, BookingController.class
 })
-@Transactional
-public class BookingControllerTest {
-
-    @Autowired
-    private WebApplicationContext context;
-    @Autowired
-    private BookingDAOBookingMock bookingDAOBookingMock;
-    @Autowired
-    private EventDAOMock eventDAOMock;
-    @Autowired
-    private UserDAOMock userDAOMock;
-    @Autowired
-    private DBAuditoriumDAOMock auditoriumDAOMock;
-    @Autowired
-    private BookingService bookingService;
-    @Autowired
-    private TicketDao ticketDao;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private EventService eventService;
-    @Autowired
-    private AuditoriumService auditoriumService;
-
-    private MockMvc mvc;
-
-    @Before
-    public void setup() {
-        auditoriumDAOMock.init();
-        userDAOMock.init();
-        eventDAOMock.init();
-        bookingDAOBookingMock.init();
-        mvc = MockMvcBuilders.webAppContextSetup(context).build();
-    }
+public class BookingControllerTest extends BaseWebTest {
 
     @Test
     public void getBookedTickets() throws Exception {
-        deleteAllTickets();
         Ticket ticket1 = createTicket();
         Ticket ticket2 = createTicket();
         mvc.perform(get(BookingController.ENDPOINT))
@@ -106,10 +49,6 @@ public class BookingControllerTest {
                         ticket2.getId(), ticket2.getEvent().getName())));
     }
 
-    private void deleteAllTickets() {
-        ticketDao.getAllTickets().forEach(ticket -> ticketDao.delete(ticket.getUser(), ticket));
-    }
-
     @Test
     public void getTicketById() throws Exception {
         Ticket bookedTicket = createTicket();
@@ -129,7 +68,6 @@ public class BookingControllerTest {
 
     @Test
     public void bookTicket() throws Exception {
-        deleteAllTickets();
         User user = createUser();
         Event event = createEvent();
         mvc.perform(post(BookingController.ENDPOINT)
@@ -143,7 +81,7 @@ public class BookingControllerTest {
                 .andExpect(content().string(format(
                         LoginControllerTest.ANONYMOUS_HEADER +
                                 "<h1>The ticket is booked</h1>\n" +
-                                "<p>Id: 3</p>\n" +
+                                "<p>Id: 1</p>\n" +
                                 "<p>Event: %s</p>\n" +
                                 "<p>Date: 2007-12-03T10:15:30</p>\n" +
                                 "<p>Seats: 1,2,3</p>\n" +
@@ -154,7 +92,6 @@ public class BookingControllerTest {
 
     @Test
     public void getTicketPrice() throws Exception {
-        deleteAllTickets();
         Auditorium auditorium = auditoriumService.create(new Auditorium("Room", 100, Arrays.asList(1, 2, 3)));
         User user = createUser();
         LocalDateTime date = LocalDateTime.of(2018, 1, 15, 10, 30);
@@ -176,13 +113,12 @@ public class BookingControllerTest {
 
     @Test
     public void getTicketsForEvent() throws Exception {
-        deleteAllTickets();
         Auditorium auditorium = auditoriumService.create(new Auditorium("Room", 100, Arrays.asList(1, 2, 3)));
         LocalDateTime date = LocalDateTime.of(2018, 1, 15, 10, 30);
         User user = createUser();
         Event event = eventService.create(new Event(UUID.randomUUID() + "Meeting", Rate.HIGH, 100,
                 date, auditorium));
-        Ticket ticket = bookingService.bookTicket(user, new Ticket(event, date, Arrays.asList(1, 2, 3), user, 100));
+        Ticket ticket = bookingService.create(user, new Ticket(event, date, Arrays.asList(1, 2, 3), user, 100)).getTicket();
         mvc.perform(get(BookingController.ENDPOINT + "/tickets")
                 .param("eventName", event.getName())
                 .param("auditoriumId", String.valueOf(auditorium.getId()))
@@ -213,7 +149,7 @@ public class BookingControllerTest {
         Event event = createEvent();
         Ticket ticket = new Ticket(event, LocalDateTime.of(2017, 1, 15, 10, 30),
                 Arrays.asList(1, 2, 3), user, 100);
-        return bookingService.bookTicket(user, ticket);
+        return bookingService.create(user, ticket).getTicket();
     }
 
     private Event createEvent() {

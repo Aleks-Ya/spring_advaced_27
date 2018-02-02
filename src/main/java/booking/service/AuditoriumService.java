@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface AuditoriumService {
 
-    List<Auditorium> getAuditoriums();
+    List<Auditorium> getAll();
 
     Auditorium getByName(String auditoriumName);
 

@@ -1,11 +1,11 @@
 package booking.repository.config;
 
 import booking.repository.TicketDao;
-import booking.repository.mocks.TicketDaoDiscountMock;
 import booking.service.DiscountService;
 import booking.service.impl.discount.BirthdayStrategy;
 import booking.service.impl.discount.DiscountServiceImpl;
 import booking.service.impl.discount.TicketsStrategy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,7 +18,10 @@ import java.util.Arrays;
  * Time: 3:36 PM
  */
 @Configuration
+@Deprecated
 public class TestStrategiesConfig {
+    @Autowired
+    private TicketDao ticketDao;
 
     @Bean
     public BirthdayStrategy birthdayStrategy() {
@@ -27,13 +30,14 @@ public class TestStrategiesConfig {
 
     @Bean
     public TicketsStrategy ticketsStrategy() {
-        return new TicketsStrategy(bookingDiscountDAO(), 0.5, 2, 0);
+        return new TicketsStrategy(ticketDao, 0.5, 2, 0);
     }
 
-    @Bean
-    public TicketDao bookingDiscountDAO() {
-        return new TicketDaoDiscountMock("Test User", 1);
-    }
+//    @Bean
+//    public TicketDao bookingDiscountDAO() {
+//        throw new UnsupportedOperationException();
+////        return new TicketDaoDiscountMock("Test User", 1);
+//    }
 
     @Bean
     public DiscountService discountServiceImpl() {

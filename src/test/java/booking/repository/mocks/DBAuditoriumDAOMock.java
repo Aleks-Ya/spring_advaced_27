@@ -11,6 +11,7 @@ import java.util.List;
  * Date: 06/2/16
  * Time: 1:27 PM
  */
+@Deprecated
 public class DBAuditoriumDAOMock extends AuditoriumDAOImpl {
 
     private final List<Auditorium> auditoriums;

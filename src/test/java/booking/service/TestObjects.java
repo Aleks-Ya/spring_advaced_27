@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
+import static java.lang.String.format;
 import static java.util.Arrays.asList;
 
 /**
@@ -23,18 +24,25 @@ public class TestObjects {
     @Autowired
     private EventService eventService;
     @Autowired
+    private TicketService ticketService;
+    @Autowired
     private BookingService bookingService;
 
     public Auditorium createBlueHall() {
-        return auditoriumService.create(new Auditorium("Blue hall", 15, asList(1, 2, 3, 4, 5)));
+        return auditoriumService.create(new Auditorium("Blue hall", 1000, asList(1, 2, 3, 4, 5)));
     }
 
     public Auditorium createRedHall() {
-        return auditoriumService.create(new Auditorium("Red hall", 8, Collections.singletonList(1)));
+        return auditoriumService.create(new Auditorium("Red hall", 500, Collections.singletonList(1)));
     }
 
+    private int userConuter = 0;
+
     public User createJohn() {
-        return userService.register(new User("john@gmail.com", "John Smith",
+        userConuter++;
+        return userService.register(new User(
+                format("john_%d@gmail.com", userConuter),
+                "John Smith " + userConuter,
                 LocalDate.of(1980, 3, 20), "jpass", null));
     }
 
@@ -53,21 +61,31 @@ public class TestObjects {
     public Ticket createTicketToParty() {
         User user = createJohn();
         Event event = createParty();
-        Ticket ticket = new Ticket(event, event.getDateTime(), asList(5, 6), user, event.getBasePrice() * 2);
-        return bookingService.bookTicket(user, ticket);
+        Ticket ticket = new Ticket(event, event.getDateTime(), asList(100, 101), user, event.getBasePrice() * 2);
+        return bookingService.create(user, ticket).getTicket();
+    }
+
+    public Ticket createTicketToHackathon() {
+        User user = createJohn();
+        Event event = createHackathon();
+        Ticket ticket = new Ticket(event, event.getDateTime(), asList(200, 201, 202), user, event.getBasePrice() * 3);
+        return bookingService.create(user, ticket).getTicket();
     }
 
     /**
      * Make the datasource empty.
      */
     public void cleanup() {
-        for (Ticket ticket : bookingService.getBookedTickets()) {
-//            bookingService
+        for (Booking booking : bookingService.getAll()) {
+            bookingService.delete(booking.getId());
+        }
+        for (Ticket ticket : ticketService.getAll()) {
+            ticketService.delete(ticket.getId());
         }
         for (Event event : eventService.getAll()) {
             eventService.delete(event);
         }
-        for (Auditorium auditorium : auditoriumService.getAuditoriums()) {
+        for (Auditorium auditorium : auditoriumService.getAll()) {
             auditoriumService.delete(auditorium.getId());
         }
         for (User user : userService.getAll()) {

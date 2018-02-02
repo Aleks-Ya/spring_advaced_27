@@ -6,7 +6,6 @@ import booking.domain.Ticket;
 import booking.domain.User;
 import booking.repository.TicketDao;
 import org.hibernate.Query;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,12 +16,12 @@ import java.util.Optional;
  * Date: 20/2/16
  * Time: 9:00 PM
  */
-@Repository("bookingDAO")
 public class TicketDaoImpl extends AbstractDAO implements TicketDao {
 
     @Override
-    public Ticket create(User user, Ticket ticket) {
+    public Ticket create(Ticket ticket) {
         TicketDao.validateTicket(ticket);
+        User user = ticket.getUser();
         TicketDao.validateUser(user);
 
         Long ticketId = (Long) getCurrentSession().save(ticket);
@@ -33,18 +32,10 @@ public class TicketDaoImpl extends AbstractDAO implements TicketDao {
     }
 
     @Override
-    public void delete(User user, Ticket ticket) {
-        Query query = getCurrentSession().createQuery(
-                "delete from Booking b where b.user = :user and b.ticket = :ticket");
-        query.setParameter("user", user);
-        query.setParameter("ticket", ticket);
-        query.executeUpdate();
-        getCurrentSession().delete(ticket);
-    }
-
-    @Override
     public void delete(long ticketId) {
-        getCurrentSession().createQuery("delete from Ticket t where t.id = :ticketId").executeUpdate();
+        Query query = getCurrentSession().createQuery("delete from Ticket t where t.id = :ticketId");
+        query.setParameter("ticketId", ticketId);
+        query.executeUpdate();
     }
 
     @Override
@@ -72,9 +63,15 @@ public class TicketDaoImpl extends AbstractDAO implements TicketDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Ticket> getAllTickets() {
+    public List<Ticket> getBookedTickets() {
         Query query = getCurrentSession().createQuery("select b.ticket from Booking b");
         return ((List<Ticket>) query.list());
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Ticket> getAll() {
+        return ((List<Ticket>) createBlankCriteria(Ticket.class).list());
     }
 
     @Override

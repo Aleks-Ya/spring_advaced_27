@@ -28,7 +28,7 @@ public class AuditoriumServiceImpl implements AuditoriumService {
     }
 
     @Override
-    public List<Auditorium> getAuditoriums() {
+    public List<Auditorium> getAll() {
         return auditoriumDAO.getAll();
     }
 

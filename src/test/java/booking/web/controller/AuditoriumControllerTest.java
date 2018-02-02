@@ -80,12 +80,12 @@ public class AuditoriumControllerTest extends BaseWebTest {
                                 "<p>Auditorium</p>\n" +
                                 "<p>Id: %d</p>\n" +
                                 "<p>Name: Blue hall</p>\n" +
-                                "<p>Seats number: 15</p>\n" +
+                                "<p>Seats number: 1,000</p>\n" +
                                 "<p>VIP seats: 1,2,3,4,5</p><hr/>\n" +
                                 "<p>Auditorium</p>\n" +
                                 "<p>Id: %d</p>\n" +
                                 "<p>Name: Red hall</p>\n" +
-                                "<p>Seats number: 8</p>\n" +
+                                "<p>Seats number: 500</p>\n" +
                                 "<p>VIP seats: 1</p><hr/>\n",
                         blueHall.getId(),
                         redHall.getId())));

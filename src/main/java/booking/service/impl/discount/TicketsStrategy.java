@@ -4,7 +4,6 @@ import booking.domain.User;
 import booking.repository.TicketDao;
 import booking.service.DiscountStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -16,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Date: 2/4/2016
  * Time: 11:25 AM
  */
-@Component("ticketsStrategy")
+@Component
 @PropertySource({"classpath:strategies/strategies.properties"})
 @Transactional
 public class TicketsStrategy implements DiscountStrategy {
@@ -27,10 +26,11 @@ public class TicketsStrategy implements DiscountStrategy {
     private final int discountThreshold;
 
     @Autowired
-    public TicketsStrategy(@Qualifier("bookingDAO") TicketDao ticketDao,
-                           @Value("${tickets.discount}") double ticketsDiscountValue,
-                           @Value("${tickets.discount.threshold}") int discountThreshold,
-                           @Value("${tickets.discount.default}") double defaultDiscount) {
+    public TicketsStrategy(
+            TicketDao ticketDao,
+            @Value("${tickets.discount}") double ticketsDiscountValue,
+            @Value("${tickets.discount.threshold}") int discountThreshold,
+            @Value("${tickets.discount.default}") double defaultDiscount) {
         this.ticketDao = ticketDao;
         this.ticketsDiscountValue = ticketsDiscountValue;
         this.discountThreshold = discountThreshold;

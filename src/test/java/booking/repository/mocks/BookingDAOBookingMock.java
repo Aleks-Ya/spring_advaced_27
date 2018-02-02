@@ -2,7 +2,6 @@ package booking.repository.mocks;
 
 import booking.domain.Ticket;
 import booking.domain.User;
-import booking.repository.impl.TicketDaoImpl;
 
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +12,10 @@ import java.util.Set;
  * Date: 06/2/16
  * Time: 3:08 AM
  */
-public class BookingDAOBookingMock extends TicketDaoImpl {
+@Deprecated
+public class BookingDAOBookingMock
+//        extends TicketDaoImpl
+{
 
     private final Map<User, Set<Ticket>> initWith;
 
@@ -24,10 +26,12 @@ public class BookingDAOBookingMock extends TicketDaoImpl {
     public void init() {
         cleanup();
         System.out.println("creating " + initWith);
-        initWith.forEach((user, tickets) -> tickets.forEach(ticket -> create(user, ticket)));
+        throw new UnsupportedOperationException();
+//        initWith.forEach((user, tickets) -> tickets.forEach(ticket -> create(user, ticket)));
     }
 
     public void cleanup() {
-        getAllTickets().forEach(ticket -> delete(ticket.getUser(), ticket));
+        throw new UnsupportedOperationException();
+//        getBookedTickets().forEach(ticket -> delete(ticket.getUser(), ticket));
     }
 }
