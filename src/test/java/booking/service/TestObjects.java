@@ -13,6 +13,8 @@ import static java.util.Arrays.asList;
 
 /**
  * Provides convenient methods for creating and deleting domain objects in tests.
+ *
+ * @author Aleksey Yablokov
  */
 @Component
 public class TestObjects {
@@ -69,7 +71,7 @@ public class TestObjects {
         User user = createJohn();
         Event event = createHackathon();
         Ticket ticket = new Ticket(event, event.getDateTime(), asList(200, 201, 202), user, event.getBasePrice() * 3);
-        return bookingService.create(user, ticket).getTicket();
+        return ticketService.create(ticket);
     }
 
     /**

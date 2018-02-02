@@ -13,6 +13,8 @@ public interface BookingDao {
 
     Booking create(User user, Ticket ticket);
 
+    Booking getById(long bookingId);
+
     List<Booking> getAll();
 
     void delete(User user, Ticket booking);

@@ -87,6 +87,11 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    public Booking getById(long bookingId) {
+        return bookingDao.getById(bookingId);
+    }
+
+    @Override
     public List<Booking> getAll() {
         return bookingDao.getAll();
     }

@@ -1,13 +1,19 @@
 package booking.service.impl;
 
 import booking.BaseTest;
-import booking.repository.config.DataSourceConfig;
-import booking.repository.config.DbSessionFactoryConfig;
-import booking.repository.config.PropertySourceConfig;
-import booking.repository.impl.TicketDaoImpl;
+import booking.domain.Booking;
+import booking.domain.Event;
+import booking.domain.Ticket;
+import booking.domain.User;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Arrays;
+
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,144 +21,59 @@ import org.springframework.transaction.annotation.Transactional;
  * Date: 06/2/16
  * Time: 8:28 PM
  */
-//@RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {PropertySourceConfig.class, DataSourceConfig.class, DbSessionFactoryConfig.class,
-//        , TestBookingServiceConfig.class
-        BookingServiceImpl.class, TicketDaoImpl.class
-})
-@Transactional
+@Ignore("fix it") //TODO
 public class BookingServiceImplTest extends BaseTest {
 
-//    @Autowired
-//    private ApplicationContext applicationContext;
-
-
-
-//    @Autowired
-//    private BookingDAOBookingMock bookingDAOBookingMock;
-//    @Autowired
-//    private EventDAOMock eventDAOMock;
-//    @Autowired
-//    private UserDAOMock userDAOMock;
-//    @Autowired
-//    private DBAuditoriumDAOMock auditoriumDAOMock;
-//
-//    @Before
-//    public void init() {
-//        auditoriumDAOMock.init();
-//        userDAOMock.init();
-//        eventDAOMock.init();
-//        bookingDAOBookingMock.init();
-//    }
-//
-//    @After
-//    public void cleanup() {
-//        auditoriumDAOMock.cleanup();
-//        userDAOMock.cleanup();
-//        eventDAOMock.cleanup();
-//        bookingDAOBookingMock.cleanup();
-//    }
-
-    @Test
-    public void name() {
+    @Test(expected = RuntimeException.class)
+    public void testBookTicket_NotRegistered() {
+        Ticket ticket = testObjects.createTicketToParty();
+        User user = testObjects.createJohn();
+        Booking expBooking = bookingService.create(user, ticket);
+        assertThat(bookingService.getById(expBooking.getId()), equalTo(expBooking));
     }
 
+    @Test(expected = RuntimeException.class)
+    public void testBookTicket_AlreadyBooked() {
+        Ticket newTicket = testObjects.createTicketToParty();
+        User user = newTicket.getUser();
+        bookingService.create(user, newTicket);
+        bookingService.create(user, newTicket);
+    }
 
-//    @Test
-//    public void testGetTicketsForEvent() {
-//        Event testEvent1 = (Event) applicationContext.getBean("testEvent1");
-//        Ticket ticket = (Ticket) applicationContext.getBean("testTicket1");
-//        List<Ticket> ticketsForEvent = bookingService.getTicketsForEvent(testEvent1.getName(),
-//                testEvent1.getAuditorium().getId(),
-//                testEvent1.getDateTime());
-//        assertEquals("Tickets should match", Collections.singletonList(ticket), ticketsForEvent);
-//    }
-//
-//    @Test(expected = RuntimeException.class)
-//    public void testBookTicket_NotRegistered() {
-//        Event testEvent1 = (Event) applicationContext.getBean("testEvent1");
-//        User newUser = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString(), LocalDate.now(), null, null);
-//        Ticket newTicket = new Ticket(testEvent1, LocalDateTime.now(), Arrays.asList(3, 4), newUser, 0.0);
-//        bookingService.bookTicket(newUser, newTicket);
-//    }
-//
-//    @Test(expected = RuntimeException.class)
-//    public void testBookTicket_AlreadyBooked() {
-//        Event testEvent1 = (Event) applicationContext.getBean("testEvent1");
-//        User testUser2 = (User) applicationContext.getBean("testUser2");
-//        Ticket newTicket = new Ticket(testEvent1, LocalDateTime.now(), Arrays.asList(3, 4), testUser2, 0.0);
-//        bookingService.bookTicket(testUser2, newTicket);
-//    }
-//
-//    @Test
-//    public void testBookTicket() {
-//        Event testEvent1 = (Event) applicationContext.getBean("testEvent1");
-//        List<Ticket> before = bookingService.getTicketsForEvent(testEvent1.getName(),
-//                testEvent1.getAuditorium().getId(),
-//                testEvent1.getDateTime());
-//        User testUser1 = (User) applicationContext.getBean("testUser1");
-//        Ticket newTicket = new Ticket(testEvent1, LocalDateTime.now(), Arrays.asList(5, 6), testUser1, 0.0);
-//        Ticket bookedTicket = bookingService.bookTicket(testUser1, newTicket);
-//        List<Ticket> after = bookingService.getTicketsForEvent(testEvent1.getName(),
-//                testEvent1.getAuditorium().getId(),
-//                testEvent1.getDateTime());
-//        before.add(bookedTicket);
-//        assertTrue("Events should change", after.containsAll(before));
-//        assertTrue("Events should change", before.containsAll(after));
-//    }
-//
-//    @Test
-//    public void testGetTicketPrice() {
-//        Ticket ticket = (Ticket) applicationContext.getBean("testTicket1");
-//        Event event = ticket.getEvent();
-//        double ticketPrice = bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
-//                event.getDateTime(), ticket.getSeatsList(),
-//                ticket.getUser());
-//        Assert.assertEquals("Price is wrong", 297.6, ticketPrice, 0.00001);
-//    }
-//
-//    @Test
-//    public void testGetTicketPrice_WithoutDiscount() {
-//        Ticket ticket = (Ticket) applicationContext.getBean("testTicket1");
-//        User user = userDAOMock.create(new User("dadsada", "asdasda", LocalDate.now().minus(1, ChronoUnit.DAYS), "pass", null));
-//        Event event = ticket.getEvent();
-//        double ticketPrice = bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
-//                event.getDateTime(), ticket.getSeatsList(), user);
-//        Assert.assertEquals("Price is wrong", 595.2, ticketPrice, 0.00001);
-//    }
-//
-//    @Test
-//    public void testGetTicketPrice_DiscountsForTicketsAndForBirthday() {
-//        Ticket ticket = (Ticket) applicationContext.getBean("testTicket1");
-//        User testUser = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString(), LocalDate.now(), "pass", null);
-//        User registeredUser = userDAOMock.create(testUser);
-//        bookingService.bookTicket(registeredUser,
-//                new Ticket(ticket.getEvent(), LocalDateTime.now(), Collections.singletonList(1),
-//                        registeredUser, 0.0));
-//        bookingService.bookTicket(registeredUser,
-//                new Ticket(ticket.getEvent(), LocalDateTime.now(), Collections.singletonList(2),
-//                        registeredUser, 0.0));
-//        Event event = ticket.getEvent();
-//        double ticketPrice = bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
-//                event.getDateTime(), Arrays.asList(5, 6, 7, 8),
-//                registeredUser);
-//        Assert.assertEquals("Price is wrong", 260.4, ticketPrice, 0.00001);
-//    }
-//
-//    @Test
-//    public void testGetTicketPrice_DiscountsForTicketsAndForBirthday_MidRate() {
-//        Ticket ticket = (Ticket) applicationContext.getBean("testTicket2");
-//        User testUser = new User(UUID.randomUUID().toString(), UUID.randomUUID().toString(), LocalDate.now(), "pass", null);
-//        User registeredUser = userDAOMock.create(testUser);
-//        bookingService.bookTicket(registeredUser,
-//                new Ticket(ticket.getEvent(), LocalDateTime.now(), Collections.singletonList(3),
-//                        registeredUser, 0.0));
-//        bookingService.bookTicket(registeredUser,
-//                new Ticket(ticket.getEvent(), LocalDateTime.now(), Collections.singletonList(4),
-//                        registeredUser, 0.0));
-//        Event event = ticket.getEvent();
-//        double ticketPrice = bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
-//                event.getDateTime(), Arrays.asList(5, 6, 7), registeredUser);
-//        Assert.assertEquals("Price is wrong", 525, ticketPrice, 0.00001);
-//    }
+    @Test
+    public void getAll() {
+        Event testEvent1 = testObjects.createParty();
+        Ticket newTicket = testObjects.createTicketToHackathon();
+        User testUser1 = newTicket.getUser();
+        Booking booking = bookingService.create(testUser1, newTicket);
+
+        assertThat(bookingService.getAll(), containsInAnyOrder(booking));
+    }
+
+    @Test
+    public void testGetTicketPrice_DiscountsForTicketsAndForBirthday() {
+        Ticket ticket = testObjects.createTicketToParty();
+        Ticket ticket2 = testObjects.createTicketToHackathon();
+        User testUser = ticket.getUser();
+        User registeredUser = testObjects.createJohn();
+        bookingService.create(registeredUser, ticket);
+        bookingService.create(ticket2.getUser(), ticket2);
+        Event event = ticket.getEvent();
+        double ticketPrice = ticketService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
+                event.getDateTime(), Arrays.asList(5, 6, 7, 8),
+                registeredUser);
+        assertEquals("Price is wrong", 260.4, ticketPrice, 0.00001);
+    }
+
+    @Test
+    public void testGetTicketPrice_DiscountsForTicketsAndForBirthday_MidRate() {
+        Ticket ticket = testObjects.createTicketToParty();
+        User testUser = ticket.getUser();
+        bookingService.create(testUser, ticket);
+        bookingService.create(testUser, ticket);
+        Event event = ticket.getEvent();
+        double ticketPrice = ticketService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
+                event.getDateTime(), Arrays.asList(5, 6, 7), testUser);
+        assertEquals("Price is wrong", 525, ticketPrice, 0.00001);
+    }
 }
