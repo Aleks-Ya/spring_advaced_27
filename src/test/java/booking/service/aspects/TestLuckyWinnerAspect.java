@@ -1,6 +1,6 @@
 package booking.service.aspects;
 
-import booking.BaseTest;
+import booking.BaseServiceTest;
 import booking.domain.Ticket;
 import booking.domain.User;
 import booking.service.aspects.mocks.LuckyWinnerAspectMock;
@@ -35,7 +35,7 @@ import static org.junit.Assert.assertEquals;
 //@Transactional
 //@TestPropertySource("classpath:aspects/aspects.properties")
 @Ignore("fix it") //TODO
-public class TestLuckyWinnerAspect extends BaseTest {
+public class TestLuckyWinnerAspect extends BaseServiceTest {
 
 //    @Autowired
 //    private ApplicationContext applicationContext;

@@ -16,7 +16,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @WebAppConfiguration
 @ContextConfiguration(classes = {FreeMarkerConfig.class, AdviceErrorHandler.class, MvcConfig.class})
-public abstract class BaseWebTest extends BaseTest {
+public abstract class BaseWebTest extends BaseServiceTest {
     @Autowired
     protected WebApplicationContext wc;
     protected MockMvc mvc;

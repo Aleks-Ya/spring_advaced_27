@@ -1,6 +1,6 @@
 package booking.service.impl.discount;
 
-import booking.BaseTest;
+import booking.BaseServiceTest;
 import booking.domain.Ticket;
 import booking.domain.User;
 import booking.repository.BookingDao;
@@ -27,7 +27,7 @@ import static org.junit.Assert.assertEquals;
 //        , TicketDaoDiscountMock.class
 })
 @Transactional
-public class TicketsStrategyTest extends BaseTest {
+public class TicketsStrategyTest extends BaseServiceTest {
 
 
     @Autowired

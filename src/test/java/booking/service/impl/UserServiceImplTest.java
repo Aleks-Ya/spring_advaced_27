@@ -1,6 +1,6 @@
 package booking.service.impl;
 
-import booking.BaseTest;
+import booking.BaseServiceTest;
 import booking.domain.User;
 import org.junit.Test;
 
@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  * Date: 06/2/16
  * Time: 8:02 PM
  */
-public class UserServiceImplTest extends BaseTest {
+public class UserServiceImplTest extends BaseServiceTest {
 
     @Test
     public void testRegister() {

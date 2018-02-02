@@ -1,6 +1,6 @@
 package booking.service.impl;
 
-import booking.BaseTest;
+import booking.BaseServiceTest;
 import booking.domain.Event;
 import booking.domain.Ticket;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
 /**
  * @author Aleksey Yablokov
  */
-public class TicketServiceImplTest extends BaseTest {
+public class TicketServiceImplTest extends BaseServiceTest {
 
     @Test
     public void testGetTicketsForEvent() {

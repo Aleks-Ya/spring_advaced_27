@@ -1,6 +1,6 @@
 package booking.service.aspects;
 
-import booking.BaseTest;
+import booking.BaseServiceTest;
 import booking.domain.Event;
 import booking.domain.Ticket;
 import booking.domain.User;
@@ -28,7 +28,7 @@ import static org.junit.Assert.assertEquals;
 @ContextConfiguration(classes = {CounterAspect.class})
 //@Transactional
 @Ignore("fix it")//TODO
-public class TestCounterAspect  extends BaseTest {
+public class TestCounterAspect  extends BaseServiceTest {
 
     @Autowired
     private CounterAspect       counterAspect;

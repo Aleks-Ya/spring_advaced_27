@@ -1,6 +1,6 @@
 package booking.service.impl;
 
-import booking.BaseTest;
+import booking.BaseServiceTest;
 import booking.domain.Booking;
 import booking.domain.Event;
 import booking.domain.Ticket;
@@ -22,7 +22,7 @@ import static org.junit.Assert.assertThat;
  * Time: 8:28 PM
  */
 @Ignore("fix it") //TODO
-public class BookingServiceImplTest extends BaseTest {
+public class BookingServiceImplTest extends BaseServiceTest {
 
     @Test(expected = RuntimeException.class)
     public void testBookTicket_NotRegistered() {
