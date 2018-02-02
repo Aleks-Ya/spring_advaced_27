@@ -5,12 +5,12 @@ import booking.domain.Auditorium;
 import booking.repository.config.DataSourceConfig;
 import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.impl.AuditoriumDAOImpl;
+import booking.repository.impl.UserDAOImpl;
 import booking.service.AuditoriumService;
 import booking.service.TestObjects;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,9 +25,8 @@ import static org.junit.Assert.assertThat;
  * Date: 06/2/16
  * Time: 1:23 PM
  */
-@Transactional
 @ContextConfiguration(classes = {DataSourceConfig.class, DbSessionFactoryConfig.class, AuditoriumServiceImpl.class,
-        AuditoriumDAOImpl.class, TestObjects.class
+        AuditoriumDAOImpl.class, TestObjects.class, UserServiceImpl.class, UserDAOImpl.class
 })
 public class AuditoriumServiceImplTest extends BaseTest {
 
