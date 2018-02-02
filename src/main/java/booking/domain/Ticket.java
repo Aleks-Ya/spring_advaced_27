@@ -17,7 +17,7 @@ public class Ticket {
     private Event         event;
     private LocalDateTime dateTime;
     private String        seats;
-    private User          user;
+    private User          user;//TODO remove (must be in Booking)
     private Double        price;
 
     public Ticket() {

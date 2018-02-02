@@ -38,21 +38,19 @@ public class BookingServiceImpl implements BookingService {
     private final BookingDao bookingDao;
     private final TicketDao ticketDao;
     private final DiscountService discountService;
-    private final TicketService ticketService;
 
     @Autowired
     public BookingServiceImpl(
             EventService eventService,
             @Qualifier("auditoriumServiceImpl") AuditoriumService auditoriumService,
             @Qualifier("userServiceImpl") UserService userService,
-            @Qualifier("discountServiceImpl") DiscountService discountService,
+            DiscountService discountService,
             BookingDao bookingDao,
             TicketDao ticketDao,
             @Value("${min.seat.number}") int minSeatNumber,
             @Value("${vip.seat.price.multiplier}") double vipSeatPriceMultiplier,
             @Value("${high.rate.price.multiplier}") double highRatedPriceMultiplier,
-            @Value("${def.rate.price.multiplier}") double defaultRateMultiplier,
-            TicketService ticketService) {
+            @Value("${def.rate.price.multiplier}") double defaultRateMultiplier) {
         this.eventService = eventService;
         this.auditoriumService = auditoriumService;
         this.userService = userService;
@@ -63,7 +61,6 @@ public class BookingServiceImpl implements BookingService {
         this.vipSeatPriceMultiplier = vipSeatPriceMultiplier;
         this.highRatedPriceMultiplier = highRatedPriceMultiplier;
         this.defaultRateMultiplier = defaultRateMultiplier;
-        this.ticketService = ticketService;
     }
 
     @Override
@@ -90,6 +87,11 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Booking getById(long bookingId) {
         return bookingDao.getById(bookingId);
+    }
+
+    @Override
+    public long countTickets(User user) {
+        return bookingDao.countTickets(user);
     }
 
     @Override

@@ -18,6 +18,8 @@ public interface BookingService {
 
     Booking getById(long bookingId);
 
+    long countTickets(User user);
+
     List<Ticket> getBookedTickets();
 
     List<Booking> getAll();

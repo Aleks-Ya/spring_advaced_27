@@ -1,7 +1,9 @@
 package booking.repository.config;
 
 import booking.domain.*;
-import booking.repository.*;
+import booking.repository.AuditoriumDAO;
+import booking.repository.EventDAO;
+import booking.repository.UserDAO;
 import booking.repository.mocks.DBAuditoriumDAOMock;
 import booking.repository.mocks.EventDAOMock;
 import booking.repository.mocks.UserDAOMock;
@@ -32,10 +34,7 @@ import java.util.List;
 public class TestBookingServiceConfig {
 
     @Autowired
-    private TicketDao ticketDao;
-
-    @Autowired
-    private BookingDao bookingDao;
+    private BookingService bookingService;
 
     @Bean
     public DiscountStrategy birthdayBookingStrategy() {
@@ -44,18 +43,8 @@ public class TestBookingServiceConfig {
 
     @Bean
     public DiscountStrategy ticketsBookingStrategy() {
-        return new TicketsStrategy(ticketDao, 0.5, 3, 0, bookingDao);
+        return new TicketsStrategy(bookingService, 0.5, 3, 0);
     }
-
-//    @Bean
-//    public TicketDao bookingBookingDAO() {
-//        HashSet<Ticket> tickets = new HashSet<Ticket>() {
-//            {
-//                addAll(tickets());
-//            }
-//        };
-//        throw new UnsupportedOperationException();
-//    }
 
     @Bean
     public DiscountService discountBookingServiceImpl() {
@@ -75,13 +64,13 @@ public class TestBookingServiceConfig {
     @Bean
     public Event testEvent1() {
         return new Event(1, "Test event", Rate.HIGH, 124.0, java.time.LocalDateTime.of(2016, 2, 6, 14, 45, 0),
-                         testHall1());
+                testHall1());
     }
 
     @Bean
     public Event testEvent2() {
         return new Event(2, "Test event2", Rate.MID, 500.0, java.time.LocalDateTime.of(2016, 12, 6, 9, 35, 0),
-                         testHall2());
+                testHall2());
     }
 
     @Bean
@@ -99,13 +88,13 @@ public class TestBookingServiceConfig {
     @Bean
     public Ticket testTicket1() {
         return new Ticket(1, testEvent1(), java.time.LocalDateTime.of(2016, 2, 6, 14, 45, 0), Arrays.asList(3, 4),
-                          testUser1(), 32D);
+                testUser1(), 32D);
     }
 
     @Bean
     public Ticket testTicket2() {
         return new Ticket(2, testEvent2(), java.time.LocalDateTime.of(2016, 2, 7, 14, 45, 0), Arrays.asList(1, 2),
-                          testUser1(), 123D);
+                testUser1(), 123D);
     }
 
     @Bean
@@ -143,10 +132,4 @@ public class TestBookingServiceConfig {
     public UserService userServiceImpl() {
         return new UserServiceImpl(userDAOMock());
     }
-
-//    @Bean(name = "testBookingServiceImpl")
-//    public BookingService bookingServiceImpl() {
-//        return new BookingServiceImpl(eventServiceImpl(), auditoriumServiceImpl(), userServiceImpl(),
-//                                      discountBookingServiceImpl(), bookingBookingDAO(), 1, 2, 1.2, 1);
-//    }
 }

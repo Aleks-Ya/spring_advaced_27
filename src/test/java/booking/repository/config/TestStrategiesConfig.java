@@ -1,7 +1,6 @@
 package booking.repository.config;
 
-import booking.repository.BookingDao;
-import booking.repository.TicketDao;
+import booking.service.BookingService;
 import booking.service.DiscountService;
 import booking.service.impl.discount.BirthdayStrategy;
 import booking.service.impl.discount.DiscountServiceImpl;
@@ -21,11 +20,9 @@ import java.util.Arrays;
 @Configuration
 @Deprecated
 public class TestStrategiesConfig {
-    @Autowired
-    private TicketDao ticketDao;
 
     @Autowired
-    private BookingDao bookingDao;
+    private BookingService bookingService;
 
     @Bean
     public BirthdayStrategy birthdayStrategy() {
@@ -34,14 +31,8 @@ public class TestStrategiesConfig {
 
     @Bean
     public TicketsStrategy ticketsStrategy() {
-        return new TicketsStrategy(ticketDao, 0.5, 2, 0, bookingDao);
+        return new TicketsStrategy(bookingService, 0.5, 2, 0);
     }
-
-//    @Bean
-//    public TicketDao bookingDiscountDAO() {
-//        throw new UnsupportedOperationException();
-////        return new TicketDaoDiscountMock("Test User", 1);
-//    }
 
     @Bean
     public DiscountService discountServiceImpl() {

@@ -1,20 +1,15 @@
 package booking.service.impl.discount;
 
 import booking.BaseServiceTest;
+import booking.domain.Event;
 import booking.domain.Ticket;
 import booking.domain.User;
-import booking.repository.BookingDao;
-import booking.repository.config.TestStrategiesConfig;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-
-import static org.junit.Assert.assertEquals;
+import static java.util.Collections.singletonList;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,35 +17,34 @@ import static org.junit.Assert.assertEquals;
  * Date: 06/2/16
  * Time: 2:16 AM
  */
-//@RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {TestStrategiesConfig.class
-//        , TicketDaoDiscountMock.class
-})
-@Transactional
 public class TicketsStrategyTest extends BaseServiceTest {
 
+    private static final double TICKETS_DISCOUNT_VALUE = 0.5;
+    private static final double DEFAULT_DISCOUNT = 0.01;
+    private static final int DISCOUNT_THRESHOLD = 10;
+    private TicketsStrategy strategy;
 
-    @Autowired
-    private BookingDao bookingDao;
-
-    @Ignore("fix it") //TODO
-    @Test
-    public void testCalculateDiscount_UserHasDiscount() throws Exception {
-        Ticket ticketToParty = testObjects.createTicketToParty();
-        TicketsStrategy strategy = new TicketsStrategy(ticketDao, 0.5, 2, 0, bookingDao);
-        System.out.println(strategy.getClass());
-        User userWithDiscount = new User("test@ema.il", ticketToParty.getUser().getEmail(),
-                LocalDate.now(), null, null);
-        double discount = strategy.calculateDiscount(userWithDiscount);
-//        assertEquals("User: [" + userWithDiscount + "] has tickets discount", strategy.ticketsDiscountValue, discount, 0.00001);
+    @Before
+    public void setUp() {
+        strategy = new TicketsStrategy(bookingService,
+                TICKETS_DISCOUNT_VALUE, DISCOUNT_THRESHOLD, DEFAULT_DISCOUNT);
     }
 
     @Test
-    public void testCalculateDiscount_UserHasNoDiscount() throws Exception {
-        TicketsStrategy strategy = new TicketsStrategy(ticketDao, 0.5, 2, 0, bookingDao);
-        User userWithoutDiscount = new User("test@ema.il", "Test Name 2",
-                LocalDate.now().minus(1, ChronoUnit.DAYS), null, null);
-        double discount = strategy.calculateDiscount(userWithoutDiscount);
-        assertEquals("User: [" + userWithoutDiscount + "] doesn't have tickets discount", strategy.defaultDiscount, discount, 0.00001);
+    public void testCalculateDiscount_UserHasDiscount() {
+        User user = testObjects.createJohn();
+        Event event = testObjects.createParty();
+        for (int i = 1; i < DISCOUNT_THRESHOLD; i++) {
+            ticketService.create(new Ticket(event, event.getDateTime(), singletonList(i), user, event.getBasePrice()));
+        }
+        double discount = strategy.calculateDiscount(user);
+        assertThat(discount, equalTo(TICKETS_DISCOUNT_VALUE));
+    }
+
+    @Test
+    public void testCalculateDiscount_UserHasNoDiscount() {
+        User user = testObjects.createJohn();
+        double discount = strategy.calculateDiscount(user);
+        assertThat(discount, equalTo(DEFAULT_DISCOUNT));
     }
 }
