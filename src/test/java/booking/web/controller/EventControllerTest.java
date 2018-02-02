@@ -1,29 +1,16 @@
 package booking.web.controller;
 
+import booking.BaseWebTest;
+import booking.domain.Auditorium;
 import booking.domain.Event;
 import booking.domain.Rate;
-import booking.repository.config.DataSourceConfig;
-import booking.repository.config.DbSessionFactoryConfig;
-import booking.repository.config.TestEventServiceConfig;
-import booking.repository.config.TestUserServiceConfig;
-import booking.service.EventService;
 import booking.util.ResourceUtil;
-import booking.web.config.FreeMarkerConfig;
-import booking.web.config.MvcConfig;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import static java.lang.String.format;
 import static org.hamcrest.Matchers.emptyIterable;
@@ -37,28 +24,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Aleksey Yablokov
  */
-@RunWith(SpringRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(classes = {MvcConfig.class, FreeMarkerConfig.class, EventController.class,
-        DataSourceConfig.class, DbSessionFactoryConfig.class, TestEventServiceConfig.class, TestUserServiceConfig.class
+@ContextConfiguration(classes = {EventController.class,
 })
-public class EventControllerTest {
-    @Autowired
-    private WebApplicationContext context;
-
-    @Autowired
-    private EventService eventService;
-
-    private MockMvc mvc;
-
-    @Before
-    public void setup() {
-        mvc = MockMvcBuilders.webAppContextSetup(context).build();
-    }
-
+public class EventControllerTest  extends BaseWebTest {
 
     @Test
     public void create() throws Exception {
+        Auditorium auditorium = testObjects.createBlueHall();
         String name = "Discussion";
 
         assertThat(eventService.getByName(name), emptyIterable());
@@ -69,7 +41,7 @@ public class EventControllerTest {
                 .param("rate", "HIGH")
                 .param("bastPrice", "10.5")
                 .param("dateTime", "2007-12-03T10:15:30")
-                .param("auditoriumId", "1")
+                .param("auditoriumId", String.valueOf(auditorium.getId()))
         )
                 .andExpect(status().isCreated())
                 .andExpect(content().string(LoginControllerTest.ANONYMOUS_HEADER +
