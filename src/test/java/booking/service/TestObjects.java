@@ -1,16 +1,14 @@
 package booking.service;
 
-import booking.domain.Auditorium;
-import booking.domain.Event;
-import booking.domain.Rate;
-import booking.domain.User;
+import booking.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Collections;
+
+import static java.util.Arrays.asList;
 
 /**
  * Provides convenient methods for creating and deleting domain objects in tests.
@@ -24,9 +22,11 @@ public class TestObjects {
     private UserService userService;
     @Autowired
     private EventService eventService;
+    @Autowired
+    private BookingService bookingService;
 
     public Auditorium createBlueHall() {
-        return auditoriumService.create(new Auditorium("Blue hall", 15, Arrays.asList(1, 2, 3, 4, 5)));
+        return auditoriumService.create(new Auditorium("Blue hall", 15, asList(1, 2, 3, 4, 5)));
     }
 
     public Auditorium createRedHall() {
@@ -50,10 +50,20 @@ public class TestObjects {
                 LocalDateTime.of(2018, 3, 13, 9, 0), auditorium));
     }
 
+    public Ticket createTicketToParty() {
+        User user = createJohn();
+        Event event = createParty();
+        Ticket ticket = new Ticket(event, event.getDateTime(), asList(5, 6), user, event.getBasePrice() * 2);
+        return bookingService.bookTicket(user, ticket);
+    }
+
     /**
      * Make the datasource empty.
      */
     public void cleanup() {
+        for (Ticket ticket : bookingService.getBookedTickets()) {
+            bookingService
+        }
         for (Event event : eventService.getAll()) {
             eventService.delete(event);
         }

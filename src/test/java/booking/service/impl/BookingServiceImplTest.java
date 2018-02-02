@@ -1,27 +1,18 @@
 package booking.service.impl;
 
+import booking.BaseTest;
 import booking.domain.Event;
 import booking.domain.Ticket;
 import booking.domain.User;
 import booking.repository.config.DataSourceConfig;
 import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.config.PropertySourceConfig;
-import booking.repository.config.TestBookingServiceConfig;
-import booking.repository.mocks.BookingDAOBookingMock;
-import booking.repository.mocks.DBAuditoriumDAOMock;
-import booking.repository.mocks.EventDAOMock;
-import booking.repository.mocks.UserDAOMock;
+import booking.repository.impl.BookingDAOImpl;
 import booking.service.BookingService;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -41,43 +32,45 @@ import static org.junit.Assert.assertTrue;
  * Date: 06/2/16
  * Time: 8:28 PM
  */
-@RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {PropertySourceConfig.class, DataSourceConfig.class, DbSessionFactoryConfig.class,
-        TestBookingServiceConfig.class})
+//@RunWith(SpringRunner.class)
+@ContextConfiguration(classes = {PropertySourceConfig.class, DataSourceConfig.class, DbSessionFactoryConfig.class
+//        , TestBookingServiceConfig.class
+        BookingServiceImpl.class, BookingDAOImpl.class
+})
 @Transactional
-public class BookingServiceImplTest {
+public class BookingServiceImplTest extends BaseTest {
+
+//    @Autowired
+//    private ApplicationContext applicationContext;
 
     @Autowired
-    private ApplicationContext applicationContext;
-
-    @Autowired
-    @Value("#{testBookingServiceImpl}")
+//    @Value("#{testBookingServiceImpl}")
     private BookingService bookingService;
 
-    @Autowired
-    private BookingDAOBookingMock bookingDAOBookingMock;
-    @Autowired
-    private EventDAOMock eventDAOMock;
-    @Autowired
-    private UserDAOMock userDAOMock;
-    @Autowired
-    private DBAuditoriumDAOMock auditoriumDAOMock;
-
-    @Before
-    public void init() {
-        auditoriumDAOMock.init();
-        userDAOMock.init();
-        eventDAOMock.init();
-        bookingDAOBookingMock.init();
-    }
-
-    @After
-    public void cleanup() {
-        auditoriumDAOMock.cleanup();
-        userDAOMock.cleanup();
-        eventDAOMock.cleanup();
-        bookingDAOBookingMock.cleanup();
-    }
+//    @Autowired
+//    private BookingDAOBookingMock bookingDAOBookingMock;
+//    @Autowired
+//    private EventDAOMock eventDAOMock;
+//    @Autowired
+//    private UserDAOMock userDAOMock;
+//    @Autowired
+//    private DBAuditoriumDAOMock auditoriumDAOMock;
+//
+//    @Before
+//    public void init() {
+//        auditoriumDAOMock.init();
+//        userDAOMock.init();
+//        eventDAOMock.init();
+//        bookingDAOBookingMock.init();
+//    }
+//
+//    @After
+//    public void cleanup() {
+//        auditoriumDAOMock.cleanup();
+//        userDAOMock.cleanup();
+//        eventDAOMock.cleanup();
+//        bookingDAOBookingMock.cleanup();
+//    }
 
     @Test
     public void testGetTicketsForEvent() {
