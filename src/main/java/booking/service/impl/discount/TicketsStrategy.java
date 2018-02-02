@@ -1,7 +1,7 @@
 package booking.service.impl.discount;
 
 import booking.domain.User;
-import booking.repository.BookingDAO;
+import booking.repository.TicketDao;
 import booking.service.DiscountStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,15 +23,15 @@ public class TicketsStrategy implements DiscountStrategy {
 
     public final double ticketsDiscountValue;
     public final double defaultDiscount;
-    private final BookingDAO bookingDAO;
+    private final TicketDao ticketDao;
     private final int discountThreshold;
 
     @Autowired
-    public TicketsStrategy(@Qualifier("bookingDAO") BookingDAO bookingDAO,
+    public TicketsStrategy(@Qualifier("bookingDAO") TicketDao ticketDao,
                            @Value("${tickets.discount}") double ticketsDiscountValue,
                            @Value("${tickets.discount.threshold}") int discountThreshold,
                            @Value("${tickets.discount.default}") double defaultDiscount) {
-        this.bookingDAO = bookingDAO;
+        this.ticketDao = ticketDao;
         this.ticketsDiscountValue = ticketsDiscountValue;
         this.discountThreshold = discountThreshold;
         this.defaultDiscount = defaultDiscount;
@@ -39,7 +39,7 @@ public class TicketsStrategy implements DiscountStrategy {
 
     @Override
     public double calculateDiscount(User user) {
-        final long boughtTicketsCount = bookingDAO.countTickets(user);
+        final long boughtTicketsCount = ticketDao.countTickets(user);
         if ((boughtTicketsCount + 1) % discountThreshold == 0) {
             return ticketsDiscountValue;
         }

@@ -1,7 +1,7 @@
 package booking.service.impl.discount;
 
 import booking.domain.User;
-import booking.repository.mocks.BookingDAODiscountMock;
+import booking.repository.mocks.TicketDaoDiscountMock;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -26,7 +26,7 @@ public class TicketsStrategyTest {
     private TicketsStrategy strategy;
 
     @Autowired
-    private BookingDAODiscountMock bookingDAODiscountMock;
+    private TicketDaoDiscountMock bookingDAODiscountMock;
 
     @org.junit.Test
     public void testCalculateDiscount_UserHasDiscount() throws Exception {

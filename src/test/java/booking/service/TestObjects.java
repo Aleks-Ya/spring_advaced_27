@@ -62,7 +62,7 @@ public class TestObjects {
      */
     public void cleanup() {
         for (Ticket ticket : bookingService.getBookedTickets()) {
-            bookingService
+//            bookingService
         }
         for (Event event : eventService.getAll()) {
             eventService.delete(event);

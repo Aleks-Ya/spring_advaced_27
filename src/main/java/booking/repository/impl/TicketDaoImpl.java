@@ -4,7 +4,7 @@ import booking.domain.Booking;
 import booking.domain.Event;
 import booking.domain.Ticket;
 import booking.domain.User;
-import booking.repository.BookingDAO;
+import booking.repository.TicketDao;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
@@ -18,12 +18,12 @@ import java.util.Optional;
  * Time: 9:00 PM
  */
 @Repository("bookingDAO")
-public class BookingDAOImpl extends AbstractDAO implements BookingDAO {
+public class TicketDaoImpl extends AbstractDAO implements TicketDao {
 
     @Override
     public Ticket create(User user, Ticket ticket) {
-        BookingDAO.validateTicket(ticket);
-        BookingDAO.validateUser(user);
+        TicketDao.validateTicket(ticket);
+        TicketDao.validateUser(user);
 
         Long ticketId = (Long) getCurrentSession().save(ticket);
         Ticket storedTicket = ticket.withId(ticketId);

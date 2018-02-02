@@ -3,7 +3,7 @@ package booking.repository.mocks;
 import booking.domain.Event;
 import booking.domain.Ticket;
 import booking.domain.User;
-import booking.repository.BookingDAO;
+import booking.repository.TicketDao;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,12 +15,12 @@ import java.util.Optional;
  * Date: 06/2/16
  * Time: 3:08 AM
  */
-public class BookingDAODiscountMock implements BookingDAO {
+public class TicketDaoDiscountMock implements TicketDao {
 
     public final String userThatBookedTickets;
     public final int    ticketsBought;
 
-    public BookingDAODiscountMock(String userThatBookedTickets, int ticketsBought) {
+    public TicketDaoDiscountMock(String userThatBookedTickets, int ticketsBought) {
         this.userThatBookedTickets = userThatBookedTickets;
         this.ticketsBought = ticketsBought;
     }

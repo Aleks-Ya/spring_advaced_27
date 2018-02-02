@@ -14,7 +14,7 @@ import java.util.Optional;
  * Date: 2/4/2016
  * Time: 10:21 AM
  */
-public interface BookingDAO {
+public interface TicketDao {
 
     Ticket create(User user, Ticket ticket);
 

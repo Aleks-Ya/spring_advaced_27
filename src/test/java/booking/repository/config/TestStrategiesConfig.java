@@ -1,7 +1,7 @@
 package booking.repository.config;
 
-import booking.repository.BookingDAO;
-import booking.repository.mocks.BookingDAODiscountMock;
+import booking.repository.TicketDao;
+import booking.repository.mocks.TicketDaoDiscountMock;
 import booking.service.DiscountService;
 import booking.service.impl.discount.BirthdayStrategy;
 import booking.service.impl.discount.DiscountServiceImpl;
@@ -31,8 +31,8 @@ public class TestStrategiesConfig {
     }
 
     @Bean
-    public BookingDAO bookingDiscountDAO() {
-        return new BookingDAODiscountMock("Test User", 1);
+    public TicketDao bookingDiscountDAO() {
+        return new TicketDaoDiscountMock("Test User", 1);
     }
 
     @Bean

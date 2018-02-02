@@ -7,7 +7,7 @@ import booking.domain.User;
 import booking.repository.config.DataSourceConfig;
 import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.config.PropertySourceConfig;
-import booking.repository.impl.BookingDAOImpl;
+import booking.repository.impl.TicketDaoImpl;
 import booking.service.BookingService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -33,9 +33,9 @@ import static org.junit.Assert.assertTrue;
  * Time: 8:28 PM
  */
 //@RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {PropertySourceConfig.class, DataSourceConfig.class, DbSessionFactoryConfig.class
+@ContextConfiguration(classes = {PropertySourceConfig.class, DataSourceConfig.class, DbSessionFactoryConfig.class,
 //        , TestBookingServiceConfig.class
-        BookingServiceImpl.class, BookingDAOImpl.class
+        BookingServiceImpl.class, TicketDaoImpl.class
 })
 @Transactional
 public class BookingServiceImplTest extends BaseTest {

@@ -1,7 +1,7 @@
 package booking.web.controller;
 
 import booking.domain.*;
-import booking.repository.BookingDAO;
+import booking.repository.TicketDao;
 import booking.repository.config.DataSourceConfig;
 import booking.repository.config.DbSessionFactoryConfig;
 import booking.repository.config.TestBookingServiceConfig;
@@ -60,7 +60,7 @@ public class BookingControllerTest {
     @Autowired
     private BookingService bookingService;
     @Autowired
-    private BookingDAO bookingDAO;
+    private TicketDao ticketDao;
     @Autowired
     private UserService userService;
     @Autowired
@@ -107,7 +107,7 @@ public class BookingControllerTest {
     }
 
     private void deleteAllTickets() {
-        bookingDAO.getAllTickets().forEach(ticket -> bookingDAO.delete(ticket.getUser(), ticket));
+        ticketDao.getAllTickets().forEach(ticket -> ticketDao.delete(ticket.getUser(), ticket));
     }
 
     @Test

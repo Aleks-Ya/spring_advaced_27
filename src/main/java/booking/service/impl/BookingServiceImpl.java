@@ -1,7 +1,7 @@
 package booking.service.impl;
 
 import booking.domain.*;
-import booking.repository.BookingDAO;
+import booking.repository.TicketDao;
 import booking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,7 +34,7 @@ public class BookingServiceImpl implements BookingService {
     private final EventService eventService;
     private final AuditoriumService auditoriumService;
     private final UserService userService;
-    private final BookingDAO bookingDAO;
+    private final TicketDao ticketDao;
     private final DiscountService discountService;
 
     @Autowired
@@ -42,7 +42,7 @@ public class BookingServiceImpl implements BookingService {
                               @Qualifier("auditoriumServiceImpl") AuditoriumService auditoriumService,
                               @Qualifier("userServiceImpl") UserService userService,
                               @Qualifier("discountServiceImpl") DiscountService discountService,
-                              @Qualifier("bookingDAO") BookingDAO bookingDAO,
+                              @Qualifier("bookingDAO") TicketDao ticketDao,
                               @Value("${min.seat.number}") int minSeatNumber,
                               @Value("${vip.seat.price.multiplier}") double vipSeatPriceMultiplier,
                               @Value("${high.rate.price.multiplier}") double highRatedPriceMultiplier,
@@ -50,7 +50,7 @@ public class BookingServiceImpl implements BookingService {
         this.eventService = eventService;
         this.auditoriumService = auditoriumService;
         this.userService = userService;
-        this.bookingDAO = bookingDAO;
+        this.ticketDao = ticketDao;
         this.discountService = discountService;
         this.minSeatNumber = minSeatNumber;
         this.vipSeatPriceMultiplier = vipSeatPriceMultiplier;
@@ -126,13 +126,13 @@ public class BookingServiceImpl implements BookingService {
             throw new IllegalStateException("User: [" + user + "] is not registered");
         }
 
-        List<Ticket> bookedTickets = bookingDAO.getTickets(ticket.getEvent());
+        List<Ticket> bookedTickets = ticketDao.getTickets(ticket.getEvent());
         boolean seatsAreAlreadyBooked = bookedTickets.stream()
                 .anyMatch(bookedTicket -> ticket.getSeatsList().stream()
                         .anyMatch(bookedTicket.getSeatsList()::contains));
 
         if (!seatsAreAlreadyBooked)
-            bookingDAO.create(user, ticket);
+            ticketDao.create(user, ticket);
         else
             throw new IllegalStateException("Unable to book ticket: [" + ticket + "]. Seats are already booked.");
 
@@ -143,15 +143,15 @@ public class BookingServiceImpl implements BookingService {
     public List<Ticket> getTicketsForEvent(String eventName, Long auditoriumId, LocalDateTime date) {
         final Auditorium auditorium = auditoriumService.getById(auditoriumId);
         final Event foundEvent = eventService.getEvent(eventName, auditorium, date);
-        return bookingDAO.getTickets(foundEvent);
+        return ticketDao.getTickets(foundEvent);
     }
 
     public List<Ticket> getBookedTickets() {
-        return bookingDAO.getAllTickets();
+        return ticketDao.getAllTickets();
     }
 
     @Override
     public Ticket getTicketById(Long ticketId) {
-        return bookingDAO.getTicketById(ticketId).orElse(null);
+        return ticketDao.getTicketById(ticketId).orElse(null);
     }
 }

@@ -1,24 +1,15 @@
 package booking.repository.config;
 
-import booking.domain.Auditorium;
-import booking.domain.Event;
-import booking.domain.Rate;
-import booking.domain.Ticket;
-import booking.domain.User;
+import booking.domain.*;
 import booking.repository.AuditoriumDAO;
-import booking.repository.BookingDAO;
 import booking.repository.EventDAO;
+import booking.repository.TicketDao;
 import booking.repository.UserDAO;
 import booking.repository.mocks.BookingDAOBookingMock;
 import booking.repository.mocks.DBAuditoriumDAOMock;
 import booking.repository.mocks.EventDAOMock;
 import booking.repository.mocks.UserDAOMock;
-import booking.service.AuditoriumService;
-import booking.service.BookingService;
-import booking.service.DiscountService;
-import booking.service.DiscountStrategy;
-import booking.service.EventService;
-import booking.service.UserService;
+import booking.service.*;
 import booking.service.impl.AuditoriumServiceImpl;
 import booking.service.impl.BookingServiceImpl;
 import booking.service.impl.EventServiceImpl;
@@ -30,12 +21,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -57,7 +43,7 @@ public class TestBookingServiceConfig {
     }
 
     @Bean
-    public BookingDAO bookingBookingDAO() {
+    public TicketDao bookingBookingDAO() {
         HashSet<Ticket> tickets = new HashSet<Ticket>() {
             {
                 addAll(tickets());

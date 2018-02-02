@@ -2,7 +2,7 @@ package booking.repository.mocks;
 
 import booking.domain.Ticket;
 import booking.domain.User;
-import booking.repository.impl.BookingDAOImpl;
+import booking.repository.impl.TicketDaoImpl;
 
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +13,7 @@ import java.util.Set;
  * Date: 06/2/16
  * Time: 3:08 AM
  */
-public class BookingDAOBookingMock extends BookingDAOImpl {
+public class BookingDAOBookingMock extends TicketDaoImpl {
 
     private final Map<User, Set<Ticket>> initWith;
 
