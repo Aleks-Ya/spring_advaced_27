@@ -36,7 +36,7 @@ public class CounterAspect {
         // This method intended for declaring a @Pointcut
     }
 
-    @Pointcut("(execution(* booking.service.BookingService.bookTicket(*, booking.domain.Ticket)) && args(*, ticket))")
+    @Pointcut("(execution(* booking.service.BookingService.create(*, booking.domain.Ticket)) && args(*, ticket))")
     private void bookTicketByName(Ticket ticket) {
         // This method intended for declaring a @Pointcut
     }

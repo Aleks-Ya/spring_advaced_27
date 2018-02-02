@@ -7,16 +7,15 @@ import booking.domain.User;
 import booking.service.aspects.mocks.CountAspectMock;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.HashMap;
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,31 +23,17 @@ import static org.junit.Assert.assertEquals;
  * Date: 13/2/16
  * Time: 7:20 PM
  */
-//@RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {CounterAspect.class})
-//@Transactional
-@Ignore("fix it")//TODO
+@ContextConfiguration(classes = {AspectConfig.class})
 public class TestCounterAspect extends BaseServiceTest {
-
-    @Autowired
-    private CounterAspect counterAspect;
 
     @Before
     public void initAspectMock() {
         CountAspectMock.cleanup();
-//        auditoriumDAOMock.init();
-//        userDAOMock.init();
-//        eventDAOMock.init();
-//        bookingDAOBookingMock.init();
     }
 
     @After
     public void cleanupAspectMock() {
         CountAspectMock.cleanup();
-//        auditoriumDAOMock.cleanup();
-//        userDAOMock.cleanup();
-//        eventDAOMock.cleanup();
-//        bookingDAOBookingMock.cleanup();
     }
 
     @Test
@@ -68,7 +53,7 @@ public class TestCounterAspect extends BaseServiceTest {
             put("testName3", 1);
             put(testEvent1.getName(), 4);
         }};
-        assertEquals(expected, CounterAspect.getAccessByNameStat());
+        assertThat(CounterAspect.getAccessByNameStat(), equalTo(expected));
     }
 
     @Test
@@ -76,32 +61,30 @@ public class TestCounterAspect extends BaseServiceTest {
         Event event = testObjects.createParty();
         User user = testObjects.createJohn();
         List<Integer> seats = asList(1, 2, 3, 4);
-        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats,
-                user);
-        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats,
-                user);
+        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
+        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
         HashMap<String, Integer> expected = new HashMap<String, Integer>() {{
             put(event.getName(), 2);
         }};
-        assertEquals(expected, CounterAspect.getGetPriceByNameStat());
+        assertThat(CounterAspect.getGetPriceByNameStat(), equalTo(expected));
     }
 
     @Test
     public void testBookTicketByName() {
         User user = testObjects.createJohn();
-        Ticket ticket1 = testObjects.createTicketToParty();
-        Ticket ticket2 = testObjects.createTicketToHackathon();
+        Ticket party = testObjects.createTicketToParty();
+        Ticket hackathon = testObjects.createTicketToHackathon();
+        bookingService.create(party.getUser().getId(),
+                new Ticket(party.getEvent(), party.getDateTime(), asList(5, 6), user, party.getPrice()));
         bookingService.create(user.getId(),
-                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), asList(5, 6), user, ticket1.getPrice()));
+                new Ticket(party.getEvent(), party.getDateTime(), asList(7, 8), user, party.getPrice()));
         bookingService.create(user.getId(),
-                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), asList(7, 8), user, ticket1.getPrice()));
-        bookingService.create(user.getId(),
-                new Ticket(ticket2.getEvent(), ticket2.getDateTime(), asList(7, 8), user,
-                        ticket2.getPrice()));
+                new Ticket(hackathon.getEvent(), hackathon.getDateTime(), asList(7, 8), user,
+                        hackathon.getPrice()));
         HashMap<String, Integer> expected = new HashMap<String, Integer>() {{
-            put(ticket1.getEvent().getName(), 2);
-            put(ticket2.getEvent().getName(), 1);
+            put(party.getEvent().getName(), 2);
+            put(hackathon.getEvent().getName(), 1);
         }};
-//        assertEquals(expected, CounterAspect.getBookTicketByNameStat());
+        assertThat(CounterAspect.getBookTicketByNameStat(), equalTo(expected));
     }
 }

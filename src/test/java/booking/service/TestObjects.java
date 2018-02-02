@@ -64,7 +64,7 @@ public class TestObjects {
         User user = createJohn();
         Event event = createParty();
         Ticket ticket = new Ticket(event, event.getDateTime(), asList(100, 101), user, event.getBasePrice() * 2);
-        return bookingService.create(user.getId(), ticket).getTicket();
+        return ticketService.create(ticket);
     }
 
     public Ticket createTicketToHackathon() {
