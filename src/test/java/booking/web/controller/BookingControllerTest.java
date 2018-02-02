@@ -2,7 +2,6 @@ package booking.web.controller;
 
 import booking.BaseWebTest;
 import booking.domain.*;
-import booking.web.config.FreeMarkerConfig;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -19,8 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Aleksey Yablokov
  */
-@ContextConfiguration(classes = {FreeMarkerConfig.class, BookingController.class
-})
+@ContextConfiguration(classes = BookingController.class)
 public class BookingControllerTest extends BaseWebTest {
 
     @Test
