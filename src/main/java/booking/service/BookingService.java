@@ -18,7 +18,7 @@ public interface BookingService {
 
     Booking getById(long bookingId);
 
-    long countTickets(User user);
+    long countTickets(long userId);
 
     List<Ticket> getBookedTickets();
 

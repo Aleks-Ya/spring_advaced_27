@@ -38,7 +38,7 @@ public class TicketsStrategy implements DiscountStrategy {
 
     @Override
     public double calculateDiscount(User user) {
-        final long boughtTicketsCount = bookingService.countTickets(user);
+        final long boughtTicketsCount = bookingService.countTickets(user.getId());
         if ((boughtTicketsCount + 1) % discountThreshold == 0) {
             return ticketsDiscountValue;
         }

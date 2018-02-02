@@ -23,5 +23,5 @@ public interface BookingDao {
 
     List<Ticket> getBookedTickets();
 
-    long countTickets(User user);
+    long countTickets(long userId);
 }

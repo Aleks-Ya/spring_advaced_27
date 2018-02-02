@@ -89,8 +89,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public long countTickets(User user) {
-        return bookingDao.countTickets(user);
+    public long countTickets(long userId) {
+        return bookingDao.countTickets(userId);
     }
 
     @Override
