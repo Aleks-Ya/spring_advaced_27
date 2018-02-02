@@ -100,7 +100,7 @@ public class BookingController {
         LocalDateTime date = LocalDateTime.parse(localDateTime);
         Ticket ticket = new Ticket(event, date, seatsList, user, price);
 
-        Ticket bookedTicket = bookingService.create(user, ticket).getTicket();
+        Ticket bookedTicket = bookingService.create(user.getId(), ticket).getTicket();
 
         model.addAttribute(TICKET_ATTR, bookedTicket);
         return BOOKED_TICKET_FTL;

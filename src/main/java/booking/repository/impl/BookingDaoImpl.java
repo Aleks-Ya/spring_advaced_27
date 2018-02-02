@@ -7,6 +7,7 @@ import booking.repository.BookingDao;
 import booking.repository.TicketDao;
 import booking.service.UserService;
 import org.hibernate.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -15,8 +16,13 @@ import java.util.List;
  */
 public class BookingDaoImpl extends AbstractDAO implements BookingDao {
 
+    @Autowired
+    private UserService userService;
+
     @Override
-    public Booking create(User user, Ticket ticket) {
+    public Booking create(long userId, Ticket ticket) {
+        User user = userService.getById(userId);
+
         TicketDao.validateTicket(ticket);
         UserService.validateUser(user);
 

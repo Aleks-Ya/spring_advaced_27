@@ -12,10 +12,10 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -28,10 +28,10 @@ import static org.junit.Assert.assertEquals;
 @ContextConfiguration(classes = {CounterAspect.class})
 //@Transactional
 @Ignore("fix it")//TODO
-public class TestCounterAspect  extends BaseServiceTest {
+public class TestCounterAspect extends BaseServiceTest {
 
     @Autowired
-    private CounterAspect       counterAspect;
+    private CounterAspect counterAspect;
 
     @Before
     public void initAspectMock() {
@@ -75,11 +75,11 @@ public class TestCounterAspect  extends BaseServiceTest {
     public void testGetPriceByName() {
         Event event = testObjects.createParty();
         User user = testObjects.createJohn();
-        List<Integer> seats = Arrays.asList(1, 2, 3, 4);
+        List<Integer> seats = asList(1, 2, 3, 4);
         bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats,
-                                      user);
+                user);
         bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats,
-                                      user);
+                user);
         HashMap<String, Integer> expected = new HashMap<String, Integer>() {{
             put(event.getName(), 2);
         }};
@@ -91,12 +91,13 @@ public class TestCounterAspect  extends BaseServiceTest {
         User user = testObjects.createJohn();
         Ticket ticket1 = testObjects.createTicketToParty();
         Ticket ticket2 = testObjects.createTicketToHackathon();
-        bookingService.create(user, new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(5, 6), user,
-                                                   ticket1.getPrice()));
-        bookingService.create(user, new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(7, 8), user,
-                                                   ticket1.getPrice()));
-        bookingService.create(user, new Ticket(ticket2.getEvent(), ticket2.getDateTime(), Arrays.asList(7, 8), user,
-                                                   ticket2.getPrice()));
+        bookingService.create(user.getId(),
+                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), asList(5, 6), user, ticket1.getPrice()));
+        bookingService.create(user.getId(),
+                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), asList(7, 8), user, ticket1.getPrice()));
+        bookingService.create(user.getId(),
+                new Ticket(ticket2.getEvent(), ticket2.getDateTime(), asList(7, 8), user,
+                        ticket2.getPrice()));
         HashMap<String, Integer> expected = new HashMap<String, Integer>() {{
             put(ticket1.getEvent().getName(), 2);
             put(ticket2.getEvent().getName(), 1);

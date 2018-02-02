@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface BookingService {
 
-    Booking create(User user, Ticket ticket);
+    Booking create(long userId, Ticket ticket);
 
     Booking getById(long bookingId);
 

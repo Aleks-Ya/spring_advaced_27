@@ -118,7 +118,7 @@ public class BookingControllerTest extends BaseWebTest {
         User user = createUser();
         Event event = eventService.create(new Event(UUID.randomUUID() + "Meeting", Rate.HIGH, 100,
                 date, auditorium));
-        Ticket ticket = bookingService.create(user, new Ticket(event, date, Arrays.asList(1, 2, 3), user, 100)).getTicket();
+        Ticket ticket = bookingService.create(user.getId(), new Ticket(event, date, Arrays.asList(1, 2, 3), user, 100)).getTicket();
         mvc.perform(get(BookingController.ENDPOINT + "/tickets")
                 .param("eventName", event.getName())
                 .param("auditoriumId", String.valueOf(auditorium.getId()))
@@ -149,7 +149,7 @@ public class BookingControllerTest extends BaseWebTest {
         Event event = createEvent();
         Ticket ticket = new Ticket(event, LocalDateTime.of(2017, 1, 15, 10, 30),
                 Arrays.asList(1, 2, 3), user, 100);
-        return bookingService.create(user, ticket).getTicket();
+        return bookingService.create(user.getId(), ticket).getTicket();
     }
 
     private Event createEvent() {

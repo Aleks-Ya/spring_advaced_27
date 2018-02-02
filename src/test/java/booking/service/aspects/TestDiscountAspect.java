@@ -33,10 +33,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.util.Arrays.asList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -103,13 +104,13 @@ public class TestDiscountAspect {
         User user = (User) applicationContext.getBean("testUser1");
         User discountUser = new User(user.getId(), user.getEmail(), user.getName(), LocalDate.now(), null, null);
         Ticket ticket1 = (Ticket) applicationContext.getBean("testTicket1");
-        bookingService.create(discountUser,
-                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(5, 6), user, ticket1.getPrice()));
-        bookingService.create(discountUser,
-                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(7, 8), user, ticket1.getPrice()));
-        bookingService.create(discountUser,
-                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(9, 10), user, ticket1.getPrice()));
-        List<Integer> seats = Arrays.asList(1, 2, 3, 4);
+        bookingService.create(discountUser.getId(),
+                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), asList(5, 6), user, ticket1.getPrice()));
+        bookingService.create(discountUser.getId(),
+                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), asList(7, 8), user, ticket1.getPrice()));
+        bookingService.create(discountUser.getId(),
+                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), asList(9, 10), user, ticket1.getPrice()));
+        List<Integer> seats = asList(1, 2, 3, 4);
         bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
         bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
         bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);

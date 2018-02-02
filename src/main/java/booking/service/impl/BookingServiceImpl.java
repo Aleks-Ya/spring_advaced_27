@@ -63,13 +63,10 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking create(User user, Ticket ticket) {
-        if (Objects.isNull(user)) {
-            throw new NullPointerException("User is [null]");
-        }
-        User foundUser = userService.getById(user.getId());
+    public Booking create(long userId, Ticket ticket) {
+        User foundUser = userService.getById(userId);
         if (Objects.isNull(foundUser)) {
-            throw new IllegalStateException("User: [" + user + "] is not registered");
+            throw new IllegalStateException("User: [" + userId + "] is not registered");
         }
 
         List<Ticket> bookedTickets = ticketDao.getTickets(ticket.getEvent());
@@ -78,7 +75,7 @@ public class BookingServiceImpl implements BookingService {
                         .anyMatch(bookedTicket.getSeatsList()::contains));
 
         if (!seatsAreAlreadyBooked)
-            return bookingDao.create(user, ticket);
+            return bookingDao.create(userId, ticket);
         else
             throw new IllegalStateException("Unable to book ticket: [" + ticket + "]. Seats are already booked.");
     }
