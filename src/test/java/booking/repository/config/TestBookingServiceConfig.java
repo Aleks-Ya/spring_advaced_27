@@ -1,10 +1,7 @@
 package booking.repository.config;
 
 import booking.domain.*;
-import booking.repository.AuditoriumDAO;
-import booking.repository.EventDAO;
-import booking.repository.TicketDao;
-import booking.repository.UserDAO;
+import booking.repository.*;
 import booking.repository.mocks.DBAuditoriumDAOMock;
 import booking.repository.mocks.EventDAOMock;
 import booking.repository.mocks.UserDAOMock;
@@ -37,6 +34,9 @@ public class TestBookingServiceConfig {
     @Autowired
     private TicketDao ticketDao;
 
+    @Autowired
+    private BookingDao bookingDao;
+
     @Bean
     public DiscountStrategy birthdayBookingStrategy() {
         return new BirthdayStrategy(0.15, 0);
@@ -44,7 +44,7 @@ public class TestBookingServiceConfig {
 
     @Bean
     public DiscountStrategy ticketsBookingStrategy() {
-        return new TicketsStrategy(ticketDao, 0.5, 3, 0);
+        return new TicketsStrategy(ticketDao, 0.5, 3, 0, bookingDao);
     }
 
 //    @Bean

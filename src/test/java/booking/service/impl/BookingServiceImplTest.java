@@ -59,7 +59,7 @@ public class BookingServiceImplTest extends BaseTest {
         bookingService.create(registeredUser, ticket);
         bookingService.create(ticket2.getUser(), ticket2);
         Event event = ticket.getEvent();
-        double ticketPrice = ticketService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
+        double ticketPrice = bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
                 event.getDateTime(), Arrays.asList(5, 6, 7, 8),
                 registeredUser);
         assertEquals("Price is wrong", 260.4, ticketPrice, 0.00001);
@@ -72,8 +72,28 @@ public class BookingServiceImplTest extends BaseTest {
         bookingService.create(testUser, ticket);
         bookingService.create(testUser, ticket);
         Event event = ticket.getEvent();
-        double ticketPrice = ticketService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
+        double ticketPrice = bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
                 event.getDateTime(), Arrays.asList(5, 6, 7), testUser);
         assertEquals("Price is wrong", 525, ticketPrice, 0.00001);
+    }
+
+    @Test
+    public void testGetTicketPrice() {
+        Ticket ticket = testObjects.createTicketToParty();
+        Event event = ticket.getEvent();
+        double ticketPrice = bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
+                event.getDateTime(), ticket.getSeatsList(),
+                ticket.getUser());
+        assertEquals("Price is wrong", 297.6, ticketPrice, 0.00001);
+    }
+
+    @Test
+    public void testGetTicketPrice_WithoutDiscount() {
+        Ticket ticket = testObjects.createTicketToParty();
+        User user = ticket.getUser();
+        Event event = ticket.getEvent();
+        double ticketPrice = bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
+                event.getDateTime(), ticket.getSeatsList(), user);
+        assertEquals("Price is wrong", 595.2, ticketPrice, 0.00001);
     }
 }

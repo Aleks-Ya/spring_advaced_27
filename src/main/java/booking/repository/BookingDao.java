@@ -20,4 +20,8 @@ public interface BookingDao {
     void delete(User user, Ticket booking);
 
     void delete(long bookingId);
+
+    List<Ticket> getBookedTickets();
+
+    long countTickets(User user);
 }

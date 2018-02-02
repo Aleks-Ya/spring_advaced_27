@@ -1,6 +1,8 @@
 package booking.service.impl;
 
-import booking.domain.*;
+import booking.domain.Auditorium;
+import booking.domain.Event;
+import booking.domain.Ticket;
 import booking.repository.TicketDao;
 import booking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * @author Aleksey Yablokov
@@ -61,73 +60,10 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public double getTicketPrice(String eventName, String auditoriumName, LocalDateTime dateTime, List<Integer> seats,
-                                 User user) {
-        if (Objects.isNull(eventName)) {
-            throw new NullPointerException("Event name is [null]");
-        }
-        if (Objects.isNull(seats)) {
-            throw new NullPointerException("Seats are [null]");
-        }
-        if (Objects.isNull(user)) {
-            throw new NullPointerException("User is [null]");
-        }
-        if (seats.contains(null)) {
-            throw new NullPointerException("Seats contain [null]");
-        }
-
-        final Auditorium auditorium = auditoriumService.getByName(auditoriumName);
-
-        final Event event = eventService.getEvent(eventName, auditorium, dateTime);
-        if (Objects.isNull(event)) {
-            throw new IllegalStateException(
-                    "There is no event with name: [" + eventName + "] in auditorium: [" + auditorium + "] on date: ["
-                            + dateTime + "]");
-        }
-
-        final double baseSeatPrice = event.getBasePrice();
-        final double rateMultiplier = event.getRate() == Rate.HIGH ? highRatedPriceMultiplier : defaultRateMultiplier;
-        final double seatPrice = baseSeatPrice * rateMultiplier;
-        final double vipSeatPrice = vipSeatPriceMultiplier * seatPrice;
-        final double discount = discountService.getDiscount(user, event);
-
-
-        validateSeats(seats, auditorium);
-
-        final List<Integer> auditoriumVipSeats = auditorium.getVipSeatsList();
-        final List<Integer> vipSeats = auditoriumVipSeats.stream().filter(seats::contains).collect(
-                Collectors.toList());
-        final List<Integer> simpleSeats = seats.stream().filter(seat -> !vipSeats.contains(seat)).collect(
-                Collectors.toList());
-
-        final double simpleSeatsPrice = simpleSeats.size() * seatPrice;
-        final double vipSeatsPrice = vipSeats.size() * vipSeatPrice;
-        final double totalPrice = simpleSeatsPrice + vipSeatsPrice;
-
-        return (1.0 - discount) * totalPrice;
-    }
-
-    private void validateSeats(List<Integer> seats, Auditorium auditorium) {
-        final int seatsNumber = auditorium.getSeatsNumber();
-        final Optional<Integer> incorrectSeat = seats.stream().filter(
-                seat -> seat < minSeatNumber || seat > seatsNumber).findFirst();
-        incorrectSeat.ifPresent(seat -> {
-            throw new IllegalArgumentException(
-                    String.format("Seat: [%s] is incorrect. Auditorium: [%s] has [%s] seats", seat, auditorium.getName(),
-                            seatsNumber));
-        });
-    }
-
-    @Override
     public List<Ticket> getTicketsForEvent(String eventName, Long auditoriumId, LocalDateTime date) {
         final Auditorium auditorium = auditoriumService.getById(auditoriumId);
         final Event foundEvent = eventService.getEvent(eventName, auditorium, date);
         return ticketDao.getTickets(foundEvent);
-    }
-
-    @Override
-    public List<Ticket> getBookedTickets() {
-        return ticketDao.getBookedTickets();
     }
 
     @Override

@@ -52,7 +52,7 @@ public class BookingController {
 
     @RequestMapping(method = RequestMethod.GET)
     String getBookedTickets(@ModelAttribute("model") ModelMap model) {
-        model.addAttribute(TICKETS_ATTR, ticketService.getBookedTickets());
+        model.addAttribute(TICKETS_ATTR, bookingService.getBookedTickets());
         return TICKETS_FTL;
     }
 
@@ -67,7 +67,7 @@ public class BookingController {
         User user = userService.getById(userId);
         LocalDateTime date = LocalDateTime.parse(localDateTime);
         List<Integer> seatsList = SeatHelper.parseSeatsString(seats);
-        double price = ticketService.getTicketPrice(eventName, String.valueOf(auditoriumName), date, seatsList, user);
+        double price = bookingService.getTicketPrice(eventName, String.valueOf(auditoriumName), date, seatsList, user);
         model.addAttribute(TICKET_PRICE_ATTR, price);
         return TICKET_PRICE_FTL;
     }

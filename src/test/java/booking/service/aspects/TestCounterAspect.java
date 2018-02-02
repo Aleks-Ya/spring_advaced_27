@@ -76,9 +76,9 @@ public class TestCounterAspect  extends BaseTest {
         Event event = testObjects.createParty();
         User user = testObjects.createJohn();
         List<Integer> seats = Arrays.asList(1, 2, 3, 4);
-        ticketService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats,
+        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats,
                                       user);
-        ticketService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats,
+        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats,
                                       user);
         HashMap<String, Integer> expected = new HashMap<String, Integer>() {{
             put(event.getName(), 2);

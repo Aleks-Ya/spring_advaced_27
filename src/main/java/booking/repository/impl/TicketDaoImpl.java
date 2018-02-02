@@ -5,6 +5,7 @@ import booking.domain.Event;
 import booking.domain.Ticket;
 import booking.domain.User;
 import booking.repository.TicketDao;
+import booking.service.UserService;
 import org.hibernate.Query;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class TicketDaoImpl extends AbstractDAO implements TicketDao {
     public Ticket create(Ticket ticket) {
         TicketDao.validateTicket(ticket);
         User user = ticket.getUser();
-        TicketDao.validateUser(user);
+        UserService.validateUser(user);
 
         Long ticketId = (Long) getCurrentSession().save(ticket);
         Ticket storedTicket = ticket.withId(ticketId);
@@ -43,28 +44,6 @@ public class TicketDaoImpl extends AbstractDAO implements TicketDao {
     public List<Ticket> getTickets(Event event) {
         Query query = getCurrentSession().createQuery("select b.ticket from Booking b where b.ticket.event = :event");
         query.setParameter("event", event);
-        return ((List<Ticket>) query.list());
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Ticket> getTickets(User user) {
-        Query query = getCurrentSession().createQuery("select b.ticket from Booking b where b.user = :user");
-        query.setParameter("user", user);
-        return ((List<Ticket>) query.list());
-    }
-
-    @Override
-    public long countTickets(User user) {
-        Query query = getCurrentSession().createQuery("select count(*) from Booking b where b.user = :user");
-        query.setParameter("user", user);
-        return (Long) query.uniqueResult();
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Ticket> getBookedTickets() {
-        Query query = getCurrentSession().createQuery("select b.ticket from Booking b");
         return ((List<Ticket>) query.list());
     }
 

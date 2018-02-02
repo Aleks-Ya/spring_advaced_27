@@ -110,10 +110,10 @@ public class TestDiscountAspect {
         bookingService.create(discountUser,
                 new Ticket(ticket1.getEvent(), ticket1.getDateTime(), Arrays.asList(9, 10), user, ticket1.getPrice()));
         List<Integer> seats = Arrays.asList(1, 2, 3, 4);
-        ticketService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
-        ticketService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
-        ticketService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
-        ticketService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
+        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
+        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
+        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
+        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
         HashMap<String, Map<String, Integer>> expected = new HashMap<String, Map<String, Integer>>() {{
             put(TicketsStrategy.class.getSimpleName(), new HashMap<String, Integer>() {{
                 put(user.getEmail(), 4);

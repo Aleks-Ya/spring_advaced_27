@@ -1,5 +1,6 @@
 package booking.repository.config;
 
+import booking.repository.BookingDao;
 import booking.repository.TicketDao;
 import booking.service.DiscountService;
 import booking.service.impl.discount.BirthdayStrategy;
@@ -23,6 +24,9 @@ public class TestStrategiesConfig {
     @Autowired
     private TicketDao ticketDao;
 
+    @Autowired
+    private BookingDao bookingDao;
+
     @Bean
     public BirthdayStrategy birthdayStrategy() {
         return new BirthdayStrategy(1.0, 0);
@@ -30,7 +34,7 @@ public class TestStrategiesConfig {
 
     @Bean
     public TicketsStrategy ticketsStrategy() {
-        return new TicketsStrategy(ticketDao, 0.5, 2, 0);
+        return new TicketsStrategy(ticketDao, 0.5, 2, 0, bookingDao);
     }
 
 //    @Bean

@@ -2,7 +2,6 @@ package booking.repository;
 
 import booking.domain.Event;
 import booking.domain.Ticket;
-import booking.domain.User;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,24 +21,9 @@ public interface TicketDao {
 
     List<Ticket> getTickets(Event event);
 
-    List<Ticket> getTickets(User user);
-
-    long countTickets(User user);
-
-    List<Ticket> getBookedTickets();
-
     List<Ticket> getAll();
 
     Optional<Ticket> getTicketById(Long ticketId);
-
-    static void validateUser(User user) {
-        if (Objects.isNull(user)) {
-            throw new NullPointerException("User is [null]");
-        }
-        if (Objects.isNull(user.getEmail())) {
-            throw new NullPointerException("User email is [null]");
-        }
-    }
 
     static void validateTicket(Ticket ticket) {
         if (Objects.isNull(ticket)) {
