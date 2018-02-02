@@ -4,7 +4,6 @@ import booking.domain.Auditorium;
 import booking.repository.AuditoriumDAO;
 import booking.service.AuditoriumService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +22,7 @@ public class AuditoriumServiceImpl implements AuditoriumService {
     private final AuditoriumDAO auditoriumDAO;
 
     @Autowired
-    public AuditoriumServiceImpl(@Qualifier("auditoriumDAO") AuditoriumDAO auditoriumDAO) {
+    public AuditoriumServiceImpl(AuditoriumDAO auditoriumDAO) {
         this.auditoriumDAO = auditoriumDAO;
     }
 

@@ -8,7 +8,6 @@ import booking.service.AuditoriumService;
 import booking.service.EventService;
 import booking.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,8 +28,8 @@ public class TicketServiceImpl implements TicketService {
     private final TicketDao ticketDao;
 
     @Autowired
-    public TicketServiceImpl(@Qualifier("eventServiceImpl") EventService eventService,
-                             @Qualifier("auditoriumServiceImpl") AuditoriumService auditoriumService,
+    public TicketServiceImpl(EventService eventService,
+                             AuditoriumService auditoriumService,
                              TicketDao ticketDao) {
         this.eventService = eventService;
         this.auditoriumService = auditoriumService;

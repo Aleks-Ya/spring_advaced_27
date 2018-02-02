@@ -5,7 +5,6 @@ import booking.domain.Event;
 import booking.repository.EventDAO;
 import booking.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +24,7 @@ public class EventServiceImpl implements EventService {
     private final EventDAO eventDAO;
 
     @Autowired
-    public EventServiceImpl(@Qualifier("eventDAO") EventDAO eventDAO) {
+    public EventServiceImpl(EventDAO eventDAO) {
         this.eventDAO = eventDAO;
     }
 

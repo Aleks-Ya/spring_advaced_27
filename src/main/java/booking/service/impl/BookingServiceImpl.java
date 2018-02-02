@@ -5,7 +5,6 @@ import booking.repository.BookingDao;
 import booking.repository.TicketDao;
 import booking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
@@ -42,8 +41,8 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     public BookingServiceImpl(
             EventService eventService,
-            @Qualifier("auditoriumServiceImpl") AuditoriumService auditoriumService,
-            @Qualifier("userServiceImpl") UserService userService,
+            AuditoriumService auditoriumService,
+            UserService userService,
             DiscountService discountService,
             BookingDao bookingDao,
             TicketDao ticketDao,
