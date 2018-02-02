@@ -3,16 +3,7 @@ package booking.service.impl;
 import booking.BaseTest;
 import booking.domain.Auditorium;
 import booking.domain.Event;
-import booking.repository.config.DataSourceConfig;
-import booking.repository.config.DbSessionFactoryConfig;
-import booking.repository.impl.AuditoriumDAOImpl;
-import booking.repository.impl.EventDAOImpl;
-import booking.repository.impl.UserDAOImpl;
-import booking.service.EventService;
-import booking.service.TestObjects;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -29,19 +20,13 @@ import static org.junit.Assert.*;
  * Date: 06/2/16
  * Time: 1:23 PM
  */
-@ContextConfiguration(classes = {DataSourceConfig.class, DbSessionFactoryConfig.class
-        , EventServiceImpl.class, EventDAOImpl.class, TestObjects.class, AuditoriumServiceImpl.class,
-        AuditoriumDAOImpl.class, UserServiceImpl.class, UserDAOImpl.class
-})
 public class EventServiceImplTest extends BaseTest {
-
-    @Autowired
-    private EventService eventService;
 
     @Test
     public void testCreate() {
         Auditorium auditorium = testObjects.createBlueHall();
-        Event event = eventService.create(new Event("Meeting", HIGH, 1000, LocalDateTime.now(), auditorium));
+        Event event = eventService.create(new Event("Meeting", HIGH,
+                1000, LocalDateTime.now(), auditorium));
         assertThat(eventService.getById(event.getId()), equalTo(event));
     }
 

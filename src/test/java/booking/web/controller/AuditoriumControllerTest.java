@@ -1,28 +1,13 @@
 package booking.web.controller;
 
-import booking.BaseTest;
+import booking.BaseWebTest;
 import booking.domain.Auditorium;
-import booking.repository.config.DataSourceConfig;
-import booking.repository.config.DbSessionFactoryConfig;
-import booking.repository.config.TestUserServiceConfig;
-import booking.repository.impl.AuditoriumDAOImpl;
-import booking.repository.impl.EventDAOImpl;
-import booking.service.AuditoriumService;
-import booking.service.TestObjects;
-import booking.service.impl.AuditoriumServiceImpl;
-import booking.service.impl.EventServiceImpl;
-import booking.web.config.FreeMarkerConfig;
-import booking.web.config.MvcConfig;
-import booking.web.error.AdviceErrorHandler;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -41,22 +26,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Aleksey Yablokov
  */
-@ContextConfiguration(classes = {FreeMarkerConfig.class, AuditoriumController.class, DataSourceConfig.class,
-        DbSessionFactoryConfig.class, AdviceErrorHandler.class, MvcConfig.class, AuditoriumDAOImpl.class,
-        AuditoriumServiceImpl.class, TestUserServiceConfig.class, TestObjects.class,
-        EventServiceImpl.class, EventDAOImpl.class
-})
-public class AuditoriumControllerTest extends BaseTest {
-    @Autowired
-    private WebApplicationContext context;
-    @Autowired
-    private AuditoriumService auditoriumService;
-
-    private MockMvc mvc;
+@ContextConfiguration(classes = {AuditoriumController.class})
+public class AuditoriumControllerTest extends BaseWebTest {
 
     @Before
     public void setup() {
-        mvc = MockMvcBuilders.webAppContextSetup(context).build();
+        mvc = MockMvcBuilders.webAppContextSetup(wc).build();
     }
 
     @Test
@@ -118,7 +93,8 @@ public class AuditoriumControllerTest extends BaseTest {
 
     @Test
     public void getById() throws Exception {
-        Auditorium auditorium = auditoriumService.create(new Auditorium("Meeting room", 500, Arrays.asList(1, 2, 3)));
+        Auditorium auditorium = auditoriumService.create(new Auditorium("Meeting room",
+                500, Arrays.asList(1, 2, 3)));
         mvc.perform(get("/auditorium/id/" + auditorium.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
@@ -132,7 +108,8 @@ public class AuditoriumControllerTest extends BaseTest {
 
     @Test
     public void getAuditoriumByName() throws Exception {
-        Auditorium auditorium = auditoriumService.create(new Auditorium("Relax room", 500, Arrays.asList(1, 2, 3)));
+        Auditorium auditorium = auditoriumService.create(new Auditorium("Relax room",
+                500, Arrays.asList(1, 2, 3)));
         mvc.perform(get("/auditorium/name/" + auditorium.getName()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(
@@ -148,7 +125,7 @@ public class AuditoriumControllerTest extends BaseTest {
     @Test
     public void seatsNumberByAuditoriumNameGet() throws Exception {
         String auditoriumName = UUID.randomUUID().toString();
-        Auditorium auditorium = auditoriumService.create(new Auditorium(auditoriumName, 500, Arrays.asList(1, 2, 3)));
+        auditoriumService.create(new Auditorium(auditoriumName, 500, Arrays.asList(1, 2, 3)));
         mvc.perform(get(format("/auditorium/name/%s/seatsNumber", auditoriumName)))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(
@@ -161,7 +138,8 @@ public class AuditoriumControllerTest extends BaseTest {
     @Test
     public void seatsNumberByAuditoriumIdGet() throws Exception {
         String auditoriumName = UUID.randomUUID().toString();
-        Auditorium auditorium = auditoriumService.create(new Auditorium(auditoriumName, 500, Arrays.asList(1, 2, 3)));
+        Auditorium auditorium = auditoriumService.create(new Auditorium(auditoriumName,
+                500, Arrays.asList(1, 2, 3)));
         mvc.perform(get(format("/auditorium/id/%s/seatsNumber", auditorium.getId())))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
@@ -183,7 +161,8 @@ public class AuditoriumControllerTest extends BaseTest {
 
     @Test
     public void vipSeatsByAuditoriumIdGet() throws Exception {
-        Auditorium auditorium = auditoriumService.create(new Auditorium("Red room", 500, Arrays.asList(1, 2, 3)));
+        Auditorium auditorium = auditoriumService.create(new Auditorium("Red room",
+                500, Arrays.asList(1, 2, 3)));
         mvc.perform(get(format("/auditorium/id/%d/vipSeats", auditorium.getId())))
                 .andExpect(status().isOk())
                 .andExpect(content().string(
@@ -196,7 +175,8 @@ public class AuditoriumControllerTest extends BaseTest {
     @Test
     public void deleteExistsAuditorium() throws Exception {
         String auditoriumName = UUID.randomUUID().toString();
-        Auditorium auditorium = auditoriumService.create(new Auditorium(auditoriumName, 500, Arrays.asList(1, 2, 3)));
+        Auditorium auditorium = auditoriumService.create(new Auditorium(auditoriumName,
+                500, Arrays.asList(1, 2, 3)));
         mvc.perform(delete(format("/auditorium/id/%s/delete", auditorium.getId())))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +

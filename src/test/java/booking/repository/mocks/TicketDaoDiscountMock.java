@@ -36,6 +36,10 @@ public class TicketDaoDiscountMock implements TicketDao {
     }
 
     @Override
+    public void delete(long ticketId) {
+    }
+
+    @Override
     public List<Ticket> getTickets(Event event) {
         return null;
     }

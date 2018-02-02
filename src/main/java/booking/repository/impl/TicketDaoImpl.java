@@ -43,6 +43,11 @@ public class TicketDaoImpl extends AbstractDAO implements TicketDao {
     }
 
     @Override
+    public void delete(long ticketId) {
+        getCurrentSession().createQuery("delete from Ticket t where t.id = :ticketId").executeUpdate();
+    }
+
+    @Override
     @SuppressWarnings("unchecked")
     public List<Ticket> getTickets(Event event) {
         Query query = getCurrentSession().createQuery("select b.ticket from Booking b where b.ticket.event = :event");

@@ -2,16 +2,7 @@ package booking.service.impl;
 
 import booking.BaseTest;
 import booking.domain.User;
-import booking.repository.config.DataSourceConfig;
-import booking.repository.config.DbSessionFactoryConfig;
-import booking.repository.impl.AuditoriumDAOImpl;
-import booking.repository.impl.EventDAOImpl;
-import booking.repository.impl.UserDAOImpl;
-import booking.service.TestObjects;
-import booking.service.UserService;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,13 +17,7 @@ import static org.junit.Assert.*;
  * Date: 06/2/16
  * Time: 8:02 PM
  */
-@ContextConfiguration(classes = {DataSourceConfig.class, DbSessionFactoryConfig.class,
-        TestObjects.class, UserServiceImpl.class, AuditoriumServiceImpl.class, AuditoriumDAOImpl.class,
-        UserDAOImpl.class, EventDAOImpl.class, EventServiceImpl.class})
 public class UserServiceImplTest extends BaseTest {
-
-    @Autowired
-    private UserService userService;
 
     @Test
     public void testRegister() {
@@ -69,7 +54,8 @@ public class UserServiceImplTest extends BaseTest {
     public void testUsersGetByName() {
         User testUser1 = testObjects.createJohn();
         List<User> before = userService.getUsersByName(testUser1.getName());
-        User addedUser = new User(UUID.randomUUID().toString(), testUser1.getName(), LocalDate.now(), "pass", null);
+        User addedUser = new User(UUID.randomUUID().toString(), testUser1.getName(),
+                LocalDate.now(), "pass", null);
         long registeredId = userService.register(addedUser).getId();
         List<User> after = userService.getUsersByName(testUser1.getName());
         before.add(addedUser.withId(registeredId));

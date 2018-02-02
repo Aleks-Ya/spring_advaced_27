@@ -20,6 +20,8 @@ public interface TicketDao {
 
     void delete(User user, Ticket booking);
 
+    void delete(long ticketId);
+
     List<Ticket> getTickets(Event event);
 
     List<Ticket> getTickets(User user);
