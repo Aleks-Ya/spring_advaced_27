@@ -2,12 +2,10 @@ package booking.web.controller;
 
 import booking.BaseWebTest;
 import booking.domain.Auditorium;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -28,11 +26,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @ContextConfiguration(classes = {AuditoriumController.class})
 public class AuditoriumControllerTest extends BaseWebTest {
-
-    @Before
-    public void setup() {
-        mvc = MockMvcBuilders.webAppContextSetup(wc).build();
-    }
 
     @Test
     public void createAuditorium() throws Exception {
