@@ -4,14 +4,12 @@ import booking.BaseTest;
 import booking.domain.User;
 import booking.repository.config.DataSourceConfig;
 import booking.repository.config.DbSessionFactoryConfig;
-import booking.repository.config.PropertySourceConfig;
 import booking.repository.impl.AuditoriumDAOImpl;
 import booking.repository.impl.UserDAOImpl;
 import booking.service.TestObjects;
 import booking.service.UserService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.time.LocalDate;
@@ -27,12 +25,9 @@ import static org.junit.Assert.*;
  * Date: 06/2/16
  * Time: 8:02 PM
  */
-@ContextConfiguration(classes = {PropertySourceConfig.class, DataSourceConfig.class, DbSessionFactoryConfig.class,
+@ContextConfiguration(classes = {DataSourceConfig.class, DbSessionFactoryConfig.class,
         TestObjects.class, UserServiceImpl.class, AuditoriumServiceImpl.class, AuditoriumDAOImpl.class, UserDAOImpl.class})
 public class UserServiceImplTest extends BaseTest {
-
-    @Autowired
-    private ConfigurableApplicationContext applicationContext;
 
     @Autowired
     private UserService userService;
@@ -58,9 +53,13 @@ public class UserServiceImplTest extends BaseTest {
     }
 
     @Test(expected = RuntimeException.class)
-    public void testRegister_Exception() {
-        User testUser1 = (User) applicationContext.getBean("testUser1");
-        userService.register(testUser1);
+    public void testRegisterSameUser() {
+        User user = testObjects.createJohn();
+        try {
+            userService.register(user);
+        } finally {
+            userService.delete(user);
+        }
     }
 
     @Test
