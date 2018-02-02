@@ -11,17 +11,16 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 /**
- * Created with IntelliJ IDEA.
  * User: Dmytro_Babichev
  * Date: 2/4/2016
  * Time: 11:25 AM
  */
-@Component("birthdayStrategy")
+@Component
 @PropertySource({"classpath:strategies/strategies.properties"})
 public class BirthdayStrategy implements DiscountStrategy {
 
-    public final double birthdayDiscountValue;
-    public final double defaultDiscountValue;
+    private final double birthdayDiscountValue;
+    private final double defaultDiscountValue;
 
     @Autowired
     public BirthdayStrategy(@Value("${birthday.discount}") double birthdayDiscountValue,
@@ -34,7 +33,7 @@ public class BirthdayStrategy implements DiscountStrategy {
     public double calculateDiscount(User user) {
         final LocalDate now = LocalDate.now();
         if (Objects.nonNull(user.getBirthday()) && user.getBirthday().getMonthValue() == now.getMonthValue() &&
-            user.getBirthday().getDayOfMonth() == now.getDayOfMonth()) {
+                user.getBirthday().getDayOfMonth() == now.getDayOfMonth()) {
             return birthdayDiscountValue;
         }
         return defaultDiscountValue;
