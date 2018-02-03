@@ -13,6 +13,8 @@
     <form action="/login" method="post">
         <fieldset>
             <legend>Login</legend>
+            <p>Default BOOKING_MANAGER: john@gmail.com/jpass</p>
+            <p>Default REGISTERED_USER: mary@gmail.com/mpass</p>
             <br/>
             <label for="username">E-mail</label>
             <input type="text" id="username" name="username"/>
