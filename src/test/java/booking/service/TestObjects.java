@@ -1,15 +1,16 @@
 package booking.service;
 
 import booking.domain.*;
+import booking.web.security.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collections;
 
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 
 /**
  * Provides convenient methods for creating and deleting domain objects in tests.
@@ -35,7 +36,7 @@ public class TestObjects {
     }
 
     public Auditorium createRedHall() {
-        return auditoriumService.create(new Auditorium("Red hall", 500, Collections.singletonList(1)));
+        return auditoriumService.create(new Auditorium("Red hall", 500, singletonList(1)));
     }
 
     private int userConuter = 0;
@@ -45,7 +46,7 @@ public class TestObjects {
         return userService.register(new User(
                 format("john_%d@gmail.com", userConuter),
                 "John Smith " + userConuter,
-                LocalDate.of(1980, 3, 20), "jpass", null));
+                LocalDate.of(1980, 3, 20), "jpass", Roles.REGISTERED_USER));
     }
 
     /**
@@ -56,7 +57,7 @@ public class TestObjects {
         return userService.register(new User(
                 format("john_%d@gmail.com", userConuter),
                 "John Smith " + userConuter,
-                LocalDate.now(), "jpass", null));
+                LocalDate.now(), "jpass", Roles.REGISTERED_USER));
     }
 
     public Event createParty() {
