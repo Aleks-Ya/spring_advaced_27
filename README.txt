@@ -23,3 +23,9 @@ Analyze command:
        -Dsonar.organization=aleks-ya-github \
        -Dsonar.host.url=https://sonarcloud.io \
        -Dsonar.login=the_token
+
+Release:
+Used maven-release-plugin.
+There is no remote repository, so release:perform is not executed.
+Command: mvn release:prepare release:clean
+The command increments version, creates tag and push changes.
