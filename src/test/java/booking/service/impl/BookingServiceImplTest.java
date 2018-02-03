@@ -5,7 +5,6 @@ import booking.domain.Booking;
 import booking.domain.Event;
 import booking.domain.Ticket;
 import booking.domain.User;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -21,7 +20,6 @@ import static org.junit.Assert.assertThat;
  * Date: 06/2/16
  * Time: 8:28 PM
  */
-@Ignore("fix it") //TODO
 public class BookingServiceImplTest extends BaseServiceTest {
 
     @Test(expected = RuntimeException.class)
@@ -61,31 +59,32 @@ public class BookingServiceImplTest extends BaseServiceTest {
         double ticketPrice = bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
                 event.getDateTime(), Arrays.asList(5, 6, 7, 8),
                 registeredUser);
-        assertEquals("Price is wrong", 260.4, ticketPrice, 0.00001);
+        assertEquals("Price is wrong", 30000D, ticketPrice, 0.00001);
     }
 
     @Test
     public void testGetTicketPrice_DiscountsForTicketsAndForBirthday_MidRate() {
         Ticket ticket = testObjects.createTicketToParty();
+        Ticket ticket2 = testObjects.createTicketToHackathon();
         User user = testObjects.createJohn();
         bookingService.create(user.getId(), ticket);
-        bookingService.create(user.getId(), ticket);
+        bookingService.create(user.getId(), ticket2);
         Event event = ticket.getEvent();
         double ticketPrice = bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
                 event.getDateTime(), Arrays.asList(5, 6, 7), user);
-        assertEquals("Price is wrong", 525, ticketPrice, 0.00001);
+        assertEquals("Price is wrong", 24000D, ticketPrice, 0.00001);
     }
 
     @Test
     public void testGetTicketPrice() {
-        Ticket ticket = testObjects.createTicketToParty();
+        Booking booking = testObjects.bookTicketToParty();
+        Ticket ticket = booking.getTicket();
         Event event = ticket.getEvent();
-        User user = testObjects.createJohn();
-        bookingService.create(user.getId(), ticket);
+        User user = booking.getUser();
         double ticketPrice = bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
                 event.getDateTime(), ticket.getSeatsList(),
                 user);
-        assertEquals("Price is wrong", 297.6, ticketPrice, 0.00001);
+        assertEquals("Price is wrong", 12000D, ticketPrice, 0.00001);
     }
 
     @Test
@@ -95,7 +94,7 @@ public class BookingServiceImplTest extends BaseServiceTest {
         Event event = ticket.getEvent();
         double ticketPrice = bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
                 event.getDateTime(), ticket.getSeatsList(), user);
-        assertEquals("Price is wrong", 595.2, ticketPrice, 0.00001);
+        assertEquals("Price is wrong", 12000D, ticketPrice, 0.00001);
     }
 
     @Test
