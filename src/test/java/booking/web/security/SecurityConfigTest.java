@@ -1,23 +1,13 @@
 package booking.web.security;
 
+import booking.BaseWebTest;
 import booking.domain.User;
-import booking.repository.config.DataSourceConfig;
-import booking.repository.config.DbSessionFactoryConfig;
-import booking.repository.config.TestUserServiceConfig;
-import booking.service.UserService;
-import booking.web.config.MvcConfig;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDate;
 
@@ -30,22 +20,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Aleksey Yablokov
  */
-@RunWith(SpringRunner.class)
-@WebAppConfiguration
-@ContextConfiguration(classes = {MvcConfig.class, SimpleController.class, SecurityConfig.class,
-        TestUserServiceConfig.class, DataSourceConfig.class, DbSessionFactoryConfig.class})
-public class SecurityConfigTest {
-    @Autowired
-    private WebApplicationContext context;
-    @Autowired
-    private UserService userService;
-
-    private MockMvc mvc;
-
+@ContextConfiguration(classes = {SimpleController.class, SecurityConfig.class})
+public class SecurityConfigTest extends BaseWebTest {
     @Before
-    public void setup() {
+    @Override
+    public void initMockMvc() {
         mvc = MockMvcBuilders
-                .webAppContextSetup(context)
+                .webAppContextSetup(wc)
                 .apply(springSecurity())
                 .build();
     }
