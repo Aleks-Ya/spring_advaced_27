@@ -83,7 +83,7 @@ public class BookingControllerTest extends BaseWebTest {
                 .param("eventId", String.valueOf(event.getId()))
                 .param("localDateTime", "2007-12-03T10:15:30")
                 .param("seats", "1,2,3")
-                .param("price", "100.5")
+                .param("price", "100")
         )
                 .andExpect(status().isCreated())
                 .andExpect(content().string(format(
@@ -93,7 +93,7 @@ public class BookingControllerTest extends BaseWebTest {
                                 "<p>Event: %s</p>\n" +
                                 "<p>Date: 2007-12-03T10:15:30</p>\n" +
                                 "<p>Seats: 1,2,3</p>\n" +
-                                "<p>Price: 100.5</p>",
+                                "<p>Price: 100</p>",
                         event.getName())));
     }
 
