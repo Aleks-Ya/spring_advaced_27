@@ -27,10 +27,11 @@ import java.util.stream.Stream;
 public class BookingController {
     public static final String ENDPOINT = "/booking";
     private static final String TICKETS_ATTR = "tickets";
+    private static final String BOOKINGS_ATTR = "bookings";
     private static final String TICKET_ATTR = "ticket";
     private static final String EVENT_ATTR = "event";
     private static final String TICKET_PRICE_ATTR = "price";
-    private static final String TICKETS_FTL = "booking/booked_tickets";
+    private static final String BOOKINGS_FTL = "booking/bookings";
     private static final String TICKET_FTL = "booking/ticket";
     private static final String TICKET_PRICE_FTL = "booking/ticket_price";
     private static final String TICKET_FOR_EVENT_FTL = "booking/ticket_for_event";
@@ -52,8 +53,8 @@ public class BookingController {
 
     @RequestMapping(method = RequestMethod.GET)
     String getBookedTickets(@ModelAttribute("model") ModelMap model) {
-        model.addAttribute(TICKETS_ATTR, bookingService.getBookedTickets());
-        return TICKETS_FTL;
+        model.addAttribute(BOOKINGS_ATTR, bookingService.getAll());
+        return BOOKINGS_FTL;
     }
 
     @RequestMapping(path = "/price", method = RequestMethod.GET)

@@ -1,13 +1,12 @@
 package booking.web.controller;
 
 import booking.BaseWebTest;
-import booking.domain.*;
+import booking.domain.Booking;
+import booking.domain.Event;
+import booking.domain.Ticket;
+import booking.domain.User;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
-
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.UUID;
 
 import static java.lang.String.format;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -23,32 +22,44 @@ public class BookingControllerTest extends BaseWebTest {
 
     @Test
     public void getBookedTickets() throws Exception {
-        Ticket ticket1 = createTicket();
-        Ticket ticket2 = createTicket();
+        Booking booking1 = testObjects.bookTicketToParty();
+        Ticket ticket1 = booking1.getTicket();
+        User user1 = booking1.getUser();
+        Booking booking2 = testObjects.bookTicketToHackathon();
+        Ticket ticket2 = booking2.getTicket();
+        User user2 = booking2.getUser();
+
         mvc.perform(get(BookingController.ENDPOINT))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
                                 RootControllerTest.NAVIGATOR +
                                 "<h1>Booked tickets</h1>\n" +
+                                "<p>Booking</p>\n" +
+                                "<p>Id: %d</p>\n" +
+                                "<p>User: %s</p>\n" +
                                 "<p>Ticket</p>\n" +
-                                "<p>Id: %s</p>\n" +
-                                "<p>Event: %s</p>\n" +
-                                "<p>Date: 2017-01-15T10:30</p>\n" +
-                                "<p>Seats: 1,2,3</p>\n" +
-                                "<p>Price: 100</p><hr/>\n" +
+                                "<p>Id: %d</p>\n" +
+                                "<p>Event: New Year Party</p>\n" +
+                                "<p>Date: 2018-12-31T23:00</p>\n" +
+                                "<p>Seats: 100,101</p>\n" +
+                                "<p>Price: 10,000</p><hr/>\n" +
+                                "<p>Booking</p>\n" +
+                                "<p>Id: %d</p>\n" +
+                                "<p>User: %s</p>\n" +
                                 "<p>Ticket</p>\n" +
-                                "<p>Id: %s</p>\n" +
-                                "<p>Event: %s</p>\n" +
-                                "<p>Date: 2017-01-15T10:30</p>\n" +
-                                "<p>Seats: 1,2,3</p>\n" +
-                                "<p>Price: 100</p><hr/>\n",
-                        ticket1.getId(), ticket1.getEvent().getName(),
-                        ticket2.getId(), ticket2.getEvent().getName())));
+                                "<p>Id: %d</p>\n" +
+                                "<p>Event: Java Hackathon</p>\n" +
+                                "<p>Date: 2018-03-13T09:00</p>\n" +
+                                "<p>Seats: 100,101</p>\n" +
+                                "<p>Price: 4,000</p><hr/>\n",
+                        booking1.getId(), user1.getName(), ticket1.getId(),
+                        booking2.getId(), user2.getName(), ticket2.getId()
+                )));
     }
 
     @Test
     public void getTicketById() throws Exception {
-        Ticket bookedTicket = createTicket();
+        Ticket bookedTicket = testObjects.bookTicketToParty().getTicket();
         mvc.perform(get(BookingController.ENDPOINT + "/id/" + bookedTicket.getId())
         )
                 .andExpect(status().isOk())
@@ -56,16 +67,17 @@ public class BookingControllerTest extends BaseWebTest {
                                 "<h1>Ticket</h1>\n" +
                                 "<p>Id: %s</p>\n" +
                                 "<p>Event: %s</p>\n" +
-                                "<p>Date: 2017-01-15T10:30</p>\n" +
-                                "<p>Seats: 1,2,3</p>\n" +
-                                "<p>Price: 100</p>",
+                                "<p>Date: 2018-12-31T23:00</p>\n" +
+                                "<p>Seats: 100,101</p>\n" +
+                                "<p>Price: 10,000</p>",
                         bookedTicket.getId(), bookedTicket.getEvent().getName())));
     }
 
     @Test
     public void bookTicket() throws Exception {
-        User user = createUser();
-        Event event = createEvent();
+        User user = testObjects.createJohn();
+        Event event = testObjects.createParty();
+
         mvc.perform(post(BookingController.ENDPOINT)
                 .param("userId", String.valueOf(user.getId()))
                 .param("eventId", String.valueOf(event.getId()))
@@ -87,24 +99,21 @@ public class BookingControllerTest extends BaseWebTest {
 
     @Test
     public void getTicketPrice() throws Exception {
-        //TODO user TestObjects
-        Auditorium auditorium = auditoriumService.create(new Auditorium("Room", 100, Arrays.asList(1, 2, 3)));
-        User user = createUser();
-        LocalDateTime date = LocalDateTime.of(2018, 1, 15, 10, 30);
-        Event event = eventService.create(new Event(UUID.randomUUID() + "Meeting", Rate.HIGH, 100,
-                date, auditorium));
+        User user = testObjects.createJohn();
+        Event event = testObjects.createParty();
+
         mvc.perform(get(BookingController.ENDPOINT + "/price")
                 .param("eventName", event.getName())
-                .param("auditoriumName", auditorium.getName())
+                .param("auditoriumName", event.getAuditorium().getName())
                 .param("userId", String.valueOf(user.getId()))
-                .param("localDateTime", date.toString())
+                .param("localDateTime", event.getDateTime().toString())
                 .param("seats", "1,2,3")
         )
                 .andExpect(status().isOk())
                 .andExpect(content().string(
                         LoginControllerTest.ANONYMOUS_HEADER +
                                 "<h1>Ticket price</h1>\n" +
-                                "720\n"));
+                                "36,000\n"));
     }
 
     @Test
@@ -130,23 +139,5 @@ public class BookingControllerTest extends BaseWebTest {
                         ticket.getId(),
                         event.getName()
                 )));
-    }
-
-    //TODO use TestObjects
-    private Ticket createTicket() {
-        User user = createUser();
-        Event event = createEvent();
-        Ticket ticket = new Ticket(event, LocalDateTime.of(2017, 1, 15, 10, 30),
-                Arrays.asList(1, 2, 3), 100);
-        return bookingService.create(user.getId(), ticket).getTicket();
-    }
-
-    private Event createEvent() {
-        return eventService.create(new Event(UUID.randomUUID() + "Meeting", Rate.HIGH, 100, null, null));
-    }
-
-    private User createUser() {
-        User userObj = new User(UUID.randomUUID() + "mat@gmail.com", "Mat", null, "pass", null);
-        return userService.register(userObj);
     }
 }

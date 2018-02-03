@@ -15,7 +15,7 @@ public class Ticket {
 
     private long id;
     private Event event;
-    private LocalDateTime dateTime;
+    private LocalDateTime dateTime;//TODO remove (use Event#dateTime)
     private String seats;
     private Double price;
 
