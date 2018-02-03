@@ -104,7 +104,7 @@ public class BookingRegisteredUserTest extends BaseWebSecurityTest {
         mvc.perform(get(forwardedUrl).session(session))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(
-                        "<p>Name: %s, E-mail: %s, Roles: REGISTERED_USER (<a href='/logout'>logout</a>)</p>\n" +
+                        "<p>%s (%s, REGISTERED_USER, <a href='/logout'>logout</a>)</p>\n" +
                                 "<h1>Access denied</h1>\n",
                         user.getName(),
                         user.getEmail()
