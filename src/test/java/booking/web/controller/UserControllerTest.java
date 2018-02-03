@@ -54,14 +54,6 @@ public class UserControllerTest extends BaseWebTest {
 
         User actUser = userService.getUserByEmail(expEmail);
         assertNotNull(actUser);
-
-        //TODO test password encoding
-//        String encodedPassword = actUser.getPassword();
-//        assertThat(actUser.getEmail(), equalTo(expEmail));
-//        assertThat(actUser.getName(), equalTo(expName));
-//        assertThat(actUser.getBirthday(), equalTo(expBirthday));
-//        assertThat("Password is stored in DB in unencoded form", encodedPassword, not(equalTo(rawPassword)));
-//        assertThat(actUser.getRoles(), equalTo(Roles.REGISTERED_USER));
     }
 
     @Test

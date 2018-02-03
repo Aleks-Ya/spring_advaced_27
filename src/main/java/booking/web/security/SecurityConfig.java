@@ -52,6 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDaoUserDetailsService);
     }
 
+    //TODO PasswordEncoder#matches is not used, users registered via UI can't login
     @Bean
     PasswordEncoder passwordEncoder() {
         return new StandardPasswordEncoder(); // Salt is added automatically
