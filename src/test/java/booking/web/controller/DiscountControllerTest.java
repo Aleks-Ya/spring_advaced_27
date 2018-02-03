@@ -4,7 +4,6 @@ import booking.BaseWebTest;
 import booking.domain.Event;
 import booking.domain.Rate;
 import booking.domain.User;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -20,16 +19,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class DiscountControllerTest extends BaseWebTest {
 
     @Test
-    @Ignore("fix it") //TODO
     public void getNonZeroDiscount() throws Exception {
-        User user = testObjects.createJohn();
+        User user = testObjects.createJohnBornToday();
         Event event = eventService.create(new Event("Meeting", Rate.HIGH, 100, null, null));
         mvc.perform(get(DiscountController.ENDPOINT)
                 .param("userId", String.valueOf(user.getId()))
                 .param("eventId", String.valueOf(event.getId()))
         )
                 .andExpect(status().isOk())
-                .andExpect(content().string(ANONYMOUS_HEADER + "<h1>Discount</h1>\n<p>0.5</p>"));
+                .andExpect(content().string(ANONYMOUS_HEADER + "<h1>Discount</h1>\n<p>0.05</p>"));
     }
 
     @Test

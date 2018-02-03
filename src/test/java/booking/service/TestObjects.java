@@ -48,6 +48,17 @@ public class TestObjects {
                 LocalDate.of(1980, 3, 20), "jpass", null));
     }
 
+    /**
+     * Create an user that born today (for testing @{@link booking.service.impl.discount.BirthdayStrategy}.
+     */
+    public User createJohnBornToday() {
+        userConuter++;
+        return userService.register(new User(
+                format("john_%d@gmail.com", userConuter),
+                "John Smith " + userConuter,
+                LocalDate.now(), "jpass", null));
+    }
+
     public Event createParty() {
         Auditorium auditorium = createBlueHall();
         return eventService.create(new Event("New Year Party", Rate.HIGH, 5000,

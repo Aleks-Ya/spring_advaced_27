@@ -13,7 +13,6 @@ import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,21 +42,20 @@ public class DiscountAspectTest extends BaseServiceTest {
 
     @Test
     public void testCalculateDiscount() {
-        User user = testObjects.createJohn();
-        User discountUser = new User(user.getId(), user.getEmail(), user.getName(), LocalDate.now(), null, null);
+        User user = testObjects.createJohnBornToday();
         Ticket ticket1 = testObjects.createTicketToParty();
         Event event = ticket1.getEvent();
-        bookingService.create(discountUser.getId(),
+        bookingService.create(user.getId(),
                 new Ticket(ticket1.getEvent(), ticket1.getDateTime(), asList(5, 6), user, ticket1.getPrice()));
-        bookingService.create(discountUser.getId(),
+        bookingService.create(user.getId(),
                 new Ticket(ticket1.getEvent(), ticket1.getDateTime(), asList(7, 8), user, ticket1.getPrice()));
-        bookingService.create(discountUser.getId(),
+        bookingService.create(user.getId(),
                 new Ticket(ticket1.getEvent(), ticket1.getDateTime(), asList(9, 10), user, ticket1.getPrice()));
         List<Integer> seats = asList(1, 2, 3, 4);
-        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
-        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
-        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
-        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, discountUser);
+        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
+        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
+        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
+        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
         HashMap<String, Map<String, Integer>> expected = new HashMap<String, Map<String, Integer>>() {{
             put(TicketsStrategy.class.getSimpleName(), new HashMap<String, Integer>() {{
                 put(user.getEmail(), 4);
