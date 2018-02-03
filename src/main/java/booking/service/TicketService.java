@@ -12,6 +12,9 @@ public interface TicketService {
 
     Ticket create(Ticket ticket);
 
+    /**
+     * TODO accept eventId, remove auditoriumId and data
+     */
     List<Ticket> getTicketsForEvent(String eventName, Long auditoriumId, LocalDateTime date);
 
     List<Ticket> getAll();

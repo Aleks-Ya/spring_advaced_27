@@ -74,13 +74,12 @@ public class TestCounterAspect extends BaseServiceTest {
         User user = testObjects.createJohn();
         Ticket party = testObjects.createTicketToParty();
         Ticket hackathon = testObjects.createTicketToHackathon();
-        bookingService.create(party.getUser().getId(),
-                new Ticket(party.getEvent(), party.getDateTime(), asList(5, 6), user, party.getPrice()));
         bookingService.create(user.getId(),
-                new Ticket(party.getEvent(), party.getDateTime(), asList(7, 8), user, party.getPrice()));
+                new Ticket(party.getEvent(), party.getDateTime(), asList(5, 6), party.getPrice()));
         bookingService.create(user.getId(),
-                new Ticket(hackathon.getEvent(), hackathon.getDateTime(), asList(7, 8), user,
-                        hackathon.getPrice()));
+                new Ticket(party.getEvent(), party.getDateTime(), asList(7, 8), party.getPrice()));
+        bookingService.create(user.getId(),
+                new Ticket(hackathon.getEvent(), hackathon.getDateTime(), asList(7, 8), hackathon.getPrice()));
         HashMap<String, Integer> expected = new HashMap<String, Integer>() {{
             put(party.getEvent().getName(), 2);
             put(hackathon.getEvent().getName(), 1);

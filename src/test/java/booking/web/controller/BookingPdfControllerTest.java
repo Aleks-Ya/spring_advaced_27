@@ -22,8 +22,8 @@ public class BookingPdfControllerTest extends BaseWebTest {
 
     @Test
     public void requestParam() throws Exception {
-        testObjects.createTicketToParty();
-        testObjects.createTicketToHackathon();
+        testObjects.bookTicketToParty();
+        testObjects.bookTicketToHackathon();
         MvcResult mvcResult = mvc.perform(get(BookingPdfController.ENDPOINT).accept(MediaType.APPLICATION_PDF))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_PDF_VALUE))

@@ -1,11 +1,8 @@
 package booking.repository.impl;
 
-import booking.domain.Booking;
 import booking.domain.Event;
 import booking.domain.Ticket;
-import booking.domain.User;
 import booking.repository.TicketDao;
-import booking.service.UserService;
 import org.hibernate.Query;
 
 import java.util.List;
@@ -22,14 +19,8 @@ public class TicketDaoImpl extends AbstractDAO implements TicketDao {
     @Override
     public Ticket create(Ticket ticket) {
         TicketDao.validateTicket(ticket);
-        User user = ticket.getUser();
-        UserService.validateUser(user);
-
-        Long ticketId = (Long) getCurrentSession().save(ticket);
-        Ticket storedTicket = ticket.withId(ticketId);
-        Booking booking = new Booking(user, storedTicket);
-        getCurrentSession().save(booking);
-        return storedTicket;
+        getCurrentSession().save(ticket);
+        return ticket;
     }
 
     @Override

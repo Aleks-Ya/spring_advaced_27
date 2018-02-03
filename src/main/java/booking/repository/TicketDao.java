@@ -19,6 +19,9 @@ public interface TicketDao {
 
     void delete(long ticketId);
 
+    /**
+     * TODO Move to BookingDao
+     */
     List<Ticket> getTickets(Event event);
 
     List<Ticket> getAll();

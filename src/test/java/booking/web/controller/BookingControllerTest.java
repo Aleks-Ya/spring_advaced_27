@@ -34,14 +34,12 @@ public class BookingControllerTest extends BaseWebTest {
                                 "<p>Event: %s</p>\n" +
                                 "<p>Date: 2017-01-15T10:30</p>\n" +
                                 "<p>Seats: 1,2,3</p>\n" +
-                                "<p>User: Mat</p>\n" +
                                 "<p>Price: 100</p><hr/>\n" +
                                 "<p>Ticket</p>\n" +
                                 "<p>Id: %s</p>\n" +
                                 "<p>Event: %s</p>\n" +
                                 "<p>Date: 2017-01-15T10:30</p>\n" +
                                 "<p>Seats: 1,2,3</p>\n" +
-                                "<p>User: Mat</p>\n" +
                                 "<p>Price: 100</p><hr/>\n",
                         ticket1.getId(), ticket1.getEvent().getName(),
                         ticket2.getId(), ticket2.getEvent().getName())));
@@ -59,7 +57,6 @@ public class BookingControllerTest extends BaseWebTest {
                                 "<p>Event: %s</p>\n" +
                                 "<p>Date: 2017-01-15T10:30</p>\n" +
                                 "<p>Seats: 1,2,3</p>\n" +
-                                "<p>User: Mat</p>\n" +
                                 "<p>Price: 100</p>",
                         bookedTicket.getId(), bookedTicket.getEvent().getName())));
     }
@@ -83,7 +80,6 @@ public class BookingControllerTest extends BaseWebTest {
                                 "<p>Event: %s</p>\n" +
                                 "<p>Date: 2007-12-03T10:15:30</p>\n" +
                                 "<p>Seats: 1,2,3</p>\n" +
-                                "<p>User: Mat</p>\n" +
                                 "<p>Price: 100.5</p>",
                         event.getName())));
     }
@@ -116,7 +112,7 @@ public class BookingControllerTest extends BaseWebTest {
         User user = createUser();
         Event event = eventService.create(new Event(UUID.randomUUID() + "Meeting", Rate.HIGH, 100,
                 date, auditorium));
-        Ticket ticket = bookingService.create(user.getId(), new Ticket(event, date, Arrays.asList(1, 2, 3), user, 100)).getTicket();
+        Ticket ticket = bookingService.create(user.getId(), new Ticket(event, date, Arrays.asList(1, 2, 3), 100)).getTicket();
         mvc.perform(get(BookingController.ENDPOINT + "/tickets")
                 .param("eventName", event.getName())
                 .param("auditoriumId", String.valueOf(auditorium.getId()))
@@ -134,7 +130,6 @@ public class BookingControllerTest extends BaseWebTest {
                                 "<p>Event: %s</p>\n" +
                                 "<p>Date: 2018-01-15T10:30</p>\n" +
                                 "<p>Seats: 1,2,3</p>\n" +
-                                "<p>User: Mat</p>\n" +
                                 "<p>Price: 100</p><hr/>\n",
                         event.getName(),
                         ticket.getId(),
@@ -146,7 +141,7 @@ public class BookingControllerTest extends BaseWebTest {
         User user = createUser();
         Event event = createEvent();
         Ticket ticket = new Ticket(event, LocalDateTime.of(2017, 1, 15, 10, 30),
-                Arrays.asList(1, 2, 3), user, 100);
+                Arrays.asList(1, 2, 3), 100);
         return bookingService.create(user.getId(), ticket).getTicket();
     }
 

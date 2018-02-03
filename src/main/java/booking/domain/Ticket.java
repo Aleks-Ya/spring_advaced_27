@@ -13,29 +13,27 @@ import java.util.List;
  */
 public class Ticket {
 
-    private long          id;
-    private Event         event;
+    private long id;
+    private Event event;
     private LocalDateTime dateTime;
-    private String        seats;
-    private User          user;//TODO remove (must be in Booking)
-    private Double        price;
+    private String seats;
+    private Double price;
 
     public Ticket() {
     }
 
-    public Ticket(Event event, LocalDateTime dateTime, List<Integer> seats, User user, double price) {
-        this(-1, event, dateTime, seats, user, price);
+    public Ticket(Event event, LocalDateTime dateTime, List<Integer> seats, double price) {
+        this(-1, event, dateTime, seats, price);
     }
 
-    public Ticket(long id, Event event, LocalDateTime dateTime, List<Integer> seats, User user, Double price) {
-        this(id, event, dateTime, CsvUtil.fromListToCsv(seats), user, price);
+    public Ticket(long id, Event event, LocalDateTime dateTime, List<Integer> seats, Double price) {
+        this(id, event, dateTime, CsvUtil.fromListToCsv(seats), price);
     }
 
-    public Ticket(long id, Event event, LocalDateTime dateTime, String seats, User user, Double price) {
+    public Ticket(long id, Event event, LocalDateTime dateTime, String seats, Double price) {
         this.id = id;
         this.event = event;
         this.dateTime = dateTime;
-        this.user = user;
         this.price = price;
         this.seats = seats;
     }
@@ -77,15 +75,7 @@ public class Ticket {
     }
 
     public List<Integer> getSeatsList() {
-        return CsvUtil.fromCsvToList(seats, Integer:: valueOf);
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+        return CsvUtil.fromCsvToList(seats, Integer::valueOf);
     }
 
     public Double getPrice() {
@@ -111,8 +101,6 @@ public class Ticket {
             return false;
         if (seats != null ? !seats.equals(ticket.seats) : ticket.seats != null)
             return false;
-        if (user != null ? !user.equals(ticket.user) : ticket.user != null)
-            return false;
         return price != null ? price.equals(ticket.price) : ticket.price == null;
 
     }
@@ -122,7 +110,6 @@ public class Ticket {
         int result = event != null ? event.hashCode() : 0;
         result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
         result = 31 * result + (seats != null ? seats.hashCode() : 0);
-        result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         return result;
     }
@@ -130,16 +117,15 @@ public class Ticket {
     @Override
     public String toString() {
         return "Ticket{" +
-               "id=" + id +
-               ", event=" + event +
-               ", dateTime=" + dateTime +
-               ", seats=" + seats +
-               ", user=" + user +
-               ", price=" + price +
-               '}';
+                "id=" + id +
+                ", event=" + event +
+                ", dateTime=" + dateTime +
+                ", seats=" + seats +
+                ", price=" + price +
+                '}';
     }
 
     public Ticket withId(Long ticketId) {
-        return new Ticket(ticketId, event, dateTime, seats, user, price);
+        return new Ticket(ticketId, event, dateTime, seats, price);
     }
 }

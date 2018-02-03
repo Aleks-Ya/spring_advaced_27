@@ -55,7 +55,7 @@ public class LuckyWinnerAspect {
     public Object countBookTicketByName(ProceedingJoinPoint joinPoint, long userId, Ticket ticket) throws Throwable {
         final int randomInt = ThreadLocalRandom.current().nextInt(100 - luckyPercentage + 1);
         if (randomInt == 0) {
-            Ticket luckyTicket = new Ticket(ticket.getEvent(), ticket.getDateTime(), ticket.getSeatsList(), ticket.getUser(), 0.0);
+            Ticket luckyTicket = new Ticket(ticket.getEvent(), ticket.getDateTime(), ticket.getSeatsList(), 0.0);
             User user = userService.getById(userId);
             luckyUsers.add(user.getEmail());
             return joinPoint.proceed(new Object[]{userId, luckyTicket});

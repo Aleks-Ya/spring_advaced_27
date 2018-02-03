@@ -35,7 +35,8 @@ public class TicketsStrategyTest extends BaseServiceTest {
         User user = testObjects.createJohn();
         Event event = testObjects.createParty();
         for (int i = 1; i < DISCOUNT_THRESHOLD; i++) {
-            ticketService.create(new Ticket(event, event.getDateTime(), singletonList(i), user, event.getBasePrice()));
+            Ticket ticket = ticketService.create(new Ticket(event, event.getDateTime(), singletonList(i), event.getBasePrice()));
+            bookingService.create(user.getId(), ticket);
         }
         double discount = strategy.calculateDiscount(user);
         assertThat(discount, equalTo(TICKETS_DISCOUNT_VALUE));

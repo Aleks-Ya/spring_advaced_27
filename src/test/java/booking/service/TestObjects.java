@@ -73,17 +73,29 @@ public class TestObjects {
     }
 
     public Ticket createTicketToParty() {
-        User user = createJohn();
         Event event = createParty();
-        Ticket ticket = new Ticket(event, event.getDateTime(), asList(100, 101), user, event.getBasePrice() * 2);
+        Ticket ticket = new Ticket(event, event.getDateTime(), asList(100, 101), event.getBasePrice() * 2);
         return ticketService.create(ticket);
     }
 
     public Ticket createTicketToHackathon() {
-        User user = createJohn();
         Event event = createHackathon();
-        Ticket ticket = new Ticket(event, event.getDateTime(), asList(200, 201, 202), user, event.getBasePrice() * 3);
+        Ticket ticket = new Ticket(event, event.getDateTime(), asList(200, 201, 202), event.getBasePrice() * 3);
         return ticketService.create(ticket);
+    }
+
+    public Booking bookTicketToParty() {
+        Event event = createParty();
+        Ticket ticket = new Ticket(event, event.getDateTime(), asList(100, 101), event.getBasePrice() * 2);
+        User user = createJohn();
+        return bookingService.create(user.getId(), ticket);
+    }
+
+    public Booking bookTicketToHackathon() {
+        Event event = createHackathon();
+        Ticket ticket = new Ticket(event, event.getDateTime(), asList(100, 101), event.getBasePrice() * 2);
+        User user = createJohn();
+        return bookingService.create(user.getId(), ticket);
     }
 
     /**
