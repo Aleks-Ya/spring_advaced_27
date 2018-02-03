@@ -49,7 +49,9 @@ public class DbSessionFactoryConfig {
         properties.setProperty("hibernate.dialect", dialect);
         properties.setProperty("hibernate.show_sql", showSql);
         properties.setProperty("hibernate.hbm2ddl.auto", hbm2ddlAuto);
-        properties.setProperty("hibernate.hbm2ddl.import_files", importFiles);
+        if (importFiles != null && !importFiles.isEmpty()) {
+            properties.setProperty("hibernate.hbm2ddl.import_files", importFiles);
+        }
 
         LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
         localSessionFactoryBean.setDataSource(dataSource);
