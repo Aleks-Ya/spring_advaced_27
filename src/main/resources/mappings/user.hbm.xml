@@ -18,7 +18,7 @@
         </id>
         <property name="email" type="string" column="EMAIL" unique="true"/>
         <property name="name" type="string" column="NAME"/>
-        <property name="birthday" type="java.time.LocalDate" column="EVENT_DATE"/>
+        <property name="birthday" type="java.time.LocalDate" column="BIRTHDAY"/>
         <property name="password" type="string" column="PASSWORD"/>
         <property name="roles" type="string" column="ROLES"/>
     </class>
