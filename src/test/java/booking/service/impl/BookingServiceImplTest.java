@@ -9,9 +9,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
@@ -96,5 +96,12 @@ public class BookingServiceImplTest extends BaseServiceTest {
         double ticketPrice = bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
                 event.getDateTime(), ticket.getSeatsList(), user);
         assertEquals("Price is wrong", 595.2, ticketPrice, 0.00001);
+    }
+
+    @Test
+    public void testGetTicketsForEvent() {
+        Booking booking = testObjects.bookTicketToParty();
+        List<Ticket> ticketsForEvent = bookingService.getTicketsForEvent(booking.getTicket().getEvent().getId());
+        assertThat(ticketsForEvent, contains(booking.getTicket()));
     }
 }

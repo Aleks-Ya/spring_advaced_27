@@ -31,11 +31,6 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public List<Ticket> getTicketsForEvent(long eventId) {
-        return ticketDao.getTickets(eventId);
-    }
-
-    @Override
     public List<Ticket> getAll() {
         return ticketDao.getAll();
     }

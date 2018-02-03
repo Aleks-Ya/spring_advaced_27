@@ -24,4 +24,6 @@ public interface BookingDao {
     List<Ticket> getBookedTickets();
 
     long countTickets(long userId);
+
+    List<Ticket> getTicketsForEvent(long eventId);
 }

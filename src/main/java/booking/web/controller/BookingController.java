@@ -78,7 +78,7 @@ public class BookingController {
             @ModelAttribute("model") ModelMap model) {
         long eventIdLong = Long.parseLong(eventId);
         Event event = eventService.getById(eventIdLong);
-        List<Ticket> tickets = ticketService.getTicketsForEvent(eventIdLong);
+        List<Ticket> tickets = bookingService.getTicketsForEvent(eventIdLong);
         model.addAttribute(TICKETS_ATTR, tickets);
         model.addAttribute(EVENT_ATTR, event);
         return TICKET_FOR_EVENT_FTL;

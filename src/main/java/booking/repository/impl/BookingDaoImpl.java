@@ -73,8 +73,18 @@ public class BookingDaoImpl extends AbstractDAO implements BookingDao {
 
     @Override
     public long countTickets(long userId) {
-        Query query = getCurrentSession().createQuery("select count(*) from Booking b where b.user.id = :userId");
+        Query query = getCurrentSession()
+                .createQuery("select count(*) from Booking b where b.user.id = :userId");
         query.setParameter("userId", userId);
         return (Long) query.uniqueResult();
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Ticket> getTicketsForEvent(long eventId) {
+        Query query = getCurrentSession()
+                .createQuery("select b.ticket from Booking b where b.ticket.event.id = :eventId");
+        query.setParameter("eventId", eventId);
+        return ((List<Ticket>) query.list());
     }
 }

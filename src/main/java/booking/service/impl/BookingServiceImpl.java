@@ -2,7 +2,6 @@ package booking.service.impl;
 
 import booking.domain.*;
 import booking.repository.BookingDao;
-import booking.repository.TicketDao;
 import booking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +34,6 @@ public class BookingServiceImpl implements BookingService {
     private final AuditoriumService auditoriumService;
     private final UserService userService;
     private final BookingDao bookingDao;
-    private final TicketDao ticketDao;
     private final DiscountService discountService;
 
     @Autowired
@@ -45,7 +43,6 @@ public class BookingServiceImpl implements BookingService {
             UserService userService,
             DiscountService discountService,
             BookingDao bookingDao,
-            TicketDao ticketDao,
             @Value("${min.seat.number}") int minSeatNumber,
             @Value("${vip.seat.price.multiplier}") double vipSeatPriceMultiplier,
             @Value("${high.rate.price.multiplier}") double highRatedPriceMultiplier,
@@ -55,7 +52,6 @@ public class BookingServiceImpl implements BookingService {
         this.userService = userService;
         this.bookingDao = bookingDao;
         this.discountService = discountService;
-        this.ticketDao = ticketDao;
         this.minSeatNumber = minSeatNumber;
         this.vipSeatPriceMultiplier = vipSeatPriceMultiplier;
         this.highRatedPriceMultiplier = highRatedPriceMultiplier;
@@ -69,7 +65,7 @@ public class BookingServiceImpl implements BookingService {
             throw new IllegalStateException("User: [" + userId + "] is not registered");
         }
 
-        List<Ticket> bookedTickets = ticketDao.getTickets(ticket.getEvent().getId());
+        List<Ticket> bookedTickets = bookingDao.getTicketsForEvent(ticket.getEvent().getId());
         boolean seatsAreAlreadyBooked = bookedTickets.stream()
                 .anyMatch(bookedTicket -> ticket.getSeatsList().stream()
                         .anyMatch(bookedTicket.getSeatsList()::contains));
@@ -162,6 +158,11 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public List<Ticket> getBookedTickets() {
         return bookingDao.getBookedTickets();
+    }
+
+    @Override
+    public List<Ticket> getTicketsForEvent(long eventId) {
+        return bookingDao.getTicketsForEvent(eventId);
     }
 
 }

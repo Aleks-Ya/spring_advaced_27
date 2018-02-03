@@ -31,14 +31,6 @@ public class TicketDaoImpl extends AbstractDAO implements TicketDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Ticket> getTickets(long eventId) {
-        Query query = getCurrentSession().createQuery("select b.ticket from Booking b where b.ticket.event.id = :eventId");
-        query.setParameter("eventId", eventId);
-        return ((List<Ticket>) query.list());
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
     public List<Ticket> getAll() {
         return ((List<Ticket>) createBlankCriteria(Ticket.class).list());
     }
