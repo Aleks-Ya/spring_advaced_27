@@ -2,7 +2,6 @@ package booking.service;
 
 import booking.domain.Ticket;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -12,10 +11,7 @@ public interface TicketService {
 
     Ticket create(Ticket ticket);
 
-    /**
-     * TODO accept eventId, remove auditoriumId and data
-     */
-    List<Ticket> getTicketsForEvent(String eventName, Long auditoriumId, LocalDateTime date);
+    List<Ticket> getTicketsForEvent(long eventId);
 
     List<Ticket> getAll();
 

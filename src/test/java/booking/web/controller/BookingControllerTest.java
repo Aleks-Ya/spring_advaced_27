@@ -107,30 +107,23 @@ public class BookingControllerTest extends BaseWebTest {
 
     @Test
     public void getTicketsForEvent() throws Exception {
-        Auditorium auditorium = auditoriumService.create(new Auditorium("Room", 100, Arrays.asList(1, 2, 3)));
-        LocalDateTime date = LocalDateTime.of(2018, 1, 15, 10, 30);
-        User user = createUser();
-        Event event = eventService.create(new Event(UUID.randomUUID() + "Meeting", Rate.HIGH, 100,
-                date, auditorium));
-        Ticket ticket = bookingService.create(user.getId(), new Ticket(event, date, Arrays.asList(1, 2, 3), 100)).getTicket();
+        Booking booking = testObjects.bookTicketToParty();
+        Ticket ticket = booking.getTicket();
+        Event event = booking.getTicket().getEvent();
         mvc.perform(get(BookingController.ENDPOINT + "/tickets")
-                .param("eventName", event.getName())
-                .param("auditoriumId", String.valueOf(auditorium.getId()))
-                .param("localDateTime", date.toString())
+                .param("eventId", String.valueOf(event.getId()))
         )
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(
                         LoginControllerTest.ANONYMOUS_HEADER +
-                                "<h1>Ticket for event</h1>\n" +
-                                "<p>Events:\n" +
-                                "    %s;\n" +
-                                "</p>\n" +
-                                "<p>Ticket</p>\n" +
-                                "<p>Id: %s</p>\n" +
+                                "<h1>Tickets for event</h1>\n" +
                                 "<p>Event: %s</p>\n" +
-                                "<p>Date: 2018-01-15T10:30</p>\n" +
-                                "<p>Seats: 1,2,3</p>\n" +
-                                "<p>Price: 100</p><hr/>\n",
+                                "<p>Ticket</p>\n" +
+                                "<p>Id: %d</p>\n" +
+                                "<p>Event: %s</p>\n" +
+                                "<p>Date: 2018-12-31T23:00</p>\n" +
+                                "<p>Seats: 100,101</p>\n" +
+                                "<p>Price: 10,000</p><hr/>\n",
                         event.getName(),
                         ticket.getId(),
                         event.getName()

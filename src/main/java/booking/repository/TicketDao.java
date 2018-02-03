@@ -21,6 +21,7 @@ public interface TicketDao {
 
     /**
      * TODO Move to BookingDao
+     * TODO get eventId
      */
     List<Ticket> getTickets(Event event);
 

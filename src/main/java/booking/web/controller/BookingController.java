@@ -28,7 +28,7 @@ public class BookingController {
     static final String ENDPOINT = "/booking";
     private static final String TICKETS_ATTR = "tickets";
     private static final String TICKET_ATTR = "ticket";
-    private static final String EVENTS_ATTR = "events";
+    private static final String EVENT_ATTR = "event";
     private static final String TICKET_PRICE_ATTR = "price";
     private static final String TICKETS_FTL = "booking/booked_tickets";
     private static final String TICKET_FTL = "booking/ticket";
@@ -74,15 +74,13 @@ public class BookingController {
 
     @RequestMapping(path = "/tickets", method = RequestMethod.GET)
     String getTicketsForEvent(
-            @RequestParam String eventName,
-            @RequestParam Long auditoriumId,
-            @RequestParam String localDateTime,
+            @RequestParam String eventId,
             @ModelAttribute("model") ModelMap model) {
-        LocalDateTime date = LocalDateTime.parse(localDateTime);
-        List<Ticket> tickets = ticketService.getTicketsForEvent(eventName, auditoriumId, date);
-        List<Event> events = eventService.getByName(eventName);
+        long eventIdLong = Long.parseLong(eventId);
+        Event event = eventService.getById(eventIdLong);
+        List<Ticket> tickets = ticketService.getTicketsForEvent(eventIdLong);
         model.addAttribute(TICKETS_ATTR, tickets);
-        model.addAttribute(EVENTS_ATTR, events);
+        model.addAttribute(EVENT_ATTR, event);
         return TICKET_FOR_EVENT_FTL;
     }
 

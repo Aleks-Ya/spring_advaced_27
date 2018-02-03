@@ -1,9 +1,5 @@
 <#include "../login/login_details.ftl">
-<h1>Ticket for event</h1>
-<p>Events:
-<#list model.events as event>
-    ${event.name};
-</#list>
-</p>
+<h1>Tickets for event</h1>
+<p>Event: ${(model.event.name)!}</p>
 <#assign tickets=model.tickets>
 <#include "includes/ticket_list.ftl">
