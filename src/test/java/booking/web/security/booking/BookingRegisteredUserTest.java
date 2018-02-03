@@ -1,9 +1,10 @@
-package booking.web.security;
+package booking.web.security.booking;
 
 import booking.BaseWebSecurityTest;
 import booking.domain.*;
 import booking.web.controller.BookingController;
 import booking.web.controller.LoginController;
+import booking.web.security.Roles;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ContextConfiguration;

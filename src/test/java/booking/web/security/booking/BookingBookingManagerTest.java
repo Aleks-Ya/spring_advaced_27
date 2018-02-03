@@ -1,4 +1,4 @@
-package booking.web.security;
+package booking.web.security.booking;
 
 import booking.BaseWebSecurityTest;
 import booking.domain.*;

@@ -10,9 +10,13 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.hamcrest.Matchers.endsWith;
+import static org.junit.Assert.assertThat;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -48,5 +52,17 @@ public abstract class BaseWebSecurityTest extends BaseWebTest {
         ).andExpect(status().is3xxRedirection());
 
         return session;
+    }
+
+    protected void assertRedirectToLoginPage(MockHttpServletRequestBuilder builder) {
+        try {
+            MvcResult mvcResult = mvc.perform(builder)
+                    .andExpect(status().is3xxRedirection())
+                    .andReturn();
+            String redirectedUrl = mvcResult.getResponse().getRedirectedUrl();
+            assertThat(redirectedUrl, endsWith(LoginController.LOGIN_ENDPOINT));
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
 }

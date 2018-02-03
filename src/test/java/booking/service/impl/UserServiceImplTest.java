@@ -75,4 +75,9 @@ public class UserServiceImplTest extends BaseServiceTest {
         User foundUser = userService.getUserByEmail(UUID.randomUUID().toString());
         assertNull("There should not be such user", foundUser);
     }
+
+    @Test
+    public void getCurrentUserNotAuthorized() {
+        assertNull(userService.getCurrentUser());
+    }
 }

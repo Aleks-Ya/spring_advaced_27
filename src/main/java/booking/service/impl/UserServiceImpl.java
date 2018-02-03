@@ -55,7 +55,11 @@ public class UserServiceImpl implements UserService {
         if (auth == null) {
             return null;
         }
-        ExtendedUserDetails principal = (ExtendedUserDetails) auth.getPrincipal();
+        Object principalObj = auth.getPrincipal();
+        if (!(principalObj instanceof ExtendedUserDetails)) {
+            return null;
+        }
+        ExtendedUserDetails principal = (ExtendedUserDetails) principalObj;
         String email = principal.getEmail();
         return userDAO.getByEmail(email);
     }
