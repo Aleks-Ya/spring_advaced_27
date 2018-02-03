@@ -15,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @ContextConfiguration(classes = {RootController.class})
 public class RootControllerTest extends BaseWebTest {
+    public static final String NAVIGATOR = "<p><a href='/'>To home page</a></p>\n";
 
     @Test
     public void rootPage() throws Exception {

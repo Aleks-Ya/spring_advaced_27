@@ -24,9 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * @author Aleksey Yablokov
  */
-@ContextConfiguration(classes = {EventController.class,
-})
-public class EventControllerTest  extends BaseWebTest {
+@ContextConfiguration(classes = EventController.class)
+public class EventControllerTest extends BaseWebTest {
 
     @Test
     public void create() throws Exception {
@@ -81,6 +80,7 @@ public class EventControllerTest  extends BaseWebTest {
         mvc.perform(get(EventController.ENDPOINT + "/name/" + eventName))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
+                        RootControllerTest.NAVIGATOR +
                         "<h1>Event list</h1>\n" +
                         "<p>Event</p>\n" +
                         "<p>Id: %s</p>\n" +
@@ -110,6 +110,7 @@ public class EventControllerTest  extends BaseWebTest {
         mvc.perform(get(EventController.ENDPOINT))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
+                        RootControllerTest.NAVIGATOR +
                         "<h1>Event list</h1>\n" +
                         "<p>Event</p>\n" +
                         "<p>Id: %s</p>\n" +

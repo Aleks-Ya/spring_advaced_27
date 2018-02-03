@@ -28,6 +28,7 @@ public class BookingControllerTest extends BaseWebTest {
         mvc.perform(get(BookingController.ENDPOINT))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
+                                RootControllerTest.NAVIGATOR +
                                 "<h1>Booked tickets</h1>\n" +
                                 "<p>Ticket</p>\n" +
                                 "<p>Id: %s</p>\n" +

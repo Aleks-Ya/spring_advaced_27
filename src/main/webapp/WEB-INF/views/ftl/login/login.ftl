@@ -30,7 +30,7 @@
     </form>
 </div>
 <div>
-    <form action="user" method="post" enctype="application/x-www-form-urlencoded">
+    <form action="/user/register" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset>
             <legend>Create new user</legend>
             <br/>

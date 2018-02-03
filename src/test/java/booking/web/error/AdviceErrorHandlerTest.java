@@ -1,6 +1,6 @@
 package booking.web.error;
 
-import booking.BaseWebSecurityTest;
+import booking.BaseWebTest;
 import booking.web.controller.UserController;
 import org.junit.Test;
 import org.springframework.http.MediaType;
@@ -11,11 +11,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ContextConfiguration(classes = UserController.class)
-public class AdviceErrorHandlerTest extends BaseWebSecurityTest {
+public class AdviceErrorHandlerTest extends BaseWebTest {
 
     @Test
     public void register() throws Exception {
-        mvc.perform(post(UserController.ENDPOINT)
+        mvc.perform(post(UserController.ENDPOINT + "/register")//TODO put /user/register to constant
                 .param("name", "John")
                 .param("birthday", "2000-07-03")
                 .param("password", "pass")

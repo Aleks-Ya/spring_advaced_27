@@ -69,6 +69,7 @@ public class AuditoriumControllerTest extends BaseWebTest {
         mvc.perform(get("/auditorium"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
+                                RootControllerTest.NAVIGATOR +
                                 "<h1>Auditoriums</h1>\n" +
                                 "<p>Auditorium</p>\n" +
                                 "<p>Id: %d</p>\n" +

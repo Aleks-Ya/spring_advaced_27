@@ -29,30 +29,43 @@ public class UserController {
     public static final String ENDPOINT = "/user";
     static final String PART_NAME = "users";
     static final String USER_ATTR = "user";
+    private static final String USERS_ATTR = "users";
     private static final String USER_FTL = "user/user";
+    private static final String USERS_FTL = "user/users";
     private static final String USER_REGISTERED_FTL = "user/user_registered";
 
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+    public UserController(
+            @Autowired UserService userService,
+            @Autowired(required = false) PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
 
-    @RequestMapping(method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
+    @RequestMapping(path = "/register", method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
     @ResponseStatus(HttpStatus.CREATED)
     String register(@RequestBody MultiValueMap<String, String> formParams, @ModelAttribute("model") ModelMap model) {
         String name = formParams.getFirst("name");
         String email = formParams.getFirst("email");
         String birthday = formParams.getFirst("birthday");
         String rawPassword = formParams.getFirst("password");
-        String encodedPassword = passwordEncoder.encode(rawPassword);
+        String encodedPassword = encodePassword(rawPassword);
         User newUser = new User(email, name, LocalDate.parse(birthday), encodedPassword, Roles.REGISTERED_USER);
         User user = userService.register(newUser);
         model.addAttribute(USER_ATTR, user);
         return USER_REGISTERED_FTL;
+    }
+
+    private String encodePassword(String rawPassword) {
+        String encodedPassword;
+        if (passwordEncoder != null) {
+            encodedPassword = passwordEncoder.encode(rawPassword);//TODO use JdbcUserDetailsManager#createUser
+        } else {
+            encodedPassword = rawPassword;
+        }
+        return encodedPassword;
     }
 
     @RequestMapping(value = "/id/{userId}", method = RequestMethod.GET)
@@ -62,12 +75,19 @@ public class UserController {
         return USER_FTL;
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    String getAll(@ModelAttribute("model") ModelMap model) {
+        List<User> users = userService.getAll();
+        model.addAttribute(USERS_ATTR, users);
+        return USERS_FTL;
+    }
+
     @RequestMapping(path = "/batchUpload", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void batchUpload(@RequestParam(value = PART_NAME) List<MultipartFile> users) throws IOException {
         for (MultipartFile userFile : users) {
             NewUserData newUserData = JsonUtil.readValue(userFile.getBytes(), NewUserData.class);
-            String encodedPassword = passwordEncoder.encode(newUserData.getPassword());
+            String encodedPassword = encodePassword(newUserData.getPassword());
             User newUser = new User(newUserData.getEmail(), newUserData.getName(), newUserData.getBirthday(),
                     encodedPassword, Roles.REGISTERED_USER);
             userService.register(newUser);

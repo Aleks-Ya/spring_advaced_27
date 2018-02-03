@@ -1,1 +1,1 @@
-<p><a href="/">To home page</a></p>
+<p><a href='/'>To home page</a></p>
