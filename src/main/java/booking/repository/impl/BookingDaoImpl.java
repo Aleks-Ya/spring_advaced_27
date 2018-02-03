@@ -35,7 +35,7 @@ public class BookingDaoImpl extends AbstractDAO implements BookingDao {
 
     @Override
     public Booking getById(long bookingId) {
-        Query query = getCurrentSession().createQuery("select * from Booking b where b.id = :bookingId");
+        Query query = getCurrentSession().createQuery("from Booking b where b.id = :bookingId");
         query.setParameter("bookingId", bookingId);
         return (Booking) query.uniqueResult();
     }

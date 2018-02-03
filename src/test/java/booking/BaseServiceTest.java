@@ -15,6 +15,7 @@ import org.springframework.test.context.TestPropertySource;
 /**
  * @author Aleksey Yablokov
  */
+//TODO user RepositoryConfig instead of *DAO
 @ContextConfiguration(classes = {BookingServiceImpl.class,
         DataSourceConfig.class, DbSessionFactoryConfig.class, AuditoriumServiceImpl.class,
         AuditoriumDAOImpl.class, TestObjects.class, UserServiceImpl.class, UserDAOImpl.class,

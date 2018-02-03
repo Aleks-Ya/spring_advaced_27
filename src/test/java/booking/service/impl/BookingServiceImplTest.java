@@ -25,8 +25,8 @@ public class BookingServiceImplTest extends BaseServiceTest {
     @Test(expected = RuntimeException.class)
     public void testBookTicket_NotRegistered() {
         Ticket ticket = testObjects.createTicketToParty();
-        User user = testObjects.createJohn();
-        Booking expBooking = bookingService.create(user.getId(), ticket);
+        long notExistsUserId = 1;
+        Booking expBooking = bookingService.create(notExistsUserId, ticket);
         assertThat(bookingService.getById(expBooking.getId()), equalTo(expBooking));
     }
 

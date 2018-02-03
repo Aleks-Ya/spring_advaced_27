@@ -49,9 +49,10 @@ public class DbSessionFactoryConfig {
         properties.setProperty("hibernate.dialect", dialect);
         properties.setProperty("hibernate.show_sql", showSql);
         properties.setProperty("hibernate.hbm2ddl.auto", hbm2ddlAuto);
-        if (importFiles != null && !importFiles.isEmpty()) {
-            properties.setProperty("hibernate.hbm2ddl.import_files", importFiles);
-        }
+
+        // "no-import" is name of not-exists file. Can't use null or empty string because of big warnings in log.
+        String importFilesValue = importFiles != null && !importFiles.isEmpty() ? importFiles : "no-import";
+        properties.setProperty("hibernate.hbm2ddl.import_files", importFilesValue);
 
         LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
         localSessionFactoryBean.setDataSource(dataSource);
