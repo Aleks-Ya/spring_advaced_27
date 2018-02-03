@@ -69,15 +69,16 @@ public class BookingServiceImpl implements BookingService {
             throw new IllegalStateException("User: [" + userId + "] is not registered");
         }
 
-        List<Ticket> bookedTickets = ticketDao.getTickets(ticket.getEvent());
+        List<Ticket> bookedTickets = ticketDao.getTickets(ticket.getEvent().getId());
         boolean seatsAreAlreadyBooked = bookedTickets.stream()
                 .anyMatch(bookedTicket -> ticket.getSeatsList().stream()
                         .anyMatch(bookedTicket.getSeatsList()::contains));
 
-        if (!seatsAreAlreadyBooked)
+        if (!seatsAreAlreadyBooked) {
             return bookingDao.create(userId, ticket);
-        else
+        } else {
             throw new IllegalStateException("Unable to book ticket: [" + ticket + "]. Seats are already booked.");
+        }
     }
 
     @Override

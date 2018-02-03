@@ -1,9 +1,7 @@
 package booking.service.impl;
 
-import booking.domain.Event;
 import booking.domain.Ticket;
 import booking.repository.TicketDao;
-import booking.service.EventService;
 import booking.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
@@ -20,13 +18,10 @@ import java.util.List;
 @Transactional
 public class TicketServiceImpl implements TicketService {
 
-    private final EventService eventService;
     private final TicketDao ticketDao;
 
     @Autowired
-    public TicketServiceImpl(EventService eventService,
-                             TicketDao ticketDao) {
-        this.eventService = eventService;
+    public TicketServiceImpl(TicketDao ticketDao) {
         this.ticketDao = ticketDao;
     }
 
@@ -37,8 +32,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public List<Ticket> getTicketsForEvent(long eventId) {
-        final Event event = eventService.getById(eventId);
-        return ticketDao.getTickets(event);
+        return ticketDao.getTickets(eventId);
     }
 
     @Override

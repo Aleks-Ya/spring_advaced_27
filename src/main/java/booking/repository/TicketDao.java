@@ -1,6 +1,5 @@
 package booking.repository;
 
-import booking.domain.Event;
 import booking.domain.Ticket;
 
 import java.util.List;
@@ -21,9 +20,8 @@ public interface TicketDao {
 
     /**
      * TODO Move to BookingDao
-     * TODO get eventId
      */
-    List<Ticket> getTickets(Event event);
+    List<Ticket> getTickets(long eventId);
 
     List<Ticket> getAll();
 
