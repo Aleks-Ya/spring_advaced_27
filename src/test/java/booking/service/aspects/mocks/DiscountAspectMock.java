@@ -12,7 +12,6 @@ import java.util.HashMap;
  * Date: 13/2/16
  * Time: 8:38 PM
  */
-@Deprecated
 public class DiscountAspectMock extends DiscountAspect {
     public static void cleanup() {
         discountPerUserCounter.put(BirthdayStrategy.class.getSimpleName(), new HashMap<>());
