@@ -26,7 +26,7 @@ public class LoginControllerTest extends BaseWebSecurityTest {
     @Test
     public void getLoginForm() throws Exception {
         String expBody = ResourceUtil.resourceToString("login_form.html", LoginController.class);
-        mvc.perform(get(LoginController.ENDPOINT)
+        mvc.perform(get(LoginController.LOGIN_ENDPOINT)
         ).andExpect(status().isOk())
                 .andExpect(content().string(expBody));
     }
@@ -35,9 +35,9 @@ public class LoginControllerTest extends BaseWebSecurityTest {
     public void loginError() throws Exception {
         String expBody = ResourceUtil.resourceToString("login_error.html", LoginController.class);
 
-        MvcResult mvcResult = mvc.perform(post(LoginController.ENDPOINT))
+        MvcResult mvcResult = mvc.perform(post(LoginController.LOGIN_ENDPOINT))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(redirectedUrl(LoginController.ENDPOINT + "?error")).andReturn();
+                .andExpect(redirectedUrl(LoginController.LOGIN_ENDPOINT + "?error")).andReturn();
 
         String redirectedUrl = mvcResult.getResponse().getRedirectedUrl();
 
@@ -53,7 +53,7 @@ public class LoginControllerTest extends BaseWebSecurityTest {
         String email = "dan@gmail.com";
         User user = userService.register(new User(email, "John", LocalDate.now(), "abc", Roles.REGISTERED_USER));
 
-        MvcResult mvcResultLogin = mvc.perform(post(LoginController.ENDPOINT).session(session)
+        MvcResult mvcResultLogin = mvc.perform(post(LoginController.LOGIN_ENDPOINT).session(session)
                 .param("username", user.getEmail())
                 .param("password", user.getPassword())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)

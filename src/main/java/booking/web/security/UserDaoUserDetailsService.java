@@ -3,6 +3,7 @@ package booking.web.security;
 import booking.domain.User;
 import booking.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,6 +18,12 @@ import java.util.stream.Stream;
 @Component
 public class UserDaoUserDetailsService implements UserDetailsService {
     public static final String ROLES_DELIMITER = ",";
+    /**
+     * Spring Security adds this prefix to all role names.
+     *
+     * @see ExpressionUrlAuthorizationConfigurer.AuthorizedUrl#hasRole(java.lang.String)
+     */
+    public static final String SPRING_ROLE_PREFIX = "ROLE_";
     private final UserService userService;
 
     @Autowired
@@ -37,6 +44,7 @@ public class UserDaoUserDetailsService implements UserDetailsService {
         List<SimpleGrantedAuthority> authorities = Collections.emptyList();
         if (rolesStr != null) {
             authorities = Stream.of(rolesStr.split(ROLES_DELIMITER))
+                    .map(role -> SPRING_ROLE_PREFIX + role)
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
         }

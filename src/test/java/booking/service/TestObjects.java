@@ -2,6 +2,7 @@ package booking.service;
 
 import booking.domain.*;
 import booking.web.security.Roles;
+import booking.web.security.UserDaoUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 
 /**
- * Provides convenient methods for creating and deleting domain objects in tests.
+ * Factory for convenient creating domain objects in tests.
  *
  * @author Aleksey Yablokov
  */
@@ -47,6 +48,18 @@ public class TestObjects {
                 format("john_%d@gmail.com", userConuter),
                 "John Smith " + userConuter,
                 LocalDate.of(1980, 3, 20), "jpass", Roles.REGISTERED_USER));
+    }
+
+    /**
+     * Create an user has both {@link Roles#REGISTERED_USER} and {@link Roles#BOOKING_MANAGER}.
+     */
+    public User createBookingManager() {
+        userConuter++;
+        return userService.register(new User(
+                format("john_%d@gmail.com", userConuter),
+                "John Smith " + userConuter,
+                LocalDate.of(1980, 3, 20), "jpass",
+                Roles.REGISTERED_USER + UserDaoUserDetailsService.ROLES_DELIMITER + Roles.BOOKING_MANAGER));
     }
 
     /**

@@ -1,5 +1,6 @@
 package booking.web.security;
 
+import booking.web.controller.BookingController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
@@ -28,11 +29,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin().loginPage("/login").permitAll()
-                .and().rememberMe()
-                .and().authorizeRequests().anyRequest().authenticated()
-                .and().logout().permitAll()
-                .and().csrf().disable();
+        http
+                .authorizeRequests()
+                .antMatchers(BookingController.ENDPOINT + "/tickets").hasRole(Roles.BOOKING_MANAGER)
+                .anyRequest().authenticated()
+                .and()
+
+                .logout().permitAll()
+                .and()
+
+                .formLogin().loginPage("/login").permitAll().and()
+
+                .rememberMe().and()
+
+                .exceptionHandling().accessDeniedPage("/access_denied").and()
+
+                .csrf().disable();
     }
 
     @Override

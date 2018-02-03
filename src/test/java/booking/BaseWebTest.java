@@ -12,6 +12,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 /**
+ * Parent class for unit tests that use repository, service and web layers.
+ *
  * @author Aleksey Yablokov
  */
 @WebAppConfiguration

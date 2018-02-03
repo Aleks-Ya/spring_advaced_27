@@ -25,7 +25,7 @@ import java.util.stream.Stream;
 @SuppressWarnings("unused")
 @RequestMapping(BookingController.ENDPOINT)
 public class BookingController {
-    static final String ENDPOINT = "/booking";
+    public static final String ENDPOINT = "/booking";
     private static final String TICKETS_ATTR = "tickets";
     private static final String TICKET_ATTR = "ticket";
     private static final String EVENT_ATTR = "event";

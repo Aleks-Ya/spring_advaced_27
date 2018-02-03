@@ -52,7 +52,9 @@ public class UserDaoUserDetailsServiceTest {
     @Test
     public void twoAuthorities() {
         UserService userService = mock(UserService.class);
-        User user = makeUserWithAuthorities("user" + UserDaoUserDetailsService.ROLES_DELIMITER + "admin");
+        String role1 = "USER";
+        String role2 = "ADMIN";
+        User user = makeUserWithAuthorities(role1 + UserDaoUserDetailsService.ROLES_DELIMITER + role2);
         when(userService.getUserByEmail(email)).thenReturn(user);
 
         UserDaoUserDetailsService service = new UserDaoUserDetailsService(userService);
@@ -60,8 +62,8 @@ public class UserDaoUserDetailsServiceTest {
 
         assertThat(userDetails.getAuthorities(),
                 containsInAnyOrder(
-                        new SimpleGrantedAuthority("user"),
-                        new SimpleGrantedAuthority("admin")
+                        new SimpleGrantedAuthority(UserDaoUserDetailsService.SPRING_ROLE_PREFIX + role1),
+                        new SimpleGrantedAuthority(UserDaoUserDetailsService.SPRING_ROLE_PREFIX + role2)
                 ));
     }
 }

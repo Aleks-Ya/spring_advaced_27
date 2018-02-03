@@ -86,6 +86,7 @@ public class BookingControllerTest extends BaseWebTest {
 
     @Test
     public void getTicketPrice() throws Exception {
+        //TODO user TestObjects
         Auditorium auditorium = auditoriumService.create(new Auditorium("Room", 100, Arrays.asList(1, 2, 3)));
         User user = createUser();
         LocalDateTime date = LocalDateTime.of(2018, 1, 15, 10, 30);
@@ -130,6 +131,7 @@ public class BookingControllerTest extends BaseWebTest {
                 )));
     }
 
+    //TODO use TestObjects
     private Ticket createTicket() {
         User user = createUser();
         Event event = createEvent();
