@@ -1,5 +1,6 @@
 package booking.service.aspects.mocks;
 
+import booking.service.UserService;
 import booking.service.aspects.LuckyWinnerAspect;
 
 /**
@@ -8,14 +9,10 @@ import booking.service.aspects.LuckyWinnerAspect;
  * Date: 13/2/16
  * Time: 8:38 PM
  */
-@Deprecated
 public class LuckyWinnerAspectMock extends LuckyWinnerAspect {
 
-    public LuckyWinnerAspectMock(
-//            int luckyPercentage
-    ) {
-//        super(luckyPercentage);
-        super(25);
+    public LuckyWinnerAspectMock(int luckyPercentage, UserService userService) {
+        super(luckyPercentage, userService);
     }
 
     public static void cleanup() {

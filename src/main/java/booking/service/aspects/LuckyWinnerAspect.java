@@ -2,10 +2,12 @@ package booking.service.aspects;
 
 import booking.domain.Ticket;
 import booking.domain.User;
+import booking.service.UserService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -29,33 +31,36 @@ public class LuckyWinnerAspect {
 
     protected static final Set<String> luckyUsers = new HashSet<>();
     private final int luckyPercentage;
+    private final UserService userService;
 
-//    TODO
-//    @Autowired
-    public LuckyWinnerAspect(@Value("${lucky.percentage}") int luckyPercentage) {
-//        this.luckyPercentage = luckyPercentage;
+    @Autowired
+    public LuckyWinnerAspect(@Value("${lucky.percentage}") int luckyPercentage, UserService userService) {
         this.luckyPercentage = luckyPercentage;
+        this.userService = userService;
     }
 
     public static List<String> getLuckyUsers() {
         return new ArrayList<>(luckyUsers);
     }
 
-    @Pointcut(value = "(execution(* booking.service.BookingService.create(booking.domain.User, booking.domain.Ticket)) && args(user, ticket))",
-            argNames = "user,ticket")
-    private void bookTicket(User user, Ticket ticket) {
+    @Pointcut(
+            value = "(execution(* booking.service.BookingService.create(long, booking.domain.Ticket)) && args(userId, ticket))",
+            argNames = "userId,ticket"
+    )
+    private void bookTicket(long userId, Ticket ticket) {
         // This method intended for declaring a @Pointcut
     }
 
-    @Around(value = "bookTicket(user, ticket)", argNames = "joinPoint,user,ticket")
-    public void countBookTicketByName(ProceedingJoinPoint joinPoint, User user, Ticket ticket) throws Throwable {
+    @Around(value = "bookTicket(userId, ticket)", argNames = "joinPoint,userId,ticket")
+    public Object countBookTicketByName(ProceedingJoinPoint joinPoint, long userId, Ticket ticket) throws Throwable {
         final int randomInt = ThreadLocalRandom.current().nextInt(100 - luckyPercentage + 1);
         if (randomInt == 0) {
             Ticket luckyTicket = new Ticket(ticket.getEvent(), ticket.getDateTime(), ticket.getSeatsList(), ticket.getUser(), 0.0);
+            User user = userService.getById(userId);
             luckyUsers.add(user.getEmail());
-            joinPoint.proceed(new Object[]{user, luckyTicket});
+            return joinPoint.proceed(new Object[]{userId, luckyTicket});
         } else {
-            joinPoint.proceed();
+            return joinPoint.proceed();
         }
     }
 }

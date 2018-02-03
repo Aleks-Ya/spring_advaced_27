@@ -23,7 +23,7 @@ import static org.junit.Assert.assertThat;
  * Date: 13/2/16
  * Time: 7:20 PM
  */
-@ContextConfiguration(classes = {AspectConfig.class})
+@ContextConfiguration(classes = AspectConfig.class)
 public class TestCounterAspect extends BaseServiceTest {
 
     @Before

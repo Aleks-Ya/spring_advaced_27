@@ -6,12 +6,9 @@ import booking.domain.User;
 import booking.service.aspects.mocks.LuckyWinnerAspectMock;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -25,55 +22,18 @@ import static org.junit.Assert.assertEquals;
  * Date: 13/2/16
  * Time: 7:20 PM
  */
-@RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {
-        LuckyWinnerAspectMock.class
-//        PropertySourceConfig.class, DataSourceConfig.class,
-//        DbSessionFactoryConfig.class
-//        , TestAspectsConfig.class
-})
-//@Transactional
-//@TestPropertySource("classpath:aspects/aspects.properties")
-@Ignore("fix it") //TODO
-public class TestLuckyWinnerAspect extends BaseServiceTest {
-
-//    @Autowired
-//    private ApplicationContext applicationContext;
-//
-//    @Autowired
-//    private BookingService bookingService;
-
-    //    @Autowired
-//    private BookingDAOBookingMock bookingDAOBookingMock;
-//
-//    @Autowired
-//    private EventDAOMock eventDAOMock;
-//
-//    @Autowired
-//    private UserDAOMock userDAOMock;
-//
-    @Autowired
-    private LuckyWinnerAspectMock luckyWinnerAspectMock;
-//
-//    @Autowired
-//    private DBAuditoriumDAOMock auditoriumDAOMock;
+@ContextConfiguration(classes = AspectConfig.class)
+@TestPropertySource(properties = "lucky.percentage=100")
+public class LuckyWinnerAspectTest extends BaseServiceTest {
 
     @Before
     public void initAspect() {
         LuckyWinnerAspectMock.cleanup();
-//        auditoriumDAOMock.init();
-//        userDAOMock.init();
-//        eventDAOMock.init();
-//        bookingDAOBookingMock.init();
     }
 
     @After
     public void cleanupAspect() {
         LuckyWinnerAspectMock.cleanup();
-//        auditoriumDAOMock.cleanup();
-//        userDAOMock.cleanup();
-//        eventDAOMock.cleanup();
-//        bookingDAOBookingMock.cleanup();
     }
 
     @Test
