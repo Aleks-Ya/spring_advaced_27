@@ -21,7 +21,7 @@
     </properties>
 
     <scm>
-        <developerConnection>scm:git:ssh://git@github.com:Aleks-Ya/spring_advanced_31-2.git</developerConnection>
+        <developerConnection>scm:git:git@github.com:Aleks-Ya/spring_advanced_31-2.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
