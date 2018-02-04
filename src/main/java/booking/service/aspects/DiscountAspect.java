@@ -44,7 +44,7 @@ public class DiscountAspect {
             } else if (discountStrategy.isAssignableFrom(TicketsStrategy.class)) {
                 increaseCounter(TicketsStrategy.class.getSimpleName(), user);
             } else {
-                System.out.println("Unknown discount strategy: [" + discountStrategy.getName() + "]");
+                System.out.println("Unknown discount strategy: [" + discountStrategy.getName() + "]");//TODO add logging
             }
         }
     }

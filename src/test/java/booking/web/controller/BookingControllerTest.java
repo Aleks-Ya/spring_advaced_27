@@ -51,7 +51,7 @@ public class BookingControllerTest extends BaseWebTest {
                                 "<p>Event: Java Hackathon</p>\n" +
                                 "<p>Date: 2018-03-13T09:00</p>\n" +
                                 "<p>Seats: 100,101</p>\n" +
-                                "<p>Price: 4,000</p><hr/>\n",
+                                "<p>Price: 4,000</p><hr/>\n", //TODO floating bug: sometimes Price is 0
                         booking1.getId(), user1.getName(), ticket1.getId(),
                         booking2.getId(), user2.getName(), ticket2.getId()
                 )));

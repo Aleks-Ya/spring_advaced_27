@@ -32,6 +32,7 @@ public class DataSourceConfig {
 
     @Bean
     public DataSource dataSource() {
+        //TODO use connection pool instead of DriverManagerDataSource
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource(url, user, password);
         driverManagerDataSource.setDriverClassName(driver);
         return driverManagerDataSource;

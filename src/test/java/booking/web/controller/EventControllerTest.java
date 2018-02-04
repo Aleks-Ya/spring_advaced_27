@@ -4,13 +4,8 @@ import booking.BaseWebTest;
 import booking.domain.Auditorium;
 import booking.domain.Event;
 import booking.domain.Rate;
-import booking.util.ResourceUtil;
 import org.junit.Test;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static java.lang.String.format;
 import static org.hamcrest.Matchers.emptyIterable;
@@ -128,30 +123,5 @@ public class EventControllerTest extends BaseWebTest {
                         "<p>Date: -No date-</p>\n" +
                         "<p>Auditorium: -No auditorium-</p>\n" +
                         "<hr/>\n", event1.getId(), event2.getId())));
-    }
-
-    @Test
-    public void batchUpload() throws Exception {
-        String name1 = "Hall";
-        String name2 = "Room";
-
-        assertThat(eventService.getByName(name1), emptyIterable());
-        assertThat(eventService.getByName(name2), emptyIterable());
-
-        String fileContent1 = ResourceUtil.resourceToString("EventControllerTest_batchUpload_1.json", EventControllerTest.class);
-        MockMultipartFile multipartFile1 = new MockMultipartFile(EventController.PART_NAME, "filename1.json", MediaType.APPLICATION_JSON_VALUE, fileContent1.getBytes());
-
-        String fileContent2 = ResourceUtil.resourceToString("EventControllerTest_batchUpload_2.json", EventControllerTest.class);
-        MockMultipartFile multipartFile2 = new MockMultipartFile(EventController.PART_NAME, "filename2.json", MediaType.APPLICATION_JSON_VALUE, fileContent2.getBytes());
-
-        MockMultipartHttpServletRequestBuilder multipartBuilder = MockMvcRequestBuilders
-                .fileUpload(EventController.ENDPOINT + "/batchUpload")
-                .file(multipartFile1)
-                .file(multipartFile2);
-
-        mvc.perform(multipartBuilder).andExpect(status().isOk());
-
-        assertThat(eventService.getByName(name1), hasSize(1));
-        assertThat(eventService.getByName(name2), hasSize(2));
     }
 }
