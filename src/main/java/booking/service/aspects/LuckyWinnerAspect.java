@@ -7,6 +7,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -28,15 +30,22 @@ import java.util.concurrent.ThreadLocalRandom;
 @Component
 @PropertySource({"classpath:aspects/aspects.properties"})
 public class LuckyWinnerAspect {
+    private static final Logger LOG = LoggerFactory.getLogger(LuckyWinnerAspect.class);
 
     protected static final Set<String> luckyUsers = new HashSet<>();
+    private final boolean luckyEnabled;
     private final int luckyPercentage;
     private final UserService userService;
 
     @Autowired
-    public LuckyWinnerAspect(@Value("${lucky.percentage}") int luckyPercentage, UserService userService) {
-        this.luckyPercentage = luckyPercentage;
+    public LuckyWinnerAspect(UserService userService,
+                             @Value("${lucky.enabled}") boolean luckyEnabled,
+                             @Value("${lucky.percentage}") int luckyPercentage
+    ) {
         this.userService = userService;
+        this.luckyEnabled = luckyEnabled;
+        this.luckyPercentage = luckyPercentage;
+        LOG.info("Properties: luckyEnabled={}, luckyPercentage={}", luckyEnabled, luckyPercentage);
     }
 
     public static List<String> getLuckyUsers() {
@@ -54,7 +63,7 @@ public class LuckyWinnerAspect {
     @Around(value = "bookTicket(userId, ticket)", argNames = "joinPoint,userId,ticket")
     public Object countBookTicketByName(ProceedingJoinPoint joinPoint, long userId, Ticket ticket) throws Throwable {
         final int randomInt = ThreadLocalRandom.current().nextInt(100 - luckyPercentage + 1);
-        if (randomInt == 0) {
+        if (luckyEnabled && randomInt == 0) {
             Ticket luckyTicket = new Ticket(ticket.getEvent(), ticket.getDateTime(), ticket.getSeatsList(), 0.0);
             User user = userService.getById(userId);
             luckyUsers.add(user.getEmail());

@@ -22,7 +22,7 @@ import static org.junit.Assert.assertEquals;
  * Time: 7:20 PM
  */
 @ContextConfiguration(classes = AspectConfig.class)
-@TestPropertySource(properties = "lucky.percentage=100")
+@TestPropertySource(properties = {"lucky.enabled=true", "lucky.percentage=100"})
 public class LuckyWinnerAspectTest extends BaseServiceTest {
 
     @Before

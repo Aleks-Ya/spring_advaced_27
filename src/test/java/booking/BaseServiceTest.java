@@ -16,7 +16,7 @@ import org.springframework.test.context.TestPropertySource;
  * @author Aleksey Yablokov
  */
 @ContextConfiguration(classes = {RepositoryConfig.class, ServiceConfig.class, TestObjects.class})
-@TestPropertySource("classpath:db-test.properties")
+@TestPropertySource(value = "classpath:db-test.properties", properties = "lucky.enabled=false")
 public abstract class BaseServiceTest extends BaseTest {
     @Autowired
     protected TestObjects testObjects;

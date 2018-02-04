@@ -12,7 +12,7 @@ import booking.service.aspects.LuckyWinnerAspect;
 public class LuckyWinnerAspectMock extends LuckyWinnerAspect {
 
     public LuckyWinnerAspectMock(int luckyPercentage, UserService userService) {
-        super(luckyPercentage, userService);
+        super(userService, true, luckyPercentage);
     }
 
     public static void cleanup() {
