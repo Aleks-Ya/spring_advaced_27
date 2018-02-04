@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import static booking.web.controller.RootController.ENDPOINT;
 import static booking.web.controller.UserController.USER_ATTR;
 
-/**
- * @author Aleksey Yablokov
- */
 @Controller
 @SuppressWarnings("unused")
 @RequestMapping(value = ENDPOINT)

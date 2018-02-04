@@ -14,12 +14,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 2/3/2016
- * Time: 11:33 AM
- */
 @Service
 @PropertySource({"classpath:strategies/booking.properties"})
 public class BookingServiceImpl implements BookingService {

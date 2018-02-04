@@ -2,20 +2,14 @@ package booking.domain;
 
 import java.time.LocalDateTime;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 2/1/2016
- * Time: 7:42 PM
- */
 public class Event {
 
-    private long          id;
-    private String        name;
-    private Rate          rate;
-    private double        basePrice;
+    private long id;
+    private String name;
+    private Rate rate;
+    private double basePrice;
     private LocalDateTime dateTime;
-    private Auditorium    auditorium;
+    private Auditorium auditorium;
 
     public Event() {
     }
@@ -125,12 +119,12 @@ public class Event {
     @Override
     public String toString() {
         return "Event{" +
-               "id=" + id +
-               ", name='" + name + '\'' +
-               ", rate=" + rate +
-               ", basePrice=" + basePrice +
-               ", dateTime=" + dateTime +
-               ", auditorium=" + auditorium +
-               '}';
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", rate=" + rate +
+                ", basePrice=" + basePrice +
+                ", dateTime=" + dateTime +
+                ", auditorium=" + auditorium +
+                '}';
     }
 }

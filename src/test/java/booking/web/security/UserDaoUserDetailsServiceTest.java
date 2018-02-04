@@ -15,9 +15,6 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-/**
- * @author Aleksey Yablokov
- */
 public class UserDaoUserDetailsServiceTest {
     private static final String email = "john@mail.ru";
 

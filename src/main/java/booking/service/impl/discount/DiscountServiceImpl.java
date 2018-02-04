@@ -11,12 +11,6 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 2/4/2016
- * Time: 11:23 AM
- */
 @Service
 public class DiscountServiceImpl implements DiscountService {
 

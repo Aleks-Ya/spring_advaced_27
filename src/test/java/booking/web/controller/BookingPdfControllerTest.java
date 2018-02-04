@@ -14,9 +14,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * @author Aleksey Yablokov
- */
 @ContextConfiguration(classes = {BookingPdfController.class, PdfView.class})
 public class BookingPdfControllerTest extends BaseWebTest {
 

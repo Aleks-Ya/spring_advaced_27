@@ -12,9 +12,6 @@ import java.util.List;
 
 import static booking.web.controller.AuditoriumController.ENDPOINT;
 
-/**
- * @author Aleksey Yablokov
- */
 @Controller
 @SuppressWarnings("unused")
 @RequestMapping(value = ENDPOINT)

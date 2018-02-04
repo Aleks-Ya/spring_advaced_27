@@ -7,12 +7,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 2/2/2016
- * Time: 12:35 PM
- */
 public interface EventDao {
 
     Event create(Event event);

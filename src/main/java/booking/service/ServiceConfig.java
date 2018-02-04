@@ -5,9 +5,6 @@ import booking.service.impl.*;
 import booking.service.impl.discount.DiscountConfig;
 import org.springframework.context.annotation.Import;
 
-/**
- * @author Aleksey Yablokov
- */
 @Import({DiscountConfig.class, AspectConfig.class, TicketServiceImpl.class, AccountServiceImpl.class,
         AuditoriumServiceImpl.class, BookingServiceImpl.class, EventServiceImpl.class, UserServiceImpl.class})
 public class ServiceConfig {

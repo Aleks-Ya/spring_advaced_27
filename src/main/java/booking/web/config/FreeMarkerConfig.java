@@ -11,9 +11,6 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author Aleksey Yablokov
- */
 @Configuration
 @Import(CurrentUserMethod.class)
 public class FreeMarkerConfig {

@@ -10,12 +10,6 @@ import java.time.temporal.ChronoUnit;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 06/2/16
- * Time: 2:16 AM
- */
 public class BirthdayStrategyTest extends BaseTest {
 
     private static final double BIRTHDAY_DISCOUNT_VALUE = 0.1;

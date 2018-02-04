@@ -14,12 +14,6 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 06/2/16
- * Time: 8:28 PM
- */
 public class BookingServiceImplTest extends BaseServiceTest {
 
     @Test(expected = RuntimeException.class)

@@ -11,12 +11,6 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 06/2/16
- * Time: 1:23 PM
- */
 public class AuditoriumServiceImplTest extends BaseServiceTest {
 
     @Test

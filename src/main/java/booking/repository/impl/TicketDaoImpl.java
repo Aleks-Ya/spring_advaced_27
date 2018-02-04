@@ -7,12 +7,6 @@ import org.hibernate.Query;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 20/2/16
- * Time: 9:00 PM
- */
 public class TicketDaoImpl extends AbstractDao implements TicketDao {
 
     @Override

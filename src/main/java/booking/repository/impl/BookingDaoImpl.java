@@ -11,9 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-/**
- * @author Aleksey Yablokov
- */
 public class BookingDaoImpl extends AbstractDao implements BookingDao {
 
     @Autowired

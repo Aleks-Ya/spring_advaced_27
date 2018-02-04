@@ -10,12 +10,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 2/2/2016
- * Time: 12:29 PM
- */
 @Service
 public class EventServiceImpl implements EventService {
 

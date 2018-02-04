@@ -14,12 +14,6 @@ import static booking.domain.Rate.HIGH;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 06/2/16
- * Time: 1:23 PM
- */
 public class EventServiceImplTest extends BaseServiceTest {
 
     @Test

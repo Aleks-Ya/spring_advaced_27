@@ -22,8 +22,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * Check that an user (has REGISTERED_USER role) has access to all operations (exclude "get booked tickets for event").
- *
- * @author Aleksey Yablokov
  */
 @ContextConfiguration(classes = {BookingController.class, LoginController.class})
 public class BookingRegisteredUserTest extends BaseWebSecurityTest {

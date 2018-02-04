@@ -18,9 +18,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * @author Aleksey Yablokov
- */
 @Controller
 @SuppressWarnings("unused")
 public class UserBatchUploadController {

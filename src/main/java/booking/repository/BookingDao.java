@@ -6,9 +6,6 @@ import booking.domain.User;
 
 import java.util.List;
 
-/**
- * @author Aleksey Yablokov
- */
 public interface BookingDao {
 
     Booking create(long userId, Ticket ticket);

@@ -7,9 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
-/**
- * @author Aleksey Yablokov
- */
 public final class ResourceUtil {
 
     private ResourceUtil() {

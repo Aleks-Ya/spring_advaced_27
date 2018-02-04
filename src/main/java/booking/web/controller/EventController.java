@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * @author Aleksey Yablokov
- */
 @Controller
 @SuppressWarnings("unused")
 public class EventController {

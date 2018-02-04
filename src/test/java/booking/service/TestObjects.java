@@ -22,8 +22,6 @@ import static java.util.Collections.singletonList;
 
 /**
  * Factory for convenient creating domain objects in tests.
- *
- * @author Aleksey Yablokov
  */
 @Component
 public class TestObjects {

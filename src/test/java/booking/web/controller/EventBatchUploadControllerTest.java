@@ -14,9 +14,6 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * @author Aleksey Yablokov
- */
 @ContextConfiguration(classes = EventBatchUploadController.class)
 public class EventBatchUploadControllerTest extends BaseWebTest {
 

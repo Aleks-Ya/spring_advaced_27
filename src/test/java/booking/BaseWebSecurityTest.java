@@ -23,8 +23,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * Parent class for unit tests that use repository, service, web and security layers.
- *
- * @author Aleksey Yablokov
  */
 @WebAppConfiguration
 @ContextConfiguration(classes = SecurityConfig.class)

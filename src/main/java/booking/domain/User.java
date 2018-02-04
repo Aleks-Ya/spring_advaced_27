@@ -2,12 +2,6 @@ package booking.domain;
 
 import java.time.LocalDate;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 2/1/2016
- * Time: 7:35 PM
- */
 public class User {
 
     private long id;
@@ -68,7 +62,6 @@ public class User {
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
-
 
 
     public String getPassword() {

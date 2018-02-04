@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
-/**
- * @author Aleksey Yablokov
- */
 @Controller
 @SuppressWarnings("unused")
 public class LoginController {

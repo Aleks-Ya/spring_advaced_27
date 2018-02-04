@@ -11,12 +11,6 @@ import java.util.UUID;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.*;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 06/2/16
- * Time: 8:02 PM
- */
 public class UserServiceImplTest extends BaseServiceTest {
 
     @Test
