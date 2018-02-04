@@ -2,6 +2,7 @@ package booking.web.security.user;
 
 import booking.BaseWebSecurityTest;
 import booking.domain.User;
+import booking.web.controller.UserBatchUploadController;
 import booking.web.controller.UserController;
 import booking.web.security.Roles;
 import org.junit.Test;
@@ -23,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author Aleksey Yablokov
  */
-@ContextConfiguration(classes = UserController.class)
+@ContextConfiguration(classes = {UserController.class, UserBatchUploadController.class})
 public class UserAnonymousTest extends BaseWebSecurityTest {
 
     @Test
@@ -70,7 +71,7 @@ public class UserAnonymousTest extends BaseWebSecurityTest {
 
     @Test
     public void batchUpload() {
-        assertRedirectToLoginPage(fileUpload(UserController.BATCH_UPLOAD_ENDPOINT));
+        assertRedirectToLoginPage(fileUpload(UserBatchUploadController.BATCH_UPLOAD_ENDPOINT));
     }
 
 }

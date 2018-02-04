@@ -2,7 +2,6 @@ package booking.web.controller;
 
 import booking.domain.User;
 import booking.service.UserService;
-import booking.util.JsonUtil;
 import booking.web.security.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,9 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -25,9 +22,6 @@ import java.util.List;
 public class UserController {
     public static final String ROOT_ENDPOINT = "/user";
     public static final String REGISTER_ENDPOINT = ROOT_ENDPOINT + "/register";
-    public static final String BATCH_UPLOAD_ENDPOINT = ROOT_ENDPOINT + "/batchUpload";
-
-    static final String PART_NAME = "users";
 
     static final String USER_ATTR = "user";
     private static final String USERS_ATTR = "users";
@@ -53,14 +47,14 @@ public class UserController {
         String email = formParams.getFirst("email");
         String birthday = formParams.getFirst("birthday");
         String rawPassword = formParams.getFirst("password");
-        String encodedPassword = encodePassword(rawPassword);
+        String encodedPassword = encodePassword(passwordEncoder, rawPassword);
         User newUser = new User(email, name, LocalDate.parse(birthday), encodedPassword, Roles.REGISTERED_USER);
         User user = userService.register(newUser);
         model.addAttribute(USER_ATTR, user);
         return USER_REGISTERED_FTL;
     }
 
-    private String encodePassword(String rawPassword) {
+    static String encodePassword(PasswordEncoder passwordEncoder, String rawPassword) {
         String encodedPassword;
         if (passwordEncoder != null) {
             encodedPassword = passwordEncoder.encode(rawPassword);//TODO use JdbcUserDetailsManager#createUser
@@ -82,57 +76,5 @@ public class UserController {
         List<User> users = userService.getAll();
         model.addAttribute(USERS_ATTR, users);
         return USERS_FTL;
-    }
-
-    //TODO extract batch upload to separated controller
-    @RequestMapping(path = BATCH_UPLOAD_ENDPOINT, method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
-    public void batchUpload(@RequestParam(value = PART_NAME) List<MultipartFile> users) throws IOException {
-        for (MultipartFile userFile : users) {
-            NewUserData newUserData = JsonUtil.readValue(userFile.getBytes(), NewUserData.class);
-            String encodedPassword = encodePassword(newUserData.getPassword());
-            User newUser = new User(newUserData.getEmail(), newUserData.getName(), newUserData.getBirthday(),
-                    encodedPassword, Roles.REGISTERED_USER);
-            userService.register(newUser);
-        }
-    }
-
-    private static class NewUserData {
-        private String email;
-        private String name;
-        private LocalDate birthday;
-        private String password;
-
-        public String getEmail() {
-            return email;
-        }
-
-        public void setEmail(String email) {
-            this.email = email;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public LocalDate getBirthday() {
-            return birthday;
-        }
-
-        public void setBirthday(LocalDate birthday) {
-            this.birthday = birthday;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
     }
 }
