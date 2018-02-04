@@ -10,9 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-/**
- * @author Aleksey Yablokov
- */
 @Repository
 public class AccountDaoImpl extends AbstractDao implements AccountDao {
 

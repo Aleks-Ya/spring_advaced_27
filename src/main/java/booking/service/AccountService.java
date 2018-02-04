@@ -7,8 +7,6 @@ import java.util.List;
 
 /**
  * Operates users' money.
- *
- * @author Aleksey Yablokov
  */
 public interface AccountService {
     Account create(Account account);

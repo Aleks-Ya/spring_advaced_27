@@ -4,9 +4,6 @@ import booking.domain.Account;
 
 import java.util.List;
 
-/**
- * @author Aleksey Yablokov
- */
 public interface AccountDao {
 
     Account create(Account account);

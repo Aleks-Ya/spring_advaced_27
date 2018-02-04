@@ -5,8 +5,6 @@ import java.util.Objects;
 
 /**
  * Information about money that users possess.
- *
- * @author Aleksey Yablokov
  */
 @SuppressWarnings("unused")
 public class Account {
