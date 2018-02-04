@@ -7,6 +7,8 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -22,6 +24,7 @@ import java.util.Map;
 @Aspect
 @Component
 public class DiscountAspect {
+    private static final Logger LOG = LoggerFactory.getLogger(DiscountAspect.class);
 
     protected static final Map<String, Map<String, Integer>> discountPerUserCounter = new HashMap<>();
 
@@ -44,7 +47,7 @@ public class DiscountAspect {
             } else if (discountStrategy.isAssignableFrom(TicketsStrategy.class)) {
                 increaseCounter(TicketsStrategy.class.getSimpleName(), user);
             } else {
-                System.out.println("Unknown discount strategy: [" + discountStrategy.getName() + "]");//TODO add logging
+                LOG.info("Unknown discount strategy: [" + discountStrategy.getName() + "]");
             }
         }
     }
