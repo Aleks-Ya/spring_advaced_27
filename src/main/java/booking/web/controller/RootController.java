@@ -28,7 +28,7 @@ public class RootController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    String getRootPage(@ModelAttribute("model") ModelMap model) {
+    String getRootPage(@ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         model.addAttribute(USER_ATTR, userService.getCurrentUser());
         return ROOT_FTL;
     }

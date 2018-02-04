@@ -42,7 +42,7 @@ public class UserController {
 
     @RequestMapping(path = REGISTER_ENDPOINT, method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
     @ResponseStatus(HttpStatus.CREATED)
-    String register(@RequestBody MultiValueMap<String, String> formParams, @ModelAttribute("model") ModelMap model) {
+    String register(@RequestBody MultiValueMap<String, String> formParams, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         String name = formParams.getFirst("name");
         String email = formParams.getFirst("email");
         String birthday = formParams.getFirst("birthday");
@@ -65,14 +65,14 @@ public class UserController {
     }
 
     @RequestMapping(value = ROOT_ENDPOINT + "/id/{userId}", method = RequestMethod.GET)
-    String getById(@PathVariable Long userId, @ModelAttribute("model") ModelMap model) {
+    String getById(@PathVariable Long userId, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         User user = userService.getById(userId);
         model.addAttribute(USER_ATTR, user);
         return USER_FTL;
     }
 
     @RequestMapping(path = ROOT_ENDPOINT, method = RequestMethod.GET)
-    String getAll(@ModelAttribute("model") ModelMap model) {
+    String getAll(@ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         List<User> users = userService.getAll();
         model.addAttribute(USERS_ATTR, users);
         return USERS_FTL;

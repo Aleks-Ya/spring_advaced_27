@@ -25,7 +25,7 @@ public class LoginController {
     @RequestMapping(value = ENDPOINT, method = RequestMethod.GET)
     String getLoginPage(
             @RequestParam Map<String, String> params,
-            @ModelAttribute("model") ModelMap model
+            @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model
     ) {
         model.addAttribute(ERROR_ATTR, params.containsKey("error"));
         model.addAttribute(LOGOUT_ATTR, params.containsKey("logout"));

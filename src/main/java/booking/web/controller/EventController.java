@@ -45,7 +45,7 @@ public class EventController {
                   @RequestParam Double bastPrice,
                   @RequestParam String dateTime,
                   @RequestParam Long auditoriumId,
-                  @ModelAttribute("model") ModelMap model) {
+                  @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         Auditorium auditorium = auditoriumService.getById(auditoriumId);
         Event event = new Event(name, Rate.valueOf(rate), bastPrice, LocalDateTime.parse(dateTime), auditorium);
         Event eventCreated = eventService.create(event);
@@ -54,21 +54,21 @@ public class EventController {
     }
 
     @RequestMapping(path = ENDPOINT, method = RequestMethod.GET)
-    String getAll(@ModelAttribute("model") ModelMap model) {
+    String getAll(@ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         List<Event> events = eventService.getAll();
         model.addAttribute(EVENTS_ATTR, events);
         return EVENT_LIST_FTL;
     }
 
     @RequestMapping(path = ENDPOINT + "/id/{eventId}", method = RequestMethod.GET)
-    String getById(@PathVariable Long eventId, @ModelAttribute("model") ModelMap model) {
+    String getById(@PathVariable Long eventId, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         Event event = eventService.getById(eventId);
         model.addAttribute(EVENT_ATTR, event);
         return EVENT_FTL;
     }
 
     @RequestMapping(path = ENDPOINT + "/name/{eventName}", method = RequestMethod.GET)
-    String getByName(@PathVariable String eventName, @ModelAttribute("model") ModelMap model) {
+    String getByName(@PathVariable String eventName, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         List<Event> events = eventService.getByName(eventName);
         model.addAttribute(EVENTS_ATTR, events);
         return EVENT_LIST_FTL;

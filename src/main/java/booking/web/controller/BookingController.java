@@ -55,7 +55,7 @@ public class BookingController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    String getBookedTickets(@ModelAttribute("model") ModelMap model) {
+    String getBookedTickets(@ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         model.addAttribute(BOOKINGS_ATTR, bookingService.getAll());
         return BOOKINGS_FTL;
     }
@@ -67,7 +67,7 @@ public class BookingController {
             @RequestParam Long userId,
             @RequestParam String localDateTime,
             @RequestParam String seats,
-            @ModelAttribute("model") ModelMap model) {
+            @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         User user = userService.getById(userId);
         LocalDateTime date = LocalDateTime.parse(localDateTime);
         List<Integer> seatsList = SeatHelper.parseSeatsString(seats);
@@ -79,7 +79,7 @@ public class BookingController {
     @RequestMapping(path = TICKETS_ENDPOINT, method = RequestMethod.GET)
     String getTicketsForEvent(
             @RequestParam String eventId,
-            @ModelAttribute("model") ModelMap model) {
+            @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         long eventIdLong = Long.parseLong(eventId);
         Event event = eventService.getById(eventIdLong);
         List<Ticket> tickets = bookingService.getTicketsForEvent(eventIdLong);
@@ -95,7 +95,7 @@ public class BookingController {
                       @RequestParam String localDateTime,
                       @RequestParam String seats,
                       @RequestParam Double price,
-                      @ModelAttribute("model") ModelMap model) {
+                      @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         User user = userService.getById(userId);
         Event event = eventService.getById(eventId);
         List<Integer> seatsList = Stream.of(seats.split(",")).map(Integer::valueOf).collect(Collectors.toList());
@@ -109,7 +109,7 @@ public class BookingController {
     }
 
     @RequestMapping(path = ROOT_ENDPOINT + "/id/{ticketId}", method = RequestMethod.GET)
-    String getTicketById(@PathVariable Long ticketId, @ModelAttribute("model") ModelMap model) {
+    String getTicketById(@PathVariable Long ticketId, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         Ticket ticket = ticketService.getTicketById(ticketId);
         model.addAttribute(TICKET_ATTR, ticket);
         return TICKET_FTL;

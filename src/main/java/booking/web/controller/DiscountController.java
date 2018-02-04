@@ -38,7 +38,7 @@ public class DiscountController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getDiscount(@RequestParam Long userId, @RequestParam Long eventId, @ModelAttribute("model") ModelMap model) {
+    public String getDiscount(@RequestParam Long userId, @RequestParam Long eventId, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         User user = userService.getById(userId);
         if (user == null) {
             throw new IllegalArgumentException("User is not found by id=" + userId);

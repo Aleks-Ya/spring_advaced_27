@@ -43,7 +43,7 @@ public class AuditoriumController {
             @RequestParam String auditoriumName,
             @RequestParam int seatsNumber,
             @RequestParam String vipSeats,
-            @ModelAttribute("model") ModelMap model) {
+            @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         List<Integer> vipSeatList = SeatHelper.parseSeatsString(vipSeats);
         Auditorium auditorium = auditoriumService.create(new Auditorium(auditoriumName, seatsNumber, vipSeatList));
         model.addAttribute(AUDITORIUM_ATTR, auditorium);
@@ -51,56 +51,56 @@ public class AuditoriumController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    String getAuditoriums(@ModelAttribute("model") ModelMap model) {
+    String getAuditoriums(@ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         List<Auditorium> auditoriums = auditoriumService.getAll();
         model.addAttribute(AUDITORIUMS_ATTR, auditoriums);
         return AUDITORIUMS_FTL;
     }
 
     @RequestMapping("/id/{auditoriumId}")
-    String getAuditoriumById(@PathVariable Long auditoriumId, @ModelAttribute("model") ModelMap model) {
+    String getAuditoriumById(@PathVariable Long auditoriumId, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         Auditorium auditorium = auditoriumService.getById(auditoriumId);
         model.addAttribute(AUDITORIUM_ATTR, auditorium);
         return AUDITORIUM_FTL;
     }
 
     @RequestMapping("/name/{auditoriumName}")
-    String getAuditoriumByName(@PathVariable String auditoriumName, @ModelAttribute("model") ModelMap model) {
+    String getAuditoriumByName(@PathVariable String auditoriumName, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         Auditorium auditorium = auditoriumService.getByName(auditoriumName);
         model.addAttribute(AUDITORIUM_ATTR, auditorium);
         return AUDITORIUM_FTL;
     }
 
     @RequestMapping("/name/{auditoriumName}/seatsNumber")
-    String getSeatsNumberByAuditoriumName(@PathVariable String auditoriumName, @ModelAttribute("model") ModelMap model) {
+    String getSeatsNumberByAuditoriumName(@PathVariable String auditoriumName, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         Auditorium auditorium = auditoriumService.getByName(auditoriumName);
         model.addAttribute(AUDITORIUM_ATTR, auditorium);
         return AUDITORIUM_SEATS_NUMBER_FTL;
     }
 
     @RequestMapping("/id/{auditoriumId}/seatsNumber")
-    String getSeatsNumberByAuditoriumId(@PathVariable Long auditoriumId, @ModelAttribute("model") ModelMap model) {
+    String getSeatsNumberByAuditoriumId(@PathVariable Long auditoriumId, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         Auditorium auditorium = auditoriumService.getById(auditoriumId);
         model.addAttribute(AUDITORIUM_ATTR, auditorium);
         return AUDITORIUM_SEATS_NUMBER_FTL;
     }
 
     @RequestMapping("/name/{auditoriumName}/vipSeats")
-    String getVipSeatsByAuditoriumName(@PathVariable String auditoriumName, @ModelAttribute("model") ModelMap model) {
+    String getVipSeatsByAuditoriumName(@PathVariable String auditoriumName, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         Auditorium auditorium = auditoriumService.getByName(auditoriumName);
         model.addAttribute(AUDITORIUM_ATTR, auditorium);
         return AUDITORIUM_VIP_SEATS_FTL;
     }
 
     @RequestMapping("/id/{auditoriumId}/vipSeats")
-    String getVipSeatsByAuditoriumId(@PathVariable Long auditoriumId, @ModelAttribute("model") ModelMap model) {
+    String getVipSeatsByAuditoriumId(@PathVariable Long auditoriumId, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         Auditorium auditorium = auditoriumService.getById(auditoriumId);
         model.addAttribute(AUDITORIUM_ATTR, auditorium);
         return AUDITORIUM_VIP_SEATS_FTL;
     }
 
     @RequestMapping(path = "/id/{auditoriumId}/delete", method = RequestMethod.DELETE)
-    String delete(@PathVariable Long auditoriumId, @ModelAttribute("model") ModelMap model) {
+    String delete(@PathVariable Long auditoriumId, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         Auditorium auditorium = auditoriumService.getById(auditoriumId);
         if (auditorium != null) {
             auditoriumService.delete(auditoriumId);
