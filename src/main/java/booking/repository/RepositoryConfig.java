@@ -10,6 +10,6 @@ import org.springframework.context.annotation.Import;
  * @author Aleksey Yablokov
  */
 @Import({DataSourceConfig.class, DbSessionFactoryConfig.class, PropertySourceConfig.class,
-        AuditoriumDAOImpl.class, TicketDaoImpl.class, EventDAOImpl.class, UserDAOImpl.class, BookingDaoImpl.class})
+        AuditoriumDaoImpl.class, TicketDaoImpl.class, EventDaoImpl.class, UserDaoImpl.class, BookingDaoImpl.class})
 public class RepositoryConfig {
 }

@@ -1,7 +1,7 @@
 package booking.repository.impl;
 
 import booking.domain.Auditorium;
-import booking.repository.AuditoriumDAO;
+import booking.repository.AuditoriumDao;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +15,7 @@ import java.util.Optional;
  * Time: 4:35 PM
  */
 @Repository
-public class AuditoriumDAOImpl extends AbstractDAO implements AuditoriumDAO {
+public class AuditoriumDaoImpl extends AbstractDao implements AuditoriumDao {
 
     @Override
     @SuppressWarnings("unchecked")

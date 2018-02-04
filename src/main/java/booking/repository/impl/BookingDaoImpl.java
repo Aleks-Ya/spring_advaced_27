@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author Aleksey Yablokov
  */
-public class BookingDaoImpl extends AbstractDAO implements BookingDao {
+public class BookingDaoImpl extends AbstractDao implements BookingDao {
 
     @Autowired
     private UserService userService;

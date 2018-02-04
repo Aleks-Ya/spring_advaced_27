@@ -11,7 +11,7 @@ import java.util.Optional;
  * Date: 2/3/2016
  * Time: 11:09 AM
  */
-public interface AuditoriumDAO {
+public interface AuditoriumDao {
 
     List<Auditorium> getAll();
 
