@@ -11,12 +11,6 @@ import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 06/2/16
- * Time: 2:16 AM
- */
 public class TicketsStrategyTest extends BaseServiceTest {
 
     private static final double TICKETS_DISCOUNT_VALUE = 0.5;

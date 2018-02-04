@@ -10,8 +10,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 /**
  * Check that an unauthorized user will be redirected to the login page.
- *
- * @author Aleksey Yablokov
  */
 @ContextConfiguration(classes = BookingController.class)
 public class BookingAnonymousTest extends BaseWebSecurityTest {

@@ -21,8 +21,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 /**
  * Check behaviour for an unauthorized user.
- *
- * @author Aleksey Yablokov
  */
 @ContextConfiguration(classes = {UserController.class, UserBatchUploadController.class})
 public class UserAnonymousTest extends BaseWebSecurityTest {

@@ -5,12 +5,6 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 21/2/16
- * Time: 12:09 PM
- */
 public class CsvUtil {
 
     private CsvUtil() {

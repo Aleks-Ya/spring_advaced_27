@@ -8,12 +8,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 20/2/16
- * Time: 3:49 PM
- */
 @Configuration
 @PropertySource("classpath:db.properties")
 public class DataSourceConfig {

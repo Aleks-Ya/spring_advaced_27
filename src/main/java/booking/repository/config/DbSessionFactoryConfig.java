@@ -13,12 +13,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 20/2/16
- * Time: 4:00 PM
- */
 @Configuration
 @EnableTransactionManagement
 @PropertySource("classpath:db.properties")

@@ -16,9 +16,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * @author Aleksey Yablokov
- */
 @ContextConfiguration(classes = BookingController.class)
 public class BookingControllerTest extends BaseWebTest {
 
@@ -121,8 +118,8 @@ public class BookingControllerTest extends BaseWebTest {
         )
                 .andExpect(status().isOk())
                 .andExpect(content().string(LoginControllerTest.ANONYMOUS_HEADER +
-                                "<h1>Ticket price</h1>\n" +
-                                "36,000\n"));
+                        "<h1>Ticket price</h1>\n" +
+                        "36,000\n"));
     }
 
     @Test

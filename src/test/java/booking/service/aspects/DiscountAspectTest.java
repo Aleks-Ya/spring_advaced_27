@@ -20,12 +20,6 @@ import java.util.Map;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 13/2/16
- * Time: 7:20 PM
- */
 @ContextConfiguration(classes = AspectConfig.class)
 @TestPropertySource(properties = "tickets.discount.threshold=2")
 public class DiscountAspectTest extends BaseServiceTest {

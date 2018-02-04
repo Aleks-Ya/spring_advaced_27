@@ -13,9 +13,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * @author Aleksey Yablokov
- */
 @ContextConfiguration(classes = UserBatchUploadController.class)
 public class UserBatchUploadControllerTest extends BaseWebTest {
 

@@ -1,15 +1,9 @@
 package booking.domain;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 20/2/16
- * Time: 9:03 PM
- */
 public class Booking {
 
-    private long   id;
-    private User   user;
+    private long id;
+    private User user;
     private Ticket ticket;
 
     public Booking() {
@@ -81,9 +75,9 @@ public class Booking {
     @Override
     public String toString() {
         return "Booking{" +
-               "id=" + id +
-               ", user=" + user +
-               ", ticket=" + ticket +
-               '}';
+                "id=" + id +
+                ", user=" + user +
+                ", ticket=" + ticket +
+                '}';
     }
 }

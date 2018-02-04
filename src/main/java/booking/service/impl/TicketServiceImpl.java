@@ -9,9 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * @author Aleksey Yablokov
- */
 @Service
 @PropertySource({"classpath:strategies/booking.properties"})
 public class TicketServiceImpl implements TicketService {

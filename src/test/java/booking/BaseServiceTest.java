@@ -12,8 +12,6 @@ import org.springframework.test.context.TestPropertySource;
  * <p>
  * After each test all data from the datasource is removed.
  * In the beginning of any test fill the datasource (e.g. using {@link TestObjects}).
- *
- * @author Aleksey Yablokov
  */
 @ContextConfiguration(classes = {RepositoryConfig.class, ServiceConfig.class, TestObjects.class})
 @TestPropertySource(value = "classpath:db-test.properties", properties = "lucky.enabled=false")

@@ -23,9 +23,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-/**
- * @author Aleksey Yablokov
- */
 @ContextConfiguration(classes = {AuditoriumController.class})
 public class AuditoriumControllerTest extends BaseWebTest {
 
@@ -191,6 +188,6 @@ public class AuditoriumControllerTest extends BaseWebTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(ANONYMOUS_HEADER + NAVIGATOR +
                         "<h1>An error occurred</h1>\n" +
-                                "<p>Auditorium is not found by id=1234567</p>"));
+                        "<p>Auditorium is not found by id=1234567</p>"));
     }
 }

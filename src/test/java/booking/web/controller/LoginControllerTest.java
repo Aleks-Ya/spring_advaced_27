@@ -16,9 +16,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-/**
- * @author Aleksey Yablokov
- */
 @ContextConfiguration(classes = {LoginController.class, RootController.class})
 public class LoginControllerTest extends BaseWebSecurityTest {
     public static final String ANONYMOUS_HEADER = "User: Anonymous (<a href='/login'>login</a>)\n";

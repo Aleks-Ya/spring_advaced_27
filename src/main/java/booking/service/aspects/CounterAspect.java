@@ -11,22 +11,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 2/11/2016
- * Time: 10:14 AM
- */
 @Aspect
 @Component
 public class CounterAspect {
 
-    protected static final Map<String, Integer> accessByNameCounter   = new HashMap<>();
+    protected static final Map<String, Integer> accessByNameCounter = new HashMap<>();
     protected static final Map<String, Integer> getPriceByNameCounter = new HashMap<>();
-    protected static final Map<String, Integer> bookByNameCounter     = new HashMap<>();
+    protected static final Map<String, Integer> bookByNameCounter = new HashMap<>();
 
     @Pointcut("(execution(* booking.service.EventService.getEvent(String, ..)) && args(eventName, ..)) || "
-              + "execution(* booking.service.EventService.getByName(String)) && args(eventName))")
+            + "execution(* booking.service.EventService.getByName(String)) && args(eventName))")
     private void accessedByName(String eventName) {
         // This method intended for declaring a @Pointcut
     }
@@ -69,7 +63,7 @@ public class CounterAspect {
     }
 
     private static <K, V> Map<K, V> copyMap(Map<K, V> src) {
-        return src.entrySet().stream().collect(Collectors.toMap(Map.Entry:: getKey, Map.Entry:: getValue));
+        return src.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     private <K> void increaseCounter(Map<K, Integer> stat, K key) {

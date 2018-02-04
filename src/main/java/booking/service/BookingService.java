@@ -9,8 +9,6 @@ import java.util.List;
 
 /**
  * Join tickets and users.
- *
- * @author Aleksey Yablokov
  */
 public interface BookingService {
 

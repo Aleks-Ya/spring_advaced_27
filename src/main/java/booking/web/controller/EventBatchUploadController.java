@@ -22,9 +22,6 @@ import java.util.List;
 
 import static booking.web.controller.EventController.ENDPOINT;
 
-/**
- * @author Aleksey Yablokov
- */
 @Controller
 @SuppressWarnings("unused")
 public class EventBatchUploadController {

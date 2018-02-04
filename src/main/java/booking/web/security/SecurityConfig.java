@@ -13,9 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 
-/**
- * @author Aleksey Yablokov
- */
 @EnableWebSecurity
 @Import(UserDaoUserDetailsService.class)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {

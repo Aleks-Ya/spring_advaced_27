@@ -4,9 +4,6 @@ import booking.domain.Ticket;
 
 import java.util.List;
 
-/**
- * @author Aleksey Yablokov
- */
 public interface TicketService {
 
     Ticket create(Ticket ticket);

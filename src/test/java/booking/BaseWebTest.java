@@ -13,8 +13,6 @@ import org.springframework.web.context.WebApplicationContext;
 
 /**
  * Parent class for unit tests that use repository, service and web layers.
- *
- * @author Aleksey Yablokov
  */
 @WebAppConfiguration
 @ContextConfiguration(classes = {FreeMarkerConfig.class, AdviceErrorHandler.class, MvcConfig.class})

@@ -7,8 +7,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Parent class for unit tests that don't use datasource.
- *
- * @author Aleksey Yablokov
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = BaseTest.Empty.class)

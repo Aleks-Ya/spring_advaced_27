@@ -7,12 +7,6 @@ import java.util.Objects;
 
 import static java.lang.String.format;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 2/2/2016
- * Time: 11:38 AM
- */
 public interface UserDao {
 
     static void validateUser(User user) {

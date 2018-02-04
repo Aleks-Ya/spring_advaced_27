@@ -8,12 +8,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 20/2/16
- * Time: 4:35 PM
- */
 @Repository
 public class UserDaoImpl extends AbstractDao implements UserDao {
 

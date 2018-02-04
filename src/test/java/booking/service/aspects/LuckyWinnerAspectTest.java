@@ -15,12 +15,6 @@ import java.util.Collections;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 13/2/16
- * Time: 7:20 PM
- */
 @ContextConfiguration(classes = AspectConfig.class)
 @TestPropertySource(properties = {"lucky.enabled=true", "lucky.percentage=100"})
 public class LuckyWinnerAspectTest extends BaseServiceTest {

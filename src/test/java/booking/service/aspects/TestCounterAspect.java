@@ -17,12 +17,6 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Dmytro_Babichev
- * Date: 13/2/16
- * Time: 7:20 PM
- */
 @ContextConfiguration(classes = AspectConfig.class)
 public class TestCounterAspect extends BaseServiceTest {
 
