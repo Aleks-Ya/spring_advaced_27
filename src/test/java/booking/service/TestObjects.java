@@ -1,13 +1,19 @@
 package booking.service;
 
 import booking.domain.*;
+import booking.web.security.ExtendedUserDetails;
 import booking.web.security.Roles;
 import booking.web.security.UserDaoUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
@@ -48,6 +54,19 @@ public class TestObjects {
                 format("john_%d@gmail.com", userConuter),
                 "John Smith " + userConuter,
                 LocalDate.of(1980, 3, 20), "jpass", Roles.REGISTERED_USER));
+    }
+
+    /**
+     * Create a new user and put him to SecurityContext, so {@link UserService#getCurrentUser()} returns him.
+     */
+    public User createCurrentUser() {
+        User user = createJohn();
+        List<SimpleGrantedAuthority> authorities = UserDaoUserDetailsService.rolesStrToAuthorities(user.getRoles());
+        ExtendedUserDetails userDetails = new ExtendedUserDetails(user.getEmail(), user.getPassword(),
+                authorities, user.getEmail(), user.getName());
+        Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, authorities);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return user;
     }
 
     /**

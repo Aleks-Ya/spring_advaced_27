@@ -41,6 +41,11 @@ public class UserDaoUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found by email: " + email);
         }
         String rolesStr = user.getRoles();
+        List<SimpleGrantedAuthority> authorities = rolesStrToAuthorities(rolesStr);
+        return new ExtendedUserDetails(email, user.getPassword(), authorities, email, user.getName());
+    }
+
+    public static List<SimpleGrantedAuthority> rolesStrToAuthorities(String rolesStr) {
         List<SimpleGrantedAuthority> authorities = Collections.emptyList();
         if (rolesStr != null) {
             authorities = Stream.of(rolesStr.split(ROLES_DELIMITER))
@@ -48,6 +53,6 @@ public class UserDaoUserDetailsService implements UserDetailsService {
                     .map(SimpleGrantedAuthority::new)
                     .collect(Collectors.toList());
         }
-        return new ExtendedUserDetails(email, user.getPassword(), authorities, email, user.getName());
+        return authorities;
     }
 }

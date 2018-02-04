@@ -5,7 +5,6 @@ import booking.repository.AuditoriumDAO;
 import booking.service.AuditoriumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,7 +15,6 @@ import java.util.List;
  * Time: 11:14 AM
  */
 @Service("auditoriumServiceImpl")
-@Transactional
 public class AuditoriumServiceImpl implements AuditoriumService {
 
     private final AuditoriumDAO auditoriumDAO;

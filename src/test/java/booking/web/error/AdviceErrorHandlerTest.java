@@ -6,6 +6,8 @@ import org.junit.Test;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 
+import static booking.web.controller.LoginControllerTest.ANONYMOUS_HEADER;
+import static booking.web.controller.RootControllerTest.NAVIGATOR;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -22,7 +24,8 @@ public class AdviceErrorHandlerTest extends BaseWebTest {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
         )
                 .andExpect(status().isOk())
-                .andExpect(content().string("<h1>An error occurred</h1>\n" +
+                .andExpect(content().string(ANONYMOUS_HEADER + NAVIGATOR +
+                        "<h1>An error occurred</h1>\n" +
                         "<p>User's email is [null]: [User {email='null', name='John', birthday='2000-07-03'}]</p>"));
     }
 

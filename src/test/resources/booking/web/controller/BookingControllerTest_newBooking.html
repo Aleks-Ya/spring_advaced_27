@@ -1,0 +1,23 @@
+<p>%s (%s, REGISTERED_USER, <a href='/logout'>logout</a>)</p>
+<p><a href='/'>To home page</a></p>
+<h1>New booking</h1>
+
+<form action="/booking" method="post">
+    <p>
+        <label>
+            Event:
+            <select name="eventId">
+            </select>
+        </label>
+    </p>
+    <p>
+        <label>
+            Seats (e.g. "10,11,15"): <input name="seats" type="text"/>
+        </label>
+    </p>
+    <p>
+        <input type="submit" value="Book"/>
+    </p>
+    <input name="userId" value="%d" type="hidden"/>
+</form>
+

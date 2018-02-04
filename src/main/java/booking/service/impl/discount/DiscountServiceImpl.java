@@ -7,7 +7,6 @@ import booking.service.DiscountStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +18,6 @@ import java.util.List;
  * Time: 11:23 AM
  */
 @Service
-@Transactional
 public class DiscountServiceImpl implements DiscountService {
 
     private static final double MAX_DISCOUNT = 0.8;

@@ -10,7 +10,7 @@ public class ExtendedUserDetails extends User {
     private final String name;
     private final String email;
 
-    ExtendedUserDetails(String username,
+    public ExtendedUserDetails(String username,
                         String password,
                         Collection<? extends GrantedAuthority> authorities,
                         String email,

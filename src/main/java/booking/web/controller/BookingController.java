@@ -27,11 +27,13 @@ public class BookingController {
     public static final String ROOT_ENDPOINT = "/booking";
     public static final String TICKETS_ENDPOINT = ROOT_ENDPOINT + "/tickets";
     public static final String PRICE_ENDPOINT = ROOT_ENDPOINT + "/price";
+    public static final String NEW_BOOKING_ENDPOINT = ROOT_ENDPOINT + "/new_booking";
 
     private static final String TICKETS_ATTR = "tickets";
     private static final String BOOKINGS_ATTR = "bookings";
     private static final String TICKET_ATTR = "ticket";
     private static final String EVENT_ATTR = "event";
+    private static final String EVENTS_ATTR = "events";
     private static final String TICKET_PRICE_ATTR = "price";
 
     private static final String BOOKINGS_FTL = "booking/bookings";
@@ -39,6 +41,7 @@ public class BookingController {
     private static final String TICKET_PRICE_FTL = "booking/ticket_price";
     private static final String TICKET_FOR_EVENT_FTL = "booking/ticket_for_event";
     private static final String BOOKED_TICKET_FTL = "booking/booked_ticket";
+    private static final String NEW_BOOKING_FTL = "booking/new_booking";
 
     private final BookingService bookingService;
     private final UserService userService;
@@ -92,15 +95,16 @@ public class BookingController {
     @ResponseStatus(HttpStatus.CREATED)
     String bookTicket(@RequestParam Long userId,
                       @RequestParam Long eventId,
-                      @RequestParam String localDateTime,
+                      @RequestParam(required = false) String localDateTime,
                       @RequestParam String seats,
-                      @RequestParam Double price,
+                      @RequestParam(required = false) Double price,
                       @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         User user = userService.getById(userId);
         Event event = eventService.getById(eventId);
         List<Integer> seatsList = Stream.of(seats.split(",")).map(Integer::valueOf).collect(Collectors.toList());
-        LocalDateTime date = LocalDateTime.parse(localDateTime);
-        Ticket ticket = new Ticket(event, date, seatsList, price);
+        LocalDateTime date = localDateTime != null ? LocalDateTime.parse(localDateTime) : event.getDateTime();
+        Double priceValue = price != null ? price : event.getBasePrice();
+        Ticket ticket = new Ticket(event, date, seatsList, priceValue);
 
         Ticket bookedTicket = bookingService.create(user.getId(), ticket).getTicket();
 
@@ -113,5 +117,12 @@ public class BookingController {
         Ticket ticket = ticketService.getTicketById(ticketId);
         model.addAttribute(TICKET_ATTR, ticket);
         return TICKET_FTL;
+    }
+
+    @RequestMapping(path = NEW_BOOKING_ENDPOINT, method = RequestMethod.GET)
+    String bookNewTicket(@ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
+        List<Event> events = eventService.getAll();
+        model.addAttribute(EVENTS_ATTR, events);
+        return NEW_BOOKING_FTL;
     }
 }

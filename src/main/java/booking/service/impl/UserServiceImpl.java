@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,8 +17,7 @@ import java.util.List;
  * Date: 2/1/2016
  * Time: 7:30 PM
  */
-@Service("userServiceImpl")
-@Transactional
+@Service
 public class UserServiceImpl implements UserService {
 
     private final UserDAO userDAO;
