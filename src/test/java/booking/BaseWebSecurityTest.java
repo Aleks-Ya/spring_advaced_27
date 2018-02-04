@@ -45,7 +45,7 @@ public abstract class BaseWebSecurityTest extends BaseWebTest {
     protected MockHttpSession authenticateSession(User user) throws Exception {
         MockHttpSession session = new MockHttpSession();
 
-        mvc.perform(post(LoginController.LOGIN_ENDPOINT).session(session)
+        mvc.perform(post(LoginController.ENDPOINT).session(session)
                 .param("username", user.getEmail())
                 .param("password", user.getPassword())
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -60,7 +60,7 @@ public abstract class BaseWebSecurityTest extends BaseWebTest {
                     .andExpect(status().is3xxRedirection())
                     .andReturn();
             String redirectedUrl = mvcResult.getResponse().getRedirectedUrl();
-            assertThat(redirectedUrl, endsWith(LoginController.LOGIN_ENDPOINT));
+            assertThat(redirectedUrl, endsWith(LoginController.ENDPOINT));
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }

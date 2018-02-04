@@ -15,14 +15,14 @@ import java.util.Map;
 @Controller
 @SuppressWarnings("unused")
 public class LoginController {
-    public static final String LOGIN_ENDPOINT = "/login";
+    public static final String ENDPOINT = "/login";
     public static final String ACCESS_DENIED_ENDPOINT = "/access_denied";
     private static final String LOGIN_FTL = "login/login";
     private static final String ACCESS_DENIED_FTL = "login/access_denied";
     private static final String ERROR_ATTR = "error";
     private static final String LOGOUT_ATTR = "logout";
 
-    @RequestMapping(value = LOGIN_ENDPOINT, method = RequestMethod.GET)
+    @RequestMapping(value = ENDPOINT, method = RequestMethod.GET)
     String getLoginPage(
             @RequestParam Map<String, String> params,
             @ModelAttribute("model") ModelMap model

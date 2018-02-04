@@ -26,10 +26,10 @@ import static booking.web.controller.EventController.ENDPOINT;
  * @author Aleksey Yablokov
  */
 @Controller
-@RequestMapping(ENDPOINT)
 @SuppressWarnings("unused")
 public class EventBatchUploadController {
     static final String PART_NAME = "events";
+    static final String BATCH_UPLOAD_ENDPOINT = ENDPOINT + "/batchUpload";
 
     private final EventService eventService;
     private final AuditoriumService auditoriumService;
@@ -40,7 +40,7 @@ public class EventBatchUploadController {
         this.auditoriumService = auditoriumService;
     }
 
-    @RequestMapping(path = "/batchUpload", method = RequestMethod.POST)
+    @RequestMapping(path = BATCH_UPLOAD_ENDPOINT, method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void batchUpload(@RequestParam(value = PART_NAME) List<MultipartFile> events) throws IOException {
         for (MultipartFile userFile : events) {

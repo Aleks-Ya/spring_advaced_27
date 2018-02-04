@@ -15,7 +15,7 @@ import java.util.Map;
 @Controller
 @SuppressWarnings("unused")
 class BookingPdfController {
-    static final String ENDPOINT = BookingController.ENDPOINT + "/bookedTickets";
+    static final String ENDPOINT = BookingController.ROOT_ENDPOINT + "/bookedTickets";
     static final String TICKETS_KEY = "tickets";
 
     private final BookingService bookingService;

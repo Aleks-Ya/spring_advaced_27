@@ -17,19 +17,21 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-import static booking.web.controller.UserController.ENDPOINT;
-
 /**
  * @author Aleksey Yablokov
  */
 @Controller
 @SuppressWarnings("unused")
-@RequestMapping(ENDPOINT)
 public class UserController {
-    public static final String ENDPOINT = "/user";
+    public static final String ROOT_ENDPOINT = "/user";
+    public static final String REGISTER_ENDPOINT = ROOT_ENDPOINT + "/register";
+    public static final String BATCH_UPLOAD_ENDPOINT = ROOT_ENDPOINT + "/batchUpload";
+
     static final String PART_NAME = "users";
+
     static final String USER_ATTR = "user";
     private static final String USERS_ATTR = "users";
+
     private static final String USER_FTL = "user/user";
     private static final String USERS_FTL = "user/users";
     private static final String USER_REGISTERED_FTL = "user/user_registered";
@@ -44,7 +46,7 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @RequestMapping(path = "/register", method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
+    @RequestMapping(path = REGISTER_ENDPOINT, method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
     @ResponseStatus(HttpStatus.CREATED)
     String register(@RequestBody MultiValueMap<String, String> formParams, @ModelAttribute("model") ModelMap model) {
         String name = formParams.getFirst("name");
@@ -68,21 +70,22 @@ public class UserController {
         return encodedPassword;
     }
 
-    @RequestMapping(value = "/id/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = ROOT_ENDPOINT + "/id/{userId}", method = RequestMethod.GET)
     String getById(@PathVariable Long userId, @ModelAttribute("model") ModelMap model) {
         User user = userService.getById(userId);
         model.addAttribute(USER_ATTR, user);
         return USER_FTL;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(path = ROOT_ENDPOINT, method = RequestMethod.GET)
     String getAll(@ModelAttribute("model") ModelMap model) {
         List<User> users = userService.getAll();
         model.addAttribute(USERS_ATTR, users);
         return USERS_FTL;
     }
 
-    @RequestMapping(path = "/batchUpload", method = RequestMethod.POST)
+    //TODO extract batch upload to separated controller
+    @RequestMapping(path = BATCH_UPLOAD_ENDPOINT, method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void batchUpload(@RequestParam(value = PART_NAME) List<MultipartFile> users) throws IOException {
         for (MultipartFile userFile : users) {

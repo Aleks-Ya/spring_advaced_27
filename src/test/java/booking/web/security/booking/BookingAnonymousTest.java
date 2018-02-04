@@ -18,27 +18,27 @@ public class BookingAnonymousTest extends BaseWebSecurityTest {
 
     @Test
     public void getBookedTickets() {
-        assertRedirectToLoginPage(get(BookingController.ENDPOINT));
+        assertRedirectToLoginPage(get(BookingController.ROOT_ENDPOINT));
     }
 
     @Test
     public void getTicketById() {
-        assertRedirectToLoginPage(get(BookingController.ENDPOINT + "/id/1"));
+        assertRedirectToLoginPage(get(BookingController.ROOT_ENDPOINT + "/id/1"));
     }
 
     @Test
     public void bookTicket() {
-        assertRedirectToLoginPage(post(BookingController.ENDPOINT));
+        assertRedirectToLoginPage(post(BookingController.ROOT_ENDPOINT));
     }
 
     @Test
     public void getTicketPrice() {
-        assertRedirectToLoginPage(get(BookingController.ENDPOINT + "/price"));
+        assertRedirectToLoginPage(get(BookingController.PRICE_ENDPOINT));
     }
 
     @Test
     public void getTicketsForEvent() {
-        assertRedirectToLoginPage(get(BookingController.ENDPOINT + "/tickets"));
+        assertRedirectToLoginPage(get(BookingController.TICKETS_ENDPOINT));
     }
 
 }

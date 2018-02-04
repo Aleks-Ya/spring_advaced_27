@@ -35,7 +35,7 @@ public class UserControllerTest extends BaseWebTest {
         String rawPassword = "pass";
 
         MockHttpSession session = new MockHttpSession();
-        mvc.perform(post(UserController.ENDPOINT + "/register").session(session)
+        mvc.perform(post(UserController.REGISTER_ENDPOINT).session(session)
                 .param("name", expName)
                 .param("email", expEmail)
                 .param("birthday", expBirthday.toString())
@@ -60,7 +60,7 @@ public class UserControllerTest extends BaseWebTest {
     public void getById() throws Exception {
         User user = testObjects.createJohn();
 
-        mvc.perform(get(UserController.ENDPOINT + "/id/" + user.getId()))
+        mvc.perform(get(UserController.ROOT_ENDPOINT + "/id/" + user.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(String.format(
                         LoginControllerTest.ANONYMOUS_HEADER +
@@ -79,7 +79,7 @@ public class UserControllerTest extends BaseWebTest {
 
     @Test
     public void getByIdNotFound() throws Exception {
-        mvc.perform(get(UserController.ENDPOINT + "/id/333"))
+        mvc.perform(get(UserController.ROOT_ENDPOINT + "/id/333"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(LoginControllerTest.ANONYMOUS_HEADER +
                         "<h1>User</h1>\n" +
@@ -115,7 +115,7 @@ public class UserControllerTest extends BaseWebTest {
                 "filename2.json", MediaType.APPLICATION_JSON_VALUE, fileContent2.getBytes());
 
         MockMultipartHttpServletRequestBuilder multipartBuilder = MockMvcRequestBuilders
-                .fileUpload(UserController.ENDPOINT + "/batchUpload")
+                .fileUpload(UserController.BATCH_UPLOAD_ENDPOINT)
                 .file(multipartFile1)
                 .file(multipartFile2);
 

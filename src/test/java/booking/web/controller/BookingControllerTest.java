@@ -29,7 +29,7 @@ public class BookingControllerTest extends BaseWebTest {
         Ticket ticket2 = booking2.getTicket();
         User user2 = booking2.getUser();
 
-        mvc.perform(get(BookingController.ENDPOINT))
+        mvc.perform(get(BookingController.ROOT_ENDPOINT))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
                                 RootControllerTest.NAVIGATOR +
@@ -60,7 +60,7 @@ public class BookingControllerTest extends BaseWebTest {
     @Test
     public void getTicketById() throws Exception {
         Ticket bookedTicket = testObjects.bookTicketToParty().getTicket();
-        mvc.perform(get(BookingController.ENDPOINT + "/id/" + bookedTicket.getId())
+        mvc.perform(get(BookingController.ROOT_ENDPOINT + "/id/" + bookedTicket.getId())
         )
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
@@ -78,7 +78,7 @@ public class BookingControllerTest extends BaseWebTest {
         User user = testObjects.createJohn();
         Event event = testObjects.createParty();
 
-        mvc.perform(post(BookingController.ENDPOINT)
+        mvc.perform(post(BookingController.ROOT_ENDPOINT)
                 .param("userId", String.valueOf(user.getId()))
                 .param("eventId", String.valueOf(event.getId()))
                 .param("localDateTime", "2007-12-03T10:15:30")
@@ -102,7 +102,7 @@ public class BookingControllerTest extends BaseWebTest {
         User user = testObjects.createJohn();
         Event event = testObjects.createParty();
 
-        mvc.perform(get(BookingController.ENDPOINT + "/price")
+        mvc.perform(get(BookingController.PRICE_ENDPOINT)
                 .param("eventName", event.getName())
                 .param("auditoriumName", event.getAuditorium().getName())
                 .param("userId", String.valueOf(user.getId()))
@@ -121,7 +121,7 @@ public class BookingControllerTest extends BaseWebTest {
         Booking booking = testObjects.bookTicketToParty();
         Ticket ticket = booking.getTicket();
         Event event = booking.getTicket().getEvent();
-        mvc.perform(get(BookingController.ENDPOINT + "/tickets")
+        mvc.perform(get(BookingController.TICKETS_ENDPOINT)
                 .param("eventId", String.valueOf(event.getId()))
         )
                 .andExpect(status().isOk())

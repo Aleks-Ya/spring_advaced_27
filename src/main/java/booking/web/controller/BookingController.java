@@ -23,14 +23,17 @@ import java.util.stream.Stream;
  */
 @Controller
 @SuppressWarnings("unused")
-@RequestMapping(BookingController.ENDPOINT)
 public class BookingController {
-    public static final String ENDPOINT = "/booking";
+    public static final String ROOT_ENDPOINT = "/booking";
+    public static final String TICKETS_ENDPOINT = ROOT_ENDPOINT + "/tickets";
+    public static final String PRICE_ENDPOINT = ROOT_ENDPOINT + "/price";
+
     private static final String TICKETS_ATTR = "tickets";
     private static final String BOOKINGS_ATTR = "bookings";
     private static final String TICKET_ATTR = "ticket";
     private static final String EVENT_ATTR = "event";
     private static final String TICKET_PRICE_ATTR = "price";
+
     private static final String BOOKINGS_FTL = "booking/bookings";
     private static final String TICKET_FTL = "booking/ticket";
     private static final String TICKET_PRICE_FTL = "booking/ticket_price";
@@ -57,7 +60,7 @@ public class BookingController {
         return BOOKINGS_FTL;
     }
 
-    @RequestMapping(path = "/price", method = RequestMethod.GET)
+    @RequestMapping(path = PRICE_ENDPOINT, method = RequestMethod.GET)
     String getTicketPrice(
             @RequestParam String eventName,
             @RequestParam String auditoriumName,
@@ -73,7 +76,7 @@ public class BookingController {
         return TICKET_PRICE_FTL;
     }
 
-    @RequestMapping(path = "/tickets", method = RequestMethod.GET)
+    @RequestMapping(path = TICKETS_ENDPOINT, method = RequestMethod.GET)
     String getTicketsForEvent(
             @RequestParam String eventId,
             @ModelAttribute("model") ModelMap model) {
@@ -105,7 +108,7 @@ public class BookingController {
         return BOOKED_TICKET_FTL;
     }
 
-    @RequestMapping(path = "/id/{ticketId}", method = RequestMethod.GET)
+    @RequestMapping(path = ROOT_ENDPOINT + "/id/{ticketId}", method = RequestMethod.GET)
     String getTicketById(@PathVariable Long ticketId, @ModelAttribute("model") ModelMap model) {
         Ticket ticket = ticketService.getTicketById(ticketId);
         model.addAttribute(TICKET_ATTR, ticket);

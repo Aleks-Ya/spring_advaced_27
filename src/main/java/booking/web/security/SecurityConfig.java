@@ -1,6 +1,7 @@
 package booking.web.security;
 
 import booking.web.controller.BookingController;
+import booking.web.controller.UserController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
@@ -30,8 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers(BookingController.ENDPOINT + "/tickets").hasRole(Roles.BOOKING_MANAGER)
-                .antMatchers("/user/register").permitAll()
+                .antMatchers(BookingController.TICKETS_ENDPOINT).hasRole(Roles.BOOKING_MANAGER)
+                .antMatchers(UserController.REGISTER_ENDPOINT).permitAll()
                 .anyRequest().authenticated()
                 .and()
 

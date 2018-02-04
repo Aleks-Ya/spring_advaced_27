@@ -14,18 +14,17 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static booking.web.controller.EventController.ENDPOINT;
-
 /**
  * @author Aleksey Yablokov
  */
 @Controller
-@RequestMapping(ENDPOINT)
 @SuppressWarnings("unused")
 public class EventController {
     static final String ENDPOINT = "/event";
+
     private static final String EVENT_ATTR = "event";
     private static final String EVENTS_ATTR = "events";
+
     private static final String EVENT_CREATED_FTL = "event/event_created";
     private static final String EVENT_FTL = "event/event";
     private static final String EVENT_LIST_FTL = "event/event_list";
@@ -39,7 +38,7 @@ public class EventController {
         this.auditoriumService = auditoriumService;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(path = ENDPOINT, method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     String create(@RequestParam String name,
                   @RequestParam String rate,
@@ -54,21 +53,21 @@ public class EventController {
         return EVENT_CREATED_FTL;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(path = ENDPOINT, method = RequestMethod.GET)
     String getAll(@ModelAttribute("model") ModelMap model) {
         List<Event> events = eventService.getAll();
         model.addAttribute(EVENTS_ATTR, events);
         return EVENT_LIST_FTL;
     }
 
-    @RequestMapping(path = "/id/{eventId}", method = RequestMethod.GET)
+    @RequestMapping(path = ENDPOINT + "/id/{eventId}", method = RequestMethod.GET)
     String getById(@PathVariable Long eventId, @ModelAttribute("model") ModelMap model) {
         Event event = eventService.getById(eventId);
         model.addAttribute(EVENT_ATTR, event);
         return EVENT_FTL;
     }
 
-    @RequestMapping(path = "/name/{eventName}", method = RequestMethod.GET)
+    @RequestMapping(path = ENDPOINT + "/name/{eventName}", method = RequestMethod.GET)
     String getByName(@PathVariable String eventName, @ModelAttribute("model") ModelMap model) {
         List<Event> events = eventService.getByName(eventName);
         model.addAttribute(EVENTS_ATTR, events);

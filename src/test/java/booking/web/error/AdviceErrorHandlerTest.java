@@ -15,7 +15,7 @@ public class AdviceErrorHandlerTest extends BaseWebTest {
 
     @Test
     public void register() throws Exception {
-        mvc.perform(post(UserController.ENDPOINT + "/register")//TODO put /user/register to constant
+        mvc.perform(post(UserController.REGISTER_ENDPOINT)
                 .param("name", "John")
                 .param("birthday", "2000-07-03")
                 .param("password", "pass")

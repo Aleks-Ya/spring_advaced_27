@@ -32,7 +32,7 @@ public class BookingRegisteredUserTest extends BaseWebSecurityTest {
     public void getBookedTickets() throws Exception {
         User user = testObjects.createJohn();
         MockHttpSession session = authenticateSession(user);
-        mvc.perform(get(BookingController.ENDPOINT).session(session))
+        mvc.perform(get(BookingController.ROOT_ENDPOINT).session(session))
                 .andExpect(status().isOk());
     }
 
@@ -41,7 +41,7 @@ public class BookingRegisteredUserTest extends BaseWebSecurityTest {
         User user = testObjects.createJohn();
         MockHttpSession session = authenticateSession(user);
         Ticket ticket = testObjects.createTicketToParty();
-        mvc.perform(get(BookingController.ENDPOINT + "/id/" + ticket.getId()).session(session))
+        mvc.perform(get(BookingController.ROOT_ENDPOINT + "/id/" + ticket.getId()).session(session))
                 .andExpect(status().isOk());
     }
 
@@ -50,7 +50,7 @@ public class BookingRegisteredUserTest extends BaseWebSecurityTest {
         User user = testObjects.createJohn();
         MockHttpSession session = authenticateSession(user);
         Event event = testObjects.createParty();
-        mvc.perform(post(BookingController.ENDPOINT).session(session)
+        mvc.perform(post(BookingController.ROOT_ENDPOINT).session(session)
                 .param("userId", String.valueOf(user.getId()))
                 .param("eventId", String.valueOf(event.getId()))
                 .param("localDateTime", "2007-12-03T10:15:30")
@@ -71,7 +71,7 @@ public class BookingRegisteredUserTest extends BaseWebSecurityTest {
         Auditorium auditorium = event.getAuditorium();
         LocalDateTime date = event.getDateTime();
 
-        mvc.perform(get(BookingController.ENDPOINT + "/price").session(session)
+        mvc.perform(get(BookingController.PRICE_ENDPOINT).session(session)
                 .param("eventName", event.getName())
                 .param("auditoriumName", auditorium.getName())
                 .param("userId", String.valueOf(user.getId()))
@@ -93,7 +93,7 @@ public class BookingRegisteredUserTest extends BaseWebSecurityTest {
         Booking booking = testObjects.bookTicketToParty();
         Event event = booking.getTicket().getEvent();
 
-        MvcResult mvcResult = mvc.perform(get(BookingController.ENDPOINT + "/tickets")
+        MvcResult mvcResult = mvc.perform(get(BookingController.TICKETS_ENDPOINT)
                 .session(session)
                 .param("eventId", String.valueOf(event.getId())))
                 .andExpect(status().isForbidden())

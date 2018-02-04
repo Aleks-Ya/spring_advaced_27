@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(value = DiscountController.ENDPOINT)
 public class DiscountController {
     static final String ENDPOINT = "/discount";
-    static final String DISCOUNT_KEY = "discount";
+    private static final String DISCOUNT_KEY = "discount";
     private static final String DISCOUNT_FTL = "discount/discount";
 
     private final DiscountService discountService;

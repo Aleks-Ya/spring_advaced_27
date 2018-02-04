@@ -34,7 +34,7 @@ public class UserAnonymousTest extends BaseWebSecurityTest {
         String rawPassword = "pass";
 
         MockHttpSession session = new MockHttpSession();
-        mvc.perform(post(UserController.ENDPOINT + "/register").session(session)
+        mvc.perform(post(UserController.REGISTER_ENDPOINT).session(session)
                 .param("name", expName)
                 .param("email", expEmail)
                 .param("birthday", expBirthday.toString())
@@ -64,13 +64,13 @@ public class UserAnonymousTest extends BaseWebSecurityTest {
 
     @Test
     public void getById() {
-        assertRedirectToLoginPage(get(UserController.ENDPOINT + "/id/1"));
+        assertRedirectToLoginPage(get(UserController.ROOT_ENDPOINT + "/id/1"));
     }
 
 
     @Test
     public void batchUpload() {
-        assertRedirectToLoginPage(fileUpload(UserController.ENDPOINT + "/batchUpload"));
+        assertRedirectToLoginPage(fileUpload(UserController.BATCH_UPLOAD_ENDPOINT));
     }
 
 }
