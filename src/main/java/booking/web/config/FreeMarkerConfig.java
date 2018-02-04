@@ -1,5 +1,6 @@
 package booking.web.config;
 
+import booking.web.freemarker.CurrentUserAccountMethod;
 import booking.web.freemarker.CurrentUserMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -12,14 +13,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@Import(CurrentUserMethod.class)
+@Import({CurrentUserMethod.class, CurrentUserAccountMethod.class})
 public class FreeMarkerConfig {
 
     private final CurrentUserMethod currentUserMethod;
+    private final CurrentUserAccountMethod currentUserAccountMethod;
 
     @Autowired
-    public FreeMarkerConfig(CurrentUserMethod currentUserMethod) {
+    public FreeMarkerConfig(CurrentUserMethod currentUserMethod, CurrentUserAccountMethod currentUserAccountMethod) {
         this.currentUserMethod = currentUserMethod;
+        this.currentUserAccountMethod = currentUserAccountMethod;
     }
 
     @Bean
@@ -35,6 +38,7 @@ public class FreeMarkerConfig {
     public FreeMarkerConfigurer freemarkerConfig() {
         Map<String, Object> sharedVariables = new HashMap<>();
         sharedVariables.put("currentUser", currentUserMethod);
+        sharedVariables.put("currentAccount", currentUserAccountMethod);
 
         FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
         freeMarkerConfigurer.setTemplateLoaderPath("WEB-INF/views/ftl/");
