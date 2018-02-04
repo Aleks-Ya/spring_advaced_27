@@ -14,7 +14,7 @@ import java.util.List;
  * Date: 2/3/2016
  * Time: 11:14 AM
  */
-@Service("auditoriumServiceImpl")
+@Service
 public class AuditoriumServiceImpl implements AuditoriumService {
 
     private final AuditoriumDAO auditoriumDAO;

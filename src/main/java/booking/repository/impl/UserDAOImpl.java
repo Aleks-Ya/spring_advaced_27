@@ -14,7 +14,7 @@ import java.util.Objects;
  * Date: 20/2/16
  * Time: 4:35 PM
  */
-@Repository(value = "userDAO")
+@Repository
 public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
     @Override
