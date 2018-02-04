@@ -9,10 +9,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE;
 
 @Controller
 @SuppressWarnings("unused")
@@ -37,9 +44,10 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @RequestMapping(path = REGISTER_ENDPOINT, method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
+    @RequestMapping(path = REGISTER_ENDPOINT, method = RequestMethod.POST, consumes = APPLICATION_FORM_URLENCODED_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    String register(@RequestBody MultiValueMap<String, String> formParams, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
+    String register(@RequestBody MultiValueMap<String, String> formParams,
+                    @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         String name = formParams.getFirst("name");
         String email = formParams.getFirst("email");
         String birthday = formParams.getFirst("birthday");

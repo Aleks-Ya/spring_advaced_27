@@ -6,4 +6,5 @@
     <li><a href="user">Users</a></li>
     <li><a href="booking">Booked tickets</a></li>
     <li><a href="booking/new_booking">New booking</a></li>
+    <li><a href="account">Refill account</a></li>
 </ul>

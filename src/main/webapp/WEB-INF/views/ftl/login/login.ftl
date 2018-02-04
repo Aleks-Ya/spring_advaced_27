@@ -31,7 +31,7 @@
         </fieldset>
     </form>
 </div>
-<div><#--TODO get /user/register from UserController.REGISTER_ENDPOINT -->
+<div><#--TODO get /user/register from UserController.REGISTER_ENDPOINT, MediaType.APPLICATION_FORM_URLENCODED_VALUE -->
     <form action="/user/register" method="post" enctype="application/x-www-form-urlencoded">
         <fieldset>
             <legend>Create new user</legend>

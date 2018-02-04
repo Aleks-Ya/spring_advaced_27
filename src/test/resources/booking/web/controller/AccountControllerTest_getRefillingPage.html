@@ -1,0 +1,17 @@
+<p>%s (%s, REGISTERED_USER, <a href='/logout'>logout</a>)</p>
+<p><a href='/'>To home page</a></p>
+<h1>Refill account</h1>
+
+<form action="/account" method="post">
+    <p>User: %s</p>
+    <p>
+        <label>
+            Amount (e.g. "1000.5"): <input name="amount" type="text"/>
+        </label>
+    </p>
+    <p>
+        <input type="submit" value="Refill"/>
+    </p>
+    <input name="userId" value="%d" type="hidden"/>
+</form>
+

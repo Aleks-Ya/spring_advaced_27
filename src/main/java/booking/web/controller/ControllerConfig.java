@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Import;
 
 @Import({RootController.class, LoginController.class, AuditoriumController.class, BookingController.class,
         BookingPdfController.class, DiscountController.class, EventController.class, PdfView.class,
-        UserController.class})
+        UserController.class, AccountController.class})
 public class ControllerConfig {
     /**
      * Used in FreeMarker templates.
