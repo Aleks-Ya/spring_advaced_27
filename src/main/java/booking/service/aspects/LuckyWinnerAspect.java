@@ -47,7 +47,7 @@ public class LuckyWinnerAspect {
     }
 
     @Pointcut(
-            value = "(execution(* booking.service.BookingService.create(long, booking.domain.Ticket)) && args(userId, ticket))",
+            value = "(execution(* booking.service.BookingService.bookTicket(long, booking.domain.Ticket)) && args(userId, ticket))",
             argNames = "userId,ticket"
     )
     private void bookTicket(long userId, Ticket ticket) {

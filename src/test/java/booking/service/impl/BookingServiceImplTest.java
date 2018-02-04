@@ -10,7 +10,9 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
@@ -20,7 +22,7 @@ public class BookingServiceImplTest extends BaseServiceTest {
     public void testBookTicket_NotRegistered() {
         Ticket ticket = testObjects.createTicketToParty();
         long notExistsUserId = 1;
-        Booking expBooking = bookingService.create(notExistsUserId, ticket);
+        Booking expBooking = bookingService.bookTicket(notExistsUserId, ticket);
         assertThat(bookingService.getById(expBooking.getId()), equalTo(expBooking));
     }
 
@@ -28,15 +30,15 @@ public class BookingServiceImplTest extends BaseServiceTest {
     public void testBookTicket_AlreadyBooked() {
         Ticket newTicket = testObjects.createTicketToParty();
         User user = testObjects.createJohn();
-        bookingService.create(user.getId(), newTicket);
-        bookingService.create(user.getId(), newTicket);
+        bookingService.bookTicket(user.getId(), newTicket);
+        bookingService.bookTicket(user.getId(), newTicket);
     }
 
     @Test
     public void getAll() {
         Ticket newTicket = testObjects.createTicketToHackathon();
         User user = testObjects.createJohn();
-        Booking booking = bookingService.create(user.getId(), newTicket);
+        Booking booking = bookingService.bookTicket(user.getId(), newTicket);
 
         assertThat(bookingService.getAll(), containsInAnyOrder(booking));
     }
@@ -47,8 +49,8 @@ public class BookingServiceImplTest extends BaseServiceTest {
         Ticket ticket2 = testObjects.createTicketToHackathon();
         User user = testObjects.createJohn();
         User registeredUser = testObjects.createJohn();
-        bookingService.create(registeredUser.getId(), ticket);
-        bookingService.create(user.getId(), ticket2);
+        bookingService.bookTicket(registeredUser.getId(), ticket);
+        bookingService.bookTicket(user.getId(), ticket2);
         Event event = ticket.getEvent();
         double ticketPrice = bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
                 event.getDateTime(), Arrays.asList(5, 6, 7, 8),
@@ -61,8 +63,8 @@ public class BookingServiceImplTest extends BaseServiceTest {
         Ticket ticket = testObjects.createTicketToParty();
         Ticket ticket2 = testObjects.createTicketToHackathon();
         User user = testObjects.createJohn();
-        bookingService.create(user.getId(), ticket);
-        bookingService.create(user.getId(), ticket2);
+        bookingService.bookTicket(user.getId(), ticket);
+        bookingService.bookTicket(user.getId(), ticket2);
         Event event = ticket.getEvent();
         double ticketPrice = bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(),
                 event.getDateTime(), Arrays.asList(5, 6, 7), user);

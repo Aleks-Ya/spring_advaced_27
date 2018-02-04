@@ -1,6 +1,12 @@
 package booking.service;
 
-import booking.domain.*;
+import booking.domain.Account;
+import booking.domain.Auditorium;
+import booking.domain.Booking;
+import booking.domain.Event;
+import booking.domain.Rate;
+import booking.domain.Ticket;
+import booking.domain.User;
 import booking.web.security.ExtendedUserDetails;
 import booking.web.security.Roles;
 import booking.web.security.UserDaoUserDetailsService;
@@ -121,14 +127,14 @@ public class TestObjects {
         Event event = createParty();
         Ticket ticket = new Ticket(event, event.getDateTime(), asList(100, 101), event.getBasePrice() * 2);
         User user = createJohn();
-        return bookingService.create(user.getId(), ticket);
+        return bookingService.bookTicket(user.getId(), ticket);
     }
 
     public Booking bookTicketToHackathon() {
         Event event = createHackathon();
         Ticket ticket = new Ticket(event, event.getDateTime(), asList(100, 101), event.getBasePrice() * 2);
         User user = createJohn();
-        return bookingService.create(user.getId(), ticket);
+        return bookingService.bookTicket(user.getId(), ticket);
     }
 
     public Account createAccount() {
