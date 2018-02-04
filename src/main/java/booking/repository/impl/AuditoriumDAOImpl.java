@@ -14,7 +14,7 @@ import java.util.Optional;
  * Date: 20/2/16
  * Time: 4:35 PM
  */
-@Repository(value = "auditoriumDAO")
+@Repository
 public class AuditoriumDAOImpl extends AbstractDAO implements AuditoriumDAO {
 
     @Override
