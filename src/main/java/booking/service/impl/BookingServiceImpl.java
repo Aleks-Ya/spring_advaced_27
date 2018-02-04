@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,7 +22,6 @@ import java.util.stream.Collectors;
  */
 @Service
 @PropertySource({"classpath:strategies/booking.properties"})
-@Transactional
 public class BookingServiceImpl implements BookingService {
 
     private final int minSeatNumber;

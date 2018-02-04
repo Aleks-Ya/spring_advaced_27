@@ -4,6 +4,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Date: 20/2/16
  * Time: 6:50 PM
  */
+@Transactional
 abstract class AbstractDAO {
 
     @Autowired

@@ -6,7 +6,6 @@ import booking.repository.EventDAO;
 import booking.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,7 +17,6 @@ import java.util.List;
  * Time: 12:29 PM
  */
 @Service("eventServiceImpl")
-@Transactional
 public class EventServiceImpl implements EventService {
 
     private final EventDAO eventDAO;
