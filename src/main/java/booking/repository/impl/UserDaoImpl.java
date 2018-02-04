@@ -1,7 +1,7 @@
 package booking.repository.impl;
 
 import booking.domain.User;
-import booking.repository.UserDAO;
+import booking.repository.UserDao;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -15,11 +15,11 @@ import java.util.Objects;
  * Time: 4:35 PM
  */
 @Repository
-public class UserDAOImpl extends AbstractDAO implements UserDAO {
+public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
     public User create(User user) {
-        UserDAO.validateUser(user);
+        UserDao.validateUser(user);
         User byEmail = getByEmail(user.getEmail());
         if (Objects.nonNull(byEmail)) {
             throw new IllegalStateException(
@@ -33,7 +33,7 @@ public class UserDAOImpl extends AbstractDAO implements UserDAO {
 
     @Override
     public void delete(User user) {
-        UserDAO.validateUser(user);
+        UserDao.validateUser(user);
         getCurrentSession().delete(user);
     }
 

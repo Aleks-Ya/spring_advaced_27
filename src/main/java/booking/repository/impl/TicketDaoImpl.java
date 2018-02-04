@@ -13,7 +13,7 @@ import java.util.Optional;
  * Date: 20/2/16
  * Time: 9:00 PM
  */
-public class TicketDaoImpl extends AbstractDAO implements TicketDao {
+public class TicketDaoImpl extends AbstractDao implements TicketDao {
 
     @Override
     public Ticket create(Ticket ticket) {

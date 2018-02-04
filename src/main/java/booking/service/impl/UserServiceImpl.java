@@ -1,7 +1,7 @@
 package booking.service.impl;
 
 import booking.domain.User;
-import booking.repository.UserDAO;
+import booking.repository.UserDao;
 import booking.service.UserService;
 import booking.web.security.ExtendedUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,31 +20,31 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserDAO userDAO;
+    private final UserDao userDao;
 
     @Autowired
-    public UserServiceImpl(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public UserServiceImpl(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     public User register(User user) {
-        return userDAO.create(user);
+        return userDao.create(user);
     }
 
     public void delete(User user) {
-        userDAO.delete(user);
+        userDao.delete(user);
     }
 
     public User getById(long id) {
-        return userDAO.get(id);
+        return userDao.get(id);
     }
 
     public User getUserByEmail(String email) {
-        return userDAO.getByEmail(email);
+        return userDao.getByEmail(email);
     }
 
     public List<User> getUsersByName(String name) {
-        return userDAO.getAllByName(name);
+        return userDao.getAllByName(name);
     }
 
     @Override
@@ -59,12 +59,12 @@ public class UserServiceImpl implements UserService {
         }
         ExtendedUserDetails principal = (ExtendedUserDetails) principalObj;
         String email = principal.getEmail();
-        return userDAO.getByEmail(email);
+        return userDao.getByEmail(email);
     }
 
     @Override
     public List<User> getAll() {
-        return userDAO.getAll();
+        return userDao.getAll();
     }
 
 }

@@ -13,7 +13,7 @@ import java.util.Objects;
  * Date: 2/2/2016
  * Time: 12:35 PM
  */
-public interface EventDAO {
+public interface EventDao {
 
     Event create(Event event);
 

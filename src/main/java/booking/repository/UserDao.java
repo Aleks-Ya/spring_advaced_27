@@ -13,7 +13,7 @@ import static java.lang.String.format;
  * Date: 2/2/2016
  * Time: 11:38 AM
  */
-public interface UserDAO {
+public interface UserDao {
 
     static void validateUser(User user) {
         if (Objects.isNull(user)) {

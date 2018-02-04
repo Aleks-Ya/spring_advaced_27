@@ -1,7 +1,7 @@
 package booking.service.impl;
 
 import booking.domain.Auditorium;
-import booking.repository.AuditoriumDAO;
+import booking.repository.AuditoriumDao;
 import booking.service.AuditoriumService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,45 +17,45 @@ import java.util.List;
 @Service
 public class AuditoriumServiceImpl implements AuditoriumService {
 
-    private final AuditoriumDAO auditoriumDAO;
+    private final AuditoriumDao auditoriumDao;
 
     @Autowired
-    public AuditoriumServiceImpl(AuditoriumDAO auditoriumDAO) {
-        this.auditoriumDAO = auditoriumDAO;
+    public AuditoriumServiceImpl(AuditoriumDao auditoriumDao) {
+        this.auditoriumDao = auditoriumDao;
     }
 
     @Override
     public List<Auditorium> getAll() {
-        return auditoriumDAO.getAll();
+        return auditoriumDao.getAll();
     }
 
     @Override
     public Auditorium getByName(String auditoriumName) {
-        return auditoriumDAO.getByName(auditoriumName);
+        return auditoriumDao.getByName(auditoriumName);
     }
 
     @Override
     public Auditorium getById(Long auditoriumId) {
-        return auditoriumDAO.getById(auditoriumId).orElse(null);
+        return auditoriumDao.getById(auditoriumId).orElse(null);
     }
 
     @Override
     public int getSeatsNumber(String auditoriumName) {
-        return auditoriumDAO.getByName(auditoriumName).getSeatsNumber();
+        return auditoriumDao.getByName(auditoriumName).getSeatsNumber();
     }
 
     @Override
     public List<Integer> getVipSeats(String auditoriumName) {
-        return auditoriumDAO.getByName(auditoriumName).getVipSeatsList();
+        return auditoriumDao.getByName(auditoriumName).getVipSeatsList();
     }
 
     @Override
     public Auditorium create(Auditorium auditorium) {
-        return auditoriumDAO.add(auditorium);
+        return auditoriumDao.add(auditorium);
     }
 
     @Override
     public void delete(Long auditoriumId) {
-        auditoriumDAO.delete(auditoriumId);
+        auditoriumDao.delete(auditoriumId);
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Time: 6:50 PM
  */
 @Transactional
-abstract class AbstractDAO {
+abstract class AbstractDao {
 
     @Autowired
     private SessionFactory sessionFactory;

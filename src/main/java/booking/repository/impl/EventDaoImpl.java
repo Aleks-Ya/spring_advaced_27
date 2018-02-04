@@ -2,7 +2,7 @@ package booking.repository.impl;
 
 import booking.domain.Auditorium;
 import booking.domain.Event;
-import booking.repository.EventDAO;
+import booking.repository.EventDao;
 import org.hibernate.Query;
 import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Restrictions;
@@ -20,14 +20,14 @@ import java.util.List;
  * Time: 7:07 PM
  */
 @Repository
-public class EventDAOImpl extends AbstractDAO implements EventDAO {
-    private static final Logger LOG = LoggerFactory.getLogger(EventDAOImpl.class);
+public class EventDaoImpl extends AbstractDao implements EventDao {
+    private static final Logger LOG = LoggerFactory.getLogger(EventDaoImpl.class);
     private static final String DATE_TIME_PROPERTY = "dateTime";
 
     @Override
     public Event create(Event event) {
         LOG.info("Creating " + event);
-        EventDAO.validateEvent(event);
+        EventDao.validateEvent(event);
         List<Event> byAuditoriumAndDate = getByAuditoriumAndDate(event.getAuditorium(), event.getDateTime());
         if (!byAuditoriumAndDate.isEmpty()) {
             throw new IllegalStateException(String.format(
