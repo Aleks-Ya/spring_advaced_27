@@ -36,6 +36,9 @@ public abstract class BaseServiceTest extends BaseTest {
     @Autowired
     protected EventService eventService;
 
+    @Autowired
+    protected AccountService accountService;
+
     @After
     public void clean() {
         testObjects.cleanup();

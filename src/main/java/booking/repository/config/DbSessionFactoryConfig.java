@@ -58,8 +58,8 @@ public class DbSessionFactoryConfig {
         localSessionFactoryBean.setDataSource(dataSource);
         localSessionFactoryBean.setHibernateProperties(properties);
         localSessionFactoryBean.setMappingResources("/mappings/auditorium.hbm.xml", "/mappings/event.hbm.xml",
-                "/mappings/ticket.hbm.xml", "/mappings/user.hbm.xml",
-                "/mappings/booking.hbm.xml");
+                "/mappings/ticket.hbm.xml", "/mappings/user.hbm.xml", "/mappings/booking.hbm.xml",
+                "/mappings/account.hbm.xml");
         return localSessionFactoryBean;
     }
 

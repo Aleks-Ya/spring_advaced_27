@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -37,6 +38,8 @@ public class TestObjects {
     private TicketService ticketService;
     @Autowired
     private BookingService bookingService;
+    @Autowired
+    private AccountService accountService;
 
     public Auditorium createBlueHall() {
         return auditoriumService.create(new Auditorium("Blue hall", 1000, asList(1, 2, 3, 4, 5)));
@@ -130,6 +133,12 @@ public class TestObjects {
         return bookingService.create(user.getId(), ticket);
     }
 
+    public Account createAccount() {
+        User user = createJohn();
+        Account account = new Account(user, BigDecimal.valueOf(10000));
+        return accountService.create(account);
+    }
+
     /**
      * Make the datasource empty.
      */
@@ -145,6 +154,9 @@ public class TestObjects {
         }
         for (Auditorium auditorium : auditoriumService.getAll()) {
             auditoriumService.delete(auditorium.getId());
+        }
+        for (Account account : accountService.getAll()) {
+            accountService.delete(account.getId());
         }
         for (User user : userService.getAll()) {
             userService.delete(user);
