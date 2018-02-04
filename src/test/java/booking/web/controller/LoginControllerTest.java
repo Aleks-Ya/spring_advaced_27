@@ -2,7 +2,6 @@ package booking.web.controller;
 
 import booking.BaseWebSecurityTest;
 import booking.domain.User;
-import booking.util.ResourceUtil;
 import booking.web.security.Roles;
 import org.junit.Test;
 import org.springframework.http.MediaType;
@@ -12,6 +11,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import java.time.LocalDate;
 
+import static booking.util.ResourceUtil.resourceToString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -25,7 +25,7 @@ public class LoginControllerTest extends BaseWebSecurityTest {
 
     @Test
     public void getLoginForm() throws Exception {
-        String expBody = ResourceUtil.resourceToString("login_form.html", LoginController.class);
+        String expBody = resourceToString("LoginControllerTest_getLoginForm.html", LoginController.class);
         mvc.perform(get(LoginController.ENDPOINT)
         ).andExpect(status().isOk())
                 .andExpect(content().string(expBody));
@@ -33,7 +33,7 @@ public class LoginControllerTest extends BaseWebSecurityTest {
 
     @Test
     public void loginError() throws Exception {
-        String expBody = ResourceUtil.resourceToString("login_error.html", LoginController.class);
+        String expBody = resourceToString("LoginControllerTest_loginError.html", LoginController.class);
 
         MvcResult mvcResult = mvc.perform(post(LoginController.ENDPOINT))
                 .andExpect(status().is3xxRedirection())
@@ -61,7 +61,7 @@ public class LoginControllerTest extends BaseWebSecurityTest {
 
         String redirectedUrlLogin = mvcResultLogin.getResponse().getRedirectedUrl();
 
-        String rootBody = ResourceUtil.resourceToString("logout_root.html", LoginController.class);
+        String rootBody = resourceToString("LoginControllerTest_logout_2.html", LoginController.class);
         mvc.perform(get(redirectedUrlLogin).session(session))
                 .andExpect(status().isOk())
                 .andExpect(content().string(rootBody));
@@ -73,7 +73,7 @@ public class LoginControllerTest extends BaseWebSecurityTest {
 
         String redirectedUrlLogout = mvcResultLogout.getResponse().getRedirectedUrl();
 
-        String logoutBody = ResourceUtil.resourceToString("logout.html", LoginController.class);
+        String logoutBody = resourceToString("LoginControllerTest_logout_1.html", LoginController.class);
         mvc.perform(get(redirectedUrlLogout).session(session))
                 .andExpect(status().isOk())
                 .andExpect(content().string(logoutBody));

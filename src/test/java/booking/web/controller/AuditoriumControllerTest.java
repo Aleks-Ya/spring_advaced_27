@@ -13,6 +13,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static booking.web.controller.AuditoriumController.ENDPOINT;
+import static booking.web.controller.LoginControllerTest.ANONYMOUS_HEADER;
+import static booking.web.controller.RootControllerTest.NAVIGATOR;
 import static java.lang.String.format;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -47,7 +49,7 @@ public class AuditoriumControllerTest extends BaseWebTest {
 
         resultActions
                 .andExpect(status().isCreated())
-                .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
+                .andExpect(content().string(format(ANONYMOUS_HEADER +
                                 "<h1>Auditorium is created</h1>\n" +
                                 "<p>Id: %d</p>\n" +
                                 "<p>Name: Room</p>\n" +
@@ -68,8 +70,8 @@ public class AuditoriumControllerTest extends BaseWebTest {
         Auditorium redHall = testObjects.createRedHall();
         mvc.perform(get("/auditorium"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
-                                RootControllerTest.NAVIGATOR +
+                .andExpect(content().string(format(ANONYMOUS_HEADER +
+                                NAVIGATOR +
                                 "<h1>Auditoriums</h1>\n" +
                                 "<p>Auditorium</p>\n" +
                                 "<p>Id: %d</p>\n" +
@@ -91,7 +93,7 @@ public class AuditoriumControllerTest extends BaseWebTest {
                 500, Arrays.asList(1, 2, 3)));
         mvc.perform(get("/auditorium/id/" + auditorium.getId()))
                 .andExpect(status().isOk())
-                .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
+                .andExpect(content().string(format(ANONYMOUS_HEADER +
                                 "<h1>Auditorium</h1>\n" +
                                 "<p>Id: %d</p>\n" +
                                 "<p>Name: Meeting room</p>\n" +
@@ -107,7 +109,7 @@ public class AuditoriumControllerTest extends BaseWebTest {
         mvc.perform(get("/auditorium/name/" + auditorium.getName()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(
-                        LoginControllerTest.ANONYMOUS_HEADER +
+                        ANONYMOUS_HEADER +
                                 "<h1>Auditorium</h1>\n" +
                                 "<p>Id: %d</p>\n" +
                                 "<p>Name: Relax room</p>\n" +
@@ -123,7 +125,7 @@ public class AuditoriumControllerTest extends BaseWebTest {
         mvc.perform(get(format("/auditorium/name/%s/seatsNumber", auditoriumName)))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(
-                        LoginControllerTest.ANONYMOUS_HEADER +
+                        ANONYMOUS_HEADER +
                                 "<h1>Seats number</h1>\n" +
                                 "<p>Auditorium: %s</p>\n" +
                                 "<p>Seats number: 500</p>", auditoriumName)));
@@ -136,7 +138,7 @@ public class AuditoriumControllerTest extends BaseWebTest {
                 500, Arrays.asList(1, 2, 3)));
         mvc.perform(get(format("/auditorium/id/%s/seatsNumber", auditorium.getId())))
                 .andExpect(status().isOk())
-                .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
+                .andExpect(content().string(format(ANONYMOUS_HEADER +
                         "<h1>Seats number</h1>\n" +
                         "<p>Auditorium: %s</p>\n" +
                         "<p>Seats number: 500</p>", auditoriumName)));
@@ -147,7 +149,7 @@ public class AuditoriumControllerTest extends BaseWebTest {
         Auditorium auditorium = testObjects.createBlueHall();
         mvc.perform(get(format("/auditorium/name/%s/vipSeats", auditorium.getName())))
                 .andExpect(status().isOk())
-                .andExpect(content().string(LoginControllerTest.ANONYMOUS_HEADER +
+                .andExpect(content().string(ANONYMOUS_HEADER +
                         "<h1>VIP seats</h1>\n" +
                         "<p>Auditorium: Blue hall</p>\n" +
                         "<p>VIP seats: 1,2,3,4,5</p>"));
@@ -160,7 +162,7 @@ public class AuditoriumControllerTest extends BaseWebTest {
         mvc.perform(get(format("/auditorium/id/%d/vipSeats", auditorium.getId())))
                 .andExpect(status().isOk())
                 .andExpect(content().string(
-                        LoginControllerTest.ANONYMOUS_HEADER +
+                        ANONYMOUS_HEADER +
                                 "<h1>VIP seats</h1>\n" +
                                 "<p>Auditorium: Red room</p>\n" +
                                 "<p>VIP seats: 1,2,3</p>"));
@@ -173,7 +175,7 @@ public class AuditoriumControllerTest extends BaseWebTest {
                 500, Arrays.asList(1, 2, 3)));
         mvc.perform(delete(format("/auditorium/id/%s/delete", auditorium.getId())))
                 .andExpect(status().isOk())
-                .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
+                .andExpect(content().string(format(ANONYMOUS_HEADER +
                                 "<h1>Auditorium is deleted</h1>\n" +
                                 "<p>Id: %d</p>\n" +
                                 "<p>Name: %s</p>\n" +
@@ -187,7 +189,7 @@ public class AuditoriumControllerTest extends BaseWebTest {
         int notExistsAuditoriumId = 1234567;
         mvc.perform(delete(format("/auditorium/id/%s/delete", notExistsAuditoriumId)))
                 .andExpect(status().isOk())
-                .andExpect(content().string(
+                .andExpect(content().string(ANONYMOUS_HEADER + NAVIGATOR +
                         "<h1>An error occurred</h1>\n" +
                                 "<p>Auditorium is not found by id=1234567</p>"));
     }

@@ -17,7 +17,7 @@ import java.util.List;
  * Date: 2/1/2016
  * Time: 7:30 PM
  */
-@Service("userServiceImpl")
+@Service
 public class UserServiceImpl implements UserService {
 
     private final UserDAO userDAO;

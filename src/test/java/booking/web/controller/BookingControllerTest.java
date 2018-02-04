@@ -8,6 +8,8 @@ import booking.domain.User;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 
+import static booking.util.ResourceUtil.resourceToString;
+import static booking.web.controller.RootControllerTest.NAVIGATOR;
 import static java.lang.String.format;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -32,7 +34,7 @@ public class BookingControllerTest extends BaseWebTest {
         mvc.perform(get(BookingController.ROOT_ENDPOINT))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
-                                RootControllerTest.NAVIGATOR +
+                                NAVIGATOR +
                                 "<h1>Booked tickets</h1>\n" +
                                 "<p>Booking</p>\n" +
                                 "<p>Id: %d</p>\n" +
@@ -86,8 +88,7 @@ public class BookingControllerTest extends BaseWebTest {
                 .param("price", "100")
         )
                 .andExpect(status().isCreated())
-                .andExpect(content().string(format(
-                        LoginControllerTest.ANONYMOUS_HEADER +
+                .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER + NAVIGATOR +
                                 "<h1>The ticket is booked</h1>\n" +
                                 "<p>Id: 1</p>\n" +
                                 "<p>Event: %s</p>\n" +
@@ -95,6 +96,15 @@ public class BookingControllerTest extends BaseWebTest {
                                 "<p>Seats: 1,2,3</p>\n" +
                                 "<p>Price: 100</p>",
                         event.getName())));
+    }
+
+    @Test
+    public void newBooking() throws Exception {
+        String body = resourceToString("BookingControllerTest_newBooking.html", BookingController.class);
+        User user = testObjects.createCurrentUser();
+        mvc.perform(get(BookingController.NEW_BOOKING_ENDPOINT))
+                .andExpect(status().isOk())
+                .andExpect(content().string(format(body, user.getName(), user.getEmail(), user.getId())));
     }
 
     @Test
@@ -110,8 +120,7 @@ public class BookingControllerTest extends BaseWebTest {
                 .param("seats", "1,2,3")
         )
                 .andExpect(status().isOk())
-                .andExpect(content().string(
-                        LoginControllerTest.ANONYMOUS_HEADER +
+                .andExpect(content().string(LoginControllerTest.ANONYMOUS_HEADER +
                                 "<h1>Ticket price</h1>\n" +
                                 "36,000\n"));
     }
@@ -125,8 +134,7 @@ public class BookingControllerTest extends BaseWebTest {
                 .param("eventId", String.valueOf(event.getId()))
         )
                 .andExpect(status().isOk())
-                .andExpect(content().string(format(
-                        LoginControllerTest.ANONYMOUS_HEADER +
+                .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
                                 "<h1>Tickets for event</h1>\n" +
                                 "<p>Event: %s</p>\n" +
                                 "<p>Ticket</p>\n" +
