@@ -6,13 +6,11 @@ import booking.web.config.MvcConfig;
 import booking.web.controller.ControllerConfig;
 import booking.web.error.AdviceErrorHandler;
 import booking.web.security.SecurityConfig;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 /**
  * @author Aleksey Yablokov
  */
-@Configuration
 @Import({FreeMarkerConfig.class, MultipartConfig.class, MvcConfig.class, ControllerConfig.class, SecurityConfig.class,
         AdviceErrorHandler.class})
 public class WebConfig {
