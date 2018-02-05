@@ -1,14 +1,26 @@
 package booking.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 
+@Entity
 public class Event {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
+    @Enumerated(EnumType.STRING)
     private Rate rate;
     private double basePrice;
     private LocalDateTime dateTime;
+    @ManyToOne
     private Auditorium auditorium;
 
     public Event() {

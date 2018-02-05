@@ -106,7 +106,7 @@ public class BookingController {
         List<Integer> seatsList = Stream.of(seats.split(",")).map(Integer::valueOf).collect(Collectors.toList());
         LocalDateTime date = localDateTime != null ? LocalDateTime.parse(localDateTime) : event.getDateTime();
         Double priceValue = price != null ? price : event.getBasePrice();
-        Ticket ticket = new Ticket(event, date, seatsList, priceValue);
+        Ticket ticket = ticketService.create(new Ticket(event, date, seatsList, priceValue));
 
         Ticket bookedTicket = bookingService.bookTicket(user.getId(), ticket).getTicket();
 
