@@ -9,9 +9,13 @@ import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.math.BigDecimal;
+
 import static booking.util.ResourceUtil.resourceToString;
 import static booking.web.controller.RootControllerTest.NAVIGATOR;
 import static java.lang.String.format;
+import static org.hamcrest.Matchers.closeTo;
+import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -78,6 +82,9 @@ public class BookingControllerTest extends BaseWebTest {
         User user = testObjects.createJohnWithAccount();
         Event event = testObjects.createParty();
 
+        assertThat(accountService.getByUserId(user.getId()).getAmount(),
+                closeTo(BigDecimal.valueOf(10_000), BigDecimal.ZERO));
+
         mvc.perform(post(BookingController.ROOT_ENDPOINT)
                 .param("userId", String.valueOf(user.getId()))
                 .param("eventId", String.valueOf(event.getId()))
@@ -94,6 +101,9 @@ public class BookingControllerTest extends BaseWebTest {
                                 "<p>Seats: 1,2,3</p>\n" +
                                 "<p>Price: 100</p>",
                         event.getName()))));
+
+        assertThat(accountService.getByUserId(user.getId()).getAmount(),
+                closeTo(BigDecimal.valueOf(9700), BigDecimal.ZERO));
     }
 
     @Test

@@ -88,10 +88,15 @@ public class BookingServiceImpl implements BookingService {
         }
 
         BigDecimal price = BigDecimal.valueOf(ticket.getPrice());
+        BigDecimal seatCount = BigDecimal.valueOf(ticket.getSeatsList().size());
+        BigDecimal requiredAmount = price.multiply(seatCount);
+
         BigDecimal availableAmount = account.getAmount();
-        if (availableAmount.compareTo(price) < 0) {
+        if (availableAmount.compareTo(requiredAmount) < 0) {
             throw new IllegalStateException("Not enough money to buy ticket " + ticket + ". Available amount " + availableAmount);
         }
+
+        accountService.withdrawal(account, requiredAmount);
 
         return bookingDao.create(userId, ticket);
     }
