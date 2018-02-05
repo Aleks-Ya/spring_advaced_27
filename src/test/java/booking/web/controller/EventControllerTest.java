@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import static java.lang.String.format;
 import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.matchesPattern;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -35,14 +36,14 @@ public class EventControllerTest extends BaseWebTest {
                 .param("auditoriumId", String.valueOf(auditorium.getId()))
         )
                 .andExpect(status().isCreated())
-                .andExpect(content().string(LoginControllerTest.ANONYMOUS_HEADER +
+                .andExpect(content().string(matchesPattern(".*\n" +
                         "<h1>Event created</h1>\n" +
-                        "<p>Id: 1</p>\n" +
+                        "<p>Id: \\d+</p>\n" +
                         "<p>Name: Discussion</p>\n" +
                         "<p>Rate: HIGH</p>\n" +
                         "<p>Base price: 10.5</p>\n" +
                         "<p>Date: 2007-12-03T10:15:30</p>\n" +
-                        "<p>Auditorium: Blue hall</p>\n"));
+                        "<p>Auditorium: Blue hall</p>\n")));
 
         assertThat(eventService.getByName(name), hasSize(1));
     }
