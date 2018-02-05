@@ -26,7 +26,7 @@ public class TicketsStrategyTest extends BaseServiceTest {
 
     @Test
     public void testCalculateDiscount_UserHasDiscount() {
-        User user = testObjects.createJohn();
+        User user = testObjects.createJohnWithAccount();
         Event event = testObjects.createParty();
         for (int i = 1; i < DISCOUNT_THRESHOLD; i++) {
             Ticket ticket = ticketService.create(new Ticket(event, event.getDateTime(), singletonList(i), event.getBasePrice()));

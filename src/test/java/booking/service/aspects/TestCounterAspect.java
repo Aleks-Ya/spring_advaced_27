@@ -65,7 +65,7 @@ public class TestCounterAspect extends BaseServiceTest {
 
     @Test
     public void testBookTicketByName() {
-        User user = testObjects.createJohn();
+        User user = testObjects.createJohnWithAccount();
         Ticket party = testObjects.createTicketToParty();
         Ticket hackathon = testObjects.createTicketToHackathon();
         bookingService.bookTicket(user.getId(),

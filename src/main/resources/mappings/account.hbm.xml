@@ -9,7 +9,7 @@
         <id name="id" column="ID">
             <generator class="identity"/>
         </id>
-        <one-to-one name="user" class="booking.domain.User" fetch="join" lazy="false"/>
+        <one-to-one name="user" class="booking.domain.User" fetch="join" lazy="false" />
         <property name="amount" column="AMOUNT" type="java.math.BigDecimal"/>
     </class>
 

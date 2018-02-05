@@ -13,6 +13,7 @@ public class Account {
     private BigDecimal amount;
 
     public Account() {
+        "".toString();
     }
 
     public Account(long id, User user, BigDecimal amount) {

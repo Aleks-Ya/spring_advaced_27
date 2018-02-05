@@ -13,8 +13,12 @@ import java.util.List;
 @Repository
 public class AccountDaoImpl extends AbstractDao implements AccountDao {
 
+    private final UserService userService;
+
     @Autowired
-    private UserService userService;
+    public AccountDaoImpl(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public Account create(Account account) {
@@ -24,7 +28,8 @@ public class AccountDaoImpl extends AbstractDao implements AccountDao {
         if (getByUserId(userId) != null) {
             throw new IllegalStateException("User already has account: " + user);
         }
-        getCurrentSession().save(account);
+        getCurrentSession().saveOrUpdate(user);
+        getCurrentSession().saveOrUpdate(account);
         return account;
     }
 

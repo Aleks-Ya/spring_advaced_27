@@ -1,7 +1,11 @@
 package booking.web.security.booking;
 
 import booking.BaseWebSecurityTest;
-import booking.domain.*;
+import booking.domain.Auditorium;
+import booking.domain.Booking;
+import booking.domain.Event;
+import booking.domain.Ticket;
+import booking.domain.User;
 import booking.web.controller.BookingController;
 import booking.web.controller.LoginController;
 import booking.web.security.Roles;
@@ -60,7 +64,7 @@ public class BookingRegisteredUserTest extends BaseWebSecurityTest {
 
     @Test
     public void getTicketPrice() throws Exception {
-        User user = testObjects.createJohn();
+        User user = testObjects.createJohnWithAccount();
 
         MockHttpSession session = authenticateSession(user);
 
@@ -85,7 +89,7 @@ public class BookingRegisteredUserTest extends BaseWebSecurityTest {
      */
     @Test
     public void getTicketsForEvent() throws Exception {
-        User user = testObjects.createJohn();
+        User user = testObjects.createJohnWithAccount();
         MockHttpSession session = authenticateSession(user);
 
         Booking booking = testObjects.bookTicketToParty();

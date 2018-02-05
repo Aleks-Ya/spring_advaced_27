@@ -1,5 +1,6 @@
 package booking.service.impl;
 
+import booking.domain.Account;
 import booking.domain.Auditorium;
 import booking.domain.Booking;
 import booking.domain.Event;
@@ -7,6 +8,7 @@ import booking.domain.Rate;
 import booking.domain.Ticket;
 import booking.domain.User;
 import booking.repository.BookingDao;
+import booking.service.AccountService;
 import booking.service.AuditoriumService;
 import booking.service.BookingService;
 import booking.service.DiscountService;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -36,6 +39,7 @@ public class BookingServiceImpl implements BookingService {
     private final UserService userService;
     private final BookingDao bookingDao;
     private final DiscountService discountService;
+    private final AccountService accountService;
 
     @Autowired
     public BookingServiceImpl(
@@ -44,10 +48,12 @@ public class BookingServiceImpl implements BookingService {
             UserService userService,
             DiscountService discountService,
             BookingDao bookingDao,
+            AccountService accountService,
             @Value("${min.seat.number}") int minSeatNumber,
             @Value("${vip.seat.price.multiplier}") double vipSeatPriceMultiplier,
             @Value("${high.rate.price.multiplier}") double highRatedPriceMultiplier,
-            @Value("${def.rate.price.multiplier}") double defaultRateMultiplier) {
+            @Value("${def.rate.price.multiplier}") double defaultRateMultiplier
+    ) {
         this.eventService = eventService;
         this.auditoriumService = auditoriumService;
         this.userService = userService;
@@ -57,12 +63,13 @@ public class BookingServiceImpl implements BookingService {
         this.vipSeatPriceMultiplier = vipSeatPriceMultiplier;
         this.highRatedPriceMultiplier = highRatedPriceMultiplier;
         this.defaultRateMultiplier = defaultRateMultiplier;
+        this.accountService = accountService;
     }
 
     @Override
     public Booking bookTicket(long userId, Ticket ticket) {
-        User foundUser = userService.getById(userId);
-        if (Objects.isNull(foundUser)) {
+        User user = userService.getById(userId);
+        if (Objects.isNull(user)) {
             throw new IllegalStateException("User: [" + userId + "] is not registered");
         }
 
@@ -71,11 +78,22 @@ public class BookingServiceImpl implements BookingService {
                 .anyMatch(bookedTicket -> ticket.getSeatsList().stream()
                         .anyMatch(bookedTicket.getSeatsList()::contains));
 
-        if (!seatsAreAlreadyBooked) {
-            return bookingDao.create(userId, ticket);
-        } else {
+        if (seatsAreAlreadyBooked) {
             throw new IllegalStateException("Unable to book ticket: [" + ticket + "]. Seats are already booked.");
         }
+
+        Account account = accountService.getByUserId(userId);
+        if (account == null) {
+            account = accountService.create(new Account(user, BigDecimal.ZERO));
+        }
+
+        BigDecimal price = BigDecimal.valueOf(ticket.getPrice());
+        BigDecimal availableAmount = account.getAmount();
+        if (availableAmount.compareTo(price) < 0) {
+            throw new IllegalStateException("Not enough money to buy ticket " + ticket + ". Available amount " + availableAmount);
+        }
+
+        return bookingDao.create(userId, ticket);
     }
 
     @Override

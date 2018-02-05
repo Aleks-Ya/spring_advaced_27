@@ -37,7 +37,7 @@ public class BookingServiceImplTest extends BaseServiceTest {
     @Test
     public void getAll() {
         Ticket newTicket = testObjects.createTicketToHackathon();
-        User user = testObjects.createJohn();
+        User user = testObjects.createJohnWithAccount();
         Booking booking = bookingService.bookTicket(user.getId(), newTicket);
 
         assertThat(bookingService.getAll(), containsInAnyOrder(booking));
@@ -48,7 +48,7 @@ public class BookingServiceImplTest extends BaseServiceTest {
         Ticket ticket = testObjects.createTicketToParty();
         Ticket ticket2 = testObjects.createTicketToHackathon();
         User user = testObjects.createJohn();
-        User registeredUser = testObjects.createJohn();
+        User registeredUser = testObjects.createJohnWithAccount();
         bookingService.bookTicket(registeredUser.getId(), ticket);
         bookingService.bookTicket(user.getId(), ticket2);
         Event event = ticket.getEvent();
@@ -62,7 +62,7 @@ public class BookingServiceImplTest extends BaseServiceTest {
     public void testGetTicketPrice_DiscountsForTicketsAndForBirthday_MidRate() {
         Ticket ticket = testObjects.createTicketToParty();
         Ticket ticket2 = testObjects.createTicketToHackathon();
-        User user = testObjects.createJohn();
+        User user = testObjects.createJohnWithAccount();
         bookingService.bookTicket(user.getId(), ticket);
         bookingService.bookTicket(user.getId(), ticket2);
         Event event = ticket.getEvent();

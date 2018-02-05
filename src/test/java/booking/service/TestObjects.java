@@ -53,21 +53,27 @@ public class TestObjects {
         return auditoriumService.create(new Auditorium("Red hall", 500, singletonList(1)));
     }
 
-    private int userConuter = 0;
+    private int userCounter = 0;
 
     public User createJohn() {
-        userConuter++;
-        return userService.register(new User(
-                format("john_%d@gmail.com", userConuter),
-                "John Smith " + userConuter,
-                LocalDate.of(1980, 3, 20), "jpass", Roles.REGISTERED_USER));
+//        userCounter++;
+//        return userService.register(new User(
+//                format("john_%d@gmail.com", userCounter),
+//                "John Smith " + userCounter,
+//                LocalDate.of(1980, 3, 20), "jpass", Roles.REGISTERED_USER));
+        return userBuilder().amount(0).build();
+    }
+
+    public User createJohnWithAccount() {
+//        return createAccount().getUser();
+        return userBuilder().build();
     }
 
     /**
      * Create a new user and put him to SecurityContext, so {@link UserService#getCurrentUser()} returns him.
      */
     public User createCurrentUser() {
-        User user = createJohn();
+        User user = userBuilder().build();
         List<SimpleGrantedAuthority> authorities = UserDaoUserDetailsService.rolesStrToAuthorities(user.getRoles());
         ExtendedUserDetails userDetails = new ExtendedUserDetails(user.getEmail(), user.getPassword(),
                 authorities, user.getEmail(), user.getName());
@@ -80,34 +86,36 @@ public class TestObjects {
      * Create an user has both {@link Roles#REGISTERED_USER} and {@link Roles#BOOKING_MANAGER}.
      */
     public User createBookingManager() {
-        userConuter++;
-        return userService.register(new User(
-                format("john_%d@gmail.com", userConuter),
-                "John Smith " + userConuter,
-                LocalDate.of(1980, 3, 20), "jpass",
-                Roles.REGISTERED_USER + UserDaoUserDetailsService.ROLES_DELIMITER + Roles.BOOKING_MANAGER));
+//        userCounter++;
+//        return userService.register(new User(
+//                format("john_%d@gmail.com", userCounter),
+//                "John Smith " + userCounter,
+//                LocalDate.of(1980, 3, 20), "jpass",
+//                Roles.REGISTERED_USER + UserDaoUserDetailsService.ROLES_DELIMITER + Roles.BOOKING_MANAGER));
+        return userBuilder().hasBookingManagerRole().build();
     }
 
     /**
      * Create an user that born today (for testing @{@link booking.service.impl.discount.BirthdayStrategy}.
      */
     public User createJohnBornToday() {
-        userConuter++;
-        return userService.register(new User(
-                format("john_%d@gmail.com", userConuter),
-                "John Smith " + userConuter,
-                LocalDate.now(), "jpass", Roles.REGISTERED_USER));
+//        userCounter++;
+//        return userService.register(new User(
+//                format("john_%d@gmail.com", userCounter),
+//                "John Smith " + userCounter,
+//                LocalDate.now(), "jpass", Roles.REGISTERED_USER));
+        return userBuilder().birthdayToday().build();
     }
 
     public Event createParty() {
         Auditorium auditorium = createBlueHall();
-        return eventService.create(new Event("New Year Party", Rate.HIGH, 5000,
+        return eventService.create(new Event("New Year Party", Rate.HIGH, 200,
                 LocalDateTime.of(2018, 12, 31, 23, 0), auditorium));
     }
 
     public Event createHackathon() {
         Auditorium auditorium = createRedHall();
-        return eventService.create(new Event("Java Hackathon", Rate.MID, 2000,
+        return eventService.create(new Event("Java Hackathon", Rate.MID, 100,
                 LocalDateTime.of(2018, 3, 13, 9, 0), auditorium));
     }
 
@@ -126,14 +134,14 @@ public class TestObjects {
     public Booking bookTicketToParty() {
         Event event = createParty();
         Ticket ticket = new Ticket(event, event.getDateTime(), asList(100, 101), event.getBasePrice() * 2);
-        User user = createJohn();
+        User user = createJohnWithAccount();
         return bookingService.bookTicket(user.getId(), ticket);
     }
 
     public Booking bookTicketToHackathon() {
         Event event = createHackathon();
         Ticket ticket = new Ticket(event, event.getDateTime(), asList(100, 101), event.getBasePrice() * 2);
-        User user = createJohn();
+        User user = createJohnWithAccount();
         return bookingService.bookTicket(user.getId(), ticket);
     }
 
@@ -164,6 +172,61 @@ public class TestObjects {
         }
         for (User user : userService.getAll()) {
             userService.delete(user);
+        }
+    }
+
+    public UserBuilder userBuilder() {
+        return new UserBuilder(userService, accountService);
+    }
+
+    public static class UserBuilder {
+        private static int userCounter = 0;
+        private static final String BOOKING_MANAGER_ROLE = Roles.REGISTERED_USER + UserDaoUserDetailsService.ROLES_DELIMITER + Roles.BOOKING_MANAGER;
+
+        private final UserService userService;
+        private final AccountService accountService;
+
+        private boolean birthdayToday = false;
+        private boolean hasBookingManagerRole = false;
+        private double amount = 10_000;
+
+        UserBuilder(UserService userService, AccountService accountService) {
+            this.userService = userService;
+            this.accountService = accountService;
+        }
+
+        public UserBuilder birthdayToday() {
+            birthdayToday = true;
+            return this;
+        }
+
+        public UserBuilder hasBookingManagerRole() {
+            hasBookingManagerRole = true;
+            return this;
+        }
+
+        public UserBuilder amount(double amount) {
+            this.amount = amount;
+            return this;
+        }
+
+        public User build() {
+            userCounter++;
+
+            LocalDate birthday = birthdayToday ? LocalDate.now() : LocalDate.of(1980, 3, 20);
+            String roles = hasBookingManagerRole ? BOOKING_MANAGER_ROLE : Roles.REGISTERED_USER;
+
+
+            User user = userService.register(new User(
+                    format("john_%d@gmail.com", userCounter),
+                    "John Smith " + userCounter,
+                    birthday, "jpass", roles));
+
+            if (amount > 0) {
+                accountService.create(new Account(user, BigDecimal.valueOf(amount)));
+            }
+
+            return user;
         }
     }
 }
