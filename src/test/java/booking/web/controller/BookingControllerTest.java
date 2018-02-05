@@ -42,7 +42,7 @@ public class BookingControllerTest extends BaseWebTest {
                                 "<p>Event: New Year Party</p>\n" +
                                 "<p>Date: 2018-12-31T23:00</p>\n" +
                                 "<p>Seats: 100,101</p>\n" +
-                                "<p>Price: 10,000</p><hr/>\n" +
+                                "<p>Price: 400</p><hr/>\n" +
                                 "<p>Booking</p>\n" +
                                 "<p>Id: %d</p>\n" +
                                 "<p>User: %s</p>\n" +
@@ -51,7 +51,7 @@ public class BookingControllerTest extends BaseWebTest {
                                 "<p>Event: Java Hackathon</p>\n" +
                                 "<p>Date: 2018-03-13T09:00</p>\n" +
                                 "<p>Seats: 100,101</p>\n" +
-                                "<p>Price: 4,000</p><hr/>\n",
+                                "<p>Price: 200</p><hr/>\n",
                         booking1.getId(), user1.getName(), ticket1.getId(),
                         booking2.getId(), user2.getName(), ticket2.getId()
                 )));
@@ -69,13 +69,13 @@ public class BookingControllerTest extends BaseWebTest {
                                 "<p>Event: %s</p>\n" +
                                 "<p>Date: 2018-12-31T23:00</p>\n" +
                                 "<p>Seats: 100,101</p>\n" +
-                                "<p>Price: 10,000</p>",
+                                "<p>Price: 400</p>",
                         bookedTicket.getId(), bookedTicket.getEvent().getName())));
     }
 
     @Test
     public void bookTicket() throws Exception {
-        User user = testObjects.createJohn();
+        User user = testObjects.createJohnWithAccount();
         Event event = testObjects.createParty();
 
         mvc.perform(post(BookingController.ROOT_ENDPOINT)
@@ -120,7 +120,7 @@ public class BookingControllerTest extends BaseWebTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(LoginControllerTest.ANONYMOUS_HEADER +
                         "<h1>Ticket price</h1>\n" +
-                        "36,000\n"));
+                        "1,440\n"));
     }
 
     @Test
@@ -140,7 +140,7 @@ public class BookingControllerTest extends BaseWebTest {
                                 "<p>Event: %s</p>\n" +
                                 "<p>Date: 2018-12-31T23:00</p>\n" +
                                 "<p>Seats: 100,101</p>\n" +
-                                "<p>Price: 10,000</p><hr/>\n",
+                                "<p>Price: 400</p><hr/>\n",
                         event.getName(),
                         ticket.getId(),
                         event.getName()

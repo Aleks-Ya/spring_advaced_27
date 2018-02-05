@@ -59,7 +59,7 @@ public class BookingRegisteredUserTest extends BaseWebSecurityTest {
                 .param("seats", "1,2,3")
                 .param("price", "100.5")
         )
-                .andExpect(status().isCreated());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -107,7 +107,7 @@ public class BookingRegisteredUserTest extends BaseWebSecurityTest {
         mvc.perform(get(forwardedUrl).session(session))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(
-                        "<p>%s (%s, REGISTERED_USER, <a href='/logout'>logout</a>)</p>\n" +
+                        "<p>%s (%s, $10,000, REGISTERED_USER, <a href='/logout'>logout</a>)</p>\n" +
                                 "<h1>Access denied</h1>\n",
                         user.getName(),
                         user.getEmail()
