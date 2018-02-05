@@ -5,6 +5,7 @@ import booking.domain.Booking;
 import booking.domain.Event;
 import booking.domain.Ticket;
 import booking.domain.User;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -85,14 +86,14 @@ public class BookingControllerTest extends BaseWebTest {
                 .param("price", "100")
         )
                 .andExpect(status().isCreated())
-                .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER + NAVIGATOR +
+                .andExpect(content().string(Matchers.matchesPattern(format(".*\n" + NAVIGATOR +
                                 "<h1>The ticket is booked</h1>\n" +
-                                "<p>Id: 1</p>\n" +
+                                "<p>Id: \\d+</p>\n" +
                                 "<p>Event: %s</p>\n" +
                                 "<p>Date: 2007-12-03T10:15:30</p>\n" +
                                 "<p>Seats: 1,2,3</p>\n" +
                                 "<p>Price: 100</p>",
-                        event.getName())));
+                        event.getName()))));
     }
 
     @Test

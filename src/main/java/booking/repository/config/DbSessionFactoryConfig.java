@@ -1,5 +1,11 @@
 package booking.repository.config;
 
+import booking.domain.Account;
+import booking.domain.Auditorium;
+import booking.domain.Booking;
+import booking.domain.Event;
+import booking.domain.Ticket;
+import booking.domain.User;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -51,9 +57,8 @@ public class DbSessionFactoryConfig {
         LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
         localSessionFactoryBean.setDataSource(dataSource);
         localSessionFactoryBean.setHibernateProperties(properties);
-        localSessionFactoryBean.setMappingResources("/mappings/auditorium.hbm.xml", "/mappings/event.hbm.xml",
-                "/mappings/ticket.hbm.xml", "/mappings/user.hbm.xml", "/mappings/booking.hbm.xml",
-                "/mappings/account.hbm.xml");
+        localSessionFactoryBean.setAnnotatedClasses(Auditorium.class, User.class, Event.class,
+                Ticket.class, Booking.class, Account.class);
         return localSessionFactoryBean;
     }
 
