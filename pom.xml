@@ -8,12 +8,12 @@
     <packaging>war</packaging>
 
     <properties>
-        <spring.ver>4.3.12.RELEASE</spring.ver>
-        <spring.security.ver>4.2.3.RELEASE</spring.security.ver>
-        <aspectj.ver>1.8.8</aspectj.ver>
-        <hibernate.ver>5.1.0.Final</hibernate.ver>
-        <h2.ver>1.4.191</h2.ver>
-        <jackson.ver>2.9.2</jackson.ver>
+        <spring.ver>4.3.14.RELEASE</spring.ver>
+        <spring.security.ver>4.2.4.RELEASE</spring.security.ver>
+        <aspectj.ver>1.8.13</aspectj.ver>
+        <hibernate.ver>5.1.12.Final</hibernate.ver>
+        <h2.ver>1.4.196</h2.ver>
+        <jackson.ver>2.9.4</jackson.ver>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
