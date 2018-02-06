@@ -1,23 +1,13 @@
 package booking.service.impl;
 
-import booking.domain.Account;
-import booking.domain.Auditorium;
-import booking.domain.Booking;
-import booking.domain.Event;
-import booking.domain.Rate;
-import booking.domain.Ticket;
-import booking.domain.User;
+import booking.domain.*;
 import booking.repository.BookingDao;
-import booking.service.AccountService;
-import booking.service.AuditoriumService;
-import booking.service.BookingService;
-import booking.service.DiscountService;
-import booking.service.EventService;
-import booking.service.UserService;
+import booking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -25,6 +15,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @PropertySource({"classpath:strategies/booking.properties"})
@@ -40,6 +31,7 @@ public class BookingServiceImpl implements BookingService {
     private final BookingDao bookingDao;
     private final DiscountService discountService;
     private final AccountService accountService;
+    private final TicketService ticketService;
 
     @Autowired
     public BookingServiceImpl(
@@ -52,8 +44,8 @@ public class BookingServiceImpl implements BookingService {
             @Value("${min.seat.number}") int minSeatNumber,
             @Value("${vip.seat.price.multiplier}") double vipSeatPriceMultiplier,
             @Value("${high.rate.price.multiplier}") double highRatedPriceMultiplier,
-            @Value("${def.rate.price.multiplier}") double defaultRateMultiplier
-    ) {
+            @Value("${def.rate.price.multiplier}") double defaultRateMultiplier,
+            TicketService ticketService) {
         this.eventService = eventService;
         this.auditoriumService = auditoriumService;
         this.userService = userService;
@@ -64,6 +56,7 @@ public class BookingServiceImpl implements BookingService {
         this.highRatedPriceMultiplier = highRatedPriceMultiplier;
         this.defaultRateMultiplier = defaultRateMultiplier;
         this.accountService = accountService;
+        this.ticketService = ticketService;
     }
 
     @Override
@@ -90,6 +83,48 @@ public class BookingServiceImpl implements BookingService {
         BigDecimal price = BigDecimal.valueOf(ticket.getPrice());
         BigDecimal seatCount = BigDecimal.valueOf(ticket.getSeatsList().size());
         BigDecimal requiredAmount = price.multiply(seatCount);
+
+        BigDecimal availableAmount = account.getAmount();
+        if (availableAmount.compareTo(requiredAmount) < 0) {
+            throw new IllegalStateException("Not enough money to buy ticket " + ticket + ". Available amount " + availableAmount);
+        }
+
+        accountService.withdrawal(account, requiredAmount);
+
+        return bookingDao.create(userId, ticket);
+    }
+
+    @Override
+    @Transactional
+    public Booking bookTicket(long userId, long eventId, String seats, String localDateTime, Double price) {
+        User user = userService.getById(userId);
+        Event event = eventService.getById(eventId);
+        List<Integer> seatsList = Stream.of(seats.split(",")).map(Integer::valueOf).collect(Collectors.toList());
+        LocalDateTime date = localDateTime != null ? LocalDateTime.parse(localDateTime) : event.getDateTime();
+        Double priceValue = price != null ? price : event.getBasePrice();
+        Ticket ticket = ticketService.create(new Ticket(event, date, seatsList, priceValue));
+
+        if (Objects.isNull(user)) {
+            throw new IllegalStateException("User: [" + userId + "] is not registered");
+        }
+
+        List<Ticket> bookedTickets = bookingDao.getTicketsForEvent(ticket.getEvent().getId());
+        boolean seatsAreAlreadyBooked = bookedTickets.stream()
+                .anyMatch(bookedTicket -> ticket.getSeatsList().stream()
+                        .anyMatch(bookedTicket.getSeatsList()::contains));
+
+        if (seatsAreAlreadyBooked) {
+            throw new IllegalStateException("Unable to book ticket: [" + ticket + "]. Seats are already booked.");
+        }
+
+        Account account = accountService.getByUserId(userId);
+        if (account == null) {
+            account = accountService.create(new Account(user, BigDecimal.ZERO));
+        }
+
+        BigDecimal priceDec = BigDecimal.valueOf(ticket.getPrice());
+        BigDecimal seatCount = BigDecimal.valueOf(ticket.getSeatsList().size());
+        BigDecimal requiredAmount = priceDec.multiply(seatCount);
 
         BigDecimal availableAmount = account.getAmount();
         if (availableAmount.compareTo(requiredAmount) < 0) {

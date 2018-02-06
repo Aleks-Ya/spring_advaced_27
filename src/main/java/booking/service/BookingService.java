@@ -14,6 +14,8 @@ public interface BookingService {
 
     Booking bookTicket(long userId, Ticket ticket);
 
+    Booking bookTicket(long userId, long eventId, String seats, String dateTime, Double price);
+
     Booking getById(long bookingId);
 
     long countTickets(long userId);
