@@ -8,7 +8,6 @@ import org.junit.Test;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 import static booking.domain.Rate.HIGH;
 import static org.hamcrest.Matchers.*;
@@ -70,8 +69,8 @@ public class EventServiceImplTest extends BaseServiceTest {
 
     @Test
     public void testGetEvent_Exception() {
-        Auditorium auditorium = new Auditorium(UUID.randomUUID().toString(), 1231, Collections.emptyList());
-        Event event = eventService.getEvent(1L, auditorium, LocalDateTime.now());
+        Auditorium auditorium = new Auditorium(1L, "Big Hall", 1231, Collections.emptyList());
+        Event event = eventService.getEvent(2L, auditorium, LocalDateTime.now());
         assertNull("There shouldn't be such event in db", event);
     }
 

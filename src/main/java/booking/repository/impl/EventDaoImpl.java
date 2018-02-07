@@ -40,10 +40,16 @@ public class EventDaoImpl extends AbstractDao implements EventDao {
 
     @Override
     public Event get(long eventId, Auditorium auditorium, LocalDateTime dateTime) {
-        LogicalExpression nameAndDate = Restrictions.and(Restrictions.eq(DATE_TIME_PROPERTY, dateTime),
-                Restrictions.eq("id", eventId));
-        return ((Event) createBlankCriteria(Event.class).add(nameAndDate).createAlias("auditorium", "aud").add(
-                Restrictions.eq("aud.id", auditorium.getId())).uniqueResult());
+        LogicalExpression idAndDate = Restrictions.and(
+                Restrictions.eq(DATE_TIME_PROPERTY, dateTime),
+                Restrictions.eq("id", eventId)
+        );
+        return ((Event) createBlankCriteria(Event.class)
+                .add(idAndDate)
+                .createAlias("auditorium", "aud")
+                .add(Restrictions.eq("aud.id", auditorium.getId()))
+                .uniqueResult()
+        );
     }
 
     @Override
