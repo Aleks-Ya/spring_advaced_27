@@ -1,20 +1,8 @@
 package booking.service.impl;
 
-import booking.domain.Account;
-import booking.domain.Auditorium;
-import booking.domain.Booking;
-import booking.domain.Event;
-import booking.domain.Rate;
-import booking.domain.Ticket;
-import booking.domain.User;
+import booking.domain.*;
 import booking.repository.BookingDao;
-import booking.service.AccountService;
-import booking.service.AuditoriumService;
-import booking.service.BookingService;
-import booking.service.DiscountService;
-import booking.service.EventService;
-import booking.service.TicketService;
-import booking.service.UserService;
+import booking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -101,6 +89,8 @@ public class BookingServiceImpl implements BookingService {
         if (availableAmount.compareTo(requiredAmount) < 0) {
             throw new IllegalStateException("Not enough money to buy ticket " + ticket + ". Available amount " + availableAmount);
         }
+
+        ticketService.create(ticket);
 
         accountService.withdrawal(account, requiredAmount);
 
