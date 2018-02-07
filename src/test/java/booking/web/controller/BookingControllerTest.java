@@ -33,7 +33,7 @@ public class BookingControllerTest extends BaseWebTest {
         Ticket ticket2 = booking2.getTicket();
         User user2 = booking2.getUser();
 
-        mvc.perform(get(BookingController.ROOT_ENDPOINT))
+        mvc.perform(get(BookingController.SHOW_ALL_TICKETS_ENDPOINT))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
                                 NAVIGATOR +
@@ -138,7 +138,7 @@ public class BookingControllerTest extends BaseWebTest {
         Booking booking = testObjects.bookTicketToParty();
         Ticket ticket = booking.getTicket();
         Event event = booking.getTicket().getEvent();
-        mvc.perform(get(BookingController.TICKETS_ENDPOINT)
+        mvc.perform(get(BookingController.SHOW_TICKETS_BY_EVENT_ENDPOINT)
                 .param("eventId", String.valueOf(event.getId()))
         )
                 .andExpect(status().isOk())

@@ -36,7 +36,7 @@ public class BookingAnonymousTest extends BaseWebSecurityTest {
 
     @Test
     public void getTicketsForEvent() {
-        assertRedirectToLoginPage(get(BookingController.TICKETS_ENDPOINT));
+        assertRedirectToLoginPage(get(BookingController.SHOW_TICKETS_BY_EVENT_ENDPOINT));
     }
 
 }

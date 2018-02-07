@@ -19,6 +19,7 @@ import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VAL
 @SuppressWarnings("unused")
 public class AccountController {
     public static final String ROOT_ENDPOINT = "/account";
+    public static final String REFILLING_ENDPOINT = ROOT_ENDPOINT + "/refilling";
     public static final String REFILLED_ENDPOINT = ROOT_ENDPOINT + "/refilled";
 
     private static final String USER_ATTR = "user";
@@ -52,7 +53,7 @@ public class AccountController {
         return REFILLED_FTL;
     }
 
-    @RequestMapping(path = ROOT_ENDPOINT, method = RequestMethod.GET)
+    @RequestMapping(path = REFILLING_ENDPOINT, method = RequestMethod.GET)
     String getRefillingPage(@ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         return REFILLING_FTL;
     }

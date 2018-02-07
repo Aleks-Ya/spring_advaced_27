@@ -9,12 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -26,6 +21,7 @@ import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VAL
 public class UserController {
     public static final String ROOT_ENDPOINT = "/user";
     public static final String REGISTER_ENDPOINT = ROOT_ENDPOINT + "/register";
+    public static final String SHOW_ALL_USERS_ENDPOINT = ROOT_ENDPOINT + "/all";
 
     static final String USER_ATTR = "user";
     private static final String USERS_ATTR = "users";
@@ -76,7 +72,7 @@ public class UserController {
         return USER_FTL;
     }
 
-    @RequestMapping(path = ROOT_ENDPOINT, method = RequestMethod.GET)
+    @RequestMapping(path = SHOW_ALL_USERS_ENDPOINT, method = RequestMethod.GET)
     String getAll(@ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         List<User> users = userService.getAll();
         model.addAttribute(USERS_ATTR, users);

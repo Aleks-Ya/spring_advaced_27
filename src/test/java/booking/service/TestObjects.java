@@ -1,12 +1,6 @@
 package booking.service;
 
-import booking.domain.Account;
-import booking.domain.Auditorium;
-import booking.domain.Booking;
-import booking.domain.Event;
-import booking.domain.Rate;
-import booking.domain.Ticket;
-import booking.domain.User;
+import booking.domain.*;
 import booking.web.security.ExtendedUserDetails;
 import booking.web.security.Roles;
 import booking.web.security.UserDaoUserDetailsService;
@@ -73,7 +67,7 @@ public class TestObjects {
      * Create a new user and put him to SecurityContext, so {@link UserService#getCurrentUser()} returns him.
      */
     public User createCurrentUser() {
-        User user = userBuilder().build();
+        User user = userBuilder().hasBookingManagerRole().build();
         List<SimpleGrantedAuthority> authorities = UserDaoUserDetailsService.rolesStrToAuthorities(user.getRoles());
         ExtendedUserDetails userDetails = new ExtendedUserDetails(user.getEmail(), user.getPassword(),
                 authorities, user.getEmail(), user.getName());

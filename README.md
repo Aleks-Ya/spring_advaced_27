@@ -41,3 +41,6 @@ Release command: `mvn release:prepare release:clean`. The command increments ver
 - Spring transactions
 - Replace Hibernate XML configuration with annotations 
 - Bug fixes
+
+**v3.1**
+- Create "Restricted area" on the home page

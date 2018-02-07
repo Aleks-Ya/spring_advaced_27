@@ -20,7 +20,8 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class BookingController {
     public static final String ROOT_ENDPOINT = "/booking";
-    public static final String TICKETS_ENDPOINT = ROOT_ENDPOINT + "/tickets";
+    public static final String SHOW_TICKETS_BY_EVENT_ENDPOINT = ROOT_ENDPOINT + "/tickets";
+    public static final String SHOW_ALL_TICKETS_ENDPOINT = ROOT_ENDPOINT + "/all";
     public static final String PRICE_ENDPOINT = ROOT_ENDPOINT + "/price";
     public static final String NEW_BOOKING_ENDPOINT = ROOT_ENDPOINT + "/new_booking";
 
@@ -52,7 +53,7 @@ public class BookingController {
         this.ticketService = ticketService;
     }
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(path = SHOW_ALL_TICKETS_ENDPOINT, method = RequestMethod.GET)
     String getBookedTickets(@ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         model.addAttribute(BOOKINGS_ATTR, bookingService.getAll());
         return BOOKINGS_FTL;
@@ -75,7 +76,7 @@ public class BookingController {
         return TICKET_PRICE_FTL;
     }
 
-    @RequestMapping(path = TICKETS_ENDPOINT, method = RequestMethod.GET)
+    @RequestMapping(path = SHOW_TICKETS_BY_EVENT_ENDPOINT, method = RequestMethod.GET)
     String getTicketsForEvent(
             @RequestParam String eventId,
             @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {

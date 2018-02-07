@@ -1,11 +1,7 @@
 package booking.web.security.booking;
 
 import booking.BaseWebSecurityTest;
-import booking.domain.Auditorium;
-import booking.domain.Booking;
-import booking.domain.Event;
-import booking.domain.Ticket;
-import booking.domain.User;
+import booking.domain.*;
 import booking.web.controller.BookingController;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpSession;
@@ -23,7 +19,7 @@ public class BookingBookingManagerTest extends BaseWebSecurityTest {
     public void getBookedTickets() throws Exception {
         User user = testObjects.createBookingManager();
         MockHttpSession session = authenticateSession(user);
-        mvc.perform(get(BookingController.ROOT_ENDPOINT).session(session))
+        mvc.perform(get(BookingController.SHOW_ALL_TICKETS_ENDPOINT).session(session))
                 .andExpect(status().isOk());
     }
 
@@ -80,7 +76,7 @@ public class BookingBookingManagerTest extends BaseWebSecurityTest {
         Booking booking = testObjects.bookTicketToParty();
         Event event = booking.getTicket().getEvent();
 
-        mvc.perform(get(BookingController.TICKETS_ENDPOINT)
+        mvc.perform(get(BookingController.SHOW_TICKETS_BY_EVENT_ENDPOINT)
                 .session(session)
                 .param("eventId", String.valueOf(event.getId())))
                 .andExpect(status().isOk());
