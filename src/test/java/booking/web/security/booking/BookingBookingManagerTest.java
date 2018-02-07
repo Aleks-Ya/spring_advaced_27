@@ -1,7 +1,11 @@
 package booking.web.security.booking;
 
 import booking.BaseWebSecurityTest;
-import booking.domain.*;
+import booking.domain.Auditorium;
+import booking.domain.Booking;
+import booking.domain.Event;
+import booking.domain.Ticket;
+import booking.domain.User;
 import booking.web.controller.BookingController;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpSession;
@@ -34,7 +38,7 @@ public class BookingBookingManagerTest extends BaseWebSecurityTest {
 
     @Test
     public void bookTicket() throws Exception {
-        User user = testObjects.createBookingManager();
+        User user = testObjects.createJohnWithAccount();
         MockHttpSession session = authenticateSession(user);
         Event event = testObjects.createParty();
         mvc.perform(post(BookingController.ROOT_ENDPOINT).session(session)

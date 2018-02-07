@@ -47,7 +47,7 @@ public class AccountDaoImpl extends AbstractDao implements AccountDao {
 
     @Override
     public Account update(Account account) {
-        getCurrentSession().update(account);
+        getCurrentSession().saveOrUpdate(account);
         return account;
     }
 

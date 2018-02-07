@@ -37,13 +37,15 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account withdrawal(Account account, BigDecimal withdrawalAmount) {
         BigDecimal newAmount = account.getAmount().subtract(withdrawalAmount);
-        return accountDao.update(account.withAmount(newAmount));
+        account.setAmount(newAmount);
+        return accountDao.update(account);
     }
 
     @Override
     public Account refill(Account account, BigDecimal refillAmount) {
         BigDecimal newAmount = account.getAmount().add(refillAmount);
-        return accountDao.update(account.withAmount(newAmount));
+        account.setAmount(newAmount);
+        return accountDao.update(account);
     }
 
     @Override

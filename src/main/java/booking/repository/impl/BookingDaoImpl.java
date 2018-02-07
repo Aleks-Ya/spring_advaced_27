@@ -23,9 +23,7 @@ public class BookingDaoImpl extends AbstractDao implements BookingDao {
         TicketDao.validateTicket(ticket);
         UserService.validateUser(user);
 
-        Long ticketId = (Long) getCurrentSession().save(ticket);
-        Ticket storedTicket = ticket.withId(ticketId);
-        Booking booking = new Booking(user, storedTicket);
+        Booking booking = new Booking(user, ticket);
         getCurrentSession().save(booking);
         return booking;
     }

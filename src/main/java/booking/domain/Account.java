@@ -17,16 +17,15 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @OneToOne
     private User user;
     private BigDecimal amount;
 
     public Account() {
-        "".toString();
     }
 
-    public Account(long id, User user, BigDecimal amount) {
+    private Account(long id, User user, BigDecimal amount) {
         this.id = id;
         this.user = user;
         this.amount = amount;
@@ -59,10 +58,6 @@ public class Account {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public Account withAmount(BigDecimal amount) {
-        return new Account(getId(), getUser(), amount);
     }
 
     @Override

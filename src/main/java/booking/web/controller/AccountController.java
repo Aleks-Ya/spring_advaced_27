@@ -22,8 +22,8 @@ public class AccountController {
     public static final String REFILLED_ENDPOINT = ROOT_ENDPOINT + "/refilled";
 
     private static final String USER_ATTR = "user";
-    private static final String ACCOUNT_BEFORE_ATTR = "accountBefore";
-    private static final String ACCOUNT_AFTER_ATTR = "accountAfter";
+    private static final String AMOUNT_BEFORE_ATTR = "amountBefore";
+    private static final String AMOUNT_AFTER_ATTR = "amountAfter";
     private static final String AMOUNT_ATTR = "amount";
 
     private static final String REFILLING_FTL = "account/refilling";
@@ -41,13 +41,14 @@ public class AccountController {
                   @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         long userId = Long.parseLong(formParams.getFirst("userId"));
         Account account = accountService.getByUserId(userId);
-        BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(formParams.getFirst("amount")));
-        Account refilledAccount = accountService.refill(account, amount);
+        BigDecimal amountBefore = account.getAmount();
+        BigDecimal refillAmount = BigDecimal.valueOf(Double.parseDouble(formParams.getFirst("amount")));
+        Account refilledAccount = accountService.refill(account, refillAmount);
 
         model.addAttribute(USER_ATTR, refilledAccount.getUser());
-        model.addAttribute(ACCOUNT_BEFORE_ATTR, account);
-        model.addAttribute(ACCOUNT_AFTER_ATTR, refilledAccount);
-        model.addAttribute(AMOUNT_ATTR, amount);
+        model.addAttribute(AMOUNT_BEFORE_ATTR, amountBefore);
+        model.addAttribute(AMOUNT_AFTER_ATTR, refilledAccount.getAmount());
+        model.addAttribute(AMOUNT_ATTR, refillAmount);
         return REFILLED_FTL;
     }
 

@@ -3,6 +3,6 @@
 
 <h1>Account is refilled</h1>
 <p>User: ${model.user.name}</p>
-<p>Amount before: ${model.accountBefore.amount}</p>
-<p>Amount after: ${model.accountAfter.amount}</p>
+<p>Amount before: ${model.amountBefore}</p>
+<p>Amount after: ${model.amountAfter}</p>
 <p>Amount: ${model.amount}</p>

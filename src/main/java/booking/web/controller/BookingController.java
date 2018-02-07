@@ -11,12 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Controller
 @SuppressWarnings("unused")
@@ -96,17 +99,7 @@ public class BookingController {
                       @RequestParam String seats,
                       @RequestParam(required = false) Double price,
                       @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
-        Ticket bookedTicket1 = bookingService.bookTicket(userId, eventId, seats, localDateTime, price).getTicket();
-
-        User user = userService.getById(userId);
-        Event event = eventService.getById(eventId);
-        List<Integer> seatsList = Stream.of(seats.split(",")).map(Integer::valueOf).collect(Collectors.toList());
-        LocalDateTime date = localDateTime != null ? LocalDateTime.parse(localDateTime) : event.getDateTime();
-        Double priceValue = price != null ? price : event.getBasePrice();
-        Ticket ticket = ticketService.create(new Ticket(event, date, seatsList, priceValue));
-
-        Ticket bookedTicket = bookingService.bookTicket(user.getId(), ticket).getTicket();
-
+        Ticket bookedTicket = bookingService.bookTicket(userId, eventId, seats, localDateTime, price).getTicket();
         model.addAttribute(TICKET_ATTR, bookedTicket);
         return BOOKED_TICKET_FTL;
     }
