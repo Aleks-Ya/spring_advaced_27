@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.anEmptyMap;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -38,14 +39,14 @@ public class TestCounterAspect extends BaseServiceTest {
         eventService.getByName("testName2");
         eventService.getByName("testName3");
         eventService.getByName(testEvent1.getName());
-        eventService.getEvent(testEvent1.getName(), testEvent1.getAuditorium(), testEvent1.getDateTime());
-        eventService.getEvent(testEvent1.getName(), testEvent1.getAuditorium(), testEvent1.getDateTime());
+        eventService.getEvent(testEvent1.getId(), testEvent1.getAuditorium(), testEvent1.getDateTime());
+        eventService.getEvent(testEvent1.getId(), testEvent1.getAuditorium(), testEvent1.getDateTime());
         eventService.getByName(testEvent1.getName());
         HashMap<String, Integer> expected = new HashMap<String, Integer>() {{
             put("testName1", 1);
             put("testName2", 2);
             put("testName3", 1);
-            put(testEvent1.getName(), 4);
+            put(testEvent1.getName(), 2);
         }};
         assertThat(CounterAspect.getAccessByNameStat(), equalTo(expected));
     }
@@ -55,12 +56,9 @@ public class TestCounterAspect extends BaseServiceTest {
         Event event = testObjects.createParty();
         User user = testObjects.createJohn();
         List<Integer> seats = asList(1, 2, 3, 4);
-        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
-        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
-        HashMap<String, Integer> expected = new HashMap<String, Integer>() {{
-            put(event.getName(), 2);
-        }};
-        assertThat(CounterAspect.getGetPriceByNameStat(), equalTo(expected));
+        bookingService.getTicketPrice(event.getId(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
+        bookingService.getTicketPrice(event.getId(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
+        assertThat(CounterAspect.getGetPriceByNameStat(), anEmptyMap());
     }
 
     @Test

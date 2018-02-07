@@ -19,8 +19,7 @@ public class CounterAspect {
     protected static final Map<String, Integer> getPriceByNameCounter = new HashMap<>();
     protected static final Map<String, Integer> bookByNameCounter = new HashMap<>();
 
-    @Pointcut("(execution(* booking.service.EventService.getEvent(String, ..)) && args(eventName, ..)) || "
-            + "execution(* booking.service.EventService.getByName(String)) && args(eventName))")
+    @Pointcut("execution(* booking.service.EventService.getByName(String)) && args(eventName))")
     private void accessedByName(String eventName) {
         // This method intended for declaring a @Pointcut
     }

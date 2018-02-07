@@ -121,7 +121,7 @@ public class BookingControllerTest extends BaseWebTest {
         Event event = testObjects.createParty();
 
         mvc.perform(get(BookingController.PRICE_ENDPOINT)
-                .param("eventName", event.getName())
+                .param("eventId", String.valueOf(event.getId()))
                 .param("auditoriumName", event.getAuditorium().getName())
                 .param("userId", String.valueOf(user.getId()))
                 .param("localDateTime", event.getDateTime().toString())

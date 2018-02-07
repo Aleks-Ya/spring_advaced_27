@@ -26,7 +26,7 @@ public interface BookingService {
 
     void delete(long bookingId);
 
-    double getTicketPrice(String eventName, String auditoriumName, LocalDateTime dateTime,
+    double getTicketPrice(long eventId, String auditoriumName, LocalDateTime dateTime,
                           List<Integer> seats, User user);
 
     List<Ticket> getTicketsForEvent(long eventId);

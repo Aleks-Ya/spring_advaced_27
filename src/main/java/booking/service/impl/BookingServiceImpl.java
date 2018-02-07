@@ -161,11 +161,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public double getTicketPrice(String eventName, String auditoriumName, LocalDateTime dateTime, List<Integer> seats,
+    public double getTicketPrice(long eventId, String auditoriumName, LocalDateTime dateTime, List<Integer> seats,
                                  User user) {
-        if (Objects.isNull(eventName)) {
-            throw new NullPointerException("Event name is [null]");
-        }
         if (Objects.isNull(seats)) {
             throw new NullPointerException("Seats are [null]");
         }
@@ -178,10 +175,10 @@ public class BookingServiceImpl implements BookingService {
 
         final Auditorium auditorium = auditoriumService.getByName(auditoriumName);
 
-        final Event event = eventService.getEvent(eventName, auditorium, dateTime);
+        final Event event = eventService.getEvent(eventId, auditorium, dateTime);
         if (Objects.isNull(event)) {
             throw new IllegalStateException(
-                    "There is no event with name: [" + eventName + "] in auditorium: [" + auditorium + "] on date: ["
+                    "There is no event with id: [" + eventId + "] in auditorium: [" + auditorium + "] on date: ["
                             + dateTime + "]");
         }
 

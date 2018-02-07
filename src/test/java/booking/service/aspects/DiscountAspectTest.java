@@ -46,10 +46,10 @@ public class DiscountAspectTest extends BaseServiceTest {
         bookingService.bookTicket(user.getId(),
                 new Ticket(ticket1.getEvent(), ticket1.getDateTime(), asList(9, 10), ticket1.getPrice()));
         List<Integer> seats = asList(1, 2, 3, 4);
-        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
-        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
-        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
-        bookingService.getTicketPrice(event.getName(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
+        bookingService.getTicketPrice(event.getId(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
+        bookingService.getTicketPrice(event.getId(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
+        bookingService.getTicketPrice(event.getId(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
+        bookingService.getTicketPrice(event.getId(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
         HashMap<String, Map<String, Integer>> expected = new HashMap<String, Map<String, Integer>>() {{
             put(TicketsStrategy.class.getSimpleName(), new HashMap<String, Integer>() {{
                 put(user.getEmail(), 4);

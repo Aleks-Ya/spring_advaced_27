@@ -12,7 +12,7 @@ public interface EventService {
 
     void delete(Event event);
 
-    Event getEvent(String name, Auditorium auditorium, LocalDateTime dateTime);
+    Event getEvent(long eventId, Auditorium auditorium, LocalDateTime dateTime);
 
     List<Event> getByName(String name);
 
