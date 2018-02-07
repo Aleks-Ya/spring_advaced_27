@@ -45,7 +45,9 @@ public class AccountControllerTest extends BaseWebTest {
     @Test
     public void getRefillingPage() throws Exception {
         User user = testObjects.createCurrentUser();
-        String body = resourceToString("AccountControllerTest_getRefillingPage.html", AccountController.class);
+        String body = resourceToString("AccountControllerTest_getRefillingPage.html", AccountController.class)
+                .replaceAll("%userId%", user.getId().toString())
+                .replaceAll("%user_name%", user.getName());
         mvc.perform(get(AccountController.REFILLING_ENDPOINT))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(body, user.getName(), user.getEmail(), user.getName(), user.getId())));

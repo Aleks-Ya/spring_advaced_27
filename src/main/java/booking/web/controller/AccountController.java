@@ -2,6 +2,7 @@ package booking.web.controller;
 
 import booking.domain.Account;
 import booking.service.AccountService;
+import booking.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,6 +24,7 @@ public class AccountController {
     public static final String REFILLED_ENDPOINT = ROOT_ENDPOINT + "/refilled";
 
     private static final String USER_ATTR = "user";
+    private static final String USERS_ATTR = "users";
     private static final String AMOUNT_BEFORE_ATTR = "amountBefore";
     private static final String AMOUNT_AFTER_ATTR = "amountAfter";
     private static final String AMOUNT_ATTR = "amount";
@@ -31,10 +33,12 @@ public class AccountController {
     private static final String REFILLED_FTL = "account/refilled";
 
     private final AccountService accountService;
+    private final UserService userService;
 
     @Autowired
-    public AccountController(AccountService accountService) {
+    public AccountController(AccountService accountService, UserService userService) {
         this.accountService = accountService;
+        this.userService = userService;
     }
 
     @RequestMapping(path = ROOT_ENDPOINT, method = RequestMethod.POST, consumes = APPLICATION_FORM_URLENCODED_VALUE)
@@ -55,6 +59,7 @@ public class AccountController {
 
     @RequestMapping(path = REFILLING_ENDPOINT, method = RequestMethod.GET)
     String getRefillingPage(@ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
+        model.addAttribute(USERS_ATTR, userService.getAll());
         return REFILLING_FTL;
     }
 }

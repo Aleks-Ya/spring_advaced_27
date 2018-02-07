@@ -5,7 +5,16 @@
 
 <#-- TODO use constant-->
 <form action="/account" method="post">
-    <p>User: ${currentUser().name}</p>
+    <p>
+        <label>
+            User:
+            <select name="userId">
+            <#list model.users as user>
+                <option value="${user.id}">${user.name}</option>
+            </#list>
+            </select>
+        </label>
+    </p>
     <p>
         <label>
             Amount (e.g. "1000.5"): <input name="amount" type="text"/>
@@ -14,5 +23,4 @@
     <p>
         <input type="submit" value="Refill"/>
     </p>
-    <input name="userId" value="${currentUser().id}" type="hidden"/>
 </form>

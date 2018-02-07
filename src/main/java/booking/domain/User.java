@@ -38,7 +38,7 @@ public class User {
         return new User(id, email, name, birthday, password, roles);
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

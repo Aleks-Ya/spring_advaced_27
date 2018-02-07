@@ -36,11 +36,12 @@ There is no remote Maven repository, so `release:perform` is not executed.
 Release command: `mvn release:prepare release:clean`. The command increments version, creates tag and pushes changes.
 
 ## Release notes
+**v3.1**
+- Create "Restricted area" on the home page
+- Choose user on the refilling page 
+
 **v3.0**
 - User account feature
 - Spring transactions
 - Replace Hibernate XML configuration with annotations 
 - Bug fixes
-
-**v3.1**
-- Create "Restricted area" on the home page
