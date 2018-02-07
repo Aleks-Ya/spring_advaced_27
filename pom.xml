@@ -4,7 +4,7 @@
 
     <groupId>com.epam</groupId>
     <artifactId>spring-advanced-course</artifactId>
-    <version>3.1</version>
+    <version>3.2-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <properties>
@@ -21,7 +21,7 @@
 
     <scm>
         <developerConnection>scm:git:git@github.com:Aleks-Ya/spring_advanced_31-2.git</developerConnection>
-        <tag>spring-advanced-course-3.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencyManagement>
