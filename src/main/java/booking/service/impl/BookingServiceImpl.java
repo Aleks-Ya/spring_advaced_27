@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
+@Transactional
 @PropertySource({"classpath:strategies/booking.properties"})
 public class BookingServiceImpl implements BookingService {
 

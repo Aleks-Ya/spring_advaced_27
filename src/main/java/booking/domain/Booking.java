@@ -11,7 +11,7 @@ public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @ManyToOne
     private User user;
     @ManyToOne
@@ -21,17 +21,13 @@ public class Booking {
     }
 
     public Booking(User user, Ticket ticket) {
-        this(-1, user, ticket);
+        this(null, user, ticket);
     }
 
-    public Booking(long id, User user, Ticket ticket) {
+    public Booking(Long id, User user, Ticket ticket) {
         this.id = id;
         this.user = user;
         this.ticket = ticket;
-    }
-
-    public Booking withId(long id) {
-        return new Booking(id, user, ticket);
     }
 
     public long getId() {

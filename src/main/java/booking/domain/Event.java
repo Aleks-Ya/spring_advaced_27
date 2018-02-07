@@ -14,7 +14,7 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
     @Enumerated(EnumType.STRING)
     private Rate rate;
@@ -27,10 +27,10 @@ public class Event {
     }
 
     public Event(String name, Rate rate, double basePrice, LocalDateTime dateTime, Auditorium auditorium) {
-        this(-1, name, rate, basePrice, dateTime, auditorium);
+        this(null, name, rate, basePrice, dateTime, auditorium);
     }
 
-    public Event(long id, String name, Rate rate, double basePrice, LocalDateTime dateTime, Auditorium auditorium) {
+    public Event(Long id, String name, Rate rate, double basePrice, LocalDateTime dateTime, Auditorium auditorium) {
         this.id = id;
         this.name = name;
         this.rate = rate;

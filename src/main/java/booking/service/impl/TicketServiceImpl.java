@@ -4,13 +4,13 @@ import booking.domain.Ticket;
 import booking.repository.TicketDao;
 import booking.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@PropertySource({"classpath:strategies/booking.properties"})
+@Transactional
 public class TicketServiceImpl implements TicketService {
 
     private final TicketDao ticketDao;

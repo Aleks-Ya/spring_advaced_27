@@ -15,7 +15,7 @@ public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @ManyToOne
     private Event event;
     private LocalDateTime dateTime;//TODO remove (use Event#dateTime)
@@ -26,14 +26,14 @@ public class Ticket {
     }
 
     public Ticket(Event event, LocalDateTime dateTime, List<Integer> seats, double price) {
-        this(-1, event, dateTime, seats, price);
+        this(null, event, dateTime, seats, price);
     }
 
-    public Ticket(long id, Event event, LocalDateTime dateTime, List<Integer> seats, Double price) {
+    public Ticket(Long id, Event event, LocalDateTime dateTime, List<Integer> seats, Double price) {
         this(id, event, dateTime, CsvUtil.fromListToCsv(seats), price);
     }
 
-    public Ticket(long id, Event event, LocalDateTime dateTime, String seats, Double price) {
+    public Ticket(Long id, Event event, LocalDateTime dateTime, String seats, Double price) {
         this.id = id;
         this.event = event;
         this.dateTime = dateTime;

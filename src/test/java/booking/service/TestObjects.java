@@ -125,6 +125,12 @@ public class TestObjects {
         return ticketService.create(ticket);
     }
 
+    public Ticket createTicketToParty(Integer... seats) {
+        Event event = createParty();
+        Ticket ticket = new Ticket(event, event.getDateTime(), asList(seats), event.getBasePrice() * 2);
+        return ticketService.create(ticket);
+    }
+
     public Ticket createTicketToHackathon() {
         Event event = createHackathon();
         Ticket ticket = new Ticket(event, event.getDateTime(), asList(200, 201, 202), event.getBasePrice() * 3);

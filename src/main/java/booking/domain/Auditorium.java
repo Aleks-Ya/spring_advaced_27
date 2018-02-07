@@ -13,7 +13,7 @@ public class Auditorium {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String name;
     private int seatsNumber;
     private String vipSeats;
@@ -22,14 +22,14 @@ public class Auditorium {
     }
 
     public Auditorium(String name, int seatsNumber, List<Integer> vipSeats) {
-        this(-1, name, seatsNumber, vipSeats);
+        this(null, name, seatsNumber, vipSeats);
     }
 
-    public Auditorium(long id, String name, int seatsNumber, List<Integer> vipSeats) {
+    public Auditorium(Long id, String name, int seatsNumber, List<Integer> vipSeats) {
         this(id, name, seatsNumber, CsvUtil.fromListToCsv(vipSeats));
     }
 
-    public Auditorium(long id, String name, int seatsNumber, String vipSeats) {
+    public Auditorium(Long id, String name, int seatsNumber, String vipSeats) {
         this.id = id;
         this.name = name;
         this.seatsNumber = seatsNumber;
