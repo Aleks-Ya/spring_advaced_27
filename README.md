@@ -34,3 +34,10 @@ Used maven-release-plugin.
 There is no remote Maven repository, so `release:perform` is not executed.
 
 Release command: `mvn release:prepare release:clean`. The command increments version, creates tag and pushes changes.
+
+## Release notes
+**v3.0**
+- User account feature
+- Spring transactions
+- Replace Hibernate XML configuration with annotations 
+- Bug fixes
