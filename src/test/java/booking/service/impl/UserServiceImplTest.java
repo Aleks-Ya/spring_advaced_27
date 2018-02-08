@@ -18,7 +18,7 @@ public class UserServiceImplTest extends BaseServiceTest {
         String name = UUID.randomUUID().toString();
         User user = new User(email, name, LocalDate.now(), "mypass", "admin,user");
         User expUser = userService.register(user);
-        User actUserByEmail = userService.getUserByEmail(email);
+        User actUserByEmail = userService.getByEmail(email);
         assertEquals("User should be the same", expUser, actUserByEmail);
     }
 
@@ -32,20 +32,20 @@ public class UserServiceImplTest extends BaseServiceTest {
     public void testDelete() {
         User user = testObjects.createJohn();
         userService.delete(user);
-        User actUser = userService.getUserByEmail(user.getEmail());
+        User actUser = userService.getByEmail(user.getEmail());
         assertNull("User should be the same", actUser);
     }
 
     @Test
     public void testGetUserByEmail() {
         User user = testObjects.createJohn();
-        User foundUser = userService.getUserByEmail(user.getEmail());
+        User foundUser = userService.getByEmail(user.getEmail());
         assertEquals("User should match", user, foundUser);
     }
 
     @Test
     public void testGetUserByEmail_Null() {
-        User foundUser = userService.getUserByEmail(UUID.randomUUID().toString());
+        User foundUser = userService.getByEmail(UUID.randomUUID().toString());
         assertNull("There should not be such user", foundUser);
     }
 

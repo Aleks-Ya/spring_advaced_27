@@ -36,7 +36,7 @@ public class UserDaoUserDetailsService implements UserDetailsService {
         if (email == null) {
             throw new UsernameNotFoundException("email is null");
         }
-        User user = userService.getUserByEmail(email);
+        User user = userService.getByEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException("User not found by email: " + email);
         }

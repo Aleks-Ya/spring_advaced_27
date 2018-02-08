@@ -40,7 +40,7 @@ public class UserDaoUserDetailsServiceTest {
     public void nullAuthorities() {
         UserService userService = mock(UserService.class);
         User user = makeUserWithAuthorities(null);
-        when(userService.getUserByEmail(email)).thenReturn(user);
+        when(userService.getByEmail(email)).thenReturn(user);
         UserDaoUserDetailsService service = new UserDaoUserDetailsService(userService);
         UserDetails userDetails = service.loadUserByUsername(email);
         assertThat(userDetails.getAuthorities(), emptyIterable());
@@ -52,7 +52,7 @@ public class UserDaoUserDetailsServiceTest {
         String role1 = "USER";
         String role2 = "ADMIN";
         User user = makeUserWithAuthorities(role1 + UserDaoUserDetailsService.ROLES_DELIMITER + role2);
-        when(userService.getUserByEmail(email)).thenReturn(user);
+        when(userService.getByEmail(email)).thenReturn(user);
 
         UserDaoUserDetailsService service = new UserDaoUserDetailsService(userService);
         UserDetails userDetails = service.loadUserByUsername(email);

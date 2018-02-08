@@ -22,7 +22,7 @@ public interface UserService {
 
     User getById(long id);
 
-    User getUserByEmail(String email);
+    User getByEmail(String email);
 
     User getCurrentUser();
 

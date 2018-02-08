@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
         return userDao.getById(id);
     }
 
-    public User getUserByEmail(String email) {
+    public User getByEmail(String email) {
         return userDao.getByEmail(email);
     }
 

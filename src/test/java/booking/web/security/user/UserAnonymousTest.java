@@ -12,10 +12,14 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.time.LocalDate;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.matchesPattern;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -50,7 +54,7 @@ public class UserAnonymousTest extends BaseWebSecurityTest {
                                 "<p>Roles: REGISTERED_USER</p>"
                 ))).andReturn();
 
-        User actUser = userService.getUserByEmail(expEmail);
+        User actUser = userService.getByEmail(expEmail);
         assertNotNull(actUser);
 
         String encodedPassword = actUser.getPassword();

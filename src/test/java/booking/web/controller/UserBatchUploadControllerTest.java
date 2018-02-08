@@ -21,8 +21,8 @@ public class UserBatchUploadControllerTest extends BaseWebTest {
         String email1 = "stenev@gmail.com";
         String email2 = "julia@gmail.com";
 
-        assertNull(userService.getUserByEmail(email1));
-        assertNull(userService.getUserByEmail(email2));
+        assertNull(userService.getByEmail(email1));
+        assertNull(userService.getByEmail(email2));
 
         String fileContent1 = JsonUtil.format("{" +
                 "'name': 'Steven'," +
@@ -51,7 +51,7 @@ public class UserBatchUploadControllerTest extends BaseWebTest {
 
         mvc.perform(multipartBuilder).andExpect(status().isOk());
 
-        assertNotNull(userService.getUserByEmail(email1));
-        assertNotNull(userService.getUserByEmail(email2));
+        assertNotNull(userService.getByEmail(email1));
+        assertNotNull(userService.getByEmail(email2));
     }
 }

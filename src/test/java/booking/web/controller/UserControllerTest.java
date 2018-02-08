@@ -44,7 +44,7 @@ public class UserControllerTest extends BaseWebTest {
                                 "<p>Roles: REGISTERED_USER</p>"
                 ))).andReturn();
 
-        User actUser = userService.getUserByEmail(expEmail);
+        User actUser = userService.getByEmail(expEmail);
         assertNotNull(actUser);
     }
 
