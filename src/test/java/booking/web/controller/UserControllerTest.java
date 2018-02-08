@@ -52,7 +52,7 @@ public class UserControllerTest extends BaseWebTest {
     public void getById() throws Exception {
         User user = testObjects.createJohn();
 
-        mvc.perform(get(UserController.ROOT_ENDPOINT + "/id/" + user.getId()))
+        mvc.perform(get(UserController.ROOT_ENDPOINT + "/" + user.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(String.format(
                         LoginControllerTest.ANONYMOUS_HEADER +
@@ -71,7 +71,7 @@ public class UserControllerTest extends BaseWebTest {
 
     @Test
     public void getByIdNotFound() throws Exception {
-        mvc.perform(get(UserController.ROOT_ENDPOINT + "/id/333"))
+        mvc.perform(get(UserController.ROOT_ENDPOINT + "/333"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(LoginControllerTest.ANONYMOUS_HEADER +
                         "<h1>User</h1>\n" +

@@ -9,7 +9,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -65,7 +70,7 @@ public class UserController {
         return encodedPassword;
     }
 
-    @RequestMapping(value = ROOT_ENDPOINT + "/id/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = ROOT_ENDPOINT + "/{userId}", method = RequestMethod.GET)
     String getById(@PathVariable Long userId, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         User user = userService.getById(userId);
         model.addAttribute(USER_ATTR, user);

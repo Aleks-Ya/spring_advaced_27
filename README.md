@@ -39,6 +39,7 @@ Release command: `mvn release:prepare release:clean`. The command increments ver
 **3.2**
 - Remove operation "Get event by name"
 - Change "Get event by ID" endpoint path from "/id/{eventId}" to "/{eventId}"
+- Change "Get user by ID" endpoint path from "/id/{userId}" to "/{userId}"
 
 **v3.1**
 - Create "Restricted area" on the home page
