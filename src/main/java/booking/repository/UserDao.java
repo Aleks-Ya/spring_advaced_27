@@ -32,7 +32,7 @@ public interface UserDao {
 
     void delete(User user);
 
-    User get(long id);
+    User getById(long id);
 
     User getByEmail(String email);
 

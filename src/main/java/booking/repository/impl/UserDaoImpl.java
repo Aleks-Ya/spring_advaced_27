@@ -32,7 +32,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     @Override
-    public User get(long id) {
+    public User getById(long id) {
         return getCurrentSession().get(User.class, id);
     }
 

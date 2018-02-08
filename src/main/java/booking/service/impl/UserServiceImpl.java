@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User getById(long id) {
-        return userDao.get(id);
+        return userDao.getById(id);
     }
 
     public User getUserByEmail(String email) {
