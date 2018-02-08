@@ -1,6 +1,5 @@
 package booking.repository.impl;
 
-import booking.domain.Auditorium;
 import booking.domain.Event;
 import booking.repository.EventDao;
 import org.hibernate.Query;
@@ -22,8 +21,8 @@ public class EventDaoImpl extends AbstractDao implements EventDao {
     public Event create(Event event) {
         LOG.info("Creating " + event);
         EventDao.validateEvent(event);
-        List<Event> byAuditoriumAndDate = getByAuditoriumAndDate(event.getAuditorium(), event.getDateTime());
-        if (!byAuditoriumAndDate.isEmpty()) {
+        Event byAuditoriumAndDate = getByAuditoriumAndDate(event.getAuditorium().getId(), event.getDateTime());
+        if (byAuditoriumAndDate != null) {
             throw new IllegalStateException(String.format(
                     "Unable to store event: [%s]. Event with such auditorium: [%s] on date: [%s] is already created.",
                     event, event.getAuditorium(), event.getDateTime()));
@@ -36,20 +35,6 @@ public class EventDaoImpl extends AbstractDao implements EventDao {
     @Override
     public Event update(Event event) {
         return ((Event) getCurrentSession().merge(event));
-    }
-
-    @Override
-    public Event get(long eventId, Auditorium auditorium, LocalDateTime dateTime) {
-        LogicalExpression idAndDate = Restrictions.and(
-                Restrictions.eq(DATE_TIME_PROPERTY, dateTime),
-                Restrictions.eq("id", eventId)
-        );
-        return ((Event) createBlankCriteria(Event.class)
-                .add(idAndDate)
-                .createAlias("auditorium", "aud")
-                .add(Restrictions.eq("aud.id", auditorium.getId()))
-                .uniqueResult()
-        );
     }
 
     @Override
@@ -90,11 +75,11 @@ public class EventDaoImpl extends AbstractDao implements EventDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Event> getByAuditoriumAndDate(Auditorium auditorium, LocalDateTime date) {
+    public Event getByAuditoriumAndDate(long auditoriumId, LocalDateTime date) {
         Query query = getCurrentSession().createQuery(
-                "from Event e where e.auditorium = :auditorium and e.dateTime = :dateTime");
-        query.setParameter("auditorium", auditorium);
+                "from Event e where e.auditorium.id = :auditoriumId and e.dateTime = :dateTime");
+        query.setParameter("auditoriumId", auditoriumId);
         query.setParameter(DATE_TIME_PROPERTY, date);
-        return ((List<Event>) query.list());
+        return (Event) query.uniqueResult();
     }
 }

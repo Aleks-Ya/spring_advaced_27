@@ -1,8 +1,20 @@
 package booking.service.impl;
 
-import booking.domain.*;
+import booking.domain.Account;
+import booking.domain.Auditorium;
+import booking.domain.Booking;
+import booking.domain.Event;
+import booking.domain.Rate;
+import booking.domain.Ticket;
+import booking.domain.User;
 import booking.repository.BookingDao;
-import booking.service.*;
+import booking.service.AccountService;
+import booking.service.AuditoriumService;
+import booking.service.BookingService;
+import booking.service.DiscountService;
+import booking.service.EventService;
+import booking.service.TicketService;
+import booking.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -175,7 +187,7 @@ public class BookingServiceImpl implements BookingService {
 
         final Auditorium auditorium = auditoriumService.getByName(auditoriumName);
 
-        final Event event = eventService.getEvent(eventId, auditorium, dateTime);
+        final Event event = eventService.getByAuditoriumAndDate(auditorium, dateTime);
         if (Objects.isNull(event)) {
             throw new IllegalStateException(
                     "There is no event with id: [" + eventId + "] in auditorium: [" + auditorium + "] on date: ["

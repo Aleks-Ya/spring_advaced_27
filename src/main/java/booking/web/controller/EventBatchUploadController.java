@@ -39,8 +39,8 @@ public class EventBatchUploadController {
 
     @RequestMapping(path = BATCH_UPLOAD_ENDPOINT, method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public void batchUpload(@RequestParam(value = PART_NAME) List<MultipartFile> events) throws IOException {
-        for (MultipartFile userFile : events) {
+    public void batchUpload(@RequestParam(value = PART_NAME) List<MultipartFile> parts) throws IOException {
+        for (MultipartFile userFile : parts) {
             List<EventCreateData> eventCreateDataList = JsonUtil.readValue(userFile.getBytes(), new TypeReference<List<EventCreateData>>() {
             });
             for (EventCreateData eventCreateData : eventCreateDataList) {

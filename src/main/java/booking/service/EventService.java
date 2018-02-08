@@ -12,7 +12,7 @@ public interface EventService {
 
     void delete(Event event);
 
-    Event getEvent(long eventId, Auditorium auditorium, LocalDateTime dateTime);
+    Event getByAuditoriumAndDate(Auditorium auditorium, LocalDateTime dateTime);
 
     Event getById(Long eventId);
 

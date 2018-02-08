@@ -1,6 +1,5 @@
 package booking.repository;
 
-import booking.domain.Auditorium;
 import booking.domain.Event;
 
 import java.time.LocalDateTime;
@@ -12,8 +11,6 @@ public interface EventDao {
     Event create(Event event);
 
     Event update(Event event);
-
-    Event get(long eventId, Auditorium auditoriumName, LocalDateTime dateTime);
 
     void delete(Event event);
 
@@ -27,7 +24,7 @@ public interface EventDao {
 
     List<Event> getNext(LocalDateTime to);
 
-    List<Event> getByAuditoriumAndDate(Auditorium auditorium, LocalDateTime date);
+    Event getByAuditoriumAndDate(long auditoriumId, LocalDateTime date);
 
     static void validateEvent(Event event) {
         if (Objects.isNull(event)) {
@@ -38,6 +35,9 @@ public interface EventDao {
         }
         if (Objects.isNull(event.getRate())) {
             throw new NullPointerException("Events's rate is [null]. Event: [" + event + "]");
+        }
+        if (Objects.isNull(event.getAuditorium())) {
+            throw new NullPointerException("Events's auditorium is [null]. Event: [" + event + "]");
         }
     }
 }

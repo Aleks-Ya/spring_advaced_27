@@ -2,7 +2,6 @@ package booking.web.controller;
 
 import booking.BaseWebTest;
 import booking.domain.Event;
-import booking.domain.Rate;
 import booking.domain.User;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
@@ -18,7 +17,7 @@ public class DiscountControllerTest extends BaseWebTest {
     @Test
     public void getNonZeroDiscount() throws Exception {
         User user = testObjects.createJohnBornToday();
-        Event event = eventService.create(new Event("Meeting", Rate.HIGH, 100, null, null));
+        Event event = testObjects.createParty();
         mvc.perform(get(DiscountController.ENDPOINT)
                 .param("userId", String.valueOf(user.getId()))
                 .param("eventId", String.valueOf(event.getId()))
@@ -29,8 +28,8 @@ public class DiscountControllerTest extends BaseWebTest {
 
     @Test
     public void getZeroDiscount() throws Exception {
-        User user = userService.register(new User("john3@gmail.com", "John", null, "pass", null));
-        Event event = eventService.create(new Event("Meeting2", Rate.HIGH, 100, null, null));
+        User user = testObjects.createJohn();
+        Event event = testObjects.createParty();
         mvc.perform(get(DiscountController.ENDPOINT)
                 .param("userId", String.valueOf(user.getId()))
                 .param("eventId", String.valueOf(event.getId()))

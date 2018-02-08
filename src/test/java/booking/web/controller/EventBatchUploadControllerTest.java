@@ -17,6 +17,8 @@ public class EventBatchUploadControllerTest extends BaseWebTest {
 
     @Test
     public void batchUpload() throws Exception {
+        testObjects.createBlueHall();
+
         String fileContent1 = resourceToString(
                 "EventControllerTest_batchUpload_1.json", EventBatchUploadControllerTest.class);
         MockMultipartFile multipartFile1 = new MockMultipartFile(
@@ -44,5 +46,6 @@ public class EventBatchUploadControllerTest extends BaseWebTest {
 
         assertNotNull(eventService.getById(1L));
         assertNotNull(eventService.getById(2L));
+        assertNotNull(eventService.getById(3L));
     }
 }

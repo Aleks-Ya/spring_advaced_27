@@ -33,8 +33,8 @@ public class EventServiceImpl implements EventService {
         return eventDao.getById(eventId);
     }
 
-    public Event getEvent(long eventId, Auditorium auditorium, LocalDateTime dateTime) {
-        return eventDao.get(eventId, auditorium, dateTime);
+    public Event getByAuditoriumAndDate(Auditorium auditorium, LocalDateTime dateTime) {
+        return eventDao.getByAuditoriumAndDate(auditorium.getId(), dateTime);
     }
 
     public List<Event> getAll() {

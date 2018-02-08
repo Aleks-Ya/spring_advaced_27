@@ -3,7 +3,6 @@ package booking.web.controller;
 import booking.BaseWebTest;
 import booking.domain.Auditorium;
 import booking.domain.Event;
-import booking.domain.Rate;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -43,26 +42,23 @@ public class EventControllerTest extends BaseWebTest {
 
     @Test
     public void getById() throws Exception {
-        Event event = eventService.create(new Event("Meeting", Rate.HIGH, 100, null, null));
-
+        Event event = testObjects.createParty();
         mvc.perform(get(EventController.ENDPOINT + "/" + event.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
                         "<h1>Event</h1>\n" +
                         "<p>Id: %s</p>\n" +
-                        "<p>Name: Meeting</p>\n" +
+                        "<p>Name: New Year Party</p>\n" +
                         "<p>Rate: HIGH</p>\n" +
-                        "<p>Base price: 100</p>\n" +
-                        "<p>Date: -No date-</p>\n" +
-                        "<p>Auditorium: -No auditorium-</p>\n", event.getId())));
+                        "<p>Base price: 200</p>\n" +
+                        "<p>Date: 2018-12-31T23:00</p>\n" +
+                        "<p>Auditorium: Blue hall</p>\n", event.getId())));
     }
 
     @Test
     public void getAll() throws Exception {
-        eventService.getAll().forEach(event -> eventService.delete(event));
-        String eventName = "Travel";
-        Event event1 = eventService.create(new Event(eventName, Rate.HIGH, 100, null, null));
-        Event event2 = eventService.create(new Event(eventName, Rate.HIGH, 100, null, null));
+        Event event1 = testObjects.createParty();
+        Event event2 = testObjects.createHackathon();
 
         mvc.perform(get(EventController.ENDPOINT))
                 .andExpect(status().isOk())
@@ -71,19 +67,19 @@ public class EventControllerTest extends BaseWebTest {
                         "<h1>Event list</h1>\n" +
                         "<p>Event</p>\n" +
                         "<p>Id: %s</p>\n" +
-                        "<p>Name: Travel</p>\n" +
+                        "<p>Name: New Year Party</p>\n" +
                         "<p>Rate: HIGH</p>\n" +
-                        "<p>Base price: 100</p>\n" +
-                        "<p>Date: -No date-</p>\n" +
-                        "<p>Auditorium: -No auditorium-</p>\n" +
+                        "<p>Base price: 200</p>\n" +
+                        "<p>Date: 2018-12-31T23:00</p>\n" +
+                        "<p>Auditorium: Blue hall</p>\n" +
                         "<hr/>\n" +
                         "<p>Event</p>\n" +
                         "<p>Id: %s</p>\n" +
-                        "<p>Name: Travel</p>\n" +
-                        "<p>Rate: HIGH</p>\n" +
+                        "<p>Name: Java Hackathon</p>\n" +
+                        "<p>Rate: MID</p>\n" +
                         "<p>Base price: 100</p>\n" +
-                        "<p>Date: -No date-</p>\n" +
-                        "<p>Auditorium: -No auditorium-</p>\n" +
+                        "<p>Date: 2018-03-13T09:00</p>\n" +
+                        "<p>Auditorium: Red hall</p>\n" +
                         "<hr/>\n", event1.getId(), event2.getId())));
     }
 }

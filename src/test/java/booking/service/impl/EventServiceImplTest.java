@@ -49,7 +49,7 @@ public class EventServiceImplTest extends BaseServiceTest {
     }
 
     private Event getEvent(Event eventMock) {
-        return eventService.getEvent(eventMock.getId(), eventMock.getAuditorium(), eventMock.getDateTime());
+        return eventService.getByAuditoriumAndDate(eventMock.getAuditorium(), eventMock.getDateTime());
     }
 
     @Test
@@ -66,7 +66,7 @@ public class EventServiceImplTest extends BaseServiceTest {
     @Test
     public void testGetEvent_Exception() {
         Auditorium auditorium = new Auditorium(1L, "Big Hall", 1231, Collections.emptyList());
-        Event event = eventService.getEvent(2L, auditorium, LocalDateTime.now());
+        Event event = eventService.getByAuditoriumAndDate(auditorium, LocalDateTime.now());
         assertNull("There shouldn't be such event in db", event);
     }
 
