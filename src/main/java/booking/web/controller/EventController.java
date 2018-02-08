@@ -62,7 +62,7 @@ public class EventController {
         return EVENT_LIST_FTL;
     }
 
-    @RequestMapping(path = ENDPOINT + "/id/{eventId}", method = RequestMethod.GET)
+    @RequestMapping(path = ENDPOINT + "/{eventId}", method = RequestMethod.GET)
     String getById(@PathVariable Long eventId, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         Event event = eventService.getById(eventId);
         model.addAttribute(EVENT_ATTR, event);

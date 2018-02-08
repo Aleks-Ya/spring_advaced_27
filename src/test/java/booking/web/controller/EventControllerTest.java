@@ -45,7 +45,7 @@ public class EventControllerTest extends BaseWebTest {
     public void getById() throws Exception {
         Event event = eventService.create(new Event("Meeting", Rate.HIGH, 100, null, null));
 
-        mvc.perform(get(EventController.ENDPOINT + "/id/" + event.getId()))
+        mvc.perform(get(EventController.ENDPOINT + "/" + event.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
                         "<h1>Event</h1>\n" +
