@@ -28,10 +28,6 @@ public class EventServiceImpl implements EventService {
         eventDao.delete(event);
     }
 
-    public List<Event> getByName(String name) {
-        return eventDao.getByName(name);
-    }
-
     @Override
     public Event getById(Long eventId) {
         return eventDao.getById(eventId);

@@ -36,6 +36,9 @@ There is no remote Maven repository, so `release:perform` is not executed.
 Release command: `mvn release:prepare release:clean`. The command increments version, creates tag and pushes changes.
 
 ## Release notes
+**3.2**
+- Remove operation "Get event by name"
+
 **v3.1**
 - Create "Restricted area" on the home page
 - Choose user on the refilling page 

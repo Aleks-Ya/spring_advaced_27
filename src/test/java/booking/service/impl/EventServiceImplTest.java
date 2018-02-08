@@ -7,11 +7,14 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.List;
 
 import static booking.domain.Rate.HIGH;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.emptyIterable;
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 
 public class EventServiceImplTest extends BaseServiceTest {
 
@@ -43,13 +46,6 @@ public class EventServiceImplTest extends BaseServiceTest {
         Event party = testObjects.createParty();
         Event hackathon = testObjects.createHackathon();
         assertThat(eventService.getAll(), containsInAnyOrder(party, hackathon));
-    }
-
-    @Test
-    public void testGetByName() {
-        Event expParty = testObjects.createParty();
-        List<Event> partyByName = eventService.getByName(expParty.getName());
-        assertThat(partyByName, contains(expParty));
     }
 
     private Event getEvent(Event eventMock) {

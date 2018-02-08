@@ -32,26 +32,6 @@ public class TestCounterAspect extends BaseServiceTest {
     }
 
     @Test
-    public void testAccessedByName() {
-        Event testEvent1 = testObjects.createParty();
-        eventService.getByName("testName1");
-        eventService.getByName("testName2");
-        eventService.getByName("testName2");
-        eventService.getByName("testName3");
-        eventService.getByName(testEvent1.getName());
-        eventService.getEvent(testEvent1.getId(), testEvent1.getAuditorium(), testEvent1.getDateTime());
-        eventService.getEvent(testEvent1.getId(), testEvent1.getAuditorium(), testEvent1.getDateTime());
-        eventService.getByName(testEvent1.getName());
-        HashMap<String, Integer> expected = new HashMap<String, Integer>() {{
-            put("testName1", 1);
-            put("testName2", 2);
-            put("testName3", 1);
-            put(testEvent1.getName(), 2);
-        }};
-        assertThat(CounterAspect.getAccessByNameStat(), equalTo(expected));
-    }
-
-    @Test
     public void testGetPriceByName() {
         Event event = testObjects.createParty();
         User user = testObjects.createJohn();

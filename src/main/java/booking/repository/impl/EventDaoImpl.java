@@ -58,12 +58,6 @@ public class EventDaoImpl extends AbstractDao implements EventDao {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public List<Event> getByName(String name) {
-        return ((List<Event>) createBlankCriteria(Event.class).add(Restrictions.eq("name", name)).list());
-    }
-
-    @Override
     public Event getById(Long eventId) {
         return (Event) createBlankCriteria(Event.class).add(Restrictions.eq("id", eventId)).uniqueResult();
     }

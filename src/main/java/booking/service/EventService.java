@@ -14,8 +14,6 @@ public interface EventService {
 
     Event getEvent(long eventId, Auditorium auditorium, LocalDateTime dateTime);
 
-    List<Event> getByName(String name);
-
     Event getById(Long eventId);
 
     List<Event> getAll();

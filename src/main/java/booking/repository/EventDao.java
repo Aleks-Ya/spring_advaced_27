@@ -17,8 +17,6 @@ public interface EventDao {
 
     void delete(Event event);
 
-    List<Event> getByName(String name);
-
     Event getById(Long eventId);
 
     List<Event> getByNameAndDate(String name, LocalDateTime dateTime);

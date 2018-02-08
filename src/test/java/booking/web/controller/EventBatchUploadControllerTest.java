@@ -9,9 +9,7 @@ import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequ
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static booking.util.ResourceUtil.resourceToString;
-import static org.hamcrest.Matchers.emptyIterable;
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ContextConfiguration(classes = EventBatchUploadController.class)
@@ -19,13 +17,8 @@ public class EventBatchUploadControllerTest extends BaseWebTest {
 
     @Test
     public void batchUpload() throws Exception {
-        String name1 = "Hall";
-        String name2 = "Room";
-
-        assertThat(eventService.getByName(name1), emptyIterable());
-        assertThat(eventService.getByName(name2), emptyIterable());
-
-        String fileContent1 = resourceToString("EventControllerTest_batchUpload_1.json", EventBatchUploadControllerTest.class);
+        String fileContent1 = resourceToString(
+                "EventControllerTest_batchUpload_1.json", EventBatchUploadControllerTest.class);
         MockMultipartFile multipartFile1 = new MockMultipartFile(
                 EventBatchUploadController.PART_NAME,
                 "filename1.json",
@@ -33,7 +26,8 @@ public class EventBatchUploadControllerTest extends BaseWebTest {
                 fileContent1.getBytes()
         );
 
-        String fileContent2 = resourceToString("EventControllerTest_batchUpload_2.json", EventBatchUploadControllerTest.class);
+        String fileContent2 = resourceToString(
+                "EventControllerTest_batchUpload_2.json", EventBatchUploadControllerTest.class);
         MockMultipartFile multipartFile2 = new MockMultipartFile(
                 EventBatchUploadController.PART_NAME,
                 "filename2.json",
@@ -48,7 +42,7 @@ public class EventBatchUploadControllerTest extends BaseWebTest {
 
         mvc.perform(multipartBuilder).andExpect(status().isOk());
 
-        assertThat(eventService.getByName(name1), hasSize(1));
-        assertThat(eventService.getByName(name2), hasSize(2));
+        assertNotNull(eventService.getById(1L));
+        assertNotNull(eventService.getById(2L));
     }
 }
