@@ -2,6 +2,7 @@ package booking.repository.impl;
 
 import booking.domain.User;
 import booking.repository.UserDao;
+import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -26,9 +27,10 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     @Override
-    public void delete(User user) {
-        UserDao.validateUser(user);
-        getCurrentSession().delete(user);
+    public void delete(long userId) {
+        Query query = getCurrentSession().createQuery("delete from User where id = :userId ");
+        query.setLong("userId", userId);
+        query.executeUpdate();
     }
 
     @Override

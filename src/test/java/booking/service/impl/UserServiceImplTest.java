@@ -33,7 +33,7 @@ public class UserServiceImplTest extends BaseServiceTest {
         User user = testObjects.createJohn();
         userService.delete(user);
         User actUser = userService.getByEmail(user.getEmail());
-        assertNull("User should be the same", actUser);
+        assertNull(actUser);
     }
 
     @Test

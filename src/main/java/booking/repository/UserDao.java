@@ -30,7 +30,7 @@ public interface UserDao {
 
     User create(User user);
 
-    void delete(User user);
+    void delete(long userId);
 
     User getById(long id);
 

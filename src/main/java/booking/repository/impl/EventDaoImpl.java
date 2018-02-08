@@ -78,7 +78,7 @@ public class EventDaoImpl extends AbstractDao implements EventDao {
     public Event getByAuditoriumAndDate(long auditoriumId, LocalDateTime date) {
         Query query = getCurrentSession().createQuery(
                 "from Event e where e.auditorium.id = :auditoriumId and e.dateTime = :dateTime");
-        query.setParameter("auditoriumId", auditoriumId);
+        query.setLong("auditoriumId", auditoriumId);
         query.setParameter(DATE_TIME_PROPERTY, date);
         return (Event) query.uniqueResult();
     }
