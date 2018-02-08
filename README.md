@@ -11,7 +11,7 @@ Participant: Aleksei Iablokov
 2) Open `http://localhost:8080`
 
 Predefined users:
-  - `john@gmail.com`/`jpass` (REGISTERED_USER and BOOKING_MANAGER roles)
+  - `john@gmail.com`/`jpass` (BOOKING_MANAGER role)
   - `mary@gmail.com`/`mpass` (REGISTERED_USER role)
 
 ## Sources
@@ -40,6 +40,7 @@ Release command: `mvn release:prepare release:clean`. The command increments ver
 - Remove operation "Get event by name"
 - Change "Get event by ID" endpoint path from "/id/{eventId}" to "/{eventId}"
 - Change "Get user by ID" endpoint path from "/id/{userId}" to "/{userId}"
+- Booking manager user has only BOOKING_MANAGER role
 
 **v3.1**
 - Create "Restricted area" on the home page

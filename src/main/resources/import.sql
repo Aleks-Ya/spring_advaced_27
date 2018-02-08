@@ -2,7 +2,7 @@ INSERT INTO auditorium (id, name, seatsNumber, vipSeats) VALUES (1, 'Blue hall',
 INSERT INTO auditorium (id, name, seatsNumber, vipSeats) VALUES (2, 'Red hall', 800, '25,26,27,28,29,30,31,32,33,34,35,75,76,77,78,79,80,81,82,83,84,85');
 INSERT INTO auditorium (id, name, seatsNumber, vipSeats) VALUES (3, 'Yellow hall', 1000, '25,26,27,28,29,30,31,32,33,34,35,75,76,77,78,79,80,81,82,83,84,85,105,106,107,108,109,110,111,112,113,114,115');
 
-INSERT INTO user (id, email, name, birthday, password, roles) VALUES (1, 'john@gmail.com', 'John', '1980-06-20','jpass', 'REGISTERED_USER,BOOKING_MANAGER');
+INSERT INTO user (id, email, name, birthday, password, roles) VALUES (1, 'john@gmail.com', 'John', '1980-06-20','jpass', 'BOOKING_MANAGER');
 INSERT INTO user (id, email, name, birthday, password, roles) VALUES (2, 'mary@gmail.com', 'Mary', '1990-11-30', 'mpass', 'REGISTERED_USER');
 
 INSERT INTO account (ID, user_id, amount) VALUES (1, 1, 15000);

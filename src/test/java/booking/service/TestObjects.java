@@ -1,6 +1,12 @@
 package booking.service;
 
-import booking.domain.*;
+import booking.domain.Account;
+import booking.domain.Auditorium;
+import booking.domain.Booking;
+import booking.domain.Event;
+import booking.domain.Rate;
+import booking.domain.Ticket;
+import booking.domain.User;
 import booking.web.security.ExtendedUserDetails;
 import booking.web.security.Roles;
 import booking.web.security.UserDaoUserDetailsService;
@@ -47,19 +53,11 @@ public class TestObjects {
         return auditoriumService.create(new Auditorium("Red hall", 500, singletonList(1)));
     }
 
-    private int userCounter = 0;
-
     public User createJohn() {
-//        userCounter++;
-//        return userService.register(new User(
-//                format("john_%d@gmail.com", userCounter),
-//                "John Smith " + userCounter,
-//                LocalDate.of(1980, 3, 20), "jpass", Roles.REGISTERED_USER));
         return userBuilder().amount(0).build();
     }
 
     public User createJohnWithAccount() {
-//        return createAccount().getUser();
         return userBuilder().build();
     }
 
@@ -77,15 +75,9 @@ public class TestObjects {
     }
 
     /**
-     * Create an user has both {@link Roles#REGISTERED_USER} and {@link Roles#BOOKING_MANAGER}.
+     * Create an user has {@link Roles#BOOKING_MANAGER} role.
      */
     public User createBookingManager() {
-//        userCounter++;
-//        return userService.register(new User(
-//                format("john_%d@gmail.com", userCounter),
-//                "John Smith " + userCounter,
-//                LocalDate.of(1980, 3, 20), "jpass",
-//                Roles.REGISTERED_USER + UserDaoUserDetailsService.ROLES_DELIMITER + Roles.BOOKING_MANAGER));
         return userBuilder().hasBookingManagerRole().build();
     }
 
@@ -93,11 +85,6 @@ public class TestObjects {
      * Create an user that born today (for testing @{@link booking.service.impl.discount.BirthdayStrategy}.
      */
     public User createJohnBornToday() {
-//        userCounter++;
-//        return userService.register(new User(
-//                format("john_%d@gmail.com", userCounter),
-//                "John Smith " + userCounter,
-//                LocalDate.now(), "jpass", Roles.REGISTERED_USER));
         return userBuilder().birthdayToday().build();
     }
 
@@ -175,13 +162,12 @@ public class TestObjects {
         }
     }
 
-    public UserBuilder userBuilder() {
+    private UserBuilder userBuilder() {
         return new UserBuilder(userService, accountService);
     }
 
-    public static class UserBuilder {
+    static class UserBuilder {
         private static int userCounter = 0;
-        private static final String BOOKING_MANAGER_ROLE = Roles.REGISTERED_USER + UserDaoUserDetailsService.ROLES_DELIMITER + Roles.BOOKING_MANAGER;
 
         private final UserService userService;
         private final AccountService accountService;
@@ -195,26 +181,26 @@ public class TestObjects {
             this.accountService = accountService;
         }
 
-        public UserBuilder birthdayToday() {
+        UserBuilder birthdayToday() {
             birthdayToday = true;
             return this;
         }
 
-        public UserBuilder hasBookingManagerRole() {
+        UserBuilder hasBookingManagerRole() {
             hasBookingManagerRole = true;
             return this;
         }
 
-        public UserBuilder amount(double amount) {
+        UserBuilder amount(double amount) {
             this.amount = amount;
             return this;
         }
 
-        public User build() {
+        User build() {
             userCounter++;
 
             LocalDate birthday = birthdayToday ? LocalDate.now() : LocalDate.of(1980, 3, 20);
-            String roles = hasBookingManagerRole ? BOOKING_MANAGER_ROLE : Roles.REGISTERED_USER;
+            String roles = hasBookingManagerRole ? Roles.BOOKING_MANAGER : Roles.REGISTERED_USER;
 
 
             User user = userService.register(new User(
