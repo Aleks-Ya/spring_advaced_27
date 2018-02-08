@@ -5,11 +5,10 @@ import booking.domain.User;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class UserServiceImplTest extends BaseServiceTest {
 
@@ -19,15 +18,8 @@ public class UserServiceImplTest extends BaseServiceTest {
         String name = UUID.randomUUID().toString();
         User user = new User(email, name, LocalDate.now(), "mypass", "admin,user");
         User expUser = userService.register(user);
-
         User actUserByEmail = userService.getUserByEmail(email);
-
-        List<User> usersByName = userService.getUsersByName(name);
-        assertThat(usersByName, hasSize(1));
-        User actUserByName = usersByName.get(0);
-
         assertEquals("User should be the same", expUser, actUserByEmail);
-        assertEquals("User should be the same", expUser, actUserByName);
     }
 
     @Test(expected = RuntimeException.class)
@@ -42,19 +34,6 @@ public class UserServiceImplTest extends BaseServiceTest {
         userService.delete(user);
         User actUser = userService.getUserByEmail(user.getEmail());
         assertNull("User should be the same", actUser);
-    }
-
-    @Test
-    public void testUsersGetByName() {
-        User testUser1 = testObjects.createJohn();
-        List<User> before = userService.getUsersByName(testUser1.getName());
-        User addedUser = new User(UUID.randomUUID().toString(), testUser1.getName(),
-                LocalDate.now(), "pass", null);
-        long registeredId = userService.register(addedUser).getId();
-        List<User> after = userService.getUsersByName(testUser1.getName());
-        before.add(addedUser.withId(registeredId));
-        assertTrue("Users should change", before.containsAll(after));
-        assertTrue("Users should change", after.containsAll(before));
     }
 
     @Test

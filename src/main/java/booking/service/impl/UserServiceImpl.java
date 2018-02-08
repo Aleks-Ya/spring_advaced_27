@@ -37,10 +37,6 @@ public class UserServiceImpl implements UserService {
         return userDao.getByEmail(email);
     }
 
-    public List<User> getUsersByName(String name) {
-        return userDao.getAllByName(name);
-    }
-
     @Override
     public User getCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

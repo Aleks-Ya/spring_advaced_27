@@ -43,12 +43,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<User> getAllByName(String name) {
-        return createBlankCriteria(User.class).add(Restrictions.eq("name", name)).list();
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
     public List<User> getAll() {
         return ((List<User>) createBlankCriteria(User.class).list());
     }
