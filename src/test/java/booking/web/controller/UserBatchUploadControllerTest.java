@@ -45,7 +45,7 @@ public class UserBatchUploadControllerTest extends BaseWebTest {
                 "filename2.json", MediaType.APPLICATION_JSON_VALUE, fileContent2.getBytes());
 
         MockMultipartHttpServletRequestBuilder multipartBuilder = MockMvcRequestBuilders
-                .fileUpload(UserBatchUploadController.BATCH_UPLOAD_ENDPOINT)
+                .multipart(UserBatchUploadController.BATCH_UPLOAD_ENDPOINT)
                 .file(multipartFile1)
                 .file(multipartFile2);
 

@@ -14,7 +14,9 @@ import java.time.LocalDate;
 import static booking.util.ResourceUtil.resourceToString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ContextConfiguration(classes = {LoginController.class, RootController.class})
 public class LoginControllerTest extends BaseWebSecurityTest {
@@ -48,11 +50,13 @@ public class LoginControllerTest extends BaseWebSecurityTest {
         MockHttpSession session = new MockHttpSession();
 
         String email = "dan@gmail.com";
-        User user = userService.register(new User(email, "John", LocalDate.now(), "abc", Roles.REGISTERED_USER));
+        String rawPassword = "abc";
+        User user = userService.register(
+                new User(email, "John", LocalDate.now(), rawPassword, Roles.REGISTERED_USER));
 
         MvcResult mvcResultLogin = mvc.perform(post(LoginController.ENDPOINT).session(session)
                 .param("username", user.getEmail())
-                .param("password", user.getPassword())
+                .param("password", rawPassword)
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
         ).andExpect(status().is3xxRedirection()).andReturn();
 

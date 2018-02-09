@@ -41,6 +41,8 @@ Release command: `mvn release:prepare release:clean`. The command increments ver
 - Change "Get event by ID" endpoint path from "/id/{eventId}" to "/{eventId}"
 - Change "Get user by ID" endpoint path from "/id/{userId}" to "/{userId}"
 - Booking manager user has only BOOKING_MANAGER role
+- Upgrade to Spring 5
+- Fix password encoding
 
 **v3.1**
 - Create "Restricted area" on the home page

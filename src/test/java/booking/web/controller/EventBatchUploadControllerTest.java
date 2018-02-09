@@ -38,7 +38,7 @@ public class EventBatchUploadControllerTest extends BaseWebTest {
         );
 
         MockMultipartHttpServletRequestBuilder multipartBuilder = MockMvcRequestBuilders
-                .fileUpload(EventBatchUploadController.BATCH_UPLOAD_ENDPOINT)
+                .multipart(EventBatchUploadController.BATCH_UPLOAD_ENDPOINT)
                 .file(multipartFile1)
                 .file(multipartFile2);
 

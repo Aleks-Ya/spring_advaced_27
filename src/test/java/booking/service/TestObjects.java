@@ -20,7 +20,9 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
@@ -138,6 +140,10 @@ public class TestObjects {
         return accountService.create(account);
     }
 
+    public String getRawPassword(long userId) {
+        return UserBuilder.getRawPassword(userId);
+    }
+
     /**
      * Make the datasource empty.
      */
@@ -167,6 +173,7 @@ public class TestObjects {
     }
 
     static class UserBuilder {
+        private static final Map<Long, String> rawPasswords = new HashMap<>();
         private static int userCounter = 0;
 
         private final UserService userService;
@@ -175,6 +182,10 @@ public class TestObjects {
         private boolean birthdayToday = false;
         private boolean hasBookingManagerRole = false;
         private double amount = 10_000;
+
+        static String getRawPassword(long userId) {
+            return rawPasswords.get(userId);
+        }
 
         UserBuilder(UserService userService, AccountService accountService) {
             this.userService = userService;
@@ -202,15 +213,17 @@ public class TestObjects {
             LocalDate birthday = birthdayToday ? LocalDate.now() : LocalDate.of(1980, 3, 20);
             String roles = hasBookingManagerRole ? Roles.BOOKING_MANAGER : Roles.REGISTERED_USER;
 
-
+            String rawPassword = "jpass";
             User user = userService.register(new User(
                     format("john_%d@gmail.com", userCounter),
                     "John Smith " + userCounter,
-                    birthday, "jpass", roles));
+                    birthday, rawPassword, roles));
 
             if (amount > 0) {
                 accountService.create(new Account(user, BigDecimal.valueOf(amount)));
             }
+
+            rawPasswords.put(user.getId(), rawPassword);
 
             return user;
         }

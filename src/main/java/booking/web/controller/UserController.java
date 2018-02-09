@@ -5,7 +5,6 @@ import booking.service.UserService;
 import booking.web.security.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.MultiValueMap;
@@ -36,13 +35,10 @@ public class UserController {
     private static final String USER_REGISTERED_FTL = "user/user_registered";
 
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
 
     public UserController(
-            @Autowired UserService userService,
-            @Autowired(required = false) PasswordEncoder passwordEncoder) {
+            @Autowired UserService userService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @RequestMapping(path = REGISTER_ENDPOINT, method = RequestMethod.POST, consumes = APPLICATION_FORM_URLENCODED_VALUE)
@@ -52,22 +48,11 @@ public class UserController {
         String name = formParams.getFirst("name");
         String email = formParams.getFirst("email");
         String birthday = formParams.getFirst("birthday");
-        String rawPassword = formParams.getFirst("password");
-        String encodedPassword = encodePassword(passwordEncoder, rawPassword);
-        User newUser = new User(email, name, LocalDate.parse(birthday), encodedPassword, Roles.REGISTERED_USER);
+        String password = formParams.getFirst("password");
+        User newUser = new User(email, name, LocalDate.parse(birthday), password, Roles.REGISTERED_USER);
         User user = userService.register(newUser);
         model.addAttribute(USER_ATTR, user);
         return USER_REGISTERED_FTL;
-    }
-
-    static String encodePassword(PasswordEncoder passwordEncoder, String rawPassword) {
-        String encodedPassword;
-        if (passwordEncoder != null) {
-            encodedPassword = passwordEncoder.encode(rawPassword);//TODO use JdbcUserDetailsManager#createUser
-        } else {
-            encodedPassword = rawPassword;
-        }
-        return encodedPassword;
     }
 
     @RequestMapping(value = ROOT_ENDPOINT + "/{userId}", method = RequestMethod.GET)

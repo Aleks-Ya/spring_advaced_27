@@ -6,7 +6,6 @@ import booking.util.JsonUtil;
 import booking.web.security.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,13 +24,10 @@ public class UserBatchUploadController {
     static final String PART_NAME = "users";
 
     private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
 
-    public UserBatchUploadController(
-            @Autowired UserService userService,
-            @Autowired(required = false) PasswordEncoder passwordEncoder) {
+    @Autowired
+    public UserBatchUploadController(UserService userService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -40,9 +36,8 @@ public class UserBatchUploadController {
     public void batchUpload(@RequestParam(value = PART_NAME) List<MultipartFile> users) throws IOException {
         for (MultipartFile userFile : users) {
             NewUserData newUserData = JsonUtil.readValue(userFile.getBytes(), NewUserData.class);
-            String encodedPassword = UserController.encodePassword(passwordEncoder, newUserData.getPassword());
             User newUser = new User(newUserData.getEmail(), newUserData.getName(), newUserData.getBirthday(),
-                    encodedPassword, Roles.REGISTERED_USER);
+                    newUserData.getPassword(), Roles.REGISTERED_USER);
             userService.register(newUser);
         }
     }

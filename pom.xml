@@ -8,9 +8,8 @@
     <packaging>war</packaging>
 
     <properties>
-        <!-- TODO Try Spring 5-->
-        <spring.ver>4.3.14.RELEASE</spring.ver>
-        <spring.security.ver>4.2.4.RELEASE</spring.security.ver>
+        <spring.ver>5.0.3.RELEASE</spring.ver>
+        <spring.security.ver>5.0.1.RELEASE</spring.security.ver>
         <aspectj.ver>1.8.13</aspectj.ver>
         <hibernate.ver>5.1.12.Final</hibernate.ver>
         <h2.ver>1.4.196</h2.ver>

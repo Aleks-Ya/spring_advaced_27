@@ -17,8 +17,8 @@ import static org.hamcrest.Matchers.matchesPattern;
 import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -73,7 +73,7 @@ public class UserAnonymousTest extends BaseWebSecurityTest {
 
     @Test
     public void batchUpload() {
-        assertRedirectToLoginPage(fileUpload(UserBatchUploadController.BATCH_UPLOAD_ENDPOINT));
+        assertRedirectToLoginPage(multipart(UserBatchUploadController.BATCH_UPLOAD_ENDPOINT));
     }
 
 }
