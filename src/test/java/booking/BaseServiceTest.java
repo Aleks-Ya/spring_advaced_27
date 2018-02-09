@@ -26,7 +26,7 @@ import org.springframework.test.context.TestPropertySource;
 @TestPropertySource(value = "classpath:db-test.properties", properties = "lucky.enabled=false")
 public abstract class BaseServiceTest extends BaseTest {
     @Autowired
-    protected TestObjects testObjects;
+    protected TestObjects to;
 
     @Autowired
     protected TicketService ticketService;
@@ -48,6 +48,6 @@ public abstract class BaseServiceTest extends BaseTest {
 
     @After
     public void clean() {
-        testObjects.cleanup();
+        to.cleanup();
     }
 }

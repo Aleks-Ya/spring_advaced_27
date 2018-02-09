@@ -45,7 +45,7 @@ public abstract class BaseWebSecurityTest extends BaseWebTest {
 
         mvc.perform(post(LoginController.ENDPOINT).session(session)
                 .param("username", user.getEmail())
-                .param("password", testObjects.getRawPassword(user.getId()))
+                .param("password", to.getRawPassword(user.getId()))
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
         ).andExpect(status().is3xxRedirection());
 

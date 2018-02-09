@@ -36,8 +36,8 @@ public class DiscountAspectTest extends BaseServiceTest {
 
     @Test
     public void testCalculateDiscount() {
-        User user = testObjects.createJohnBornToday();
-        Ticket ticket1 = testObjects.createTicketToParty();
+        User user = to.createJohnBornToday();
+        Ticket ticket1 = to.createTicketToParty();
         Event event = ticket1.getEvent();
         bookingService.bookTicket(user.getId(),
                 new Ticket(ticket1.getEvent(), ticket1.getDateTime(), asList(5, 6), ticket1.getPrice()));

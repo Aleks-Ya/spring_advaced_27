@@ -16,8 +16,8 @@ public class DiscountControllerTest extends BaseWebTest {
 
     @Test
     public void getNonZeroDiscount() throws Exception {
-        User user = testObjects.createJohnBornToday();
-        Event event = testObjects.createParty();
+        User user = to.createJohnBornToday();
+        Event event = to.createParty();
         mvc.perform(get(DiscountController.ENDPOINT)
                 .param("userId", String.valueOf(user.getId()))
                 .param("eventId", String.valueOf(event.getId()))
@@ -28,8 +28,8 @@ public class DiscountControllerTest extends BaseWebTest {
 
     @Test
     public void getZeroDiscount() throws Exception {
-        User user = testObjects.createJohn();
-        Event event = testObjects.createParty();
+        User user = to.createJohn();
+        Event event = to.createParty();
         mvc.perform(get(DiscountController.ENDPOINT)
                 .param("userId", String.valueOf(user.getId()))
                 .param("eventId", String.valueOf(event.getId()))

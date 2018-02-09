@@ -1,7 +1,11 @@
 package booking.web.security.booking;
 
 import booking.BaseWebSecurityTest;
-import booking.domain.*;
+import booking.domain.Auditorium;
+import booking.domain.Booking;
+import booking.domain.Event;
+import booking.domain.Ticket;
+import booking.domain.User;
 import booking.web.controller.BookingController;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpSession;
@@ -17,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class BookingBookingManagerTest extends BaseWebSecurityTest {
     @Test
     public void getBookedTickets() throws Exception {
-        User user = testObjects.createBookingManager();
+        User user = to.createBookingManager();
         MockHttpSession session = authenticateSession(user);
         mvc.perform(get(BookingController.SHOW_ALL_TICKETS_ENDPOINT).session(session))
                 .andExpect(status().isOk());
@@ -25,18 +29,18 @@ public class BookingBookingManagerTest extends BaseWebSecurityTest {
 
     @Test
     public void getTicketById() throws Exception {
-        User user = testObjects.createBookingManager();
+        User user = to.createBookingManager();
         MockHttpSession session = authenticateSession(user);
-        Ticket ticket = testObjects.createTicketToParty();
+        Ticket ticket = to.createTicketToParty();
         mvc.perform(get(BookingController.ROOT_ENDPOINT + "/id/" + ticket.getId()).session(session))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void bookTicket() throws Exception {
-        User user = testObjects.createJohnWithAccount();
+        User user = to.createJohnWithAccount();
         MockHttpSession session = authenticateSession(user);
-        Event event = testObjects.createParty();
+        Event event = to.createParty();
         mvc.perform(post(BookingController.ROOT_ENDPOINT).session(session)
                 .param("userId", String.valueOf(user.getId()))
                 .param("eventId", String.valueOf(event.getId()))
@@ -49,11 +53,11 @@ public class BookingBookingManagerTest extends BaseWebSecurityTest {
 
     @Test
     public void getTicketPrice() throws Exception {
-        User user = testObjects.createBookingManager();
+        User user = to.createBookingManager();
 
         MockHttpSession session = authenticateSession(user);
 
-        Booking booking = testObjects.bookTicketToParty();
+        Booking booking = to.bookTicketToParty();
         Event event = booking.getTicket().getEvent();
         Auditorium auditorium = event.getAuditorium();
         LocalDateTime date = event.getDateTime();
@@ -70,10 +74,10 @@ public class BookingBookingManagerTest extends BaseWebSecurityTest {
 
     @Test
     public void getTicketsForEvent() throws Exception {
-        User user = testObjects.createBookingManager();
+        User user = to.createBookingManager();
         MockHttpSession session = authenticateSession(user);
 
-        Booking booking = testObjects.bookTicketToParty();
+        Booking booking = to.bookTicketToParty();
         Event event = booking.getTicket().getEvent();
 
         mvc.perform(get(BookingController.SHOW_TICKETS_BY_EVENT_ENDPOINT)

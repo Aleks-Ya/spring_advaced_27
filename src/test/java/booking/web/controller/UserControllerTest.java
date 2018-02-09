@@ -50,7 +50,7 @@ public class UserControllerTest extends BaseWebTest {
 
     @Test
     public void getById() throws Exception {
-        User user = testObjects.createJohn();
+        User user = to.createJohn();
 
         mvc.perform(get(UserController.ROOT_ENDPOINT + "/" + user.getId()))
                 .andExpect(status().isOk())

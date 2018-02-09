@@ -17,7 +17,7 @@ public class EventBatchUploadControllerTest extends BaseWebTest {
 
     @Test
     public void batchUpload() throws Exception {
-        testObjects.createBlueHall();
+        to.createBlueHall();
 
         String fileContent1 = resourceToString(
                 "EventControllerTest_batchUpload_1.json", EventBatchUploadControllerTest.class);

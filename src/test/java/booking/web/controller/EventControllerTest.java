@@ -19,7 +19,7 @@ public class EventControllerTest extends BaseWebTest {
 
     @Test
     public void create() throws Exception {
-        Auditorium auditorium = testObjects.createBlueHall();
+        Auditorium auditorium = to.createBlueHall();
         mvc.perform(post(EventController.ENDPOINT)
                 .param("name", "Discussion")
                 .param("rate", "HIGH")
@@ -42,7 +42,7 @@ public class EventControllerTest extends BaseWebTest {
 
     @Test
     public void getById() throws Exception {
-        Event event = testObjects.createParty();
+        Event event = to.createParty();
         mvc.perform(get(EventController.ENDPOINT + "/" + event.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(LoginControllerTest.ANONYMOUS_HEADER +
@@ -57,8 +57,8 @@ public class EventControllerTest extends BaseWebTest {
 
     @Test
     public void getAll() throws Exception {
-        Event event1 = testObjects.createParty();
-        Event event2 = testObjects.createHackathon();
+        Event event1 = to.createParty();
+        Event event2 = to.createHackathon();
 
         mvc.perform(get(EventController.ENDPOINT))
                 .andExpect(status().isOk())

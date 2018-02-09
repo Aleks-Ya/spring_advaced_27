@@ -24,13 +24,13 @@ public class UserServiceImplTest extends BaseServiceTest {
 
     @Test(expected = RuntimeException.class)
     public void testRegisterSameUser() {
-        User user = testObjects.createJohn();
+        User user = to.createJohn();
         userService.register(user);
     }
 
     @Test
     public void testDelete() {
-        User user = testObjects.createJohn();
+        User user = to.createJohn();
         userService.delete(user);
         User actUser = userService.getByEmail(user.getEmail());
         assertNull(actUser);
@@ -38,7 +38,7 @@ public class UserServiceImplTest extends BaseServiceTest {
 
     @Test
     public void testGetUserByEmail() {
-        User user = testObjects.createJohn();
+        User user = to.createJohn();
         User foundUser = userService.getByEmail(user.getEmail());
         assertEquals("User should match", user, foundUser);
     }

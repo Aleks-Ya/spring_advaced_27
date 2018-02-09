@@ -20,7 +20,7 @@ public class EventServiceImplTest extends BaseServiceTest {
 
     @Test
     public void testCreate() {
-        Auditorium auditorium = testObjects.createBlueHall();
+        Auditorium auditorium = to.createBlueHall();
         Event event = eventService.create(new Event("Meeting", HIGH,
                 1000, LocalDateTime.now(), auditorium));
         assertThat(eventService.getById(event.getId()), equalTo(event));
@@ -28,7 +28,7 @@ public class EventServiceImplTest extends BaseServiceTest {
 
     @Test
     public void testDelete() {
-        Event party = testObjects.createParty();
+        Event party = to.createParty();
         assertThat(eventService.getById(party.getId()), equalTo(party));
         eventService.delete(party);
         assertNull(eventService.getById(party.getId()));
@@ -36,15 +36,15 @@ public class EventServiceImplTest extends BaseServiceTest {
 
     @Test(expected = RuntimeException.class)
     public void testCreateSameEvent() {
-        Event party = testObjects.createParty();
+        Event party = to.createParty();
         eventService.create(party);
     }
 
     @Test
     public void testGetAll() {
         assertThat(eventService.getAll(), emptyIterable());
-        Event party = testObjects.createParty();
-        Event hackathon = testObjects.createHackathon();
+        Event party = to.createParty();
+        Event hackathon = to.createHackathon();
         assertThat(eventService.getAll(), containsInAnyOrder(party, hackathon));
     }
 
@@ -54,7 +54,7 @@ public class EventServiceImplTest extends BaseServiceTest {
 
     @Test
     public void testGetEvent() {
-        Event event1 = testObjects.createParty();
+        Event event1 = to.createParty();
         Event foundEvent = getEvent(event1);
         assertEquals("Events should match", event1.getAuditorium(), foundEvent.getAuditorium());
         assertEquals("Events should match", event1.getBasePrice(), foundEvent.getBasePrice(), 0);
@@ -72,9 +72,9 @@ public class EventServiceImplTest extends BaseServiceTest {
 
     @Test
     public void testAssignAuditorium_createNew() {
-        Event oldEvent = testObjects.createParty();
+        Event oldEvent = to.createParty();
         LocalDateTime newTime = LocalDateTime.now();
-        Auditorium newAuditorium = testObjects.createRedHall();
+        Auditorium newAuditorium = to.createRedHall();
         oldEvent.setAuditorium(newAuditorium);
         Event newEvent = eventService.assignAuditorium(oldEvent, newAuditorium, newTime);
         assertThat(eventService.getById(newEvent.getId()), equalTo(newEvent));
@@ -84,14 +84,14 @@ public class EventServiceImplTest extends BaseServiceTest {
 
     @Test
     public void testAssignAuditoriumAlreadyBusy() {
-        Event party = testObjects.createParty();
-        Event hackathon = testObjects.createHackathon();
+        Event party = to.createParty();
+        Event hackathon = to.createHackathon();
         eventService.assignAuditorium(party, hackathon.getAuditorium(), hackathon.getDateTime());
     }
 
     @Test
     public void testGetById() {
-        Event event = testObjects.createParty();
+        Event event = to.createParty();
         assertThat(eventService.getById(event.getId()), equalTo(event));
     }
 

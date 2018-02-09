@@ -15,7 +15,7 @@ public class AuditoriumServiceImplTest extends BaseServiceTest {
 
     @Test
     public void testDelete() {
-        Auditorium auditorium = testObjects.createBlueHall();
+        Auditorium auditorium = to.createBlueHall();
         long auditoriumId = auditorium.getId();
         assertThat(auditoriumService.getById(auditoriumId), equalTo(auditorium));
         auditoriumService.delete(auditoriumId);
@@ -24,21 +24,21 @@ public class AuditoriumServiceImplTest extends BaseServiceTest {
 
     @Test
     public void testGetAuditoriums() {
-        Auditorium auditorium1 = testObjects.createBlueHall();
-        Auditorium auditorium2 = testObjects.createRedHall();
+        Auditorium auditorium1 = to.createBlueHall();
+        Auditorium auditorium2 = to.createRedHall();
         List<Auditorium> auditoriums = auditoriumService.getAll();
         assertThat(auditoriums, containsInAnyOrder(auditorium1, auditorium2));
     }
 
     @Test
     public void testGetByName() {
-        Auditorium auditorium1 = testObjects.createBlueHall();
+        Auditorium auditorium1 = to.createBlueHall();
         assertThat(auditoriumService.getByName(auditorium1.getName()), equalTo(auditorium1));
     }
 
     @Test
     public void testGetById() {
-        Auditorium auditorium1 = testObjects.createBlueHall();
+        Auditorium auditorium1 = to.createBlueHall();
         assertThat(auditoriumService.getById(auditorium1.getId()), equalTo(auditorium1));
     }
 

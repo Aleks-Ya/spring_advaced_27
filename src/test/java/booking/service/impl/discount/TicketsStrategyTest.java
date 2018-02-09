@@ -26,8 +26,8 @@ public class TicketsStrategyTest extends BaseServiceTest {
 
     @Test
     public void testCalculateDiscount_UserHasDiscount() {
-        User user = testObjects.createJohnWithAccount();
-        Event event = testObjects.createParty();
+        User user = to.createJohnWithAccount();
+        Event event = to.createParty();
         for (int i = 1; i < DISCOUNT_THRESHOLD; i++) {
             Ticket ticket = ticketService.create(new Ticket(event, event.getDateTime(), singletonList(i), event.getBasePrice()));
             bookingService.bookTicket(user.getId(), ticket);
@@ -38,7 +38,7 @@ public class TicketsStrategyTest extends BaseServiceTest {
 
     @Test
     public void testCalculateDiscount_UserHasNoDiscount() {
-        User user = testObjects.createJohn();
+        User user = to.createJohn();
         double discount = strategy.calculateDiscount(user);
         assertThat(discount, equalTo(DEFAULT_DISCOUNT));
     }

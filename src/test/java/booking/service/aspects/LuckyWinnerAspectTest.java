@@ -29,11 +29,11 @@ public class LuckyWinnerAspectTest extends BaseServiceTest {
 
     @Test
     public void testCalculateDiscount() {
-        User user = testObjects.createJohnBornToday();
-        bookingService.bookTicket(user.getId(), testObjects.createTicketToParty(5, 6));
-        bookingService.bookTicket(user.getId(), testObjects.createTicketToParty(7, 8));
-        bookingService.bookTicket(user.getId(), testObjects.createTicketToParty(9, 10));
-        bookingService.bookTicket(user.getId(), testObjects.createTicketToParty(11, 12));
+        User user = to.createJohnBornToday();
+        bookingService.bookTicket(user.getId(), to.createTicketToParty(5, 6));
+        bookingService.bookTicket(user.getId(), to.createTicketToParty(7, 8));
+        bookingService.bookTicket(user.getId(), to.createTicketToParty(9, 10));
+        bookingService.bookTicket(user.getId(), to.createTicketToParty(11, 12));
         assertEquals(Collections.singletonList(user.getEmail()), LuckyWinnerAspectMock.getLuckyUsers());
     }
 }

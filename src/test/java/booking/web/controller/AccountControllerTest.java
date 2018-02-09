@@ -23,7 +23,7 @@ public class AccountControllerTest extends BaseWebTest {
 
     @Test
     public void refill() throws Exception {
-        Account account = testObjects.createAccount();
+        Account account = to.createAccount();
         User user = account.getUser();
         BigDecimal refillingAmount = BigDecimal.valueOf(300.5);
 
@@ -44,7 +44,7 @@ public class AccountControllerTest extends BaseWebTest {
 
     @Test
     public void getRefillingPage() throws Exception {
-        User user = testObjects.createCurrentUser();
+        User user = to.createCurrentUser();
         String body = resourceToString("AccountControllerTest_getRefillingPage.html", AccountController.class)
                 .replaceAll("%userId%", user.getId().toString())
                 .replaceAll("%user_name%", user.getName());

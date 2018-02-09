@@ -33,8 +33,8 @@ public class TestCounterAspect extends BaseServiceTest {
 
     @Test
     public void testGetPriceByName() {
-        Event event = testObjects.createParty();
-        User user = testObjects.createJohn();
+        Event event = to.createParty();
+        User user = to.createJohn();
         List<Integer> seats = asList(1, 2, 3, 4);
         bookingService.getTicketPrice(event.getId(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
         bookingService.getTicketPrice(event.getId(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
@@ -43,9 +43,9 @@ public class TestCounterAspect extends BaseServiceTest {
 
     @Test
     public void testBookTicketByName() {
-        User user = testObjects.createJohnWithAccount();
-        Ticket party = testObjects.createTicketToParty();
-        Ticket hackathon = testObjects.createTicketToHackathon();
+        User user = to.createJohnWithAccount();
+        Ticket party = to.createTicketToParty();
+        Ticket hackathon = to.createTicketToHackathon();
 
         Ticket ticket1 = ticketService.create(new Ticket(party.getEvent(), party.getDateTime(), asList(5, 6), party.getPrice()));
         bookingService.bookTicket(user.getId(), ticket1);

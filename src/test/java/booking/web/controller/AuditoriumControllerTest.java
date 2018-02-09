@@ -19,7 +19,9 @@ import static java.lang.String.format;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -63,8 +65,8 @@ public class AuditoriumControllerTest extends BaseWebTest {
 
     @Test
     public void getAuditoriums() throws Exception {
-        Auditorium blueHall = testObjects.createBlueHall();
-        Auditorium redHall = testObjects.createRedHall();
+        Auditorium blueHall = to.createBlueHall();
+        Auditorium redHall = to.createRedHall();
         mvc.perform(get("/auditorium"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(ANONYMOUS_HEADER +
@@ -143,7 +145,7 @@ public class AuditoriumControllerTest extends BaseWebTest {
 
     @Test
     public void vipSeatsByAuditoriumNameGet() throws Exception {
-        Auditorium auditorium = testObjects.createBlueHall();
+        Auditorium auditorium = to.createBlueHall();
         mvc.perform(get(format("/auditorium/name/%s/vipSeats", auditorium.getName())))
                 .andExpect(status().isOk())
                 .andExpect(content().string(ANONYMOUS_HEADER +
