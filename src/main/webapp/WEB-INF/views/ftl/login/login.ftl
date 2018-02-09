@@ -10,7 +10,8 @@
 <#if model.logout>
     <p style="color:green">You have been logged out.</p>
 </#if>
-    <form action="/login" method="post">
+    <form action="${statics['booking.web.controller.LoginController'].LOGIN_ENDPOINT}"
+          method="post">
         <fieldset>
             <legend>Login</legend>
             <p>Default BOOKING_MANAGER: john@gmail.com/jpass</p>
@@ -31,8 +32,10 @@
         </fieldset>
     </form>
 </div>
-<div><#--TODO get /user/register from UserController.REGISTER_ENDPOINT, MediaType.APPLICATION_FORM_URLENCODED_VALUE -->
-    <form action="/user/register" method="post" enctype="application/x-www-form-urlencoded">
+<div>
+    <form action="${statics['booking.web.controller.UserController'].REGISTER_ENDPOINT}"
+          enctype="${statics['org.springframework.http.MediaType'].APPLICATION_FORM_URLENCODED_VALUE}"
+          method="post">
         <fieldset>
             <legend>Create new user</legend>
             <br/>

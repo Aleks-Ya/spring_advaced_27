@@ -3,7 +3,7 @@
 
 <h1>New booking</h1>
 
-<form action="/booking" method="post">
+<form action="${statics['booking.web.controller.BookingController'].ROOT_ENDPOINT}" method="post">
     <p>
         <label>
             Event:

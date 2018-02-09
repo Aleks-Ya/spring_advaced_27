@@ -22,7 +22,7 @@ import java.util.List;
 @Controller
 @SuppressWarnings("unused")
 public class EventController {
-    static final String ENDPOINT = "/event";
+    public static final String ENDPOINT = "/event";
 
     private static final String EVENT_ATTR = "event";
     private static final String EVENTS_ATTR = "events";

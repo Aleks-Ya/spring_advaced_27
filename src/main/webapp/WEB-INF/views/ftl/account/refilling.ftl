@@ -3,8 +3,7 @@
 
 <h1>Refill account</h1>
 
-<#-- TODO use constant-->
-<form action="/account" method="post">
+<form action="${statics['booking.web.controller.AccountController'].ROOT_ENDPOINT}" method="post">
     <p>
         <label>
             User:
