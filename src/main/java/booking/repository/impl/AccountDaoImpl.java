@@ -3,6 +3,7 @@ package booking.repository.impl;
 import booking.domain.Account;
 import booking.domain.User;
 import booking.repository.AccountDao;
+import booking.repository.UserDao;
 import booking.service.UserService;
 import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +14,17 @@ import java.util.List;
 @Repository
 public class AccountDaoImpl extends AbstractDao implements AccountDao {
 
-    private final UserService userService;
+    private final UserDao userDao;
 
     @Autowired
-    public AccountDaoImpl(UserService userService) {
-        this.userService = userService;
+    public AccountDaoImpl(UserDao userDao) {
+        this.userDao = userDao;
     }
 
     @Override
     public Account create(Account account) {
         long userId = account.getUser().getId();
-        User user = userService.getById(userId);
+        User user = userDao.getById(userId);
         UserService.validateUser(user);
         if (getByUserId(userId) != null) {
             throw new IllegalStateException("User already has account: " + user);
@@ -58,7 +59,14 @@ public class AccountDaoImpl extends AbstractDao implements AccountDao {
     }
 
     @Override
-    public void delete(long accountId) {
+    public void deleteById(long accountId) {
         getCurrentSession().delete(getById(accountId));
+    }
+
+    @Override
+    public void deleteByUserId(long userId) {
+        Query query = getCurrentSession().createQuery("delete from Account where user.id = :userId ");
+        query.setLong("userId", userId);
+        query.executeUpdate();
     }
 }

@@ -16,5 +16,7 @@ public interface AccountDao {
 
     Account update(Account account);
 
-    void delete(long accountId);
+    void deleteById(long accountId);
+
+    void deleteByUserId(long userId);
 }

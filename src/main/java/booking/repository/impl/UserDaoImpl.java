@@ -1,9 +1,12 @@
 package booking.repository.impl;
 
 import booking.domain.User;
+import booking.repository.AccountDao;
 import booking.repository.UserDao;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,6 +14,13 @@ import java.util.Objects;
 
 @Repository
 public class UserDaoImpl extends AbstractDao implements UserDao {
+
+    private final AccountDao accountDao;
+
+    @Autowired
+    public UserDaoImpl(@Lazy AccountDao accountDao) {
+        this.accountDao = accountDao;
+    }
 
     @Override
     public User create(User user) {
@@ -28,6 +38,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
     public void delete(long userId) {
+        accountDao.deleteByUserId(userId);
         Query query = getCurrentSession().createQuery("delete from User where id = :userId ");
         query.setLong("userId", userId);
         query.executeUpdate();

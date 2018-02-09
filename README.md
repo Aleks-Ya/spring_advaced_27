@@ -44,6 +44,7 @@ Release command: `mvn release:prepare release:clean`. The command increments ver
 - Upgrade to Spring 5
 - Fix password encoding
 - Use constants in FreeMarker templates
+- Fix setting $0 for new users
 
 **v3.1**
 - Create "Restricted area" on the home page

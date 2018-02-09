@@ -135,9 +135,8 @@ public class TestObjects {
     }
 
     public Account createAccount() {
-        User user = createJohn();
-        Account account = new Account(user, BigDecimal.valueOf(10000));
-        return accountService.create(account);
+        User user = userBuilder().amount(10000).build();
+        return accountService.getByUserId(user.getId());
     }
 
     public String getRawPassword(long userId) {
@@ -220,7 +219,8 @@ public class TestObjects {
                     birthday, rawPassword, roles));
 
             if (amount > 0) {
-                accountService.create(new Account(user, BigDecimal.valueOf(amount)));
+                Account account = accountService.getByUserId(user.getId());
+                accountService.refill(account, BigDecimal.valueOf(amount));
             }
 
             rawPasswords.put(user.getId(), rawPassword);

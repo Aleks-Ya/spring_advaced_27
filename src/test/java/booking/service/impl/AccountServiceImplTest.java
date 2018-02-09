@@ -21,12 +21,12 @@ public class AccountServiceImplTest extends BaseServiceTest {
     @Test
     public void create() {
         User user = to.createJohn();
-        Account expAccount = accountService.create(new Account(user, BigDecimal.valueOf(1000)));
+        Account expAccount = accountService.getByUserId(user.getId());
         Account actAccount = accountService.getById(expAccount.getId());
         assertThat(actAccount, equalTo(expAccount));
 
         User user2 = to.createJohn();
-        Account expAccount2 = accountService.create(new Account(user2, BigDecimal.valueOf(2000)));
+        Account expAccount2 = accountService.getByUserId(user2.getId());
         Account actAccount2 = accountService.getById(expAccount2.getId());
         assertThat(actAccount2, equalTo(expAccount2));
 
@@ -34,7 +34,7 @@ public class AccountServiceImplTest extends BaseServiceTest {
     }
 
     @Test(expected = IllegalStateException.class)
-    public void createUseHasSingleAccount() {
+    public void useAlreadyHasAccount() {
         User user = to.createJohn();
         accountService.create(new Account(user, BigDecimal.valueOf(1000)));
         accountService.create(new Account(user, BigDecimal.valueOf(1000)));
@@ -43,7 +43,7 @@ public class AccountServiceImplTest extends BaseServiceTest {
     @Test
     public void delete() {
         User user = to.createJohn();
-        Account account = accountService.create(new Account(user, BigDecimal.valueOf(1000)));
+        Account account = accountService.getByUserId(user.getId());
         assertThat(accountService.getById(account.getId()), equalTo(account));
         assertThat(account.getUser(), equalTo(user));
 

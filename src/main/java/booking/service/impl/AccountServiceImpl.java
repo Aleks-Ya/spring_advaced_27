@@ -57,7 +57,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void delete(long accountId) {
-        accountDao.delete(accountId);
+        accountDao.deleteById(accountId);
     }
 
 }
