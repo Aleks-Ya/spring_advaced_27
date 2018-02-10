@@ -1,7 +1,9 @@
 package booking.exception;
 
+import booking.web.error.WebErrorHandler;
+
 /**
- * {@link booking.web.error.AdviceErrorHandler} shows {@link BookingException#userMessage} to user.
+ * {@link WebErrorHandler} shows {@link BookingException#userMessage} to user.
  */
 public class BookingException extends RuntimeException {
     private final String userMessage;

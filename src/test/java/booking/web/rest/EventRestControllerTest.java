@@ -13,12 +13,12 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ContextConfiguration(classes = EventRestController.class)
 public class EventRestControllerTest extends BaseWebTest {
 
-    //TODO add test: event not found by id
     @Test
     public void getById() throws Exception {
         Event expEvent = to.createParty();
@@ -28,6 +28,13 @@ public class EventRestControllerTest extends BaseWebTest {
         Event actEvent = objectMapper.readValue(content, Event.class);
 
         assertThat(actEvent, equalTo(expEvent));
+    }
+
+    @Test
+    public void getById_NotFound() throws Exception {
+        mvc.perform(get(EventRestController.ENDPOINT + "/123"))
+                .andExpect(status().is4xxClientError())
+                .andExpect(content().json("{error:'Event is not found by id 123'}"));
     }
 
     @Test

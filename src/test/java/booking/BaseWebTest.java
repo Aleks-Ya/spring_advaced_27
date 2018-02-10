@@ -2,7 +2,8 @@ package booking;
 
 import booking.web.config.FreeMarkerConfig;
 import booking.web.config.MvcConfig;
-import booking.web.error.AdviceErrorHandler;
+import booking.web.error.RestErrorHandler;
+import booking.web.error.WebErrorHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.Before;
@@ -17,7 +18,8 @@ import org.springframework.web.context.WebApplicationContext;
  * Parent class for unit tests that use repository, service and web layers.
  */
 @WebAppConfiguration
-@ContextConfiguration(classes = {FreeMarkerConfig.class, AdviceErrorHandler.class, MvcConfig.class})
+@ContextConfiguration(classes = {FreeMarkerConfig.class, WebErrorHandler.class, MvcConfig.class,
+        RestErrorHandler.class})
 public abstract class BaseWebTest extends BaseServiceTest {
     protected static final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 

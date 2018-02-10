@@ -15,8 +15,8 @@ import java.util.Map;
  * ({@link BookingException#header} and {@link BookingException#userMessage}).
  * Other exception is shown without details.
  */
-@ControllerAdvice("booking.web")
-public class AdviceErrorHandler {
+@ControllerAdvice("booking.web.controller")
+public class WebErrorHandler {
     private static final String HEADER_ATTR = "header";
     private static final String ERROR_MESSAGE_ATTR = "errorMessage";
     private static final String ERROR_FTL = "error/error";

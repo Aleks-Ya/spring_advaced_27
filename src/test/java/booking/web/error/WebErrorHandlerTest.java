@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ContextConfiguration(classes = UserController.class)
-public class AdviceErrorHandlerTest extends BaseWebTest {
+public class WebErrorHandlerTest extends BaseWebTest {
 
     @Test
     public void register() throws Exception {

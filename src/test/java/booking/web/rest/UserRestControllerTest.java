@@ -13,12 +13,12 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ContextConfiguration(classes = UserRestController.class)
 public class UserRestControllerTest extends BaseWebTest {
 
-    //TODO add test: user not found by id
     @Test
     public void getById() throws Exception {
         User expUser = to.createJohn();
@@ -29,6 +29,13 @@ public class UserRestControllerTest extends BaseWebTest {
 
         expUser.setPassword(null);
         assertThat(actUser, equalTo(expUser));
+    }
+
+    @Test
+    public void getById_NotFound() throws Exception {
+        mvc.perform(get(UserRestController.ENDPOINT + "/123"))
+                .andExpect(status().is4xxClientError())
+                .andExpect(content().json("{error:'User is not found by id 123'}"));
     }
 
     @Test
