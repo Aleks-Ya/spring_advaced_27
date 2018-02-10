@@ -1,6 +1,7 @@
 package booking.web.controller;
 
 import booking.domain.Account;
+import booking.exception.BookingExceptionFactory;
 import booking.service.AccountService;
 import booking.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,15 @@ public class AccountController {
         long userId = Long.parseLong(formParams.getFirst("userId"));
         Account account = accountService.getByUserId(userId);
         BigDecimal amountBefore = account.getAmount();
-        BigDecimal refillAmount = BigDecimal.valueOf(Double.parseDouble(formParams.getFirst("amount")));
+        String amount = formParams.getFirst("amount");
+
+        BigDecimal refillAmount;
+        try {
+            refillAmount = BigDecimal.valueOf(Double.parseDouble(amount));
+        } catch (Exception e) {
+            throw BookingExceptionFactory.incorrect("Amount", amount);
+        }
+
         Account refilledAccount = accountService.refill(account, refillAmount);
 
         model.addAttribute(USER_ATTR, refilledAccount.getUser());
