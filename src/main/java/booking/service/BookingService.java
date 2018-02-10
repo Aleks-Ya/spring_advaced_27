@@ -4,7 +4,6 @@ import booking.domain.Booking;
 import booking.domain.Ticket;
 import booking.domain.User;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -12,6 +11,7 @@ import java.util.List;
  */
 public interface BookingService {
 
+    //TODO remove dateTime (already exists in Event)
     Booking bookTicket(long userId, long eventId, String seats, String dateTime, Double price);
 
     Booking getById(long bookingId);
@@ -24,9 +24,7 @@ public interface BookingService {
 
     void delete(long bookingId);
 
-    //TODO accept auditoriumId
-    double getTicketPrice(long eventId, String auditoriumName, LocalDateTime dateTime,
-                          List<Integer> seats, User user);
+    double getTicketPrice(long eventId, List<Integer> seats, User user);
 
     List<Ticket> getTicketsForEvent(long eventId);
 }
