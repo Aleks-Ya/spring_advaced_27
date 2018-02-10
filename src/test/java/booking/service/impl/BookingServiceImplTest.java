@@ -55,7 +55,7 @@ public class BookingServiceImplTest extends BaseServiceTest {
     public void testGetTicketPrice_DiscountsForTicketsAndForBirthday_MidRate() {
         User user = to.createJohnWithAccount();
         Booking booking1 = to.bookTicketToParty(user.getId(), "5,6");
-//        to.bookTicketToParty(user.getId(), "5,6");//TODO uncomment after BookingService.getTicketPrice() started accept auditoriumId
+        to.bookTicketToParty(user.getId(), "5,6");
         Event event = booking1.getTicket().getEvent();
         double ticketPrice = bookingService.getTicketPrice(event.getId(), asList(5, 6, 7), user);
         assertEquals("Price is wrong", 960.0, ticketPrice, 0.00001);
