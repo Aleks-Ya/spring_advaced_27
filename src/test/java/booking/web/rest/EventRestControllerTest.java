@@ -1,7 +1,7 @@
 package booking.web.rest;
 
 import booking.BaseWebTest;
-import booking.domain.User;
+import booking.domain.Event;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,34 +15,31 @@ import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ContextConfiguration(classes = UserRestController.class)
-public class UserRestControllerTest extends BaseWebTest {
+@ContextConfiguration(classes = EventRestController.class)
+public class EventRestControllerTest extends BaseWebTest {
 
     @Test
     public void getById() throws Exception {
-        User expUser = to.createJohn();
-        MvcResult mvcResult = mvc.perform(get(UserRestController.ENDPOINT + "/" + expUser.getId()))
+        Event expEvent = to.createParty();
+        MvcResult mvcResult = mvc.perform(get(EventRestController.ENDPOINT + "/" + expEvent.getId()))
                 .andExpect(status().isOk()).andReturn();
         String content = mvcResult.getResponse().getContentAsString();
-        User actUser = objectMapper.readValue(content, User.class);
+        Event actEvent = objectMapper.readValue(content, Event.class);
 
-        expUser.setPassword(null);
-        assertThat(actUser, equalTo(expUser));
+        assertThat(actEvent, equalTo(expEvent));
     }
 
     @Test
     public void getAll() throws Exception {
-        User expUser1 = to.createJohn();
-        User expUser2 = to.createBookingManager();
-        MvcResult mvcResult = mvc.perform(get(UserRestController.ENDPOINT))
+        Event expEvent1 = to.createParty();
+        Event expEvent2 = to.createHackathon();
+        MvcResult mvcResult = mvc.perform(get(EventRestController.ENDPOINT))
                 .andExpect(status().isOk()).andReturn();
 
         String content = mvcResult.getResponse().getContentAsString();
-        List<User> actUsers = objectMapper.readValue(content, new TypeReference<List<User>>() {
+        List<Event> actEvents = objectMapper.readValue(content, new TypeReference<List<Event>>() {
         });
 
-        expUser1.setPassword(null);
-        expUser2.setPassword(null);
-        assertThat(actUsers, containsInAnyOrder(expUser1, expUser2));
+        assertThat(actEvents, containsInAnyOrder(expEvent1, expEvent2));
     }
 }
