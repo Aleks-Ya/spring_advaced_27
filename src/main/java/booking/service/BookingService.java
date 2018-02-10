@@ -11,13 +11,13 @@ import java.util.List;
  */
 public interface BookingService {
 
-    //TODO remove dateTime (already exists in Event)
-    Booking bookTicket(long userId, long eventId, String seats, String dateTime, Double price);
+    Booking bookTicket(long userId, long eventId, String seats, Double price);
 
     Booking getById(long bookingId);
 
     long countTickets(long userId);
 
+    //TODO remove (the same as getAll().stream().map(booking -> booking.getTicket())
     List<Ticket> getBookedTickets();
 
     List<Booking> getAll();

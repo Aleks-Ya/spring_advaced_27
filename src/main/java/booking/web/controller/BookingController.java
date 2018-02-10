@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -67,13 +66,10 @@ public class BookingController {
     @RequestMapping(path = PRICE_ENDPOINT, method = RequestMethod.GET)
     String getTicketPrice(
             @RequestParam String eventId,
-            @RequestParam String auditoriumName,
             @RequestParam Long userId,
-            @RequestParam String localDateTime,
             @RequestParam String seats,
             @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         User user = userService.getById(userId);
-        LocalDateTime date = LocalDateTime.parse(localDateTime);
         List<Integer> seatsList = SeatHelper.parseSeatsString(seats);
         long eventIdLong = Long.parseLong(eventId);
         double price = bookingService.getTicketPrice(eventIdLong, seatsList, user);
@@ -97,11 +93,10 @@ public class BookingController {
     @ResponseStatus(HttpStatus.CREATED)
     String bookTicket(@RequestParam Long userId,
                       @RequestParam Long eventId,
-                      @RequestParam(required = false) String localDateTime,
                       @RequestParam String seats,
                       @RequestParam(required = false) Double price,
                       @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
-        Ticket bookedTicket = bookingService.bookTicket(userId, eventId, seats, localDateTime, price).getTicket();
+        Ticket bookedTicket = bookingService.bookTicket(userId, eventId, seats, price).getTicket();
         model.addAttribute(TICKET_ATTR, bookedTicket);
         return BOOKED_TICKET_FTL;
     }

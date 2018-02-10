@@ -66,6 +66,7 @@ public class AuditoriumController {
         return AUDITORIUM_FTL;
     }
 
+    //TODO remove and set path /id/{auditoriumId} to /{auditoriumId}
     @RequestMapping("/name/{auditoriumName}")
     String getAuditoriumByName(@PathVariable String auditoriumName, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         Auditorium auditorium = auditoriumService.getByName(auditoriumName);
@@ -73,6 +74,7 @@ public class AuditoriumController {
         return AUDITORIUM_FTL;
     }
 
+    //TODO remove and set path /id/{auditoriumId}/seatsNumber to /{auditoriumId}/seatsNumber
     @RequestMapping("/name/{auditoriumName}/seatsNumber")
     String getSeatsNumberByAuditoriumName(@PathVariable String auditoriumName, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         Auditorium auditorium = auditoriumService.getByName(auditoriumName);
@@ -87,6 +89,7 @@ public class AuditoriumController {
         return AUDITORIUM_SEATS_NUMBER_FTL;
     }
 
+    //TODO remove and set path /id/{auditoriumId}/vipSeats to /{auditoriumId}/vipSeats
     @RequestMapping("/name/{auditoriumName}/vipSeats")
     String getVipSeatsByAuditoriumName(@PathVariable String auditoriumName, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         Auditorium auditorium = auditoriumService.getByName(auditoriumName);

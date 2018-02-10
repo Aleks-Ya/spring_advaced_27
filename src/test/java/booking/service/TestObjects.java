@@ -124,15 +124,13 @@ public class TestObjects {
 
     public Booking bookTicketToParty(long userId, long eventId, String seats) {
         Event event = eventService.getById(eventId);
-        return bookingService.bookTicket(userId, eventId, seats, event.getDateTime().toString(),
-                event.getBasePrice() * 2);
+        return bookingService.bookTicket(userId, eventId, seats, event.getBasePrice() * 2);
     }
 
     public Booking bookTicketToHackathon() {
         Event event = createHackathon();
         User user = createJohnWithAccount();
-        return bookingService.bookTicket(user.getId(), event.getId(), "100,101", event.getDateTime().toString(),
-                event.getBasePrice() * 2);
+        return bookingService.bookTicket(user.getId(), event.getId(), "100,101", event.getBasePrice() * 2);
     }
 
     public Account createAccount() {

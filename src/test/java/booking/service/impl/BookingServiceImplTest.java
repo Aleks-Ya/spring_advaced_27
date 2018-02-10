@@ -22,8 +22,7 @@ public class BookingServiceImplTest extends BaseServiceTest {
     public void testBookTicket_NotRegistered() {
         Event event = to.createParty();
         long notExistsUserId = 1;
-        Booking expBooking = bookingService.bookTicket(notExistsUserId, event.getId(), "1",
-                event.getDateTime().toString(), event.getBasePrice());
+        Booking expBooking = bookingService.bookTicket(notExistsUserId, event.getId(), "1", event.getBasePrice());
         assertThat(bookingService.getById(expBooking.getId()), equalTo(expBooking));
     }
 
@@ -32,10 +31,8 @@ public class BookingServiceImplTest extends BaseServiceTest {
         User user = to.createJohn();
         Event event = to.createParty();
         String seats = "1,2";
-        bookingService.bookTicket(user.getId(), event.getId(), seats, event.getDateTime().toString(),
-                event.getBasePrice());
-        bookingService.bookTicket(user.getId(), event.getId(), seats, event.getDateTime().toString(),
-                event.getBasePrice());
+        bookingService.bookTicket(user.getId(), event.getId(), seats, event.getBasePrice());
+        bookingService.bookTicket(user.getId(), event.getId(), seats, event.getBasePrice());
     }
 
     @Test

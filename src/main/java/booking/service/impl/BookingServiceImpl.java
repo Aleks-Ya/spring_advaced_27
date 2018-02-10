@@ -9,12 +9,12 @@ import booking.domain.Ticket;
 import booking.domain.User;
 import booking.repository.BookingDao;
 import booking.service.AccountService;
-import booking.service.AuditoriumService;
 import booking.service.BookingService;
 import booking.service.DiscountService;
 import booking.service.EventService;
 import booking.service.TicketService;
 import booking.service.UserService;
+import booking.web.controller.SeatHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -39,7 +38,6 @@ public class BookingServiceImpl implements BookingService {
     private final double highRatedPriceMultiplier;
     private final double defaultRateMultiplier;
     private final EventService eventService;
-    private final AuditoriumService auditoriumService;
     private final UserService userService;
     private final BookingDao bookingDao;
     private final DiscountService discountService;
@@ -49,7 +47,6 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     public BookingServiceImpl(
             EventService eventService,
-            AuditoriumService auditoriumService,
             UserService userService,
             DiscountService discountService,
             BookingDao bookingDao,
@@ -60,7 +57,6 @@ public class BookingServiceImpl implements BookingService {
             @Value("${def.rate.price.multiplier}") double defaultRateMultiplier,
             TicketService ticketService) {
         this.eventService = eventService;
-        this.auditoriumService = auditoriumService;
         this.userService = userService;
         this.bookingDao = bookingDao;
         this.discountService = discountService;
@@ -74,11 +70,11 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     @Transactional
-    public Booking bookTicket(long userId, long eventId, String seats, String localDateTime, Double price) {
+    public Booking bookTicket(long userId, long eventId, String seats, Double price) {
         User user = userService.getById(userId);
         Event event = eventService.getById(eventId);
-        List<Integer> seatsList = Stream.of(seats.split(",")).map(Integer::valueOf).collect(Collectors.toList());
-        LocalDateTime date = localDateTime != null ? LocalDateTime.parse(localDateTime) : event.getDateTime();
+        List<Integer> seatsList = SeatHelper.parseSeatsString(seats);
+        LocalDateTime date = event.getDateTime();
         Double priceValue = price != null ? price : event.getBasePrice();
         Ticket ticket = ticketService.create(new Ticket(event, date, seatsList, priceValue));
 

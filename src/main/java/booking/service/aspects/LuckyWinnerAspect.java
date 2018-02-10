@@ -46,20 +46,20 @@ public class LuckyWinnerAspect {
     }
 
     @Pointcut(
-            value = "(execution(* booking.service.BookingService.bookTicket(long, long, String, String, Double)) && args(userId, eventId, seats, dateTime, price))",
-            argNames = "userId,eventId,seats,dateTime,price"
+            value = "(execution(* booking.service.BookingService.bookTicket(long, long, String, Double)) && args(userId, eventId, seats, price))",
+            argNames = "userId,eventId,seats,price"
     )
-    private void bookTicket(long userId, long eventId, String seats, String dateTime, Double price) {
+    private void bookTicket(long userId, long eventId, String seats, Double price) {
         // This method intended for declaring a @Pointcut
     }
 
-    @Around(value = "bookTicket(userId, eventId, seats, dateTime, price)", argNames = "joinPoint,userId,eventId,seats,dateTime,price")
-    public Object countBookTicketByName(ProceedingJoinPoint joinPoint, long userId, long eventId, String seats, String dateTime, Double price) throws Throwable {
+    @Around(value = "bookTicket(userId, eventId, seats, price)", argNames = "joinPoint,userId,eventId,seats,price")
+    public Object countBookTicketByName(ProceedingJoinPoint joinPoint, long userId, long eventId, String seats, Double price) throws Throwable {
         final int randomInt = ThreadLocalRandom.current().nextInt(100 - luckyPercentage + 1);
         if (luckyEnabled && randomInt == 0) {
             User user = userService.getById(userId);
             luckyUsers.add(user.getEmail());
-            return joinPoint.proceed(new Object[]{userId, eventId, seats, dateTime, 0.0});
+            return joinPoint.proceed(new Object[]{userId, eventId, seats, 0.0});
         } else {
             return joinPoint.proceed();
         }

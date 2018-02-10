@@ -1,7 +1,6 @@
 package booking.web.security.booking;
 
 import booking.BaseWebSecurityTest;
-import booking.domain.Auditorium;
 import booking.domain.Booking;
 import booking.domain.Event;
 import booking.domain.Ticket;
@@ -10,8 +9,6 @@ import booking.web.controller.BookingController;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ContextConfiguration;
-
-import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -44,7 +41,6 @@ public class BookingBookingManagerTest extends BaseWebSecurityTest {
         mvc.perform(post(BookingController.ROOT_ENDPOINT).session(session)
                 .param("userId", String.valueOf(user.getId()))
                 .param("eventId", String.valueOf(event.getId()))
-                .param("localDateTime", "2007-12-03T10:15:30")
                 .param("seats", "1,2,3")
                 .param("price", "100.5")
         )
@@ -59,14 +55,10 @@ public class BookingBookingManagerTest extends BaseWebSecurityTest {
 
         Booking booking = to.bookTicketToParty();
         Event event = booking.getTicket().getEvent();
-        Auditorium auditorium = event.getAuditorium();
-        LocalDateTime date = event.getDateTime();
 
         mvc.perform(get(BookingController.PRICE_ENDPOINT).session(session)
                 .param("eventName", event.getName())
-                .param("auditoriumName", auditorium.getName())
                 .param("userId", String.valueOf(user.getId()))
-                .param("localDateTime", date.toString())
                 .param("seats", "1,2,3")
         )
                 .andExpect(status().isOk());
