@@ -104,7 +104,7 @@ public class TestObjects {
 
     public Ticket createTicketToParty() {
         Event event = createParty();
-        Ticket ticket = new Ticket(event, event.getDateTime(), asList(100, 101), event.getBasePrice() * 2);
+        Ticket ticket = new Ticket(event, asList(100, 101), event.getBasePrice() * 2);
         return ticketService.create(ticket);
     }
 

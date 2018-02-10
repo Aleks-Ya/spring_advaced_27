@@ -31,15 +31,13 @@ class PdfView extends AbstractView {
             for (Ticket ticket : tickets) {
                 Event event = ticket.getEvent();
                 String eventStr = event != null ? event.getName() : "No event info";
-                String ticketLine = String.format("%s, %s", eventStr, ticket.getDateTime());
-                Paragraph paragraph = new Paragraph(ticketLine);
+                Paragraph paragraph = new Paragraph(eventStr);
                 document.add(paragraph);
             }
         } else {
             document.add(new Paragraph(" "));
         }
     }
-
 
     @Override
     protected void renderMergedOutputModel(Map<String, Object> model,

@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -74,9 +73,8 @@ public class BookingServiceImpl implements BookingService {
         User user = userService.getById(userId);
         Event event = eventService.getById(eventId);
         List<Integer> seatsList = SeatHelper.parseSeatsString(seats);
-        LocalDateTime date = event.getDateTime();
         Double priceValue = price != null ? price : event.getBasePrice();
-        Ticket ticket = ticketService.create(new Ticket(event, date, seatsList, priceValue));
+        Ticket ticket = ticketService.create(new Ticket(event, seatsList, priceValue));
 
         if (Objects.isNull(user)) {
             throw new IllegalStateException("User: [" + userId + "] is not registered");

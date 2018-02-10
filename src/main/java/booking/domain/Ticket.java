@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -18,25 +17,23 @@ public class Ticket {
     private Long id;
     @ManyToOne
     private Event event;
-    private LocalDateTime dateTime;//TODO remove (use Event#dateTime)
     private String seats;
     private Double price;
 
     public Ticket() {
     }
 
-    public Ticket(Event event, LocalDateTime dateTime, List<Integer> seats, double price) {
-        this(null, event, dateTime, seats, price);
+    public Ticket(Event event, List<Integer> seats, double price) {
+        this(null, event, seats, price);
     }
 
-    public Ticket(Long id, Event event, LocalDateTime dateTime, List<Integer> seats, Double price) {
-        this(id, event, dateTime, CsvUtil.fromListToCsv(seats), price);
+    public Ticket(Long id, Event event, List<Integer> seats, Double price) {
+        this(id, event, CsvUtil.fromListToCsv(seats), price);
     }
 
-    public Ticket(Long id, Event event, LocalDateTime dateTime, String seats, Double price) {
+    public Ticket(Long id, Event event, String seats, Double price) {
         this.id = id;
         this.event = event;
-        this.dateTime = dateTime;
         this.price = price;
         this.seats = seats;
     }
@@ -55,14 +52,6 @@ public class Ticket {
 
     public void setEvent(Event event) {
         this.event = event;
-    }
-
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
     }
 
     public String getSeats() {
@@ -100,8 +89,6 @@ public class Ticket {
 
         if (event != null ? !event.equals(ticket.event) : ticket.event != null)
             return false;
-        if (dateTime != null ? !dateTime.equals(ticket.dateTime) : ticket.dateTime != null)
-            return false;
         if (seats != null ? !seats.equals(ticket.seats) : ticket.seats != null)
             return false;
         return price != null ? price.equals(ticket.price) : ticket.price == null;
@@ -111,7 +98,6 @@ public class Ticket {
     @Override
     public int hashCode() {
         int result = event != null ? event.hashCode() : 0;
-        result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
         result = 31 * result + (seats != null ? seats.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         return result;
@@ -122,13 +108,8 @@ public class Ticket {
         return "Ticket{" +
                 "id=" + id +
                 ", event=" + event +
-                ", dateTime=" + dateTime +
                 ", seats=" + seats +
                 ", price=" + price +
                 '}';
-    }
-
-    public Ticket withId(Long ticketId) {
-        return new Ticket(ticketId, event, dateTime, seats, price);
     }
 }

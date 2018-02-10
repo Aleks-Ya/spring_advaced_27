@@ -29,8 +29,8 @@ public class BookingPdfControllerTest extends BaseWebTest {
         byte[] body = mvcResult.getResponse().getContentAsByteArray();
         PDF bodyPdf = new PDF(body);
         assertThat(bodyPdf, allOf(
-                containsText("New Year Party, 2018-12-31T23:00"),
-                containsText("Java Hackathon, 2018-03-13T09:00")
+                containsText("New Year Party"),
+                containsText("Java Hackathon")
         ));
     }
 }
