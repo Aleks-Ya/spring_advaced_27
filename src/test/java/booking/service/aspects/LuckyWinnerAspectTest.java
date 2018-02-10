@@ -30,10 +30,10 @@ public class LuckyWinnerAspectTest extends BaseServiceTest {
     @Test
     public void testCalculateDiscount() {
         User user = to.createJohnBornToday();
-        bookingService.bookTicket(user.getId(), to.createTicketToParty(5, 6));
-        bookingService.bookTicket(user.getId(), to.createTicketToParty(7, 8));
-        bookingService.bookTicket(user.getId(), to.createTicketToParty(9, 10));
-        bookingService.bookTicket(user.getId(), to.createTicketToParty(11, 12));
+        to.bookTicketToParty(user.getId(), "5,6");
+        to.bookTicketToParty(user.getId(), "7,8");
+        to.bookTicketToParty(user.getId(), "9,10");
+        to.bookTicketToParty(user.getId(), "11,12");
         assertEquals(Collections.singletonList(user.getEmail()), LuckyWinnerAspectMock.getLuckyUsers());
     }
 }

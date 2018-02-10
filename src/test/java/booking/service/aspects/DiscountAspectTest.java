@@ -39,12 +39,9 @@ public class DiscountAspectTest extends BaseServiceTest {
         User user = to.createJohnBornToday();
         Ticket ticket1 = to.createTicketToParty();
         Event event = ticket1.getEvent();
-        bookingService.bookTicket(user.getId(),
-                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), asList(5, 6), ticket1.getPrice()));
-        bookingService.bookTicket(user.getId(),
-                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), asList(7, 8), ticket1.getPrice()));
-        bookingService.bookTicket(user.getId(),
-                new Ticket(ticket1.getEvent(), ticket1.getDateTime(), asList(9, 10), ticket1.getPrice()));
+        to.bookTicketToParty(user.getId(), event.getId(), "5,6");
+        to.bookTicketToParty(user.getId(), event.getId(), "7,8");
+        to.bookTicketToParty(user.getId(), event.getId(), "9,10");
         List<Integer> seats = asList(1, 2, 3, 4);
         bookingService.getTicketPrice(event.getId(), event.getAuditorium().getName(), event.getDateTime(), seats, user);
         bookingService.getTicketPrice(event.getId(), event.getAuditorium().getName(), event.getDateTime(), seats, user);

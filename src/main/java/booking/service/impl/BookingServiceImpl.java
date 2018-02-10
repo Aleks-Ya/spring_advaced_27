@@ -73,43 +73,6 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public Booking bookTicket(long userId, Ticket ticket) {
-        User user = userService.getById(userId);
-        if (Objects.isNull(user)) {
-            throw new IllegalStateException("User: [" + userId + "] is not registered");
-        }
-
-        List<Ticket> bookedTickets = bookingDao.getTicketsForEvent(ticket.getEvent().getId());
-        boolean seatsAreAlreadyBooked = bookedTickets.stream()
-                .anyMatch(bookedTicket -> ticket.getSeatsList().stream()
-                        .anyMatch(bookedTicket.getSeatsList()::contains));
-
-        if (seatsAreAlreadyBooked) {
-            throw new IllegalStateException("Unable to book ticket: [" + ticket + "]. Seats are already booked.");
-        }
-
-        Account account = accountService.getByUserId(userId);
-        if (account == null) {
-            account = accountService.create(new Account(user, BigDecimal.ZERO));
-        }
-
-        BigDecimal price = BigDecimal.valueOf(ticket.getPrice());
-        BigDecimal seatCount = BigDecimal.valueOf(ticket.getSeatsList().size());
-        BigDecimal requiredAmount = price.multiply(seatCount);
-
-        BigDecimal availableAmount = account.getAmount();
-        if (availableAmount.compareTo(requiredAmount) < 0) {
-            throw new IllegalStateException("Not enough money to buy ticket " + ticket + ". Available amount " + availableAmount);
-        }
-
-        ticketService.create(ticket);
-
-        accountService.withdrawal(account, requiredAmount);
-
-        return bookingDao.create(userId, ticket);
-    }
-
-    @Override
     @Transactional
     public Booking bookTicket(long userId, long eventId, String seats, String localDateTime, Double price) {
         User user = userService.getById(userId);

@@ -4,6 +4,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 
 @EnableAspectJAutoProxy
-@Import({CounterAspect.class, DiscountAspect.class, LuckyWinnerAspect.class})
+@Import({DiscountAspect.class, LuckyWinnerAspect.class})
 public class AspectConfig {
 }

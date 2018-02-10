@@ -9,6 +9,7 @@ public interface AuditoriumDao {
 
     List<Auditorium> getAll();
 
+    //TODO remove
     Auditorium getByName(String auditoriumName);
 
     Optional<Auditorium> getById(Long auditoriumId);

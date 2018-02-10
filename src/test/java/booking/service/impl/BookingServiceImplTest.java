@@ -20,38 +20,36 @@ public class BookingServiceImplTest extends BaseServiceTest {
 
     @Test(expected = RuntimeException.class)
     public void testBookTicket_NotRegistered() {
-        Ticket ticket = to.createTicketToParty();
+        Event event = to.createParty();
         long notExistsUserId = 1;
-        Booking expBooking = bookingService.bookTicket(notExistsUserId, ticket);
+        Booking expBooking = bookingService.bookTicket(notExistsUserId, event.getId(), "1",
+                event.getDateTime().toString(), event.getBasePrice());
         assertThat(bookingService.getById(expBooking.getId()), equalTo(expBooking));
     }
 
     @Test(expected = RuntimeException.class)
     public void testBookTicket_AlreadyBooked() {
-        Ticket newTicket = to.createTicketToParty();
         User user = to.createJohn();
-        bookingService.bookTicket(user.getId(), newTicket);
-        bookingService.bookTicket(user.getId(), newTicket);
+        Event event = to.createParty();
+        String seats = "1,2";
+        bookingService.bookTicket(user.getId(), event.getId(), seats, event.getDateTime().toString(),
+                event.getBasePrice());
+        bookingService.bookTicket(user.getId(), event.getId(), seats, event.getDateTime().toString(),
+                event.getBasePrice());
     }
 
     @Test
     public void getAll() {
-        Ticket newTicket = to.createTicketToHackathon();
-        User user = to.createJohnWithAccount();
-        Booking booking = bookingService.bookTicket(user.getId(), newTicket);
-
-        assertThat(bookingService.getAll(), containsInAnyOrder(booking));
+        Booking booking1 = to.bookTicketToParty();
+        Booking booking2 = to.bookTicketToParty();
+        assertThat(bookingService.getAll(), containsInAnyOrder(booking1, booking2));
     }
 
     @Test
     public void testGetTicketPrice_DiscountsForTicketsAndForBirthday() {
-        Ticket ticket = to.createTicketToParty();
-        Ticket ticket2 = to.createTicketToHackathon();
-        User user = to.createJohnWithAccount();
         User registeredUser = to.createJohnWithAccount();
-        bookingService.bookTicket(registeredUser.getId(), ticket);
-        bookingService.bookTicket(user.getId(), ticket2);
-        Event event = ticket.getEvent();
+        Booking booking = to.bookTicketToParty(registeredUser.getId());
+        Event event = booking.getTicket().getEvent();
         double ticketPrice = bookingService.getTicketPrice(event.getId(), event.getAuditorium().getName(),
                 event.getDateTime(), Arrays.asList(5, 6, 7, 8),
                 registeredUser);
@@ -60,12 +58,10 @@ public class BookingServiceImplTest extends BaseServiceTest {
 
     @Test
     public void testGetTicketPrice_DiscountsForTicketsAndForBirthday_MidRate() {
-        Ticket ticket = to.createTicketToParty();
-        Ticket ticket2 = to.createTicketToHackathon();
         User user = to.createJohnWithAccount();
-        bookingService.bookTicket(user.getId(), ticket);
-        bookingService.bookTicket(user.getId(), ticket2);
-        Event event = ticket.getEvent();
+        Booking booking1 = to.bookTicketToParty(user.getId(), "5,6");
+//        to.bookTicketToParty(user.getId(), "5,6");//TODO uncomment after BookingService.getTicketPrice() started accept auditoriumId
+        Event event = booking1.getTicket().getEvent();
         double ticketPrice = bookingService.getTicketPrice(event.getId(), event.getAuditorium().getName(),
                 event.getDateTime(), Arrays.asList(5, 6, 7), user);
         assertEquals("Price is wrong", 960.0, ticketPrice, 0.00001);

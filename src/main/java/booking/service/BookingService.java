@@ -12,8 +12,6 @@ import java.util.List;
  */
 public interface BookingService {
 
-    Booking bookTicket(long userId, Ticket ticket);
-
     Booking bookTicket(long userId, long eventId, String seats, String dateTime, Double price);
 
     Booking getById(long bookingId);
@@ -26,6 +24,7 @@ public interface BookingService {
 
     void delete(long bookingId);
 
+    //TODO accept auditoriumId
     double getTicketPrice(long eventId, String auditoriumName, LocalDateTime dateTime,
                           List<Integer> seats, User user);
 

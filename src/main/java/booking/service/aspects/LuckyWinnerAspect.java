@@ -1,6 +1,5 @@
 package booking.service.aspects;
 
-import booking.domain.Ticket;
 import booking.domain.User;
 import booking.service.UserService;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -47,21 +46,20 @@ public class LuckyWinnerAspect {
     }
 
     @Pointcut(
-            value = "(execution(* booking.service.BookingService.bookTicket(long, booking.domain.Ticket)) && args(userId, ticket))",
-            argNames = "userId,ticket"
+            value = "(execution(* booking.service.BookingService.bookTicket(long, long, String, String, Double)) && args(userId, eventId, seats, dateTime, price))",
+            argNames = "userId,eventId,seats,dateTime,price"
     )
-    private void bookTicket(long userId, Ticket ticket) {
+    private void bookTicket(long userId, long eventId, String seats, String dateTime, Double price) {
         // This method intended for declaring a @Pointcut
     }
 
-    @Around(value = "bookTicket(userId, ticket)", argNames = "joinPoint,userId,ticket")
-    public Object countBookTicketByName(ProceedingJoinPoint joinPoint, long userId, Ticket ticket) throws Throwable {
+    @Around(value = "bookTicket(userId, eventId, seats, dateTime, price)", argNames = "joinPoint,userId,eventId,seats,dateTime,price")
+    public Object countBookTicketByName(ProceedingJoinPoint joinPoint, long userId, long eventId, String seats, String dateTime, Double price) throws Throwable {
         final int randomInt = ThreadLocalRandom.current().nextInt(100 - luckyPercentage + 1);
         if (luckyEnabled && randomInt == 0) {
-            Ticket luckyTicket = new Ticket(ticket.getEvent(), ticket.getDateTime(), ticket.getSeatsList(), 0.0);
             User user = userService.getById(userId);
             luckyUsers.add(user.getEmail());
-            return joinPoint.proceed(new Object[]{userId, luckyTicket});
+            return joinPoint.proceed(new Object[]{userId, eventId, seats, dateTime, 0.0});
         } else {
             return joinPoint.proceed();
         }

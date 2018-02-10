@@ -108,30 +108,31 @@ public class TestObjects {
         return ticketService.create(ticket);
     }
 
-    public Ticket createTicketToParty(Integer... seats) {
-        Event event = createParty();
-        Ticket ticket = new Ticket(event, event.getDateTime(), asList(seats), event.getBasePrice() * 2);
-        return ticketService.create(ticket);
-    }
-
-    public Ticket createTicketToHackathon() {
-        Event event = createHackathon();
-        Ticket ticket = new Ticket(event, event.getDateTime(), asList(200, 201, 202), event.getBasePrice() * 3);
-        return ticketService.create(ticket);
-    }
-
     public Booking bookTicketToParty() {
-        Event event = createParty();
-        Ticket ticket = new Ticket(event, event.getDateTime(), asList(100, 101), event.getBasePrice() * 2);
         User user = createJohnWithAccount();
-        return bookingService.bookTicket(user.getId(), ticket);
+        return bookTicketToParty(user.getId());
+    }
+
+    public Booking bookTicketToParty(long userId) {
+        return bookTicketToParty(userId, "100,101");
+    }
+
+    public Booking bookTicketToParty(long userId, String seats) {
+        Event event = createParty();
+        return bookTicketToParty(userId, event.getId(), seats);
+    }
+
+    public Booking bookTicketToParty(long userId, long eventId, String seats) {
+        Event event = eventService.getById(eventId);
+        return bookingService.bookTicket(userId, eventId, seats, event.getDateTime().toString(),
+                event.getBasePrice() * 2);
     }
 
     public Booking bookTicketToHackathon() {
         Event event = createHackathon();
-        Ticket ticket = new Ticket(event, event.getDateTime(), asList(100, 101), event.getBasePrice() * 2);
         User user = createJohnWithAccount();
-        return bookingService.bookTicket(user.getId(), ticket);
+        return bookingService.bookTicket(user.getId(), event.getId(), "100,101", event.getDateTime().toString(),
+                event.getBasePrice() * 2);
     }
 
     public Account createAccount() {

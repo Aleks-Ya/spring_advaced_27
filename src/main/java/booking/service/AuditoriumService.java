@@ -8,6 +8,7 @@ public interface AuditoriumService {
 
     List<Auditorium> getAll();
 
+    //TODO remove and remove "id" and "name" from controller paths
     Auditorium getByName(String auditoriumName);
 
     Auditorium getById(Long auditoriumId);
