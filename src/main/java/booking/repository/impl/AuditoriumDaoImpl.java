@@ -2,7 +2,6 @@ package booking.repository.impl;
 
 import booking.domain.Auditorium;
 import booking.repository.AuditoriumDao;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,23 +17,17 @@ public class AuditoriumDaoImpl extends AbstractDao implements AuditoriumDao {
     }
 
     @Override
-    public Auditorium getByName(String auditoriumName) {
-        return ((Auditorium) createBlankCriteria(Auditorium.class).add(Restrictions.eq("name", auditoriumName)).uniqueResult());
-    }
-
-    @Override
     public Optional<Auditorium> getById(Long auditoriumId) {
-        return Optional.ofNullable((Auditorium) createBlankCriteria(Auditorium.class).add(Restrictions.eq("id", auditoriumId)).uniqueResult());
+        return Optional.ofNullable(getCurrentSession().get(Auditorium.class, auditoriumId));
     }
 
     @Override
     public void delete(Long auditoriumId) {
-        Auditorium auditorium = getCurrentSession().get(Auditorium.class, auditoriumId);
-        getCurrentSession().delete(auditorium);
+        getById(auditoriumId).ifPresent(auditorium -> getCurrentSession().delete(auditorium));
     }
 
     @Override
-    public Auditorium add(Auditorium auditorium) {
+    public Auditorium create(Auditorium auditorium) {
         Long id = (Long) getCurrentSession().save(auditorium);
         return auditorium.withId(id);
     }

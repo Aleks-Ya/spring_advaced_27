@@ -26,7 +26,6 @@ import java.util.Map;
 
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
 
 /**
  * Factory for convenient creating domain objects in tests.
@@ -52,7 +51,7 @@ public class TestObjects {
     }
 
     public Auditorium createRedHall() {
-        return auditoriumService.create(new Auditorium("Red hall", 500, singletonList(1)));
+        return auditoriumService.create(new Auditorium("Red hall", 500, asList(1, 2, 3)));
     }
 
     public User createJohn() {

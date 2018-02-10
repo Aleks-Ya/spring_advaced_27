@@ -48,7 +48,8 @@ public class EventController {
                   @RequestParam String dateTime,
                   @RequestParam Long auditoriumId,
                   @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
-        Auditorium auditorium = auditoriumService.getById(auditoriumId);
+        Auditorium auditorium = auditoriumService.getById(auditoriumId)
+                .orElseThrow(() -> new IllegalArgumentException("Auditorium not found by id: " + auditoriumId));//TODO add AuditoriumNotFoundException
         Event event = new Event(name, Rate.valueOf(rate), bastPrice, LocalDateTime.parse(dateTime), auditorium);
         Event eventCreated = eventService.create(event);
         model.addAttribute(EVENT_ATTR, eventCreated);

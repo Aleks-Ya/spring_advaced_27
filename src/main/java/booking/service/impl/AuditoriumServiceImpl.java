@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
+import static java.util.Collections.emptyList;
 
 @Service
 public class AuditoriumServiceImpl implements AuditoriumService {
@@ -24,28 +27,28 @@ public class AuditoriumServiceImpl implements AuditoriumService {
     }
 
     @Override
-    public Auditorium getByName(String auditoriumName) {
-        return auditoriumDao.getByName(auditoriumName);
+    public Optional<Auditorium> getById(Long auditoriumId) {
+        return auditoriumDao.getById(auditoriumId);
     }
 
     @Override
-    public Auditorium getById(Long auditoriumId) {
-        return auditoriumDao.getById(auditoriumId).orElse(null);
+    public Optional<Integer> getSeatsNumber(long auditoriumId) {
+        return auditoriumDao.getById(auditoriumId).map(Auditorium::getSeatsNumber);
     }
 
     @Override
-    public int getSeatsNumber(String auditoriumName) {
-        return auditoriumDao.getByName(auditoriumName).getSeatsNumber();
-    }
-
-    @Override
-    public List<Integer> getVipSeats(String auditoriumName) {
-        return auditoriumDao.getByName(auditoriumName).getVipSeatsList();
+    public List<Integer> getVipSeats(long auditoriumId) {
+        Optional<Auditorium> auditoriumOpt = auditoriumDao.getById(auditoriumId);
+        if (auditoriumOpt.isPresent()) {
+            return auditoriumOpt.get().getVipSeatsList();
+        } else {
+            return emptyList();
+        }
     }
 
     @Override
     public Auditorium create(Auditorium auditorium) {
-        return auditoriumDao.add(auditorium);
+        return auditoriumDao.create(auditorium);
     }
 
     @Override

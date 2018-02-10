@@ -8,7 +8,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
 public class AuditoriumServiceImplTest extends BaseServiceTest {
@@ -17,9 +17,9 @@ public class AuditoriumServiceImplTest extends BaseServiceTest {
     public void testDelete() {
         Auditorium auditorium = to.createBlueHall();
         long auditoriumId = auditorium.getId();
-        assertThat(auditoriumService.getById(auditoriumId), equalTo(auditorium));
+        assertThat(auditoriumService.getById(auditoriumId).get(), equalTo(auditorium));
         auditoriumService.delete(auditoriumId);
-        assertNull(auditoriumService.getById(auditoriumId));
+        assertFalse(auditoriumService.getById(auditoriumId).isPresent());
     }
 
     @Test
@@ -31,19 +31,10 @@ public class AuditoriumServiceImplTest extends BaseServiceTest {
     }
 
     @Test
-    public void testGetByName() {
-        Auditorium auditorium1 = to.createBlueHall();
-        assertThat(auditoriumService.getByName(auditorium1.getName()), equalTo(auditorium1));
-    }
-
-    @Test
     public void testGetById() {
-        Auditorium auditorium1 = to.createBlueHall();
-        assertThat(auditoriumService.getById(auditorium1.getId()), equalTo(auditorium1));
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void testGetByName_Exception() {
-        auditoriumService.getSeatsNumber("bla-bla-bla");
+        Auditorium auditorium = to.createBlueHall();
+        Auditorium actAuditorium = auditoriumService.getById(auditorium.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Auditorium not found by id: " + auditorium.getId()));//TODO add AuditoriumNotFoundException
+        assertThat(actAuditorium, equalTo(auditorium));
     }
 }

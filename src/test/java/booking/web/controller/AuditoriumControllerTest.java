@@ -7,8 +7,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.util.Arrays;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,7 +55,8 @@ public class AuditoriumControllerTest extends BaseWebTest {
                         auditoriumId
                 )));
 
-        Auditorium actAuditorium = auditoriumService.getById(auditoriumId);
+        Auditorium actAuditorium = auditoriumService.getById(auditoriumId)
+                .orElseThrow(() -> new IllegalArgumentException("Auditorium not found by id: " + auditoriumId));//TODO add AuditoriumNotFoundException
         assertThat(actAuditorium.getName(), equalTo(expAuditoriumName));
         assertThat(Integer.toString(actAuditorium.getSeatsNumber()), equalTo(expSeatsNumber));
         assertThat(actAuditorium.getVipSeats(), equalTo(expVipSeats));
@@ -67,7 +66,7 @@ public class AuditoriumControllerTest extends BaseWebTest {
     public void getAuditoriums() throws Exception {
         Auditorium blueHall = to.createBlueHall();
         Auditorium redHall = to.createRedHall();
-        mvc.perform(get("/auditorium"))
+        mvc.perform(get(AuditoriumController.ENDPOINT))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(ANONYMOUS_HEADER +
                                 NAVIGATOR +
@@ -81,112 +80,67 @@ public class AuditoriumControllerTest extends BaseWebTest {
                                 "<p>Id: %d</p>\n" +
                                 "<p>Name: Red hall</p>\n" +
                                 "<p>Seats number: 500</p>\n" +
-                                "<p>VIP seats: 1</p><hr/>\n",
+                                "<p>VIP seats: 1,2,3</p><hr/>\n",
                         blueHall.getId(),
                         redHall.getId())));
     }
 
     @Test
     public void getById() throws Exception {
-        Auditorium auditorium = auditoriumService.create(new Auditorium("Meeting room",
-                500, Arrays.asList(1, 2, 3)));
-        mvc.perform(get("/auditorium/id/" + auditorium.getId()))
+        Auditorium auditorium = to.createRedHall();
+        mvc.perform(get(AuditoriumController.ENDPOINT + "/" + auditorium.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(ANONYMOUS_HEADER +
                                 "<h1>Auditorium</h1>\n" +
                                 "<p>Id: %d</p>\n" +
-                                "<p>Name: Meeting room</p>\n" +
+                                "<p>Name: Red hall</p>\n" +
                                 "<p>Seats number: 500</p>\n" +
                                 "<p>VIP seats: 1,2,3</p>",
                         auditorium.getId())));
-    }
-
-    @Test
-    public void getAuditoriumByName() throws Exception {
-        Auditorium auditorium = auditoriumService.create(new Auditorium("Relax room",
-                500, Arrays.asList(1, 2, 3)));
-        mvc.perform(get("/auditorium/name/" + auditorium.getName()))
-                .andExpect(status().isOk())
-                .andExpect(content().string(format(
-                        ANONYMOUS_HEADER +
-                                "<h1>Auditorium</h1>\n" +
-                                "<p>Id: %d</p>\n" +
-                                "<p>Name: Relax room</p>\n" +
-                                "<p>Seats number: 500</p>\n" +
-                                "<p>VIP seats: 1,2,3</p>",
-                        auditorium.getId())));
-    }
-
-    @Test
-    public void seatsNumberByAuditoriumNameGet() throws Exception {
-        String auditoriumName = UUID.randomUUID().toString();
-        auditoriumService.create(new Auditorium(auditoriumName, 500, Arrays.asList(1, 2, 3)));
-        mvc.perform(get(format("/auditorium/name/%s/seatsNumber", auditoriumName)))
-                .andExpect(status().isOk())
-                .andExpect(content().string(format(
-                        ANONYMOUS_HEADER +
-                                "<h1>Seats number</h1>\n" +
-                                "<p>Auditorium: %s</p>\n" +
-                                "<p>Seats number: 500</p>", auditoriumName)));
     }
 
     @Test
     public void seatsNumberByAuditoriumIdGet() throws Exception {
-        String auditoriumName = UUID.randomUUID().toString();
-        Auditorium auditorium = auditoriumService.create(new Auditorium(auditoriumName,
-                500, Arrays.asList(1, 2, 3)));
-        mvc.perform(get(format("/auditorium/id/%s/seatsNumber", auditorium.getId())))
+        Auditorium auditorium = to.createRedHall();
+        mvc.perform(get(format(AuditoriumController.ENDPOINT + "/%s/seatsNumber", auditorium.getId())))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(ANONYMOUS_HEADER +
-                        "<h1>Seats number</h1>\n" +
-                        "<p>Auditorium: %s</p>\n" +
-                        "<p>Seats number: 500</p>", auditoriumName)));
-    }
-
-    @Test
-    public void vipSeatsByAuditoriumNameGet() throws Exception {
-        Auditorium auditorium = to.createBlueHall();
-        mvc.perform(get(format("/auditorium/name/%s/vipSeats", auditorium.getName())))
-                .andExpect(status().isOk())
-                .andExpect(content().string(ANONYMOUS_HEADER +
-                        "<h1>VIP seats</h1>\n" +
-                        "<p>Auditorium: Blue hall</p>\n" +
-                        "<p>VIP seats: 1,2,3,4,5</p>"));
+                                "<h1>Seats number</h1>\n" +
+                                "<p>Auditorium: %s</p>\n" +
+                                "<p>Seats number: %d</p>",
+                        auditorium.getName(), auditorium.getSeatsNumber())));
     }
 
     @Test
     public void vipSeatsByAuditoriumIdGet() throws Exception {
-        Auditorium auditorium = auditoriumService.create(new Auditorium("Red room",
-                500, Arrays.asList(1, 2, 3)));
-        mvc.perform(get(format("/auditorium/id/%d/vipSeats", auditorium.getId())))
+        Auditorium auditorium = to.createRedHall();
+        mvc.perform(get(format(AuditoriumController.ENDPOINT + "/%d/vipSeats", auditorium.getId())))
                 .andExpect(status().isOk())
                 .andExpect(content().string(
                         ANONYMOUS_HEADER +
                                 "<h1>VIP seats</h1>\n" +
-                                "<p>Auditorium: Red room</p>\n" +
+                                "<p>Auditorium: Red hall</p>\n" +
                                 "<p>VIP seats: 1,2,3</p>"));
     }
 
     @Test
     public void deleteExistsAuditorium() throws Exception {
-        String auditoriumName = UUID.randomUUID().toString();
-        Auditorium auditorium = auditoriumService.create(new Auditorium(auditoriumName,
-                500, Arrays.asList(1, 2, 3)));
-        mvc.perform(delete(format("/auditorium/id/%s/delete", auditorium.getId())))
+        Auditorium auditorium = to.createRedHall();
+        mvc.perform(delete(format(AuditoriumController.ENDPOINT + "/%s/delete", auditorium.getId())))
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(ANONYMOUS_HEADER +
                                 "<h1>Auditorium is deleted</h1>\n" +
                                 "<p>Id: %d</p>\n" +
                                 "<p>Name: %s</p>\n" +
-                                "<p>Seats number: 500</p>\n" +
+                                "<p>Seats number: %d</p>\n" +
                                 "<p>VIP seats: 1,2,3</p>",
-                        auditorium.getId(), auditoriumName)));
+                        auditorium.getId(), auditorium.getName(), auditorium.getSeatsNumber())));
     }
 
     @Test
     public void deleteNotExistsAuditorium() throws Exception {
         int notExistsAuditoriumId = 1234567;
-        mvc.perform(delete(format("/auditorium/id/%s/delete", notExistsAuditoriumId)))
+        mvc.perform(delete(format(AuditoriumController.ENDPOINT + "/%s/delete", notExistsAuditoriumId)))
                 .andExpect(status().isOk())
                 .andExpect(content().string(ANONYMOUS_HEADER + NAVIGATOR +
                         "<h1>An error occurred</h1>\n" +

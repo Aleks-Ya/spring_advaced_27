@@ -3,19 +3,17 @@ package booking.service;
 import booking.domain.Auditorium;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AuditoriumService {
 
     List<Auditorium> getAll();
 
-    //TODO remove and remove "id" and "name" from controller paths
-    Auditorium getByName(String auditoriumName);
+    Optional<Auditorium> getById(Long auditoriumId);
 
-    Auditorium getById(Long auditoriumId);
+    Optional<Integer> getSeatsNumber(long auditoriumId);
 
-    int getSeatsNumber(String auditoriumName);
-
-    List<Integer> getVipSeats(String auditoriumName);
+    List<Integer> getVipSeats(long auditoriumId);
 
     Auditorium create(Auditorium auditorium);
 
