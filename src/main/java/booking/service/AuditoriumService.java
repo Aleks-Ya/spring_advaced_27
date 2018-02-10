@@ -9,7 +9,7 @@ public interface AuditoriumService {
 
     List<Auditorium> getAll();
 
-    Optional<Auditorium> getById(Long auditoriumId);
+    Auditorium getById(Long auditoriumId);
 
     Optional<Integer> getSeatsNumber(long auditoriumId);
 

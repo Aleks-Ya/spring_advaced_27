@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static booking.exception.BookingExceptionFactory.accountNotFoundByUserId;
+import static booking.exception.BookingExceptionFactory.notFoundById;
+
 @Service
 @Transactional
 public class AccountServiceImpl implements AccountService {
@@ -28,12 +31,12 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account getById(long accountId) {
-        return accountDao.getById(accountId);
+        return accountDao.getById(accountId).orElseThrow(() -> notFoundById(Account.class, accountId));
     }
 
     @Override
     public Account getByUserId(long userId) {
-        return accountDao.getByUserId(userId);
+        return accountDao.getByUserId(userId).orElseThrow(() -> accountNotFoundByUserId(userId));
     }
 
     @Override

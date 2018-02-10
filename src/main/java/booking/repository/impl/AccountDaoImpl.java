@@ -9,6 +9,10 @@ import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
+
+import static booking.exception.BookingExceptionFactory.notFoundById;
+import static booking.exception.BookingExceptionFactory.userAlreadyHasAccount;
 
 public class AccountDaoImpl extends AbstractDao implements AccountDao {
 
@@ -22,10 +26,10 @@ public class AccountDaoImpl extends AbstractDao implements AccountDao {
     @Override
     public Account create(Account account) {
         long userId = account.getUser().getId();
-        User user = userDao.getById(userId);
+        User user = userDao.getById(userId).orElseThrow(() -> notFoundById(Account.class, userId));
         UserService.validateUser(user);
-        if (getByUserId(userId) != null) {
-            throw new IllegalStateException("User already has account: " + user);
+        if (getByUserId(userId).isPresent()) {
+            throw userAlreadyHasAccount(user);
         }
         getCurrentSession().saveOrUpdate(user);
         getCurrentSession().saveOrUpdate(account);
@@ -33,15 +37,15 @@ public class AccountDaoImpl extends AbstractDao implements AccountDao {
     }
 
     @Override
-    public Account getById(long accountId) {
-        return getCurrentSession().get(Account.class, accountId);
+    public Optional<Account> getById(long accountId) {
+        return Optional.ofNullable(getCurrentSession().get(Account.class, accountId));
     }
 
     @Override
-    public Account getByUserId(long userId) {
+    public Optional<Account> getByUserId(long userId) {
         Query query = getCurrentSession().createQuery("from Account a where a.user.id = :userId");
         query.setParameter("userId", userId);
-        return (Account) query.uniqueResult();
+        return Optional.ofNullable((Account) query.uniqueResult());
     }
 
     @Override
@@ -58,7 +62,7 @@ public class AccountDaoImpl extends AbstractDao implements AccountDao {
 
     @Override
     public void deleteById(long accountId) {
-        getCurrentSession().delete(getById(accountId));
+        getById(accountId).ifPresent(getCurrentSession()::delete);
     }
 
     @Override

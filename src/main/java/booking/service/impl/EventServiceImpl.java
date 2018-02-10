@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static booking.exception.BookingExceptionFactory.notFoundById;
+
+
 @Service
 public class EventServiceImpl implements EventService {
 
@@ -30,7 +33,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public Event getById(Long eventId) {
-        return eventDao.getById(eventId);
+        return eventDao.getById(eventId).orElseThrow(() -> notFoundById(Event.class, eventId));
     }
 
     public Event getByAuditoriumAndDate(Auditorium auditorium, LocalDateTime dateTime) {

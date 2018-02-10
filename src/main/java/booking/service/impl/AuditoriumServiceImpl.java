@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static booking.exception.BookingExceptionFactory.notFoundById;
 import static java.util.Collections.emptyList;
 
 @Service
@@ -27,8 +28,8 @@ public class AuditoriumServiceImpl implements AuditoriumService {
     }
 
     @Override
-    public Optional<Auditorium> getById(Long auditoriumId) {
-        return auditoriumDao.getById(auditoriumId);
+    public Auditorium getById(Long auditoriumId) {
+        return auditoriumDao.getById(auditoriumId).orElseThrow(() -> notFoundById(Auditorium.class, auditoriumId));
     }
 
     @Override

@@ -37,16 +37,17 @@ public class DiscountAspectTest extends BaseServiceTest {
     @Test
     public void testCalculateDiscount() {
         User user = to.createJohnBornToday();
-        Ticket ticket1 = to.createTicketToParty();
-        Event event = ticket1.getEvent();
-        to.bookTicketToParty(user.getId(), event.getId(), "5,6");
-        to.bookTicketToParty(user.getId(), event.getId(), "7,8");
-        to.bookTicketToParty(user.getId(), event.getId(), "9,10");
+        Ticket ticket = to.createTicketToParty();
+        Event event = ticket.getEvent();
+        Long userId = user.getId();
+        to.bookTicketToParty(userId, event.getId(), "5,6");
+        to.bookTicketToParty(userId, event.getId(), "7,8");
+        to.bookTicketToParty(userId, event.getId(), "9,10");
         List<Integer> seats = asList(1, 2, 3, 4);
-        bookingService.getTicketPrice(event.getId(), seats, user);
-        bookingService.getTicketPrice(event.getId(), seats, user);
-        bookingService.getTicketPrice(event.getId(), seats, user);
-        bookingService.getTicketPrice(event.getId(), seats, user);
+        bookingService.getTicketPrice(event.getId(), seats, userId);
+        bookingService.getTicketPrice(event.getId(), seats, userId);
+        bookingService.getTicketPrice(event.getId(), seats, userId);
+        bookingService.getTicketPrice(event.getId(), seats, userId);
         HashMap<String, Map<String, Integer>> expected = new HashMap<String, Map<String, Integer>>() {{
             put(TicketsStrategy.class.getSimpleName(), new HashMap<String, Integer>() {{
                 put(user.getEmail(), 4);

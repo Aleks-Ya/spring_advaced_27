@@ -2,6 +2,7 @@ package booking.service.impl;
 
 import booking.domain.Account;
 import booking.domain.User;
+import booking.exception.BookingExceptionFactory;
 import booking.repository.UserDao;
 import booking.service.AccountService;
 import booking.service.UserService;
@@ -15,6 +16,10 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
+
+import static booking.exception.BookingExceptionFactory.notFoundById;
+import static booking.exception.BookingExceptionFactory.userAlreadyExistWithEmail;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -31,6 +36,10 @@ public class UserServiceImpl implements UserService {
     }
 
     public User register(User user) {
+        Optional<User> userOpt = userDao.getByEmail(user.getEmail());
+        if (userOpt.isPresent()) {
+            throw userAlreadyExistWithEmail(user.getEmail());
+        }
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         User newUser = userDao.create(new User(user.getId(), user.getEmail(), user.getName(),
                 user.getBirthday(), encodedPassword, user.getRoles()));
@@ -42,12 +51,12 @@ public class UserServiceImpl implements UserService {
         userDao.delete(user.getId());
     }
 
-    public User getById(long id) {
-        return userDao.getById(id);
+    public User getById(long userId) {
+        return userDao.getById(userId).orElseThrow(() -> notFoundById(User.class, userId));
     }
 
     public User getByEmail(String email) {
-        return userDao.getByEmail(email);
+        return userDao.getByEmail(email).orElseThrow(() -> BookingExceptionFactory.userNotFoundByEmail(email));
     }
 
     @Override
@@ -62,7 +71,7 @@ public class UserServiceImpl implements UserService {
         }
         ExtendedUserDetails principal = (ExtendedUserDetails) principalObj;
         String email = principal.getEmail();
-        return userDao.getByEmail(email);
+        return userDao.getByEmail(email).orElse(null);
     }
 
     @Override

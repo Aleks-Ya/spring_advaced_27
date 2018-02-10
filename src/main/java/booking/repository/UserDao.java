@@ -4,6 +4,7 @@ import booking.domain.User;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static java.lang.String.format;
 
@@ -32,9 +33,9 @@ public interface UserDao {
 
     void delete(long userId);
 
-    User getById(long id);
+    Optional<User> getById(long id);
 
-    User getByEmail(String email);
+    Optional<User> getByEmail(String email);
 
     List<User> getAll();
 }

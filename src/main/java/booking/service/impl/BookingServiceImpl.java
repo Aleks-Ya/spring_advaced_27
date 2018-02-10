@@ -7,6 +7,7 @@ import booking.domain.Event;
 import booking.domain.Rate;
 import booking.domain.Ticket;
 import booking.domain.User;
+import booking.exception.BookingExceptionFactory;
 import booking.repository.BookingDao;
 import booking.service.AccountService;
 import booking.service.BookingService;
@@ -23,9 +24,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static booking.exception.BookingExceptionFactory.notEnoughMoneyForBooking;
+import static booking.exception.BookingExceptionFactory.notFoundById;
+import static booking.exception.BookingExceptionFactory.seatsAlreadyBooked;
 
 @Service
 @Transactional
@@ -74,11 +78,10 @@ public class BookingServiceImpl implements BookingService {
         Event event = eventService.getById(eventId);
         List<Integer> seatsList = SeatHelper.parseSeatsString(seats);
         Double priceValue = price != null ? price : event.getBasePrice();
-        Ticket ticket = ticketService.create(new Ticket(event, seatsList, priceValue));
-
-        if (Objects.isNull(user)) {
-            throw new IllegalStateException("User: [" + userId + "] is not registered");
+        if (priceValue < 0) {
+            throw BookingExceptionFactory.incorrect("Price", priceValue);
         }
+        Ticket ticket = ticketService.create(new Ticket(event, seatsList, priceValue));
 
         List<Ticket> bookedTickets = bookingDao.getTicketsForEvent(ticket.getEvent().getId());
         boolean seatsAreAlreadyBooked = bookedTickets.stream()
@@ -86,7 +89,7 @@ public class BookingServiceImpl implements BookingService {
                         .anyMatch(bookedTicket.getSeatsList()::contains));
 
         if (seatsAreAlreadyBooked) {
-            throw new IllegalStateException("Unable to book ticket: [" + ticket + "]. Seats are already booked.");
+            throw seatsAlreadyBooked(event, seats);
         }
 
         Account account = accountService.getByUserId(userId);
@@ -98,10 +101,9 @@ public class BookingServiceImpl implements BookingService {
         BigDecimal seatCount = BigDecimal.valueOf(ticket.getSeatsList().size());
         BigDecimal requiredAmount = priceDec.multiply(seatCount);
 
-        //TODO move to AccountService#withdrawal
         BigDecimal availableAmount = account.getAmount();
         if (availableAmount.compareTo(requiredAmount) < 0) {
-            throw new IllegalStateException("Not enough money to buy ticket " + ticket + ". Available amount " + availableAmount);
+            throw notEnoughMoneyForBooking(event, seats, account, requiredAmount);
         }
 
         accountService.withdrawal(account, requiredAmount);
@@ -111,11 +113,12 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Booking getById(long bookingId) {
-        return bookingDao.getById(bookingId);
+        return bookingDao.getById(bookingId).orElseThrow(() -> notFoundById(Booking.class, bookingId));
     }
 
     @Override
     public long countTickets(long userId) {
+        userService.getById(userId);
         return bookingDao.countTickets(userId);
     }
 
@@ -126,26 +129,17 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void delete(long bookingId) {
+        //noinspection ResultOfMethodCallIgnored
+        bookingDao.getById(bookingId).orElseThrow(() -> notFoundById(Booking.class, bookingId));
         bookingDao.delete(bookingId);
     }
 
     @Override
-    public double getTicketPrice(long eventId, List<Integer> seats, User user) {
-        if (Objects.isNull(seats)) {
-            throw new NullPointerException("Seats are [null]");
-        }
-        if (Objects.isNull(user)) {
-            throw new NullPointerException("User is [null]");
-        }
-        if (seats.contains(null)) {
-            throw new NullPointerException("Seats contain [null]");
-        }
+    public double getTicketPrice(long eventId, List<Integer> seats, long userId) {
+        SeatHelper.verifySeatList(seats);
 
-
+        User user = userService.getById(userId);
         final Event event = eventService.getById(eventId);
-        if (Objects.isNull(event)) {
-            throw new IllegalStateException("There is no event with id: " + eventId);
-        }
         final Auditorium auditorium = event.getAuditorium();
 
         final double baseSeatPrice = event.getBasePrice();
@@ -175,14 +169,13 @@ public class BookingServiceImpl implements BookingService {
         final Optional<Integer> incorrectSeat = seats.stream().filter(
                 seat -> seat < minSeatNumber || seat > seatsNumber).findFirst();
         incorrectSeat.ifPresent(seat -> {
-            throw new IllegalArgumentException(
-                    String.format("Seat: [%s] is incorrect. Auditorium: [%s] has [%s] seats", seat, auditorium.getName(),
-                            seatsNumber));
+            throw BookingExceptionFactory.seatOutOfRange(seat, auditorium);
         });
     }
 
     @Override
     public List<Ticket> getTicketsForEvent(long eventId) {
+        eventService.getById(eventId);
         return bookingDao.getTicketsForEvent(eventId);
     }
 

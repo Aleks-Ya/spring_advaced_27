@@ -37,7 +37,9 @@ Release command: `mvn release:prepare release:clean`. The command increments ver
 
 ## Release notes
 **3.3**
+- Custom error messages
 - Add navigator and message on the Access denied page
+- BookingService#getTicketPrice accepts userId instead of User object
 
 **3.2**
 - Remove operation "Get event by name"

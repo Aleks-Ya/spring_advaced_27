@@ -3,6 +3,7 @@ package booking.service.impl;
 import booking.BaseServiceTest;
 import booking.domain.Account;
 import booking.domain.User;
+import booking.exception.BookingException;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -33,7 +34,7 @@ public class AccountServiceImplTest extends BaseServiceTest {
         assertThat(actAccount, not(equalTo(actAccount2)));
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test(expected = BookingException.class)
     public void useAlreadyHasAccount() {
         User user = to.createJohn();
         accountService.create(new Account(user, BigDecimal.valueOf(1000)));
@@ -48,8 +49,6 @@ public class AccountServiceImplTest extends BaseServiceTest {
         assertThat(account.getUser(), equalTo(user));
 
         accountService.delete(account.getId());
-        assertNull(accountService.getById(account.getId()));
-        assertNull(accountService.getByUserId(user.getId()));
         assertThat(accountService.getAll(), emptyIterable());
     }
 
@@ -66,11 +65,14 @@ public class AccountServiceImplTest extends BaseServiceTest {
 
     @Test
     public void getById() {
-        int notExistsAccountId = 12345;
-        assertNull(accountService.getById(notExistsAccountId));
-
         Account account = to.createAccount();
         assertThat(accountService.getById(account.getId()), equalTo(account));
+    }
+
+    @Test(expected = BookingException.class)
+    public void getByIdNotExists() {
+        int notExistsAccountId = 12345;
+        assertNull(accountService.getById(notExistsAccountId));
     }
 
     @Test

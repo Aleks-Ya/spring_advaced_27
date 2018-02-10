@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
-import java.util.Optional;
 
 import static booking.web.controller.AuditoriumController.ENDPOINT;
 
@@ -62,37 +61,30 @@ public class AuditoriumController {
 
     @RequestMapping("/{auditoriumId}")
     String getById(@PathVariable Long auditoriumId, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
-        Auditorium auditorium = auditoriumService.getById(auditoriumId)
-                .orElseThrow(() -> new IllegalArgumentException("Auditorium not found by id: " + auditoriumId));//TODO add AuditoriumNotFoundException
+        Auditorium auditorium = auditoriumService.getById(auditoriumId);
         model.addAttribute(AUDITORIUM_ATTR, auditorium);
         return AUDITORIUM_FTL;
     }
 
     @RequestMapping("/{auditoriumId}/seatsNumber")
     String getSeatsNumber(@PathVariable Long auditoriumId, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
-        Auditorium auditorium = auditoriumService.getById(auditoriumId)
-                .orElseThrow(() -> new IllegalArgumentException("Auditorium not found by id: " + auditoriumId));//TODO add AuditoriumNotFoundException
+        Auditorium auditorium = auditoriumService.getById(auditoriumId);
         model.addAttribute(AUDITORIUM_ATTR, auditorium);
         return AUDITORIUM_SEATS_NUMBER_FTL;
     }
 
     @RequestMapping("/{auditoriumId}/vipSeats")
     String getVipSeats(@PathVariable Long auditoriumId, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
-        Auditorium auditorium = auditoriumService.getById(auditoriumId)
-                .orElseThrow(() -> new IllegalArgumentException("Auditorium not found by id: " + auditoriumId));//TODO add AuditoriumNotFoundException
+        Auditorium auditorium = auditoriumService.getById(auditoriumId);
         model.addAttribute(AUDITORIUM_ATTR, auditorium);
         return AUDITORIUM_VIP_SEATS_FTL;
     }
 
     @RequestMapping(path = "/{auditoriumId}/delete", method = RequestMethod.DELETE)
     String delete(@PathVariable Long auditoriumId, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
-        Optional<Auditorium> auditoriumOpt = auditoriumService.getById(auditoriumId);
-        if (auditoriumOpt.isPresent()) {
-            auditoriumService.delete(auditoriumId);
-            model.addAttribute(AUDITORIUM_ATTR, auditoriumOpt.get());
-        } else {
-            throw new IllegalArgumentException("Auditorium is not found by id=" + auditoriumId);//TODO add AuditoriumNotFoundException
-        }
+        Auditorium auditorium = auditoriumService.getById(auditoriumId);
+        auditoriumService.delete(auditoriumId);
+        model.addAttribute(AUDITORIUM_ATTR, auditorium);
         return AUDITORIUM_DELETED_FTL;
     }
 }

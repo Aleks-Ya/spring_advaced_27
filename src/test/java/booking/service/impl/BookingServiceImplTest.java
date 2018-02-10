@@ -47,17 +47,17 @@ public class BookingServiceImplTest extends BaseServiceTest {
         User user = to.createJohnWithAccount();
         Booking booking = to.bookTicketToParty(user.getId());
         Event event = booking.getTicket().getEvent();
-        double ticketPrice = bookingService.getTicketPrice(event.getId(), asList(5, 6, 7, 8), user);
+        double ticketPrice = bookingService.getTicketPrice(event.getId(), asList(5, 6, 7, 8), user.getId());
         assertEquals("Price is wrong", 1200.0, ticketPrice, 0.00001);
     }
 
     @Test
     public void testGetTicketPrice_DiscountsForTicketsAndForBirthday_MidRate() {
         User user = to.createJohnWithAccount();
-        Booking booking1 = to.bookTicketToParty(user.getId(), "5,6");
+        Booking booking = to.bookTicketToParty(user.getId(), "5,6");
         to.bookTicketToParty(user.getId(), "5,6");
-        Event event = booking1.getTicket().getEvent();
-        double ticketPrice = bookingService.getTicketPrice(event.getId(), asList(5, 6, 7), user);
+        Event event = booking.getTicket().getEvent();
+        double ticketPrice = bookingService.getTicketPrice(event.getId(), asList(5, 6, 7), user.getId());
         assertEquals("Price is wrong", 960.0, ticketPrice, 0.00001);
     }
 
@@ -67,7 +67,7 @@ public class BookingServiceImplTest extends BaseServiceTest {
         Ticket ticket = booking.getTicket();
         Event event = ticket.getEvent();
         User user = booking.getUser();
-        double ticketPrice = bookingService.getTicketPrice(event.getId(), ticket.getSeatsList(), user);
+        double ticketPrice = bookingService.getTicketPrice(event.getId(), ticket.getSeatsList(), user.getId());
         assertEquals("Price is wrong", 480.0, ticketPrice, 0.00001);
     }
 
@@ -76,7 +76,7 @@ public class BookingServiceImplTest extends BaseServiceTest {
         Ticket ticket = to.createTicketToParty();
         User user = to.createJohn();
         Event event = ticket.getEvent();
-        double ticketPrice = bookingService.getTicketPrice(event.getId(), ticket.getSeatsList(), user);
+        double ticketPrice = bookingService.getTicketPrice(event.getId(), ticket.getSeatsList(), user.getId());
         assertEquals("Price is wrong", 480.0, ticketPrice, 0.00001);
     }
 

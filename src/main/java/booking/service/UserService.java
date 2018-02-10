@@ -20,7 +20,7 @@ public interface UserService {
 
     void delete(User user);
 
-    User getById(long id);
+    User getById(long userId);
 
     User getByEmail(String email);
 

@@ -3,6 +3,7 @@ package booking.repository;
 import booking.domain.Account;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AccountDao {
 
@@ -10,9 +11,9 @@ public interface AccountDao {
 
     List<Account> getAll();
 
-    Account getById(long accountId);
+    Optional<Account> getById(long accountId);
 
-    Account getByUserId(long userId);
+    Optional<Account> getByUserId(long userId);
 
     Account update(Account account);
 

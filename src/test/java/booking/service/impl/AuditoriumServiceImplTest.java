@@ -7,8 +7,8 @@ import org.junit.Test;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.emptyIterable;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 
 public class AuditoriumServiceImplTest extends BaseServiceTest {
@@ -17,9 +17,9 @@ public class AuditoriumServiceImplTest extends BaseServiceTest {
     public void testDelete() {
         Auditorium auditorium = to.createBlueHall();
         long auditoriumId = auditorium.getId();
-        assertThat(auditoriumService.getById(auditoriumId).get(), equalTo(auditorium));
+        assertThat(auditoriumService.getById(auditoriumId), equalTo(auditorium));
         auditoriumService.delete(auditoriumId);
-        assertFalse(auditoriumService.getById(auditoriumId).isPresent());
+        assertThat(auditoriumService.getAll(), emptyIterable());
     }
 
     @Test
@@ -33,8 +33,7 @@ public class AuditoriumServiceImplTest extends BaseServiceTest {
     @Test
     public void testGetById() {
         Auditorium auditorium = to.createBlueHall();
-        Auditorium actAuditorium = auditoriumService.getById(auditorium.getId())
-                .orElseThrow(() -> new IllegalArgumentException("Auditorium not found by id: " + auditorium.getId()));//TODO add AuditoriumNotFoundException
+        Auditorium actAuditorium = auditoriumService.getById(auditorium.getId());
         assertThat(actAuditorium, equalTo(auditorium));
     }
 }

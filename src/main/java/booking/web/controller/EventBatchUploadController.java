@@ -45,8 +45,7 @@ public class EventBatchUploadController {
             });
             for (EventCreateData eventCreateData : eventCreateDataList) {
                 Long auditoriumId = eventCreateData.getAuditoriumId();
-                Auditorium auditorium = auditoriumService.getById(auditoriumId)
-                        .orElseThrow(() -> new IllegalArgumentException("Auditorium not found by id: " + auditoriumId));//TODO add AuditoriumNotFoundException
+                Auditorium auditorium = auditoriumService.getById(auditoriumId);
                 Event event = new Event(eventCreateData.getId(), eventCreateData.getName(), eventCreateData.getRate(),
                         eventCreateData.getBasePrice(), eventCreateData.getDateTime(), auditorium);
                 eventService.create(event);

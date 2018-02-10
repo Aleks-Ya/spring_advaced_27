@@ -5,12 +5,13 @@ import booking.domain.Ticket;
 import booking.domain.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookingDao {
 
     Booking create(long userId, Ticket ticket);
 
-    Booking getById(long bookingId);
+    Optional<Booking> getById(long bookingId);
 
     List<Booking> getAll();
 

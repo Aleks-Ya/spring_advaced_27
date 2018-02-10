@@ -55,8 +55,7 @@ public class AuditoriumControllerTest extends BaseWebTest {
                         auditoriumId
                 )));
 
-        Auditorium actAuditorium = auditoriumService.getById(auditoriumId)
-                .orElseThrow(() -> new IllegalArgumentException("Auditorium not found by id: " + auditoriumId));//TODO add AuditoriumNotFoundException
+        Auditorium actAuditorium = auditoriumService.getById(auditoriumId);
         assertThat(actAuditorium.getName(), equalTo(expAuditoriumName));
         assertThat(Integer.toString(actAuditorium.getSeatsNumber()), equalTo(expSeatsNumber));
         assertThat(actAuditorium.getVipSeats(), equalTo(expVipSeats));
@@ -143,7 +142,7 @@ public class AuditoriumControllerTest extends BaseWebTest {
         mvc.perform(delete(format(AuditoriumController.ENDPOINT + "/%s/delete", notExistsAuditoriumId)))
                 .andExpect(status().isOk())
                 .andExpect(content().string(ANONYMOUS_HEADER + NAVIGATOR +
-                        "<h1>An error occurred</h1>\n" +
-                        "<p>Auditorium is not found by id=1234567</p>"));
+                        "<h1>Auditorium is not found</h1>\n" +
+                        "<p>Auditorium is not found by id 1234567</p>"));
     }
 }

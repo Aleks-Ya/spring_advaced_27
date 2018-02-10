@@ -5,6 +5,7 @@
 [#-- @ftlvariable name="booking" type="booking.domain.Booking" --]
 [#-- @ftlvariable name="ticket" type="booking.domain.Ticket" --]
 [#-- @ftlvariable name="tickets" type="java.util.List<booking.domain.Ticket>" --]
+[#-- @ftlvariable name="header" type="java.lang.String" --]
 [#-- @ftlvariable name="errorMessage" type="java.lang.String" --]
 [#-- @ftlvariable name="event" type="booking.domain.Event" --]
 [#-- @ftlvariable name="user" type="booking.domain.User" --]

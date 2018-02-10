@@ -3,6 +3,7 @@ package booking.service.impl;
 import booking.BaseServiceTest;
 import booking.domain.Auditorium;
 import booking.domain.Event;
+import booking.exception.BookingException;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
@@ -31,7 +32,7 @@ public class EventServiceImplTest extends BaseServiceTest {
         Event party = to.createParty();
         assertThat(eventService.getById(party.getId()), equalTo(party));
         eventService.delete(party);
-        assertNull(eventService.getById(party.getId()));
+        assertThat(eventService.getAll(), emptyIterable());
     }
 
     @Test(expected = RuntimeException.class)
@@ -95,7 +96,7 @@ public class EventServiceImplTest extends BaseServiceTest {
         assertThat(eventService.getById(event.getId()), equalTo(event));
     }
 
-    @Test
+    @Test(expected = BookingException.class)
     public void testGetByIdNotFound() {
         assertNull(eventService.getById(123456L));
     }

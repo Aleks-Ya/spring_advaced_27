@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class EventDaoImpl extends AbstractDao implements EventDao {
     private static final Logger LOG = LoggerFactory.getLogger(EventDaoImpl.class);
@@ -41,8 +42,8 @@ public class EventDaoImpl extends AbstractDao implements EventDao {
     }
 
     @Override
-    public Event getById(Long eventId) {
-        return (Event) createBlankCriteria(Event.class).add(Restrictions.eq("id", eventId)).uniqueResult();
+    public Optional<Event> getById(Long eventId) {
+        return Optional.ofNullable((Event) createBlankCriteria(Event.class).add(Restrictions.eq("id", eventId)).uniqueResult());
     }
 
     @Override

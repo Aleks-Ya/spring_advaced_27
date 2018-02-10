@@ -35,15 +35,10 @@ public class DiscountController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public String getDiscount(@RequestParam Long userId, @RequestParam Long eventId, @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
+    public String getDiscount(@RequestParam Long userId, @RequestParam Long eventId,
+                              @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
         User user = userService.getById(userId);
-        if (user == null) {
-            throw new IllegalArgumentException("User is not found by id=" + userId);
-        }
         Event event = eventService.getById(eventId);
-        if (event == null) {
-            throw new IllegalArgumentException("Event is not found by id=" + eventId);
-        }
         double discount = discountService.getDiscount(user, event);
         model.put(DISCOUNT_KEY, discount);
         return DISCOUNT_FTL;

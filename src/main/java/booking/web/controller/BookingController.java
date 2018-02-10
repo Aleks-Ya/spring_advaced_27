@@ -2,7 +2,6 @@ package booking.web.controller;
 
 import booking.domain.Event;
 import booking.domain.Ticket;
-import booking.domain.User;
 import booking.service.BookingService;
 import booking.service.EventService;
 import booking.service.TicketService;
@@ -69,10 +68,10 @@ public class BookingController {
             @RequestParam Long userId,
             @RequestParam String seats,
             @ModelAttribute(ControllerConfig.MODEL_ATTR) ModelMap model) {
-        User user = userService.getById(userId);
+        userService.getById(userId);
         List<Integer> seatsList = SeatHelper.parseSeatsString(seats);
         long eventIdLong = Long.parseLong(eventId);
-        double price = bookingService.getTicketPrice(eventIdLong, seatsList, user);
+        double price = bookingService.getTicketPrice(eventIdLong, seatsList, userId);
         model.addAttribute(TICKET_PRICE_ATTR, price);
         return TICKET_PRICE_FTL;
     }

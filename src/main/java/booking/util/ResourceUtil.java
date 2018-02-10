@@ -18,7 +18,7 @@ public final class ResourceUtil {
             Path path = Paths.get(url.getFile());
             return Files.readAllLines(path).stream().collect(Collectors.joining("\n"));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 }

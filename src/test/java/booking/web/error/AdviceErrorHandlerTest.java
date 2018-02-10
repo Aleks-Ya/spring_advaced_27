@@ -26,7 +26,7 @@ public class AdviceErrorHandlerTest extends BaseWebTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(ANONYMOUS_HEADER + NAVIGATOR +
                         "<h1>An error occurred</h1>\n" +
-                        "<p>User's email is [null]: [User {email='null', name='John', birthday='2000-07-03'}]</p>"));
+                        "<p>Sorry, an error happened.</p>"));
     }
 
 }

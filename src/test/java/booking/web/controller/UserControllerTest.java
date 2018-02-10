@@ -9,6 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.time.LocalDate;
 
+import static booking.web.controller.RootControllerTest.NAVIGATOR;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.junit.Assert.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -73,9 +74,9 @@ public class UserControllerTest extends BaseWebTest {
     public void getByIdNotFound() throws Exception {
         mvc.perform(get(UserController.ROOT_ENDPOINT + "/333"))
                 .andExpect(status().isOk())
-                .andExpect(content().string(LoginControllerTest.ANONYMOUS_HEADER +
-                        "<h1>User</h1>\n" +
-                        "No user info"));
+                .andExpect(content().string(LoginControllerTest.ANONYMOUS_HEADER + NAVIGATOR +
+                        "<h1>User is not found</h1>\n" +
+                        "<p>User is not found by id 333</p>"));
     }
 
 }

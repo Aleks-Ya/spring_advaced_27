@@ -1,6 +1,7 @@
 package booking.repository.impl;
 
 import booking.domain.User;
+import booking.exception.BookingExceptionFactory;
 import booking.repository.AccountDao;
 import booking.repository.UserDao;
 import org.hibernate.Query;
@@ -9,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 public class UserDaoImpl extends AbstractDao implements UserDao {
 
@@ -23,15 +24,10 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     @Override
     public User create(User user) {
         UserDao.validateUser(user);
-        User byEmail = getByEmail(user.getEmail());
-        if (Objects.nonNull(byEmail)) {
-            throw new IllegalStateException(
-                    String.format("Unable to store user: [%s]. User with email: [%s] is already created.", user,
-                            user.getEmail()));
-        } else {
-            Long userId = (Long) getCurrentSession().save(user);
-            return user.withId(userId);
-        }
+        String email = user.getEmail();
+        getByEmail(email).ifPresent(existsUser -> BookingExceptionFactory.userAlreadyExistWithEmail(email));
+        Long userId = (Long) getCurrentSession().save(user);
+        return user.withId(userId);
     }
 
     @Override
@@ -43,13 +39,14 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
     }
 
     @Override
-    public User getById(long id) {
-        return getCurrentSession().get(User.class, id);
+    public Optional<User> getById(long id) {
+        return Optional.ofNullable(getCurrentSession().get(User.class, id));
     }
 
     @Override
-    public User getByEmail(String email) {
-        return ((User) createBlankCriteria(User.class).add(Restrictions.eq("email", email)).uniqueResult());
+    public Optional<User> getByEmail(String email) {
+        return Optional.ofNullable(
+                (User) createBlankCriteria(User.class).add(Restrictions.eq("email", email)).uniqueResult());
     }
 
     @Override

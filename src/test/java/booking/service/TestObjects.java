@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
@@ -171,7 +172,7 @@ public class TestObjects {
 
     static class UserBuilder {
         private static final Map<Long, String> rawPasswords = new HashMap<>();
-        private static int userCounter = 0;
+        private static final AtomicInteger userCounter = new AtomicInteger();
 
         private final UserService userService;
         private final AccountService accountService;
@@ -205,15 +206,14 @@ public class TestObjects {
         }
 
         User build() {
-            userCounter++;
-
             LocalDate birthday = birthdayToday ? LocalDate.now() : LocalDate.of(1980, 3, 20);
             String roles = hasBookingManagerRole ? Roles.BOOKING_MANAGER : Roles.REGISTERED_USER;
 
             String rawPassword = "jpass";
+            int counter = userCounter.incrementAndGet();
             User user = userService.register(new User(
-                    format("john_%d@gmail.com", userCounter),
-                    "John Smith " + userCounter,
+                    format("john_%d@gmail.com", counter),
+                    "John Smith " + counter,
                     birthday, rawPassword, roles));
 
             if (amount > 0) {

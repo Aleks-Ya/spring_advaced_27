@@ -1,10 +1,12 @@
 package booking.repository;
 
 import booking.domain.Event;
+import booking.exception.BookingExceptionFactory;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public interface EventDao {
 
@@ -14,7 +16,7 @@ public interface EventDao {
 
     void delete(Event event);
 
-    Event getById(Long eventId);
+    Optional<Event> getById(Long eventId);
 
     List<Event> getByNameAndDate(String name, LocalDateTime dateTime);
 
@@ -27,17 +29,13 @@ public interface EventDao {
     Event getByAuditoriumAndDate(long auditoriumId, LocalDateTime date);
 
     static void validateEvent(Event event) {
-        if (Objects.isNull(event)) {
-            throw new NullPointerException("Event is [null]");
-        }
-        if (Objects.isNull(event.getName())) {
-            throw new NullPointerException("Event's name is [null]. Event: [" + event + "]");
-        }
-        if (Objects.isNull(event.getRate())) {
-            throw new NullPointerException("Events's rate is [null]. Event: [" + event + "]");
-        }
-        if (Objects.isNull(event.getAuditorium())) {
-            throw new NullPointerException("Events's auditorium is [null]. Event: [" + event + "]");
+        boolean eventIsNull = Objects.isNull(event);
+        boolean nameIsNull = Objects.isNull(event.getName());
+        boolean auditoriumIsNull = Objects.isNull(event.getAuditorium());
+        boolean rateIsNull = Objects.isNull(event.getRate());
+
+        if (eventIsNull || nameIsNull || auditoriumIsNull || rateIsNull) {
+            throw BookingExceptionFactory.incorrect(Event.class, event);
         }
     }
 }

@@ -9,8 +9,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.hamcrest.Matchers.emptyIterable;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ContextConfiguration(classes = UserBatchUploadController.class)
@@ -21,8 +22,7 @@ public class UserBatchUploadControllerTest extends BaseWebTest {
         String email1 = "stenev@gmail.com";
         String email2 = "julia@gmail.com";
 
-        assertNull(userService.getByEmail(email1));
-        assertNull(userService.getByEmail(email2));
+        assertThat(userService.getAll(), emptyIterable());
 
         String fileContent1 = JsonUtil.format("{" +
                 "'name': 'Steven'," +

@@ -1,6 +1,7 @@
 package booking.repository;
 
 import booking.domain.Ticket;
+import booking.exception.BookingExceptionFactory;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +19,7 @@ public interface TicketDao {
 
     static void validateTicket(Ticket ticket) {
         if (Objects.isNull(ticket)) {
-            throw new NullPointerException("Ticket is [null]");
+            throw BookingExceptionFactory.incorrect(Ticket.class, ticket);
         }
     }
 }

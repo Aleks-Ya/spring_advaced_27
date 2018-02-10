@@ -11,6 +11,10 @@ import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
+
+import static booking.exception.BookingExceptionFactory.notFoundById;
+
 
 public class BookingDaoImpl extends AbstractDao implements BookingDao {
 
@@ -23,7 +27,7 @@ public class BookingDaoImpl extends AbstractDao implements BookingDao {
 
     @Override
     public Booking create(long userId, Ticket ticket) {
-        User user = userDao.getById(userId);
+        User user = userDao.getById(userId).orElseThrow(() -> notFoundById(Booking.class, userId));
 
         TicketDao.validateTicket(ticket);
         UserService.validateUser(user);
@@ -34,10 +38,10 @@ public class BookingDaoImpl extends AbstractDao implements BookingDao {
     }
 
     @Override
-    public Booking getById(long bookingId) {
+    public Optional<Booking> getById(long bookingId) {
         Query query = getCurrentSession().createQuery("from Booking b where b.id = :bookingId");
         query.setParameter("bookingId", bookingId);
-        return (Booking) query.uniqueResult();
+        return Optional.ofNullable((Booking) query.uniqueResult());
     }
 
     @Override
