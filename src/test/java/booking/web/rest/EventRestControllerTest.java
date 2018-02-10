@@ -18,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = EventRestController.class)
 public class EventRestControllerTest extends BaseWebTest {
 
+    //TODO add test: event not found by id
     @Test
     public void getById() throws Exception {
         Event expEvent = to.createParty();

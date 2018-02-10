@@ -43,11 +43,11 @@ public class Event {
         return new Event(eventId, this.name, this.rate, this.basePrice, this.dateTime, this.auditorium);
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

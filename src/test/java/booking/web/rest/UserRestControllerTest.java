@@ -18,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = UserRestController.class)
 public class UserRestControllerTest extends BaseWebTest {
 
+    //TODO add test: user not found by id
     @Test
     public void getById() throws Exception {
         User expUser = to.createJohn();
