@@ -38,6 +38,10 @@ Release command: `mvn release:prepare release:clean`. The command increments ver
 ## Release notes
 **3.3**
 - Custom error messages
+- Removes all operation with Auditorium by auditorium name
+- Change endpoints `/auditorium/id/*` to `/auditorium/*`
+- Remove filed Ticket#dateTime (exists in Event)
+- Remove dateTime and auditoriumName parameters from BookingController#getTicketPrice
 - Add navigator and message on the Access denied page
 - BookingService#getTicketPrice accepts userId instead of User object
 
