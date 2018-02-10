@@ -7,12 +7,10 @@ import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Objects;
 
-@Repository
 public class UserDaoImpl extends AbstractDao implements UserDao {
 
     private final AccountDao accountDao;

@@ -7,12 +7,10 @@ import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Repository
 public class EventDaoImpl extends AbstractDao implements EventDao {
     private static final Logger LOG = LoggerFactory.getLogger(EventDaoImpl.class);
     private static final String DATE_TIME_PROPERTY = "dateTime";

@@ -18,8 +18,6 @@ public interface BookingDao {
 
     void delete(long bookingId);
 
-    List<Ticket> getBookedTickets();
-
     long countTickets(long userId);
 
     List<Ticket> getTicketsForEvent(long eventId);

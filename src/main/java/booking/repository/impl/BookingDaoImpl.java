@@ -5,6 +5,7 @@ import booking.domain.Ticket;
 import booking.domain.User;
 import booking.repository.BookingDao;
 import booking.repository.TicketDao;
+import booking.repository.UserDao;
 import booking.service.UserService;
 import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,16 @@ import java.util.List;
 
 public class BookingDaoImpl extends AbstractDao implements BookingDao {
 
+    private final UserDao userDao;
+
     @Autowired
-    private UserService userService;
+    public BookingDaoImpl(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     @Override
     public Booking create(long userId, Ticket ticket) {
-        User user = userService.getById(userId);
+        User user = userDao.getById(userId);
 
         TicketDao.validateTicket(ticket);
         UserService.validateUser(user);
@@ -57,13 +62,6 @@ public class BookingDaoImpl extends AbstractDao implements BookingDao {
                 "delete from Booking b where b.id = :bookingId");
         query.setParameter("bookingId", bookingId);
         query.executeUpdate();
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Ticket> getBookedTickets() {
-        Query query = getCurrentSession().createQuery("select b.ticket from Booking b");
-        return ((List<Ticket>) query.list());
     }
 
     @Override

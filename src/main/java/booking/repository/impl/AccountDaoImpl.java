@@ -7,11 +7,9 @@ import booking.repository.UserDao;
 import booking.service.UserService;
 import org.hibernate.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public class AccountDaoImpl extends AbstractDao implements AccountDao {
 
     private final UserDao userDao;
