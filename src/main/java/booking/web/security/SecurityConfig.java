@@ -3,6 +3,7 @@ package booking.web.security;
 import booking.web.controller.AccountController;
 import booking.web.controller.BookingController;
 import booking.web.controller.UserController;
+import booking.web.rest.RestConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
@@ -35,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(BookingController.SHOW_TICKETS_BY_EVENT_ENDPOINT).hasRole(Roles.BOOKING_MANAGER)
                 .antMatchers(UserController.SHOW_ALL_USERS_ENDPOINT).hasRole(Roles.BOOKING_MANAGER)
                 .antMatchers(AccountController.ROOT_ENDPOINT + "/**").hasRole(Roles.BOOKING_MANAGER)
-                .antMatchers(UserController.REGISTER_ENDPOINT).permitAll()
+                .antMatchers(UserController.REGISTER_ENDPOINT, RestConfig.REST_ROOT_ENDPOINT + "/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
 

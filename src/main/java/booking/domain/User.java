@@ -1,5 +1,7 @@
 package booking.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +17,7 @@ public class User {
     private String email;
     private String name;
     private LocalDate birthday;
+    @JsonIgnore
     private String password;
     private String roles;
 
