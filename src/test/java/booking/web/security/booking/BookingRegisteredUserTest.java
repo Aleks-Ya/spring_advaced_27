@@ -14,6 +14,7 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MvcResult;
 
+import static booking.web.controller.RootControllerTest.NAVIGATOR;
 import static java.lang.String.format;
 import static org.hamcrest.Matchers.endsWith;
 import static org.junit.Assert.assertThat;
@@ -103,7 +104,9 @@ public class BookingRegisteredUserTest extends BaseWebSecurityTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(format(
                         "<p>%s (%s, $10,000, REGISTERED_USER, <a href='/logout'>logout</a>)</p>\n" +
-                                "<h1>Access denied</h1>\n",
+                                NAVIGATOR +
+                                "<h1>Access denied</h1>\n" +
+                        "You have no permissions to visit this page.\n",
                         user.getName(),
                         user.getEmail()
                 )));

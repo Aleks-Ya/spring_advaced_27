@@ -36,6 +36,9 @@ There is no remote Maven repository, so `release:perform` is not executed.
 Release command: `mvn release:prepare release:clean`. The command increments version, creates tag and pushes changes.
 
 ## Release notes
+**3.3**
+- Add navigator and message on the Access denied page
+
 **3.2**
 - Remove operation "Get event by name"
 - Change "Get event by ID" endpoint path from "/id/{eventId}" to "/{eventId}"
