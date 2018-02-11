@@ -15,6 +15,9 @@ import static java.lang.String.format;
  */
 public class BookingExceptionFactory {
 
+    private BookingExceptionFactory() {
+    }
+
     public static BookingException notFoundById(Class<?> clazz, Long id) {
         String name = clazz.getSimpleName();
         return new BookingException(name + " is not found", name + " is not found by id " + id);
@@ -54,7 +57,7 @@ public class BookingExceptionFactory {
     }
 
     public static BookingException incorrect(String name, Object object) {
-        String message = format(name + " '%s' is incorrect.", object);
+        String message = format("%s '%s' is incorrect.", name, object);
         return new BookingException("Incorrect " + name.toLowerCase(), message);
     }
 

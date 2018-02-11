@@ -129,8 +129,6 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public void delete(long bookingId) {
-        //noinspection ResultOfMethodCallIgnored
-        bookingDao.getById(bookingId).orElseThrow(() -> notFoundById(Booking.class, bookingId));
         bookingDao.delete(bookingId);
     }
 

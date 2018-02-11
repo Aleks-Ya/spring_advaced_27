@@ -16,7 +16,6 @@ import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -53,13 +52,13 @@ public class BookingPdfHttpMessageConverter implements HttpMessageConverter<Book
 
     @Override
     public void write(BookingList bookingList, MediaType contentType, HttpOutputMessage outputMessage)
-            throws IOException, HttpMessageNotWritableException {
+            throws IOException {
         outputMessage.getHeaders().setContentType(MediaType.APPLICATION_PDF);
         bookingListToPdf(bookingList.getList(), outputMessage.getBody());
     }
 
     @Override
-    public BookingList read(Class clazz, HttpInputMessage inputMessage) throws HttpMessageNotReadableException {
+    public BookingList read(Class clazz, HttpInputMessage inputMessage) {
         throw new HttpMessageNotReadableException(clazz.getName());
     }
 

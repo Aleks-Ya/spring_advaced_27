@@ -5,8 +5,9 @@ import booking.exception.BookingExceptionFactory;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
+
+import static java.util.Objects.isNull;
 
 public interface EventDao {
 
@@ -29,12 +30,7 @@ public interface EventDao {
     Event getByAuditoriumAndDate(long auditoriumId, LocalDateTime date);
 
     static void validateEvent(Event event) {
-        boolean eventIsNull = Objects.isNull(event);
-        boolean nameIsNull = Objects.isNull(event.getName());
-        boolean auditoriumIsNull = Objects.isNull(event.getAuditorium());
-        boolean rateIsNull = Objects.isNull(event.getRate());
-
-        if (eventIsNull || nameIsNull || auditoriumIsNull || rateIsNull) {
+        if (isNull(event) || isNull(event.getName()) || isNull(event.getAuditorium()) || isNull(event.getRate())) {
             throw BookingExceptionFactory.incorrect(Event.class, event);
         }
     }

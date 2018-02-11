@@ -25,12 +25,6 @@ public class Account {
     public Account() {
     }
 
-    private Account(long id, User user, BigDecimal amount) {
-        this.id = id;
-        this.user = user;
-        this.amount = amount;
-    }
-
     public Account(User user, BigDecimal amount) {
         this.user = user;
         this.amount = amount;

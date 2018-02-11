@@ -18,7 +18,7 @@ public class EventDaoImpl extends AbstractDao implements EventDao {
 
     @Override
     public Event create(Event event) {
-        LOG.info("Creating " + event);
+        LOG.info("Creating {}", event);
         EventDao.validateEvent(event);
         Event byAuditoriumAndDate = getByAuditoriumAndDate(event.getAuditorium().getId(), event.getDateTime());
         if (byAuditoriumAndDate != null) {

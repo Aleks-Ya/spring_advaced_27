@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.Collection;
+import java.util.Objects;
 
 public class ExtendedUserDetails extends User {
 
@@ -27,5 +28,20 @@ public class ExtendedUserDetails extends User {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        ExtendedUserDetails that = (ExtendedUserDetails) o;
+        return Objects.equals(name, that.name) &&
+                Objects.equals(email, that.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), name, email);
     }
 }
