@@ -8,6 +8,7 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.springframework.http.MediaType;
 import org.springframework.web.servlet.view.AbstractView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ class PdfView extends AbstractView {
     static final String TICKETS_KEY = "tickets";
 
     PdfView() {
-        setContentType("application/pdf");
+        setContentType(MediaType.APPLICATION_PDF_VALUE);
     }
 
     private void buildPdfDocument(Map<String, Object> model, Document document) throws DocumentException {
