@@ -1,7 +1,6 @@
 package booking.web.rest;
 
 import booking.BaseWebTest;
-import booking.web.pdf.PdfView;
 import com.codeborne.pdftest.PDF;
 import org.junit.Test;
 import org.springframework.http.MediaType;
@@ -15,7 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ContextConfiguration(classes = {BookingPdfRestController.class, PdfView.class})
+@ContextConfiguration(classes = {BookingPdfRestController.class})
 public class BookingPdfRestControllerTest extends BaseWebTest {
 
     @Test

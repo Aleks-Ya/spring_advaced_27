@@ -1,11 +1,9 @@
 package booking.web.controller;
 
-import booking.web.pdf.PdfView;
 import org.springframework.context.annotation.Import;
 
 @Import({RootController.class, LoginController.class, AuditoriumController.class, BookingController.class,
-        BookingPdfController.class, DiscountController.class, EventController.class, PdfView.class,
-        UserController.class, AccountController.class})
+        DiscountController.class, EventController.class, UserController.class, AccountController.class})
 public class ControllerConfig {
     /**
      * Used in FreeMarker templates.

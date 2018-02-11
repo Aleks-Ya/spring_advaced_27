@@ -1,6 +1,7 @@
 package booking;
 
 import booking.web.config.FreeMarkerConfig;
+import booking.web.config.MessageConverterConfig;
 import booking.web.config.MvcConfig;
 import booking.web.error.RestErrorHandler;
 import booking.web.error.WebErrorHandler;
@@ -19,7 +20,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @WebAppConfiguration
 @ContextConfiguration(classes = {FreeMarkerConfig.class, WebErrorHandler.class, MvcConfig.class,
-        RestErrorHandler.class})
+        RestErrorHandler.class, MessageConverterConfig.class})
 public abstract class BaseWebTest extends BaseServiceTest {
     protected static final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 

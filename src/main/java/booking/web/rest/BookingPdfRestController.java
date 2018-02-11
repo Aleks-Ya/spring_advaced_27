@@ -1,17 +1,16 @@
 package booking.web.rest;
 
 import booking.service.BookingService;
-import booking.web.pdf.PdfView;
+import booking.web.controller.BookingController;
+import booking.web.pdf.BookingPdfHttpMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
+import static org.springframework.http.MediaType.APPLICATION_PDF_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-@Controller
+@RestController
 @SuppressWarnings("unused")
 class BookingPdfRestController {
     static final String ENDPOINT = BookingRestController.ENDPOINT;
@@ -23,11 +22,10 @@ class BookingPdfRestController {
         this.bookingService = bookingService;
     }
 
-    @RequestMapping(path = BookingPdfRestController.ENDPOINT, produces = MediaType.APPLICATION_PDF_VALUE)
-    ModelAndView getPdf() {
-        Map<String, Object> model = new HashMap<>();
-        model.put(PdfView.BOOKINGS_KEY, bookingService.getAll());
-        return new ModelAndView(new PdfView(), model);
+    @RequestMapping(path = {BookingPdfRestController.ENDPOINT, BookingController.ROOT_ENDPOINT + "/bookedTickets"},
+            method = GET, produces = APPLICATION_PDF_VALUE)
+    BookingPdfHttpMessageConverter.BookingList getPdf() {
+        return new BookingPdfHttpMessageConverter.BookingList(bookingService.getAll());
     }
 
 }
