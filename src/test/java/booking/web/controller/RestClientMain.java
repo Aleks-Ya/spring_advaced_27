@@ -2,6 +2,7 @@ package booking.web.controller;
 
 import booking.domain.Booking;
 import booking.domain.Event;
+import booking.domain.Ticket;
 import booking.domain.User;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +29,13 @@ public class RestClientMain {
 
         User user = users.get(0);
         Event event = events.get(0);
-        book(user.getId(), event.getId(), "9");//TODO add getting available seats for event
+        List<Ticket> tickets = getTicketsByEvent(event.getId());
+        Integer nextFreeSeat = tickets.stream()
+                .map(Ticket::getSeatsList)
+                .flatMap(Collection::stream)
+                .min(Comparator.reverseOrder())
+                .get() + 1;
+        book(user.getId(), event.getId(), nextFreeSeat.toString());
         getAllBookings();
     }
 
@@ -38,6 +47,18 @@ public class RestClientMain {
         List<User> users = entity.getBody();
         System.out.println("\nAll users:\n" + listToString(users) + "\n");
         return users;
+    }
+
+    private static List<Ticket> getTicketsByEvent(long eventId) {
+        String endpoint = UriComponentsBuilder.fromHttpUrl(ROOT_URL + "/booking/tickets_for_event")
+                .queryParam("eventId", eventId)
+                .toUriString();
+        ResponseEntity<List<Ticket>> entity = template.exchange(endpoint, HttpMethod.GET, null,
+                new ParameterizedTypeReference<List<Ticket>>() {
+                });
+        List<Ticket> tickets = entity.getBody();
+        System.out.println("\nTickets for event:\n" + listToString(tickets) + "\n");
+        return tickets;
     }
 
     private static List<Event> loadEvents() {

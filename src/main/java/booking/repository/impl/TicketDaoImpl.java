@@ -18,7 +18,7 @@ public class TicketDaoImpl extends AbstractDao implements TicketDao {
 
     @Override
     public void delete(long ticketId) {
-        Query query = getCurrentSession().createQuery("delete from Ticket t where t.id = :ticketId");
+        Query query = getCurrentSession().createQuery("delete from Ticket where id = :ticketId");
         query.setParameter("ticketId", ticketId);
         query.executeUpdate();
     }
@@ -31,7 +31,7 @@ public class TicketDaoImpl extends AbstractDao implements TicketDao {
 
     @Override
     public Optional<Ticket> getTicketById(Long ticketId) {
-        Query query = getCurrentSession().createQuery("from Ticket t where t.id = :ticketId");
+        Query query = getCurrentSession().createQuery("from Ticket where id = :ticketId");
         query.setParameter("ticketId", ticketId);
         return Optional.ofNullable((Ticket) query.uniqueResult());
     }
