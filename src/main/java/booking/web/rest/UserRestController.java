@@ -14,7 +14,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
 @SuppressWarnings("unused")
-public class UserRestController {
+class UserRestController {
     public static final String ENDPOINT = REST_ROOT_ENDPOINT + "/user";
 
     private final UserService userService;

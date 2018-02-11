@@ -1,5 +1,6 @@
 package booking.web.controller;
 
+import booking.web.pdf.PdfView;
 import org.springframework.context.annotation.Import;
 
 @Import({RootController.class, LoginController.class, AuditoriumController.class, BookingController.class,

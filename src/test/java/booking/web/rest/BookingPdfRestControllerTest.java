@@ -1,4 +1,4 @@
-package booking.web.controller;
+package booking.web.rest;
 
 import booking.BaseWebTest;
 import booking.web.pdf.PdfView;
@@ -15,14 +15,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ContextConfiguration(classes = {BookingPdfController.class, PdfView.class})
-public class BookingPdfControllerTest extends BaseWebTest {
+@ContextConfiguration(classes = {BookingPdfRestController.class, PdfView.class})
+public class BookingPdfRestControllerTest extends BaseWebTest {
 
     @Test
     public void requestParam() throws Exception {
         to.bookTicketToParty();
         to.bookTicketToHackathon();
-        MvcResult mvcResult = mvc.perform(get(BookingPdfController.ENDPOINT).accept(MediaType.APPLICATION_PDF))
+        MvcResult mvcResult = mvc.perform(get(BookingPdfRestController.ENDPOINT).accept(MediaType.APPLICATION_PDF))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_PDF_VALUE))
                 .andReturn();

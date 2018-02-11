@@ -1,4 +1,4 @@
-package booking.web.controller;
+package booking.web.pdf;
 
 
 import booking.domain.Booking;
@@ -22,11 +22,11 @@ import java.util.Map;
 /**
  * Make a PDF document contains booking passed in BOOKINGS_KEY entry of the model.
  */
-class PdfView extends AbstractView {
+public class PdfView extends AbstractView {
 
-    static final String BOOKINGS_KEY = "bookings";
+    public static final String BOOKINGS_KEY = "bookings";
 
-    PdfView() {
+    public PdfView() {
         setContentType(MediaType.APPLICATION_PDF_VALUE);
     }
 

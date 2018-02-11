@@ -14,7 +14,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RestController
 @SuppressWarnings("unused")
-public class EventRestController {
+class EventRestController {
     public static final String ENDPOINT = REST_ROOT_ENDPOINT + "/event";
 
     private final EventService eventService;

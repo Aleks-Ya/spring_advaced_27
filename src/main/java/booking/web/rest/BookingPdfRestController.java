@@ -1,4 +1,4 @@
-package booking.web.controller;
+package booking.web.rest;
 
 import booking.service.BookingService;
 import booking.web.pdf.PdfView;
@@ -13,17 +13,17 @@ import java.util.Map;
 
 @Controller
 @SuppressWarnings("unused")
-class BookingPdfController {
-    static final String ENDPOINT = BookingController.ROOT_ENDPOINT + "/bookedTickets";
+class BookingPdfRestController {
+    static final String ENDPOINT = BookingRestController.ENDPOINT;
 
     private final BookingService bookingService;
 
     @Autowired
-    public BookingPdfController(BookingService bookingService) {
+    public BookingPdfRestController(BookingService bookingService) {
         this.bookingService = bookingService;
     }
 
-    @RequestMapping(path = BookingPdfController.ENDPOINT, produces = MediaType.APPLICATION_PDF_VALUE)
+    @RequestMapping(path = BookingPdfRestController.ENDPOINT, produces = MediaType.APPLICATION_PDF_VALUE)
     ModelAndView getPdf() {
         Map<String, Object> model = new HashMap<>();
         model.put(PdfView.BOOKINGS_KEY, bookingService.getAll());

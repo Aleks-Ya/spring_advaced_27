@@ -16,7 +16,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 @SuppressWarnings("unused")
-public class BookingRestController {
+class BookingRestController {
     public static final String ENDPOINT = REST_ROOT_ENDPOINT + "/booking";
 
     private final BookingService bookingService;
