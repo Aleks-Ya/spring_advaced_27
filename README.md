@@ -9,6 +9,7 @@ Participant: Aleksei Iablokov
 ## Local run
 1) `mvn jetty:run`
 2) Open `http://localhost:8080`
+3) Run REST client `booking.web.controller.RestClientMain`
 
 Predefined users:
   - `john@gmail.com`/`jpass` (BOOKING_MANAGER role)
