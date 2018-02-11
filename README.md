@@ -36,6 +36,11 @@ There is no remote Maven repository, so `release:perform` is not executed.
 Release command: `mvn release:prepare release:clean`. The command increments version, creates tag and pushes changes.
 
 ## Release notes
+**4.0**
+- REST services feature
+- Test REST client
+- Add link "Booked tickets (PDF)" on the Home page
+
 **3.3**
 - Custom error messages
 - Change endpoints `/auditorium/id/*` to `/auditorium/*`

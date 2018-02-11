@@ -32,13 +32,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers(BookingController.SHOW_ALL_TICKETS_ENDPOINT).hasRole(Roles.BOOKING_MANAGER)
-                .antMatchers(BookingController.SHOW_TICKETS_BY_EVENT_ENDPOINT).hasRole(Roles.BOOKING_MANAGER)
-                .antMatchers(UserController.SHOW_ALL_USERS_ENDPOINT).hasRole(Roles.BOOKING_MANAGER)
-                .antMatchers(AccountController.ROOT_ENDPOINT + "/**").hasRole(Roles.BOOKING_MANAGER)
-                .antMatchers(UserController.REGISTER_ENDPOINT, RestConfig.REST_ROOT_ENDPOINT + "/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
+
+                .antMatchers(
+                        BookingController.SHOW_ALL_TICKETS_ENDPOINT,
+                        BookingController.SHOW_ALL_TICKETS_PDF_ENDPOINT,
+                        BookingController.SHOW_TICKETS_BY_EVENT_ENDPOINT,
+                        UserController.SHOW_ALL_USERS_ENDPOINT,
+                        AccountController.ROOT_ENDPOINT + "/**"
+                ).hasRole(Roles.BOOKING_MANAGER)
+
+                .antMatchers(
+                        UserController.REGISTER_ENDPOINT,
+                        RestConfig.REST_ROOT_ENDPOINT + "/**"
+                ).permitAll()
+
+                .anyRequest().authenticated().and()
 
                 .logout().permitAll().and()
 

@@ -12,7 +12,7 @@ INSERT INTO event (id, name, rate, basePrice, dateTime, auditorium_id) VALUES (1
 INSERT INTO event (id, name, rate, basePrice, dateTime, auditorium_id) VALUES (2, 'Summer Party', 'MID', 500, '2018-06-01 10:30:00', 2);
 
 INSERT INTO ticket (id, event_id, seats, price) VALUES (1, 1, '1,2,3', 3000.5);
-INSERT INTO ticket (id, event_id, seats, price) VALUES (2, 1, '13,14', 2000);
+INSERT INTO ticket (id, event_id, seats, price) VALUES (2, 2, '13,14', 2000);
 
 INSERT INTO booking (id, user_id, ticket_id) VALUES (1, 1, 1);
-INSERT INTO booking (id, user_id, ticket_id) VALUES (2, 1, 2);
+INSERT INTO booking (id, user_id, ticket_id) VALUES (2, 2, 2);

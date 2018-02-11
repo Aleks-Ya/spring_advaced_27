@@ -22,8 +22,10 @@ class BookingPdfRestController {
         this.bookingService = bookingService;
     }
 
-    @RequestMapping(path = {BookingPdfRestController.ENDPOINT, BookingController.ROOT_ENDPOINT + "/bookedTickets"},
-            method = GET, produces = APPLICATION_PDF_VALUE)
+    @RequestMapping(
+            path = {BookingPdfRestController.ENDPOINT, BookingController.SHOW_ALL_TICKETS_PDF_ENDPOINT},
+            method = GET,
+            produces = APPLICATION_PDF_VALUE)
     BookingPdfHttpMessageConverter.BookingList getPdf() {
         return new BookingPdfHttpMessageConverter.BookingList(bookingService.getAll());
     }
