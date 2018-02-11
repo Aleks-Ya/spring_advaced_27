@@ -19,13 +19,15 @@ import java.util.Map;
 
 class PdfView extends AbstractView {
 
+    static final String TICKETS_KEY = "tickets";
+
     PdfView() {
         setContentType("application/pdf");
     }
 
     private void buildPdfDocument(Map<String, Object> model, Document document) throws DocumentException {
         @SuppressWarnings("unchecked")
-        List<Ticket> tickets = (List<Ticket>) model.get(BookingPdfController.TICKETS_KEY);
+        List<Ticket> tickets = (List<Ticket>) model.get(TICKETS_KEY);
 
         if (!tickets.isEmpty()) {
             for (Ticket ticket : tickets) {

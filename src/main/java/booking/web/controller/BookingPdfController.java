@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 @SuppressWarnings("unused")
 class BookingPdfController {
     static final String ENDPOINT = BookingController.ROOT_ENDPOINT + "/bookedTickets";
-    static final String TICKETS_KEY = "tickets";
 
     private final BookingService bookingService;
 
@@ -33,7 +32,7 @@ class BookingPdfController {
                 .map(Booking::getTicket)
                 .collect(Collectors.toList());
         Map<String, Object> model = new HashMap<>();
-        model.put(TICKETS_KEY, tickets);
+        model.put(PdfView.TICKETS_KEY, tickets);
         return new ModelAndView(new PdfView(), model);
     }
 
