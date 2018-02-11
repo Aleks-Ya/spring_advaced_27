@@ -1,6 +1,7 @@
 package booking.web.controller;
 
 
+import booking.domain.Booking;
 import booking.domain.Event;
 import booking.domain.Ticket;
 import com.itextpdf.text.Document;
@@ -18,9 +19,12 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Make a PDF document contains booking passed in BOOKINGS_KEY entry of the model.
+ */
 class PdfView extends AbstractView {
 
-    static final String TICKETS_KEY = "tickets";
+    static final String BOOKINGS_KEY = "bookings";
 
     PdfView() {
         setContentType(MediaType.APPLICATION_PDF_VALUE);
@@ -28,10 +32,11 @@ class PdfView extends AbstractView {
 
     private void buildPdfDocument(Map<String, Object> model, Document document) throws DocumentException {
         @SuppressWarnings("unchecked")
-        List<Ticket> tickets = (List<Ticket>) model.get(TICKETS_KEY);
+        List<Booking> bookings = (List<Booking>) model.get(BOOKINGS_KEY);
 
-        if (!tickets.isEmpty()) {
-            for (Ticket ticket : tickets) {
+        if (!bookings.isEmpty()) {
+            for (Booking booking : bookings) {
+                Ticket ticket = booking.getTicket();
                 Event event = ticket.getEvent();
                 String eventStr = event != null ? event.getName() : "No event info";
                 Paragraph paragraph = new Paragraph(eventStr);
